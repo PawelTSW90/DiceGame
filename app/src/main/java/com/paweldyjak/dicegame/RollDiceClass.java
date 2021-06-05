@@ -1,47 +1,66 @@
 package com.paweldyjak.dicegame;
 
 import android.app.Activity;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.content.Context;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.util.Random;
 
 public class RollDiceClass {
-    public Activity activity;
-    private Button rollDiceButton;
-    private TextView displayNumbers;
-    String[] rolledValues = new String[6];
+    private final Context context;
+    private ImageView rollDices;
+    private final String[] rolledValues = new String[6];
+    private ImageView[] dicesSlots = new ImageView[6];
+    private boolean dicesActive = true;
 
-    RollDiceClass(Activity activity) {
-        this.activity = activity;
-        setRollDiceButton();
+    RollDiceClass(Context context) {
+        this.context = context;
+    }
+
+    public int[] rollDices() {
+        if (!dicesActive) {
+
+        } else {
+            SoundClass soundClass = new SoundClass(context);
+            soundClass.playRollDiceSound();
+            int[] values = new int[6];
+            Random randomValue = new Random();
+
+            for (int x = 0; x < 6; x++) {
+                int value = randomValue.nextInt(6 - 1 + 1) + 1;
+                rolledValues[x] = String.valueOf(value);
+            }
+
+
+            return values;
+        }
+        return null;
+    }
+
+    public void setDicesSlots() {
+        dicesSlots[0] = ((Activity) context).findViewById(R.id.diceSlot1);
+        dicesSlots[1] = ((Activity) context).findViewById(R.id.diceSlot2);
+        dicesSlots[2] = ((Activity) context).findViewById(R.id.diceSlot3);
+        dicesSlots[3] = ((Activity) context).findViewById(R.id.diceSlot4);
+        dicesSlots[4] = ((Activity) context).findViewById(R.id.diceSlot5);
+        dicesSlots[5] = ((Activity) context).findViewById(R.id.diceSlot6);
+
     }
 
     public void setRollDiceButton() {
-        rollDiceButton = activity.findViewById(R.id.roll_dice_button);
-        rollDiceButton.setOnClickListener(v -> {
+        rollDices = ((Activity) context).findViewById(R.id.roll_dices);
+        rollDices.setOnClickListener(v -> {
             rollDices();
-            displayNumbers();
+            rollDices.setAlpha(0.5f);
+            //dicesActive = false;
         });
 
     }
 
-    public int[] rollDices() {
-        int[] values = new int[6];
-        Random randomValue = new Random();
+    public void showDices(){
 
-        for (int x = 0; x < 6; x++) {
-            int value = randomValue.nextInt(6 - 1 + 1) + 1;
-            rolledValues[x] = String.valueOf(value);
-        }
-
-        return values;
     }
 
-    public void displayNumbers() {
-        displayNumbers = activity.findViewById(R.id.numbers_display);
-        displayNumbers.setText("Siemano");
-    }
 
 }

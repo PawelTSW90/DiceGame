@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">DiceGame</string>
     <string name="roll_dice">Roll Dice</string>
+    <string name="dices_imageView_description">Dices image</string>
+    <string name="dice_slot1_description">Slot displaying dice nr 1</string>
+    <string name="dice_slot2_description">Slot displaying dice nr 2</string>
+    <string name="dice_slot3_description">Slot displaying dice nr 3</string>
+    <string name="dice_slot4_description">Slot displaying dice nr 4</string>
+    <string name="dice_slot5_description">Slot displaying dice nr 5</string>
+    <string name="dice_slot6_description">Slot displaying dice nr 6</string>
 </resources>

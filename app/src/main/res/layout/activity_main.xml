@@ -8,29 +8,75 @@
     android:backgroundTintMode="src_over"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/roll_dice_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginBottom="66dp"
-        android:text="@string/roll_dice"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/numbers_display"
-        android:layout_width="280dp"
-        android:layout_height="88dp"
-        android:layout_marginStart="226dp"
-        android:layout_marginLeft="226dp"
-        android:layout_marginTop="113dp"
-        android:layout_marginEnd="226dp"
-        android:layout_marginRight="226dp"
-        android:textSize="50sp"
+    <ImageView
+        android:id="@+id/diceSlot6"
+        android:layout_width="48dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="24dp"
+        android:contentDescription="@string/dice_slot6_description"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/diceSlot5"
+        android:layout_width="48dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/dice_slot5_description"
+        app:layout_constraintEnd_toStartOf="@+id/diceSlot6"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/diceSlot3"
+        android:layout_width="48dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/dice_slot3_description"
+        app:layout_constraintEnd_toStartOf="@+id/diceSlot4"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/diceSlot2"
+        android:layout_width="48dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/dice_slot2_description"
+        app:layout_constraintEnd_toStartOf="@+id/diceSlot3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/roll_dices"
+        android:layout_width="89dp"
+        android:layout_height="74dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/dices_imageView_description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/dices_image" />
+
+    <ImageView
+        android:id="@+id/diceSlot1"
+        android:layout_width="48dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/dice_slot1_description"
+        app:layout_constraintEnd_toStartOf="@+id/diceSlot2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/diceSlot4"
+        android:layout_width="48dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/dice_slot4_description"
+        app:layout_constraintEnd_toStartOf="@+id/diceSlot5"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
