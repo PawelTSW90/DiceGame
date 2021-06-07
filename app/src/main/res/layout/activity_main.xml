@@ -82,9 +82,10 @@
     <TableLayout
         android:layout_width="402dp"
         android:layout_height="374dp"
+        android:background="#1F8824"
+        android:stretchColumns="0,1,2,3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:stretchColumns="0,1,2,3">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
             android:layout_width="match_parent"
@@ -93,27 +94,35 @@
 
             <TextView
                 android:id="@+id/textView20"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/_1" />
 
             <TextView
                 android:id="@+id/textView19"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/punkty" />
 
             <TextView
                 android:id="@+id/textView14"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/para" />
 
             <TextView
                 android:id="@+id/textView13"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/punkty" />
         </TableRow>
 
         <TableRow
@@ -123,27 +132,35 @@
 
             <TextView
                 android:id="@+id/textView24"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/_2" />
 
             <TextView
                 android:id="@+id/textView23"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/punkty" />
 
             <TextView
                 android:id="@+id/textView22"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/_2pary" />
 
             <TextView
                 android:id="@+id/textView21"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/punkty" />
         </TableRow>
 
         <TableRow
@@ -153,27 +170,35 @@
 
             <TextView
                 android:id="@+id/textView28"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/_3" />
 
             <TextView
                 android:id="@+id/textView27"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/punkty" />
 
             <TextView
                 android:id="@+id/textView26"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/parzyste" />
 
             <TextView
                 android:id="@+id/textView25"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/punkty" />
         </TableRow>
 
         <TableRow
@@ -183,27 +208,35 @@
 
             <TextView
                 android:id="@+id/textView32"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/_4" />
 
             <TextView
                 android:id="@+id/textView31"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/punkty" />
 
             <TextView
                 android:id="@+id/textView30"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/nieparzyste" />
 
             <TextView
                 android:id="@+id/textView29"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/punkty" />
         </TableRow>
 
         <TableRow
@@ -213,27 +246,35 @@
 
             <TextView
                 android:id="@+id/textView48"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/_5" />
 
             <TextView
                 android:id="@+id/textView47"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/punkty" />
 
             <TextView
                 android:id="@+id/textView46"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/m_street" />
 
             <TextView
                 android:id="@+id/textView45"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/punkty" />
         </TableRow>
 
         <TableRow
@@ -243,27 +284,35 @@
 
             <TextView
                 android:id="@+id/textView52"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/_6" />
 
             <TextView
                 android:id="@+id/textView51"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/punkty" />
 
             <TextView
                 android:id="@+id/textView50"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/d_street" />
 
             <TextView
                 android:id="@+id/textView49"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/punkty" />
         </TableRow>
 
         <TableRow
@@ -273,27 +322,37 @@
 
             <TextView
                 android:id="@+id/textView56"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/full" />
 
             <TextView
                 android:id="@+id/textView55"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:text="@string/punkty" />
 
             <TextView
                 android:id="@+id/textView54"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/kareta" />
 
             <TextView
                 android:id="@+id/textView53"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/punkty" />
         </TableRow>
 
         <TableRow
@@ -303,27 +362,39 @@
 
             <TextView
                 android:id="@+id/textView60"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/general" />
 
             <TextView
                 android:id="@+id/textView59"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/punkty" />
 
             <TextView
                 android:id="@+id/textView58"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/SOS" />
 
             <TextView
                 android:id="@+id/textView57"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/punkty" />
         </TableRow>
 
         <TableRow
@@ -333,15 +404,21 @@
 
             <TextView
                 android:id="@+id/textView62"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/razem" />
 
             <TextView
                 android:id="@+id/textView61"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/punkty" />
         </TableRow>
 
     </TableLayout>
