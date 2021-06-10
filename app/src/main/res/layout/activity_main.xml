@@ -8,6 +8,395 @@
     android:backgroundTintMode="src_over"
     tools:context=".MainActivity">
 
+    <TableLayout
+        android:layout_width="402dp"
+        android:layout_height="330dp"
+        android:background="#801F8824"
+        android:stretchColumns="0,1,2,3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0">
+
+            <TextView
+                android:id="@+id/textView_1"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/_1" />
+
+            <TextView
+                android:id="@+id/textView_1_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+
+            <TextView
+                android:id="@+id/textView_pair"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/para" />
+
+            <TextView
+                android:id="@+id/textView_pair_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0">
+
+            <TextView
+                android:id="@+id/textView_2"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/_2" />
+
+            <TextView
+                android:id="@+id/textView_2_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+
+            <TextView
+                android:id="@+id/textView_2pairs"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/_2pary" />
+
+            <TextView
+                android:id="@+id/textView_2pairs_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0">
+
+            <TextView
+                android:id="@+id/textView_3"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/_3" />
+
+            <TextView
+                android:id="@+id/textView_3_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+
+            <TextView
+                android:id="@+id/textView_evens"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/parzyste" />
+
+            <TextView
+                android:id="@+id/textView_evens_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0">
+
+            <TextView
+                android:id="@+id/textView_4"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/_4" />
+
+            <TextView
+                android:id="@+id/textView_4_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+
+            <TextView
+                android:id="@+id/textView_odds"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/nieparzyste" />
+
+            <TextView
+                android:id="@+id/textView_odds_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0">
+
+            <TextView
+                android:id="@+id/textView_5"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/_5" />
+
+            <TextView
+                android:id="@+id/textView_5_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+
+            <TextView
+                android:id="@+id/textView_smallStraight"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/m_street" />
+
+            <TextView
+                android:id="@+id/textView_smallStraight_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0">
+
+            <TextView
+                android:id="@+id/textView_6"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/_6" />
+
+            <TextView
+                android:id="@+id/textView_6_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+
+            <TextView
+                android:id="@+id/textView_largeStraight"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/d_street" />
+
+            <TextView
+                android:id="@+id/textView_largeStraight_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0">
+
+            <TextView
+                android:id="@+id/textView_fullHouse"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/full" />
+
+            <TextView
+                android:id="@+id/textView_fullHouse_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+
+            <TextView
+                android:id="@+id/textView_4ofAKind"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/kareta" />
+
+
+            <TextView
+                android:id="@+id/textView_4ofAKind_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0">
+
+
+            <TextView
+                android:id="@+id/textView_5ofAKind"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/general" />
+
+            <TextView
+                android:id="@+id/textView_5ofAKind_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+
+            <TextView
+                android:id="@+id/textView_sos"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/SOS" />
+
+            <TextView
+                android:id="@+id/textView_sos_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            >
+
+
+            <TextView
+                android:id="@+id/textView_total"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/razem" />
+
+            <TextView
+                android:id="@+id/textView_score_pts"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/punkty" />
+        </TableRow>
+
+    </TableLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.669"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <ImageView
         android:id="@+id/diceSlot6"
         android:layout_width="48dp"
@@ -78,349 +467,5 @@
         android:contentDescription="@string/dice_slot4_description"
         app:layout_constraintEnd_toStartOf="@+id/diceSlot5"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TableLayout
-        android:layout_width="402dp"
-        android:layout_height="374dp"
-        android:background="#1F8824"
-        android:stretchColumns="0,1,2,3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0">
-
-            <TextView
-                android:id="@+id/textView20"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/_1" />
-
-            <TextView
-                android:id="@+id/textView19"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/punkty" />
-
-            <TextView
-                android:id="@+id/textView14"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/para" />
-
-            <TextView
-                android:id="@+id/textView13"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/punkty" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0">
-
-            <TextView
-                android:id="@+id/textView24"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/_2" />
-
-            <TextView
-                android:id="@+id/textView23"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/punkty" />
-
-            <TextView
-                android:id="@+id/textView22"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/_2pary" />
-
-            <TextView
-                android:id="@+id/textView21"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/punkty" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0">
-
-            <TextView
-                android:id="@+id/textView28"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/_3" />
-
-            <TextView
-                android:id="@+id/textView27"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/punkty" />
-
-            <TextView
-                android:id="@+id/textView26"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/parzyste" />
-
-            <TextView
-                android:id="@+id/textView25"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/punkty" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0">
-
-            <TextView
-                android:id="@+id/textView32"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/_4" />
-
-            <TextView
-                android:id="@+id/textView31"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/punkty" />
-
-            <TextView
-                android:id="@+id/textView30"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/nieparzyste" />
-
-            <TextView
-                android:id="@+id/textView29"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/punkty" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0">
-
-            <TextView
-                android:id="@+id/textView48"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/_5" />
-
-            <TextView
-                android:id="@+id/textView47"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/punkty" />
-
-            <TextView
-                android:id="@+id/textView46"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/m_street" />
-
-            <TextView
-                android:id="@+id/textView45"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/punkty" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0">
-
-            <TextView
-                android:id="@+id/textView52"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/_6" />
-
-            <TextView
-                android:id="@+id/textView51"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/punkty" />
-
-            <TextView
-                android:id="@+id/textView50"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/d_street" />
-
-            <TextView
-                android:id="@+id/textView49"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/punkty" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0">
-
-            <TextView
-                android:id="@+id/textView56"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/full" />
-
-            <TextView
-                android:id="@+id/textView55"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="@string/punkty" />
-
-            <TextView
-                android:id="@+id/textView54"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/kareta" />
-
-            <TextView
-                android:id="@+id/textView53"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/punkty" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0">
-
-            <TextView
-                android:id="@+id/textView60"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/general" />
-
-            <TextView
-                android:id="@+id/textView59"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/punkty" />
-
-            <TextView
-                android:id="@+id/textView58"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/SOS" />
-
-            <TextView
-                android:id="@+id/textView57"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/punkty" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0">
-
-            <TextView
-                android:id="@+id/textView62"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/razem" />
-
-            <TextView
-                android:id="@+id/textView61"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/punkty" />
-        </TableRow>
-
-    </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
