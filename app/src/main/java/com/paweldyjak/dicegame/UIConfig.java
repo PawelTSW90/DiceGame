@@ -7,8 +7,9 @@ import android.widget.TextView;
 
 public class UIConfig {
     private final Context context;
-    private final TextView[] textViews = new TextView[33];
-    private final ImageView[] dicesSlots = new ImageView[6];
+    private TextView[] combinations = new TextView[16];
+    private TextView[] combinationsPoints = new TextView[16];
+    private ImageView[] dicesSlots = new ImageView[6];
     private ImageView rollDices;
 
     UIConfig(Context context){
@@ -29,44 +30,40 @@ public class UIConfig {
 
 
     public void setDicesCombinations(){
-        textViews[0] = ((Activity) context).findViewById(R.id.textView_1);
-        textViews[1] = ((Activity) context).findViewById(R.id.textView_1_pts);
-        textViews[2] = ((Activity) context).findViewById(R.id.textView_2);
-        textViews[3] = ((Activity) context).findViewById(R.id.textView_2_pts);
-        textViews[4] = ((Activity) context).findViewById(R.id.textView_3);
-        textViews[5] = ((Activity) context).findViewById(R.id.textView_3_pts);
-        textViews[6] = ((Activity) context).findViewById(R.id.textView_4);
-        textViews[7] = ((Activity) context).findViewById(R.id.textView_4_pts);
-        textViews[8] = ((Activity) context).findViewById(R.id.textView_5);
-        textViews[9] = ((Activity) context).findViewById(R.id.textView_5_pts);
-        textViews[10] = ((Activity) context).findViewById(R.id.textView_6);
-        textViews[11] = ((Activity) context).findViewById(R.id.textView_6_pts);
-        textViews[12] = ((Activity) context).findViewById(R.id.textView_pair);
-        textViews[13] = ((Activity) context).findViewById(R.id.textView_pair_pts);
-        textViews[14] = ((Activity) context).findViewById(R.id.textView_2pairs);
-        textViews[15] = ((Activity) context).findViewById(R.id.textView_2pairs_pts);
-        textViews[16] = ((Activity) context).findViewById(R.id.textView_evens);
-        textViews[17] = ((Activity) context).findViewById(R.id.textView_evens_pts);
-        textViews[18] = ((Activity) context).findViewById(R.id.textView_odds);
-        textViews[19] = ((Activity) context).findViewById(R.id.textView_odds_pts);
-        textViews[20] = ((Activity) context).findViewById(R.id.textView_smallStraight);
-        textViews[21] = ((Activity) context).findViewById(R.id.textView_smallStraight_pts);
-        textViews[22] = ((Activity) context).findViewById(R.id.textView_largeStraight);
-        textViews[23] = ((Activity) context).findViewById(R.id.textView_largeStraight_pts);
-        textViews[24] = ((Activity) context).findViewById(R.id.textView_fullHouse);
-        textViews[25] = ((Activity) context).findViewById(R.id.textView_fullHouse_pts);
-        textViews[26] = ((Activity) context).findViewById(R.id.textView_4ofAKind);
-        textViews[27] = ((Activity) context).findViewById(R.id.textView_4ofAKind_pts);
-        textViews[28] = ((Activity) context).findViewById(R.id.textView_5ofAKind);
-        textViews[29] = ((Activity) context).findViewById(R.id.textView_5ofAKind_pts);
-        textViews[30] = ((Activity) context).findViewById(R.id.textView_sos);
-        textViews[31] = ((Activity) context).findViewById(R.id.textView_sos_pts);
-        textViews[32] = ((Activity) context).findViewById(R.id.textView_total);
+        combinations[0] = ((Activity) context).findViewById(R.id.textView_1);
+        combinationsPoints[0] = ((Activity) context).findViewById(R.id.textView_1_pts);
+        combinations[1] = ((Activity) context).findViewById(R.id.textView_2);
+        combinationsPoints[1] = ((Activity) context).findViewById(R.id.textView_2_pts);
+        combinations[2] = ((Activity) context).findViewById(R.id.textView_3);
+        combinationsPoints[2] = ((Activity) context).findViewById(R.id.textView_3_pts);
+        combinations[3] = ((Activity) context).findViewById(R.id.textView_4);
+        combinationsPoints[3] = ((Activity) context).findViewById(R.id.textView_4_pts);
+        combinations[4] = ((Activity) context).findViewById(R.id.textView_5);
+        combinationsPoints[4] = ((Activity) context).findViewById(R.id.textView_5_pts);
+        combinations[5] = ((Activity) context).findViewById(R.id.textView_6);
+        combinationsPoints[5] = ((Activity) context).findViewById(R.id.textView_6_pts);
+        combinations[6] = ((Activity) context).findViewById(R.id.textView_pair);
+        combinationsPoints[6] = ((Activity) context).findViewById(R.id.textView_pair_pts);
+        combinations[7] = ((Activity) context).findViewById(R.id.textView_2pairs);
+        combinationsPoints[7] = ((Activity) context).findViewById(R.id.textView_2pairs_pts);
+        combinations[8] = ((Activity) context).findViewById(R.id.textView_evens);
+        combinationsPoints[8] = ((Activity) context).findViewById(R.id.textView_evens_pts);
+        combinations[9] = ((Activity) context).findViewById(R.id.textView_odds);
+        combinationsPoints[9] = ((Activity) context).findViewById(R.id.textView_odds_pts);
+        combinations[10] = ((Activity) context).findViewById(R.id.textView_smallStraight);
+        combinationsPoints[10] = ((Activity) context).findViewById(R.id.textView_smallStraight_pts);
+        combinations[11] = ((Activity) context).findViewById(R.id.textView_largeStraight);
+        combinationsPoints[11] = ((Activity) context).findViewById(R.id.textView_largeStraight_pts);
+        combinations[12] = ((Activity) context).findViewById(R.id.textView_fullHouse);
+        combinationsPoints[12] = ((Activity) context).findViewById(R.id.textView_fullHouse_pts);
+        combinations[13] = ((Activity) context).findViewById(R.id.textView_4ofAKind);
+        combinationsPoints[13] = ((Activity) context).findViewById(R.id.textView_4ofAKind_pts);
+        combinations[14] = ((Activity) context).findViewById(R.id.textView_5ofAKind);
+        combinationsPoints[14] = ((Activity) context).findViewById(R.id.textView_5ofAKind_pts);
+        combinations[15] = ((Activity) context).findViewById(R.id.textView_sos);
+        combinationsPoints[15] = ((Activity) context).findViewById(R.id.textView_sos_pts);
+        //textViews[32] = ((Activity) context).findViewById(R.id.textView_total);
 
-    }
-
-    public TextView[] getTextViews(){
-        return textViews;
     }
 
     public ImageView[] getDicesSlots() {
@@ -80,4 +77,14 @@ public class UIConfig {
     public ImageView getRollDices() {
         return rollDices;
     }
+
+
+    public TextView[] getCombinationsPoints() {
+        return combinationsPoints;
+    }
+
+    public TextView[] getCombinations() {
+        return combinations;
+    }
+
 }

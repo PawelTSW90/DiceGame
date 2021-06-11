@@ -1,10 +1,7 @@
 package com.paweldyjak.dicegame;
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.widget.ImageView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
@@ -14,16 +11,18 @@ public class RollDices {
     private final ScoreInput scoreInput;
     private final UIConfig uiConfig;
     private final DicesChecker dicesChecker;
+    private final EraseCombinations eraseCombinations;
     private final int[] dices = new int[6];
     private boolean isFirstThrow = true;
     private int throwNumber = 0;
 
 
-    RollDices(Context context, ScoreInput scoreInput, DicesChecker dicesChecker, UIConfig uiConfig) {
+    RollDices(Context context, ScoreInput scoreInput, DicesChecker dicesChecker, UIConfig uiConfig, EraseCombinations eraseCombinations) {
         this.context = context;
         this.scoreInput = scoreInput;
         this.dicesChecker = dicesChecker;
         this.uiConfig = uiConfig;
+        this.eraseCombinations = eraseCombinations;
 
 
 
@@ -45,15 +44,31 @@ public class RollDices {
         uiConfig.setRollDices(new ImageView(context));
         uiConfig.setRollDices(((Activity) context).findViewById(R.id.roll_dices));
         uiConfig.getRollDices().setOnClickListener(v -> {
-            if (throwNumber < 3) {
-                if (uiConfig.getDicesSlots()[0].getDrawable() != null) {
+            if(scoreInput.getResetThrowCounter()){
+                throwNumber = 0;
+                isFirstThrow = true;
+                scoreInput.setResetThrowCounter(false);
+            }
+            if (throwNumber <3) {
+                if (throwNumber>0) {
                     isFirstThrow = false;
                 }
                 rollDices();
                 showDices();
-                scoreInput.InputScoreOnes(dicesChecker.checkOnes(dices, isFirstThrow));
+                scoreInput.InputScoreOne(dicesChecker.checkOne(dices, isFirstThrow));
+                scoreInput.InputScoreTwo(dicesChecker.checkTwo(dices, isFirstThrow));
+                scoreInput.InputScoreThree(dicesChecker.checkThree(dices, isFirstThrow));
+                scoreInput.InputScoreFour(dicesChecker.checkFour(dices, isFirstThrow));
+                scoreInput.InputScoreFive(dicesChecker.checkFive(dices, isFirstThrow));
+                scoreInput.InputScoreSix(dicesChecker.checkSix(dices, isFirstThrow));
                 throwNumber++;
-            } else {
+                if (throwNumber == 3){
+                    if(!checkForAvailableCombination())
+                        eraseCombinations.combinationEraser();
+                }
+
+            }   else {
+
 
             }
 
@@ -105,20 +120,9 @@ public class RollDices {
 
     }
 
-    public int[] getDices() {
-        return dices;
-    }
-
-    public boolean isFirstThrow() {
-        return isFirstThrow;
-    }
-
-    public void setFirstThrow(boolean firstThrow) {
-        isFirstThrow = firstThrow;
-    }
-
-    public int getThrowNumber() {
-        return throwNumber;
+    public boolean checkForAvailableCombination(){
+        return dicesChecker.checkOne(dices, isFirstThrow) != 0 || dicesChecker.checkTwo(dices, isFirstThrow) != 0 || dicesChecker.checkThree(dices, isFirstThrow) != 0
+                || dicesChecker.checkFour(dices, isFirstThrow) != 0 || dicesChecker.checkFive(dices, isFirstThrow) != 0 || dicesChecker.checkSix(dices, isFirstThrow) != 0;
     }
 
 

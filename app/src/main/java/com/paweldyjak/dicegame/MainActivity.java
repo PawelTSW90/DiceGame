@@ -22,9 +22,11 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         //creating class objects
         UIConfig uiConfig = new UIConfig(this);
+
         DicesChecker dicesChecker = new DicesChecker();
-        ScoreInput scoreInput = new ScoreInput(this, uiConfig);
-        RollDices rollDices = new RollDices(this, scoreInput, dicesChecker, uiConfig);
+        EraseCombinations eraseCombinations = new EraseCombinations(dicesChecker, uiConfig);
+        ScoreInput scoreInput = new ScoreInput(this, uiConfig, dicesChecker);
+        RollDices rollDices = new RollDices(this, scoreInput, dicesChecker, uiConfig, eraseCombinations);
         setContentView(R.layout.activity_main);
         //configuring UI
         uiConfig.setDicesSlots();
