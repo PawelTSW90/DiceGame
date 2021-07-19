@@ -5,13 +5,14 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Arrays;
+
 public class UIConfig {
     private final Context context;
-    private TextView[] combinations = new TextView[16];
-    private TextView[] combinationsPoints = new TextView[16];
-    private ImageView[] dicesSlots = new ImageView[6];
-    private ImageView rollDices;
-
+    private final TextView[] combinations = new TextView[16];
+    private final TextView[] combinationsPoints = new TextView[16];
+    private final ImageView[] dicesSlots = new ImageView[6];
+    private final boolean[] isCombinationActive = new boolean[15];
     UIConfig(Context context){
         this.context = context;
 
@@ -19,7 +20,7 @@ public class UIConfig {
 
 
     public void setDicesSlots() {
-        dicesSlots[0] = (((Activity) context).findViewById(R.id.diceSlot1));
+        dicesSlots[0] =(((Activity) context).findViewById(R.id.diceSlot1));
         dicesSlots[1] =(((Activity) context).findViewById(R.id.diceSlot2));
         dicesSlots[2] =(((Activity) context).findViewById(R.id.diceSlot3));
         dicesSlots[3] =(((Activity) context).findViewById(R.id.diceSlot4));
@@ -62,7 +63,6 @@ public class UIConfig {
         combinationsPoints[14] = ((Activity) context).findViewById(R.id.textView_5ofAKind_pts);
         combinations[15] = ((Activity) context).findViewById(R.id.textView_sos);
         combinationsPoints[15] = ((Activity) context).findViewById(R.id.textView_sos_pts);
-        //textViews[32] = ((Activity) context).findViewById(R.id.textView_total);
 
     }
 
@@ -70,21 +70,24 @@ public class UIConfig {
         return dicesSlots;
     }
 
-    public void setRollDices(ImageView rollDices) {
-        this.rollDices = rollDices;
-    }
-
-    public ImageView getRollDices() {
-        return rollDices;
-    }
-
-
     public TextView[] getCombinationsPoints() {
         return combinationsPoints;
     }
 
     public TextView[] getCombinations() {
         return combinations;
+    }
+
+    public boolean[] getIsCombinationActive() {
+        return isCombinationActive;
+    }
+
+    public void setCombinationsAsActive(){
+        Arrays.fill(isCombinationActive, true);
+    }
+
+    public void setIsCombinationActive(boolean isCombinationActive, int combinationNr){
+        this.isCombinationActive[combinationNr] = isCombinationActive;
     }
 
 }

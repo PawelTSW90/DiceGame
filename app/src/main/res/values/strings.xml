@@ -20,6 +20,7 @@
     <string name="SOS">SOS</string>
     <string name="razem">Razem</string>
     <string name="punkty">0 pkt</string>
+    <string name="pkt">pkt</string>
     <string name="dice_slot1_description">Slot displaying dice nr 1</string>
     <string name="dice_slot2_description">Slot displaying dice nr 2</string>
     <string name="dice_slot3_description">Slot displaying dice nr 3</string>
