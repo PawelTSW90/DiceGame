@@ -12,7 +12,7 @@ public class Dices {
     private final ScoreInput scoreInput;
     private final UIConfig uiConfig;
     private final DicesScoreChecker dicesScoreChecker;
-    private final int[] dices = new int[6];
+    private final int[] dices = new int[5];
     private boolean isFirstThrow = true;
     private int throwNumber = 0;
 
@@ -59,7 +59,7 @@ public class Dices {
         Sounds sounds = new Sounds(context);
         sounds.playRollDiceSound();
         Random randomValue = new Random();
-        for (int x = 0; x < 6; x++) {
+        for (int x = 0; x < 5; x++) {
             int value = randomValue.nextInt(6 - 1 + 1) + 1;
             dices[x] = value;
         }
@@ -69,18 +69,18 @@ public class Dices {
 
     //method shows dices
     public void showDices() {
-        for (int x = 0; x < 6; x++) {
+        for (int x = 0; x < 5; x++) {
             uiConfig.getDicesSlots()[x].setImageResource(0);
         }
 
         int valueToDisplay;
-        for (int x = 0; x < 6; x++) {
+        for (int x = 0; x < 5; x++) {
             valueToDisplay = dices[x];
 
-            for (int y = 0; y < 6; y++) {
-                if (uiConfig.getDicesSlots()[y].getDrawable() != null) {
+            for (int y = 0; y < 5; y++) {
+                if (uiConfig.getDicesSlots()[y].getDrawable() == null) {
 
-                } else {
+
                     switch (valueToDisplay) {
                         case 1:
                             uiConfig.getDicesSlots()[y].setImageResource(R.drawable.dice1);
@@ -107,10 +107,10 @@ public class Dices {
                             y = 5;
                             break;
                     }
+
                 }
             }
         }
-
     }
 
 
@@ -125,6 +125,10 @@ public class Dices {
         scoreInput.inputScorePair(dicesScoreChecker.checkPair(dices, isFirstThrow));
         scoreInput.inputScoreTwoPairs(dicesScoreChecker.checkTwoPairs(dices, isFirstThrow));
         scoreInput.inputScoreEvens(dicesScoreChecker.checkEvens(dices, isFirstThrow));
+        scoreInput.inputScoreOdds(dicesScoreChecker.checkOdds(dices, isFirstThrow));
+        scoreInput.inputScoreSmallStraight(dicesScoreChecker.checkSmallStraight(dices, isFirstThrow));
+        scoreInput.inputScoreLargeStraight(dicesScoreChecker.checkLargeStraight(dices, isFirstThrow));
+        scoreInput.inputScoreFullHouse(dicesScoreChecker.checkFullHouse(dices, isFirstThrow));
     }
 
     // method allows to block one of a combinations after last throw
@@ -205,6 +209,45 @@ public class Dices {
             uiConfig.getCombinations()[8].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 8);
+                scoreInput.setResetThrowCounter(true);
+                setCombinations();
+
+            });
+        }
+        if (dicesScoreChecker.checkOdds(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[9]) {
+            uiConfig.getCombinations()[9].setOnClickListener(v -> {
+                v.setEnabled(false);
+                uiConfig.setIsCombinationActive(false, 9);
+                scoreInput.setResetThrowCounter(true);
+                setCombinations();
+
+            });
+        }
+
+        if (dicesScoreChecker.checkSmallStraight(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[10]) {
+            uiConfig.getCombinations()[10].setOnClickListener(v -> {
+                v.setEnabled(false);
+                uiConfig.setIsCombinationActive(false, 10);
+                scoreInput.setResetThrowCounter(true);
+                setCombinations();
+
+            });
+        }
+
+        if (dicesScoreChecker.checkLargeStraight(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[11]) {
+            uiConfig.getCombinations()[11].setOnClickListener(v -> {
+                v.setEnabled(false);
+                uiConfig.setIsCombinationActive(false, 11);
+                scoreInput.setResetThrowCounter(true);
+                setCombinations();
+
+            });
+        }
+
+        if (dicesScoreChecker.checkFullHouse(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[12]) {
+            uiConfig.getCombinations()[12].setOnClickListener(v -> {
+                v.setEnabled(false);
+                uiConfig.setIsCombinationActive(false, 12);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
 

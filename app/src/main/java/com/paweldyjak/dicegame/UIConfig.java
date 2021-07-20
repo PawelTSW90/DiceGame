@@ -11,7 +11,7 @@ public class UIConfig {
     private final Context context;
     private final TextView[] combinations = new TextView[16];
     private final TextView[] combinationsPoints = new TextView[16];
-    private final ImageView[] dicesSlots = new ImageView[6];
+    private final ImageView[] dicesSlots = new ImageView[5];
     private final boolean[] isCombinationActive = new boolean[15];
     UIConfig(Context context){
         this.context = context;
@@ -25,7 +25,6 @@ public class UIConfig {
         dicesSlots[2] =(((Activity) context).findViewById(R.id.diceSlot3));
         dicesSlots[3] =(((Activity) context).findViewById(R.id.diceSlot4));
         dicesSlots[4] =(((Activity) context).findViewById(R.id.diceSlot5));
-        dicesSlots[5] =(((Activity) context).findViewById(R.id.diceSlot6));
 
     }
 

@@ -1,7 +1,6 @@
 package com.paweldyjak.dicegame;
 
 import android.content.Context;
-import android.content.res.Resources;
 
 //class methods writes score into score table
 //score writing enabled when combination is correct, when it's not blocked, no other combination
@@ -106,6 +105,7 @@ public class ScoreInput {
             }
 
 
+
         });
     }
 
@@ -115,6 +115,54 @@ public class ScoreInput {
                 uiConfig.getCombinationsPoints()[8].setText(scoreToInput + " pkt");
                 resetThrowCounter = true;
                 uiConfig.setIsCombinationActive(false, 8);
+            }
+
+
+        });
+    }
+
+    public void inputScoreOdds(int scoreToInput){
+        uiConfig.getCombinations()[9].setOnClickListener(v -> {
+            if(scoreToInput>0 && uiConfig.getIsCombinationActive()[9] && !resetThrowCounter){
+                uiConfig.getCombinationsPoints()[9].setText(scoreToInput + " pkt");
+                resetThrowCounter = true;
+                uiConfig.setIsCombinationActive(false, 9);
+            }
+
+
+        });
+    }
+
+    public void inputScoreSmallStraight(int scoreToInput){
+        uiConfig.getCombinations()[10].setOnClickListener(v -> {
+            if(scoreToInput>0 && uiConfig.getIsCombinationActive()[10] && !resetThrowCounter){
+                uiConfig.getCombinationsPoints()[10].setText(scoreToInput + " pkt");
+                resetThrowCounter = true;
+                uiConfig.setIsCombinationActive(false, 10);
+            }
+
+
+        });
+    }
+
+    public void inputScoreLargeStraight(int scoreToInput){
+        uiConfig.getCombinations()[11].setOnClickListener(v -> {
+            if(scoreToInput>0 && uiConfig.getIsCombinationActive()[11] && !resetThrowCounter){
+                uiConfig.getCombinationsPoints()[11].setText(scoreToInput + " pkt");
+                resetThrowCounter = true;
+                uiConfig.setIsCombinationActive(false, 11);
+            }
+
+
+        });
+    }
+
+    public void inputScoreFullHouse(int scoreToInput){
+        uiConfig.getCombinations()[12].setOnClickListener(v -> {
+            if(scoreToInput>0 && uiConfig.getIsCombinationActive()[12] && !resetThrowCounter){
+                uiConfig.getCombinationsPoints()[12].setText(scoreToInput + " pkt");
+                resetThrowCounter = true;
+                uiConfig.setIsCombinationActive(false, 12);
             }
 
 

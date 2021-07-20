@@ -527,74 +527,70 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <ImageView
-        android:id="@+id/diceSlot6"
-        android:layout_width="48dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="@string/dice_slot6_description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/diceSlot5"
+        android:id="@+id/diceSlot1"
+        tools:ignore="ContentDescription"
         android:layout_width="48dp"
         android:layout_height="51dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
-        android:contentDescription="@string/dice_slot5_description"
-        app:layout_constraintEnd_toStartOf="@+id/diceSlot6"
+        app:layout_constraintEnd_toStartOf="@+id/diceSlot2"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/diceSlot3"
-        android:layout_width="48dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="@string/dice_slot3_description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/diceSlot6" />
 
     <ImageView
         android:id="@+id/diceSlot2"
+        tools:ignore="ContentDescription"
+        android:layout_width="48dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/diceSlot5"
+        app:layout_constraintEnd_toStartOf="@+id/diceSlot3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/diceSlot3"
+        tools:ignore="ContentDescription"
+        android:layout_width="48dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/diceSlot4"
+        tools:ignore="ContentDescription"
         android:layout_width="48dp"
         android:layout_height="51dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="24dp"
-        android:contentDescription="@string/dice_slot2_description"
-        app:layout_constraintEnd_toStartOf="@+id/diceSlot3"
-        app:layout_constraintTop_toBottomOf="@+id/diceSlot5" />
+        android:contentDescription="@string/content_description"
+        app:layout_constraintEnd_toStartOf="@+id/diceSlot5"
+        app:layout_constraintTop_toBottomOf="@+id/diceSlot1" />
+
+
+    <ImageView
+        android:id="@+id/diceSlot5"
+        tools:ignore="ContentDescription"
+        android:layout_width="48dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="48dp"
+        android:contentDescription="@string/content_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/diceSlot3" />
+
 
     <ImageView
         android:id="@+id/roll_dices"
+        tools:ignore="ContentDescription"
         android:layout_width="89dp"
         android:layout_height="74dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:contentDescription="@string/dices_imageView_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/dices_image" />
-
-    <ImageView
-        android:id="@+id/diceSlot1"
-        android:layout_width="48dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="24dp"
-        android:contentDescription="@string/dice_slot1_description"
-        app:layout_constraintEnd_toStartOf="@+id/diceSlot2"
-        app:layout_constraintTop_toBottomOf="@+id/diceSlot4" />
-
-    <ImageView
-        android:id="@+id/diceSlot4"
-        android:layout_width="48dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
-        android:contentDescription="@string/dice_slot4_description"
-        app:layout_constraintEnd_toStartOf="@+id/diceSlot5"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
