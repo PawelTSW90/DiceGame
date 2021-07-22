@@ -50,6 +50,7 @@ public class Dices {
 
             if (throwNumber == 3) {
                 blockCombinations();
+                scoreInput.inputScoreSos(dicesScoreChecker.checkSOS(dices, throwNumber));
             }
         });
     }
@@ -129,6 +130,10 @@ public class Dices {
         scoreInput.inputScoreSmallStraight(dicesScoreChecker.checkSmallStraight(dices, isFirstThrow));
         scoreInput.inputScoreLargeStraight(dicesScoreChecker.checkLargeStraight(dices, isFirstThrow));
         scoreInput.inputScoreFullHouse(dicesScoreChecker.checkFullHouse(dices, isFirstThrow));
+        scoreInput.inputScore4ofAKind(dicesScoreChecker.check4OfAKind(dices, isFirstThrow));
+        scoreInput.inputScore5ofAKind(dicesScoreChecker.check4OfAKind(dices, isFirstThrow));
+        scoreInput.inputScoreSos(dicesScoreChecker.checkSOS(dices, throwNumber));
+
     }
 
     // method allows to block one of a combinations after last throw
@@ -248,6 +253,26 @@ public class Dices {
             uiConfig.getCombinations()[12].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 12);
+                scoreInput.setResetThrowCounter(true);
+                setCombinations();
+
+            });
+        }
+
+        if (dicesScoreChecker.check4OfAKind(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[13]) {
+            uiConfig.getCombinations()[13].setOnClickListener(v -> {
+                v.setEnabled(false);
+                uiConfig.setIsCombinationActive(false, 13);
+                scoreInput.setResetThrowCounter(true);
+                setCombinations();
+
+            });
+        }
+
+        if (dicesScoreChecker.check5ofAKind(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[14]) {
+            uiConfig.getCombinations()[14].setOnClickListener(v -> {
+                v.setEnabled(false);
+                uiConfig.setIsCombinationActive(false, 14);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
 

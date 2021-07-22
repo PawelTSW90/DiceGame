@@ -537,7 +537,7 @@ public class DicesScoreChecker {
 
             if (valuesList.get(x) != 0) {
                 nrOfDifferentValues++;
-                fullHouseSum = fullHouseSum+(valuesList.get(x)*(x+1));
+                fullHouseSum = fullHouseSum + (valuesList.get(x) * (x + 1));
 
             }
             if (valuesList.get(x) > 3) {
@@ -556,23 +556,122 @@ public class DicesScoreChecker {
         return 0;
 
     }
-    /*
 
 
     public int check4OfAKind(int[] dices, boolean firstThrow) {
+        if (!uiConfig.getIsCombinationActive()[13]) {
+            return 0;
+        }
+        int[] values = new int[6];
+        boolean checkCombination = false;
+        int score = 0;
+        for (int dice : dices) {
+            switch (dice) {
+                case 1:
+                    values[0] = values[0] + 1;
+                    break;
+                case 2:
+                    values[1] = values[1] + 1;
+                    break;
+                case 3:
+                    values[2] = values[2] + 1;
+                    break;
+                case 4:
+                    values[3] = values[3] + 1;
+                    break;
+                case 5:
+                    values[4] = values[4] + 1;
+                    break;
+                case 6:
+                    values[5] = values[5] + 1;
+                    break;
+            }
+        }
 
+        for (int x = 0; x < values.length; x++) {
+            if (values[x] >= 4) {
+                checkCombination = true;
+                score = values[x] * (x + 1);
+            }
+        }
+
+        if (checkCombination) {
+            if (firstThrow) {
+                return score * 2;
+            } else {
+                return score;
+            }
+
+        }
+        return 0;
     }
 
 
     public int check5ofAKind(int[] dices, boolean firstThrow) {
+        if (!uiConfig.getIsCombinationActive()[14]) {
+            return 0;
+        }
+        int[] values = new int[6];
+        boolean checkCombination = false;
+        int score = 0;
+        for (int dice : dices) {
+            switch (dice) {
+                case 1:
+                    values[0] = values[0] + 1;
+                    break;
+                case 2:
+                    values[1] = values[1] + 1;
+                    break;
+                case 3:
+                    values[2] = values[2] + 1;
+                    break;
+                case 4:
+                    values[3] = values[3] + 1;
+                    break;
+                case 5:
+                    values[4] = values[4] + 1;
+                    break;
+                case 6:
+                    values[5] = values[5] + 1;
+                    break;
+            }
+        }
+
+        for (int x = 0; x < values.length; x++) {
+            if (values[x] == 5) {
+                checkCombination = true;
+                score = values[x] * (x + 1);
+            }
+        }
+
+        if (checkCombination) {
+            if (firstThrow) {
+                return score * 2;
+            } else {
+                return score;
+
+
+            }
+
+        }
+        return 0;
 
     }
 
-    public int checkSOS(int[] dices){
 
-    }*/
+    public int checkSOS(int[] dices, int throwNumber) {
+        if (!uiConfig.getIsCombinationActive()[15]) {
+            return 0;
+        }
+        int sosSum = 0;
+        if (throwNumber == 3) {
+            for (int sum : dices) {
+                sosSum += sum;
+            }
+            return sosSum;
+        }
+        return 0;
 
-    // method checks if user rolled any combination
 
-
+    }
 }

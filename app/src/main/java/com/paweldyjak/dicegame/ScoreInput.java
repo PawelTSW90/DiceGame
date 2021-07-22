@@ -169,6 +169,44 @@ public class ScoreInput {
         });
     }
 
+    public void inputScore4ofAKind(int scoreToInput){
+        uiConfig.getCombinations()[13].setOnClickListener(v -> {
+            if(scoreToInput>0 && uiConfig.getIsCombinationActive()[13] && !resetThrowCounter){
+                uiConfig.getCombinationsPoints()[13].setText(scoreToInput + " pkt");
+                resetThrowCounter = true;
+                uiConfig.setIsCombinationActive(false, 13);
+            }
+
+
+        });
+    }
+
+    public void inputScore5ofAKind(int scoreToInput){
+        uiConfig.getCombinations()[14].setOnClickListener(v -> {
+            if(scoreToInput>0 && uiConfig.getIsCombinationActive()[14] && !resetThrowCounter){
+                uiConfig.getCombinationsPoints()[14].setText(scoreToInput + " pkt");
+                resetThrowCounter = true;
+                uiConfig.setIsCombinationActive(false, 14);
+            }
+
+
+        });
+    }
+
+    public void inputScoreSos(int scoreToInput){
+        uiConfig.getCombinations()[15].setOnClickListener(v -> {
+            if(scoreToInput>0 && uiConfig.getIsCombinationActive()[15] && !resetThrowCounter){
+                uiConfig.getCombinationsPoints()[15].setText(scoreToInput + " pkt");
+                resetThrowCounter = true;
+                uiConfig.setIsCombinationActive(false, 15);
+            }
+
+
+        });
+    }
+
+
+
     public boolean getResetThrowCounter() {
         return resetThrowCounter;
     }

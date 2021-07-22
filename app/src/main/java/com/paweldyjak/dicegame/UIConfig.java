@@ -12,7 +12,7 @@ public class UIConfig {
     private final TextView[] combinations = new TextView[16];
     private final TextView[] combinationsPoints = new TextView[16];
     private final ImageView[] dicesSlots = new ImageView[5];
-    private final boolean[] isCombinationActive = new boolean[15];
+    private final boolean[] isCombinationActive = new boolean[16];
     UIConfig(Context context){
         this.context = context;
 
