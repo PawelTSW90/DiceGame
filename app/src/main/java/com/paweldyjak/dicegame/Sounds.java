@@ -14,5 +14,6 @@ public class Sounds {
     public void playRollDiceSound() {
         MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.roll_dices);
         mediaPlayer.start();
+        mediaPlayer.setOnCompletionListener(mp -> mp.release());
     }
 }

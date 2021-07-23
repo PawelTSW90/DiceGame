@@ -15,6 +15,7 @@ public class Dices {
     private final int[] dices = new int[5];
     private boolean isFirstThrow = true;
     private int throwNumber = 0;
+    private final Sounds sounds;
 
 
     Dices(Context context, ScoreInput scoreInput, DicesScoreChecker dicesScoreChecker, UIConfig uiConfig) {
@@ -22,6 +23,7 @@ public class Dices {
         this.scoreInput = scoreInput;
         this.dicesScoreChecker = dicesScoreChecker;
         this.uiConfig = uiConfig;
+        sounds = new Sounds(context);
 
 
     }
@@ -30,7 +32,6 @@ public class Dices {
     public void setRollDicesButton() {
         ImageView rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
         rollDicesButton.setOnClickListener(v -> {
-
             if (scoreInput.getResetThrowCounter()) {
                 throwNumber = 0;
                 isFirstThrow = true;
@@ -57,7 +58,6 @@ public class Dices {
 
     //method generates dices for display
     public void rollDices() {
-        Sounds sounds = new Sounds(context);
         sounds.playRollDiceSound();
         Random randomValue = new Random();
         for (int x = 0; x < 5; x++) {

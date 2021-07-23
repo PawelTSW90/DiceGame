@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         //creating class objects
         UIConfig uiConfig = new UIConfig(this);
+        RerollDices rerollDices = new RerollDices(this, uiConfig);
         DicesScoreChecker dicesScoreChecker = new DicesScoreChecker(uiConfig);
         ScoreInput scoreInput = new ScoreInput(this, uiConfig);
         Dices dices = new Dices(this, scoreInput, dicesScoreChecker, uiConfig);

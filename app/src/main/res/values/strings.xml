@@ -20,6 +20,7 @@
     <string name="razem">Razem</string>
     <string name="punkty">0 pkt</string>
     <string name="pkt">pkt</string>
+    <string name="select_dice_message">Select dices to reroll</string>
     <string name="content_description">android:contentDescription="@null"</string>
 
 </resources>

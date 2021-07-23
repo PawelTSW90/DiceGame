@@ -10,8 +10,8 @@
 
     <TableLayout
         android:id="@+id/tableLayout2"
-        android:layout_width="396dp"
-        android:layout_height="330dp"
+        android:layout_width="407dp"
+        android:layout_height="337dp"
         android:background="#801F8824"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
             <TextView
                 android:id="@+id/textView_1_pts"
                 style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="62dp"
+                android:layout_width="72dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="8dp"
@@ -469,7 +469,7 @@
             <TextView
                 android:id="@+id/textView_sos_pts"
                 style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
+                android:layout_width="66dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="8dp"
@@ -502,7 +502,7 @@
             <TextView
                 android:id="@+id/textView_score_pts"
                 style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="match_parent"
+                android:layout_width="69dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="8dp"
@@ -513,7 +513,7 @@
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
-        
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -524,21 +524,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.669"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/diceSlot1"
-        tools:ignore="ContentDescription"
         android:layout_width="48dp"
         android:layout_height="51dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
+        android:padding="3dp"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        android:background="@drawable/dices_border"
+        android:adjustViewBounds="true"
         app:layout_constraintEnd_toStartOf="@+id/diceSlot2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/diceSlot2"
-        tools:ignore="ContentDescription"
         android:layout_width="48dp"
         android:layout_height="51dp"
         android:layout_marginTop="32dp"
@@ -546,51 +550,72 @@
         app:layout_constraintBottom_toTopOf="@+id/diceSlot5"
         app:layout_constraintEnd_toStartOf="@+id/diceSlot3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/diceSlot3"
-        tools:ignore="ContentDescription"
         android:layout_width="48dp"
         android:layout_height="51dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/diceSlot4"
-        tools:ignore="ContentDescription"
         android:layout_width="48dp"
         android:layout_height="51dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="24dp"
         android:contentDescription="@string/content_description"
         app:layout_constraintEnd_toStartOf="@+id/diceSlot5"
-        app:layout_constraintTop_toBottomOf="@+id/diceSlot1" />
+        app:layout_constraintTop_toBottomOf="@+id/diceSlot1"
+        tools:ignore="ContentDescription" />
 
 
     <ImageView
         android:id="@+id/diceSlot5"
-        tools:ignore="ContentDescription"
         android:layout_width="48dp"
         android:layout_height="51dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="48dp"
         android:contentDescription="@string/content_description"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/diceSlot3" />
+        app:layout_constraintTop_toBottomOf="@+id/diceSlot3"
+        tools:ignore="ContentDescription" />
 
 
     <ImageView
         android:id="@+id/roll_dices"
-        tools:ignore="ContentDescription"
         android:layout_width="89dp"
         android:layout_height="74dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/dices_image" />
+        app:srcCompat="@drawable/dices_image"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/reroll_message"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
+        android:layout_width="203dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="120dp"
+        android:background="@color/select_dices_message_color"
+        android:text="@string/select_dice_message"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,8 +13,10 @@ public class UIConfig {
     private final TextView[] combinationsPoints = new TextView[16];
     private final ImageView[] dicesSlots = new ImageView[5];
     private final boolean[] isCombinationActive = new boolean[16];
+    private TextView totalScore;
     UIConfig(Context context){
         this.context = context;
+        totalScore = new TextView(context);
 
     }
 
@@ -62,6 +64,7 @@ public class UIConfig {
         combinationsPoints[14] = ((Activity) context).findViewById(R.id.textView_5ofAKind_pts);
         combinations[15] = ((Activity) context).findViewById(R.id.textView_sos);
         combinationsPoints[15] = ((Activity) context).findViewById(R.id.textView_sos_pts);
+        totalScore = ((Activity)context).findViewById(R.id.textView_score_pts);
 
     }
 
@@ -87,6 +90,10 @@ public class UIConfig {
 
     public void setIsCombinationActive(boolean isCombinationActive, int combinationNr){
         this.isCombinationActive[combinationNr] = isCombinationActive;
+    }
+
+    public void setTotalScore(int score){
+        totalScore.setText(score+" pkt");
     }
 
 }
