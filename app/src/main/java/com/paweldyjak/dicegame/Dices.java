@@ -12,17 +12,19 @@ public class Dices {
     private final ScoreInput scoreInput;
     private final UIConfig uiConfig;
     private final DicesScoreChecker dicesScoreChecker;
+    private final RerollDices rerollDices;
     private final int[] dices = new int[5];
     private boolean isFirstThrow = true;
     private int throwNumber = 0;
     private final Sounds sounds;
 
 
-    Dices(Context context, ScoreInput scoreInput, DicesScoreChecker dicesScoreChecker, UIConfig uiConfig) {
+    Dices(Context context, ScoreInput scoreInput, DicesScoreChecker dicesScoreChecker, UIConfig uiConfig, RerollDices rerollDices) {
         this.context = context;
         this.scoreInput = scoreInput;
         this.dicesScoreChecker = dicesScoreChecker;
         this.uiConfig = uiConfig;
+        this.rerollDices = rerollDices;
         sounds = new Sounds(context);
 
 
@@ -32,37 +34,59 @@ public class Dices {
     public void setRollDicesButton() {
         ImageView rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
         rollDicesButton.setOnClickListener(v -> {
-            if (scoreInput.getResetThrowCounter()) {
-                throwNumber = 0;
-                isFirstThrow = true;
-                scoreInput.setResetThrowCounter(false);
+            if (!uiConfig.checkIfAllCombinationsAreDone()) {
+                if (scoreInput.getResetThrowCounter()) {
+                    throwNumber = 0;
+                    isFirstThrow = true;
+                    scoreInput.setResetThrowCounter(false);
 
-            }
-            if (throwNumber < 3) {
-                if (throwNumber > 0) {
-                    isFirstThrow = false;
                 }
-                rollDices();
-                showDices();
-                setCombinations();
-                throwNumber++;
+                if (throwNumber < 3) {
+                    if (throwNumber > 0) {
+                        isFirstThrow = false;
+                    }
+                    rollDices();
+                    showDices();
+                    setCombinations();
+                    throwNumber++;
+                    rerollDices.setDicesRerolling(throwNumber);
 
-            }
+                }
 
-            if (throwNumber == 3) {
-                blockCombinations();
-                scoreInput.inputScoreSos(dicesScoreChecker.checkSOS(dices, throwNumber));
+                if (throwNumber == 3) {
+                    rerollDices.setDicesRerolling(throwNumber);
+                    blockCombinations();
+                    scoreInput.inputScoreSos(dicesScoreChecker.checkSOS(dices, throwNumber));
+                }
             }
         });
+
     }
 
     //method generates dices for display
     public void rollDices() {
+
+
         sounds.playRollDiceSound();
+        boolean rerollAllDices = true;
         Random randomValue = new Random();
         for (int x = 0; x < 5; x++) {
             int value = randomValue.nextInt(6 - 1 + 1) + 1;
-            dices[x] = value;
+            if (throwNumber >= 1) {
+                if (rerollDices.getSelectedDices()[x]) {
+                    dices[x] = value;
+                    rerollAllDices = false;
+                }
+
+            } else {
+                dices[x] = value;
+            }
+        }
+        if (throwNumber >= 1 && rerollAllDices) {
+            for (int x = 0; x < 5; x++) {
+                int value = randomValue.nextInt(6 - 1 + 1) + 1;
+                dices[x] = value;
+            }
         }
 
 
@@ -76,7 +100,9 @@ public class Dices {
 
         int valueToDisplay;
         for (int x = 0; x < 5; x++) {
+
             valueToDisplay = dices[x];
+
 
             for (int y = 0; y < 5; y++) {
                 if (uiConfig.getDicesSlots()[y].getDrawable() == null) {
@@ -112,6 +138,7 @@ public class Dices {
                 }
             }
         }
+
     }
 
 
@@ -138,143 +165,158 @@ public class Dices {
 
     // method allows to block one of a combinations after last throw
     public void blockCombinations() {
-        if (dicesScoreChecker.checkOne(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[0]) {
+        if (dicesScoreChecker.checkOne(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[0] && !scoreInput.getResetThrowCounter()) {
             uiConfig.getCombinations()[0].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 0);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
+                uiConfig.hideDices();
 
             });
         }
-        if (dicesScoreChecker.checkTwo(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[1]) {
+        if (dicesScoreChecker.checkTwo(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[1] && !scoreInput.getResetThrowCounter()) {
             uiConfig.getCombinations()[1].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 1);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
+                uiConfig.hideDices();
 
             });
         }
-        if (dicesScoreChecker.checkThree(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[2]) {
+        if (dicesScoreChecker.checkThree(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[2] && !scoreInput.getResetThrowCounter()) {
             uiConfig.getCombinations()[2].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 2);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
+                uiConfig.hideDices();
 
             });
         }
-        if (dicesScoreChecker.checkFour(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[3]) {
+        if (dicesScoreChecker.checkFour(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[3] && !scoreInput.getResetThrowCounter()) {
             uiConfig.getCombinations()[3].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 3);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
+                uiConfig.hideDices();
 
             });
         }
-        if (dicesScoreChecker.checkFive(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[4]) {
+        if (dicesScoreChecker.checkFive(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[4] && !scoreInput.getResetThrowCounter()) {
             uiConfig.getCombinations()[4].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 4);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
+                uiConfig.hideDices();
 
             });
         }
-        if (dicesScoreChecker.checkSix(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[5]) {
+        if (dicesScoreChecker.checkSix(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[5] && !scoreInput.getResetThrowCounter()) {
             uiConfig.getCombinations()[5].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 5);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
+                uiConfig.hideDices();
 
             });
         }
-        if (dicesScoreChecker.checkPair(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[6]) {
+        if (dicesScoreChecker.checkPair(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[6] && !scoreInput.getResetThrowCounter()) {
             uiConfig.getCombinations()[6].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 6);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
+                uiConfig.hideDices();
 
             });
         }
-        if (dicesScoreChecker.checkTwoPairs(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[7]) {
+        if (dicesScoreChecker.checkTwoPairs(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[7] && !scoreInput.getResetThrowCounter()) {
             uiConfig.getCombinations()[7].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 7);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
+                uiConfig.hideDices();
 
             });
         }
-        if (dicesScoreChecker.checkEvens(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[8]) {
+        if (dicesScoreChecker.checkEvens(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[8] && !scoreInput.getResetThrowCounter()) {
             uiConfig.getCombinations()[8].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 8);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
+                uiConfig.hideDices();
 
             });
         }
-        if (dicesScoreChecker.checkOdds(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[9]) {
+        if (dicesScoreChecker.checkOdds(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[9] && !scoreInput.getResetThrowCounter()) {
             uiConfig.getCombinations()[9].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 9);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
+                uiConfig.hideDices();
 
             });
         }
 
-        if (dicesScoreChecker.checkSmallStraight(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[10]) {
+        if (dicesScoreChecker.checkSmallStraight(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[10] && !scoreInput.getResetThrowCounter()) {
             uiConfig.getCombinations()[10].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 10);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
+                uiConfig.hideDices();
 
             });
         }
 
-        if (dicesScoreChecker.checkLargeStraight(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[11]) {
+        if (dicesScoreChecker.checkLargeStraight(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[11] && !scoreInput.getResetThrowCounter()) {
             uiConfig.getCombinations()[11].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 11);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
+                uiConfig.hideDices();
 
             });
         }
 
-        if (dicesScoreChecker.checkFullHouse(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[12]) {
+        if (dicesScoreChecker.checkFullHouse(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[12] && !scoreInput.getResetThrowCounter()) {
             uiConfig.getCombinations()[12].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 12);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
+                uiConfig.hideDices();
 
             });
         }
 
-        if (dicesScoreChecker.check4OfAKind(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[13]) {
+        if (dicesScoreChecker.check4OfAKind(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[13] && !scoreInput.getResetThrowCounter()) {
             uiConfig.getCombinations()[13].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 13);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
+                uiConfig.hideDices();
 
             });
         }
 
-        if (dicesScoreChecker.check5ofAKind(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[14]) {
+        if (dicesScoreChecker.check5ofAKind(dices, isFirstThrow) == 0 && uiConfig.getIsCombinationActive()[14] && !scoreInput.getResetThrowCounter()) {
             uiConfig.getCombinations()[14].setOnClickListener(v -> {
                 v.setEnabled(false);
                 uiConfig.setIsCombinationActive(false, 14);
                 scoreInput.setResetThrowCounter(true);
                 setCombinations();
+                uiConfig.hideDices();
 
             });
         }

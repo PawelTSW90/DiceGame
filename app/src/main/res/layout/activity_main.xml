@@ -528,25 +528,26 @@
 
     <ImageView
         android:id="@+id/diceSlot1"
-        android:layout_width="48dp"
-        android:layout_height="51dp"
+        android:layout_width="51dp"
+        android:layout_height="54dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
-        android:padding="3dp"
         android:cropToPadding="true"
+        android:padding="3dp"
         android:scaleType="centerCrop"
-        android:background="@drawable/dices_border"
-        android:adjustViewBounds="true"
         app:layout_constraintEnd_toStartOf="@+id/diceSlot2"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/diceSlot2"
-        android:layout_width="48dp"
-        android:layout_height="51dp"
+        android:layout_width="51dp"
+        android:layout_height="54dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/diceSlot5"
         app:layout_constraintEnd_toStartOf="@+id/diceSlot3"
         app:layout_constraintTop_toTopOf="parent"
@@ -555,37 +556,45 @@
 
     <ImageView
         android:id="@+id/diceSlot3"
-        android:layout_width="48dp"
-        android:layout_height="51dp"
+        android:layout_width="51dp"
+        android:layout_height="54dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
+
     <ImageView
         android:id="@+id/diceSlot4"
-        android:layout_width="48dp"
-        android:layout_height="51dp"
+        android:layout_width="51dp"
+        android:layout_height="54dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="24dp"
         android:contentDescription="@string/content_description"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toStartOf="@+id/diceSlot5"
         app:layout_constraintTop_toBottomOf="@+id/diceSlot1"
         tools:ignore="ContentDescription" />
 
-
     <ImageView
         android:id="@+id/diceSlot5"
-        android:layout_width="48dp"
-        android:layout_height="51dp"
+        android:layout_width="51dp"
+        android:layout_height="54dp"
         android:layout_marginTop="28dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="52dp"
         android:contentDescription="@string/content_description"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/diceSlot3"
         tools:ignore="ContentDescription" />
-
 
     <ImageView
         android:id="@+id/roll_dices"
@@ -597,19 +606,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/dices_image"
         tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/reroll_message"
-        style="@style/Widget.AppCompat.TextView.SpinnerItem"
-        android:layout_width="203dp"
-        android:layout_height="33dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="120dp"
-        android:background="@color/select_dices_message_color"
-        android:text="@string/select_dice_message"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

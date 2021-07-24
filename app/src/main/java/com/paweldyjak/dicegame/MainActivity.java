@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         RerollDices rerollDices = new RerollDices(this, uiConfig);
         DicesScoreChecker dicesScoreChecker = new DicesScoreChecker(uiConfig);
         ScoreInput scoreInput = new ScoreInput(this, uiConfig);
-        Dices dices = new Dices(this, scoreInput, dicesScoreChecker, uiConfig);
+        Dices dices = new Dices(this, scoreInput, dicesScoreChecker, uiConfig, rerollDices);
         //configuring UI
         uiConfig.setDicesSlots();
         uiConfig.setDicesCombinations();

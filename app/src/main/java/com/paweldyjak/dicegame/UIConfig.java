@@ -2,6 +2,7 @@ package com.paweldyjak.dicegame;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -95,5 +96,21 @@ public class UIConfig {
     public void setTotalScore(int score){
         totalScore.setText(score+" pkt");
     }
+
+    public void hideDices(){
+        for (int x = 0; x<getDicesSlots().length; x++){
+            getDicesSlots()[x].setImageResource(0);
+        }
+    }
+
+    public boolean checkIfAllCombinationsAreDone() {
+        for (int x = 0; x < getIsCombinationActive().length; x++) {
+            if (getIsCombinationActive()[x]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 }
