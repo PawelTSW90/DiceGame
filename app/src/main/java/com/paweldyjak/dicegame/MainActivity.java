@@ -14,12 +14,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.title_screen);
         //hides status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
-        //creating class objects
+        //creating class object
+        TitleScreen titleScreen = new TitleScreen(this);
+
+
+    }
+
+    public void startTwoPlayersGame(){
+        setContentView(R.layout.game_started_screen);
         UIConfig uiConfig = new UIConfig(this);
         RerollDices rerollDices = new RerollDices(this, uiConfig);
         DicesScoreChecker dicesScoreChecker = new DicesScoreChecker(uiConfig);
@@ -34,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
 
     }
 
