@@ -508,8 +508,8 @@ public class DicesScoreChecker {
         valuesList.add(four);
         valuesList.add(five);
         valuesList.add(six);
-        for (int x = 0; x < dices.length; x++) {
-            switch (dices[x]) {
+        for (int dice : dices) {
+            switch (dice) {
                 case 1:
                     valuesList.set(0, valuesList.get(0) + 1);
                     break;
@@ -558,7 +558,7 @@ public class DicesScoreChecker {
     }
 
 
-    public int check4OfAKind(int[] dices, boolean firstThrow) {
+    public int checkFourOfAKind(int[] dices, boolean firstThrow) {
         if (!uiConfig.getIsCombinationActive()[13]) {
             return 0;
         }
@@ -607,7 +607,7 @@ public class DicesScoreChecker {
     }
 
 
-    public int check5ofAKind(int[] dices, boolean firstThrow) {
+    public int checkFiveOfAKind(int[] dices, boolean firstThrow) {
         if (!uiConfig.getIsCombinationActive()[14]) {
             return 0;
         }
@@ -673,5 +673,59 @@ public class DicesScoreChecker {
         return 0;
 
 
+    }
+
+    public int callCheckCombinationMethod(int combinationNr, int[] dices, boolean firstThrow, int throwNumber) {
+        switch (combinationNr) {
+            case 0:
+                return checkOne(dices, firstThrow);
+
+            case 1:
+                return checkTwo(dices, firstThrow);
+
+            case 2:
+                return checkThree(dices, firstThrow);
+
+            case 3:
+                return checkFour(dices, firstThrow);
+
+            case 4:
+                return checkFive(dices, firstThrow);
+
+            case 5:
+                return checkSix(dices, firstThrow);
+
+            case 6:
+                return checkPair(dices, firstThrow);
+
+            case 7:
+                return checkTwoPairs(dices, firstThrow);
+
+            case 8:
+                return checkEvens(dices, firstThrow);
+
+            case 9:
+                return checkOdds(dices, firstThrow);
+
+            case 10:
+                return checkSmallStraight(dices, firstThrow);
+
+            case 11:
+                return checkLargeStraight(dices, firstThrow);
+
+            case 12:
+                return checkFullHouse(dices, firstThrow);
+
+            case 13:
+                return checkFourOfAKind(dices, firstThrow);
+
+            case 14:
+                return checkFiveOfAKind(dices, firstThrow);
+
+            case 15:
+                return checkSOS(dices, throwNumber);
+
+        }
+        return 0;
     }
 }

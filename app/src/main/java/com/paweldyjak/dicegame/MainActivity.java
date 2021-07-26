@@ -1,8 +1,13 @@
 package com.paweldyjak.dicegame;
 
+import androidx.annotation.ContentView;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -36,4 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 }

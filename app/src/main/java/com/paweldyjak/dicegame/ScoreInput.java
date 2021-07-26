@@ -1,6 +1,7 @@
 package com.paweldyjak.dicegame;
 
 import android.content.Context;
+import android.view.View;
 
 //class methods writes score into score table
 //score writing enabled when combination is correct, when it's not blocked, no other combination
@@ -11,290 +12,43 @@ public class ScoreInput {
     private boolean resetThrowCounter = false;
     private int totalScore = 0;
 
-
     ScoreInput(Context context, UIConfig uiConfig) {
         this.uiConfig = uiConfig;
         this.context = context;
     }
+    /*method inputs score for a specified combination. Combinations list:
+    combination nr 0 = 1
+    combination nr 1 = 2
+    combination nr 2 = 3
+    combination nr 3 = 4
+    combination nr 4 = 5
+    combination nr 5 = 6
+    combination nr 6 = pair
+    combination nr 7 = pairs
+    combination nr 8 = evens
+    combination nr 9 = odds
+    combination nr 10 = small straight
+    combination nr 11 = large straight
+    combination nr 12 = full house
+    combination nr 13 = 4 of a kind
+    combination nr 14 = 5 of a kind
+    combination nr 15 = Sos
+    */
 
-    public void inputScoreOne(int scoreToInput) {
-        uiConfig.getCombinations()[0].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[0] && !resetThrowCounter) {
+    public void inputScore(int scoreToInput, int combinationNr) {
+        uiConfig.getCombinations()[combinationNr].setOnClickListener(v -> {
+            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[combinationNr] && !resetThrowCounter) {
+                uiConfig.setScoreValues(scoreToInput, combinationNr);
                 totalScore += scoreToInput;
                 uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[0].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[0].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 0);
+                uiConfig.getCombinationsPoints()[combinationNr].setText(uiConfig.getScoreValues(combinationNr) + " pkt");
+                uiConfig.getCombinations()[combinationNr].setEnabled(false);
+                uiConfig.setIsCombinationActive(false, combinationNr);
                 if (!uiConfig.checkIfAllCombinationsAreDone()) {
                     resetThrowCounter = true;
                 }
                 uiConfig.hideDices();
-
-            }
-
-        });
-    }
-
-    public void inputScoreTwo(int scoreToInput) {
-        uiConfig.getCombinations()[1].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[1] && !resetThrowCounter) {
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[1].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[1].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 1);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
-                uiConfig.hideDices();
-
-            }
-
-        });
-    }
-
-    public void inputScoreThree(int scoreToInput) {
-        uiConfig.getCombinations()[2].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[2] && !resetThrowCounter) {
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[2].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[2].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 2);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
-                uiConfig.hideDices();
-            }
-
-        });
-    }
-
-    public void inputScoreFour(int scoreToInput) {
-        uiConfig.getCombinations()[3].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[3] && !resetThrowCounter) {
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[3].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[3].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 3);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
-                uiConfig.hideDices();
-            }
-
-        });
-    }
-
-    public void inputScoreFive(int scoreToInput) {
-        uiConfig.getCombinations()[4].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[4] && !resetThrowCounter) {
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[4].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[4].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 4);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
-                uiConfig.hideDices();
-            }
-
-        });
-    }
-
-    public void inputScoreSix(int scoreToInput) {
-        uiConfig.getCombinations()[5].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[5] && !resetThrowCounter) {
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[5].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[5].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 5);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
-                uiConfig.hideDices();
-            }
-
-        });
-    }
-
-    public void inputScorePair(int scoreToInput) {
-        uiConfig.getCombinations()[6].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[6] && !resetThrowCounter) {
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[6].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[6].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 6);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
-                uiConfig.hideDices();
-            }
-
-
-        });
-    }
-
-    public void inputScoreTwoPairs(int scoreToInput) {
-        uiConfig.getCombinations()[7].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[7] && !resetThrowCounter) {
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[7].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[7].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 7);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
-                uiConfig.hideDices();
-            }
-
-
-        });
-    }
-
-    public void inputScoreEvens(int scoreToInput) {
-        uiConfig.getCombinations()[8].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[8] && !resetThrowCounter) {
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[8].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[8].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 8);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
-                uiConfig.hideDices();
-            }
-
-
-        });
-    }
-
-    public void inputScoreOdds(int scoreToInput) {
-        uiConfig.getCombinations()[9].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[9] && !resetThrowCounter) {
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[9].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[9].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 9);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
-                uiConfig.hideDices();
-            }
-
-
-        });
-    }
-
-    public void inputScoreSmallStraight(int scoreToInput) {
-        uiConfig.getCombinations()[10].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[10] && !resetThrowCounter) {
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[10].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[10].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 10);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
-                uiConfig.hideDices();
-            }
-
-
-        });
-    }
-
-    public void inputScoreLargeStraight(int scoreToInput) {
-        uiConfig.getCombinations()[11].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[11] && !resetThrowCounter) {
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[11].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[11].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 11);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
-                uiConfig.hideDices();
-            }
-
-
-        });
-    }
-
-    public void inputScoreFullHouse(int scoreToInput) {
-        uiConfig.getCombinations()[12].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[12] && !resetThrowCounter) {
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[12].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[12].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 12);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
-                uiConfig.hideDices();
-            }
-
-
-        });
-    }
-
-    public void inputScore4ofAKind(int scoreToInput) {
-        uiConfig.getCombinations()[13].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[13] && !resetThrowCounter) {
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[13].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[13].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 13);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
-                uiConfig.hideDices();
-            }
-
-
-        });
-    }
-
-    public void inputScore5ofAKind(int scoreToInput) {
-        uiConfig.getCombinations()[14].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[14] && !resetThrowCounter) {
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[14].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[14].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 14);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
-                uiConfig.hideDices();
-            }
-
-
-        });
-    }
-
-    public void inputScoreSos(int scoreToInput) {
-        uiConfig.getCombinations()[15].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[15] && !resetThrowCounter) {
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[15].setText(scoreToInput + " pkt");
-                uiConfig.getCombinations()[15].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, 15);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
-                uiConfig.hideDices();
+                resetCombinationsListeners();
             }
 
 
@@ -310,6 +64,15 @@ public class ScoreInput {
         this.resetThrowCounter = resetThrowCounter;
     }
 
+    public void resetCombinationsListeners() {
+        for (int x = 0; x < 15; x++) {
+
+
+            uiConfig.getCombinations()[x].setOnClickListener(v -> {
+
+            });
+        }
+    }
 
 
 }
