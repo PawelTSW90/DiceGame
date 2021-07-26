@@ -1,15 +1,11 @@
 package com.paweldyjak.dicegame;
 
-import androidx.annotation.ContentView;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -22,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         //hides status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         //creating class objects
         UIConfig uiConfig = new UIConfig(this);
         RerollDices rerollDices = new RerollDices(this, uiConfig);

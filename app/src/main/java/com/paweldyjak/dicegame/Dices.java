@@ -3,7 +3,6 @@ package com.paweldyjak.dicegame;
 import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
-
 import java.util.Random;
 
 

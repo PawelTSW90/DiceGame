@@ -1,7 +1,6 @@
 package com.paweldyjak.dicegame;
 
 import android.content.Context;
-import android.view.View;
 
 //class methods writes score into score table
 //score writing enabled when combination is correct, when it's not blocked, no other combination
