@@ -1,5 +1,6 @@
 package com.paweldyjak.dicegame;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
@@ -30,12 +31,12 @@ public class MainActivity extends AppCompatActivity {
         UIConfig uiConfig = new UIConfig(this);
         RerollDices rerollDices = new RerollDices(this, uiConfig);
         DicesScoreChecker dicesScoreChecker = new DicesScoreChecker(uiConfig);
-        ScoreInput scoreInput = new ScoreInput(this, uiConfig);
+        ScoreInput scoreInput = new ScoreInput(uiConfig);
         Dices dices = new Dices(this, scoreInput, dicesScoreChecker, uiConfig, rerollDices);
         //configuring UI
         uiConfig.setDicesSlots();
         uiConfig.setDicesCombinations();
-        uiConfig.setCombinationsAsActive();
+        uiConfig.setAllCombinationsAsActive();
         dices.setRollDicesButton();
         //ad config
         AdView mAdView = findViewById(R.id.adView);

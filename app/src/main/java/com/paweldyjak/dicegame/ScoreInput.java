@@ -1,19 +1,16 @@
 package com.paweldyjak.dicegame;
 
-import android.content.Context;
 
 //class methods writes score into score table
 //score writing enabled when combination is correct, when it's not blocked, no other combination
 // has been used during this turn and no combination has been blocked during this turn
 public class ScoreInput {
-    Context context;
-    UIConfig uiConfig;
+    private final UIConfig uiConfig;
     private boolean resetThrowCounter = false;
-    private int totalScore = 0;
+    private int playerNumber = 1;
 
-    ScoreInput(Context context, UIConfig uiConfig) {
+    ScoreInput(UIConfig uiConfig) {
         this.uiConfig = uiConfig;
-        this.context = context;
     }
     /*method inputs score for a specified combination. Combinations list:
     combination nr 0 = 1
@@ -35,15 +32,14 @@ public class ScoreInput {
     */
 
     public void inputScore(int scoreToInput, int combinationNr) {
-        uiConfig.getCombinations()[combinationNr].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[combinationNr] && !resetThrowCounter) {
-                uiConfig.setScoreValues(scoreToInput, combinationNr);
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[combinationNr].setText(uiConfig.getScoreValues(combinationNr) + " pkt");
-                uiConfig.getCombinations()[combinationNr].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, combinationNr);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
+        uiConfig.getCombinationsTextView()[combinationNr].setOnClickListener(v -> {
+            if (scoreToInput > 0 && uiConfig.getIsCombinationActive(playerNumber)[combinationNr] && !resetThrowCounter) {
+                uiConfig.setScoreValues(scoreToInput, combinationNr, playerNumber);
+                uiConfig.setTotalScore(scoreToInput, playerNumber);
+                uiConfig.getCombinationsPointsTextView()[combinationNr].setText(uiConfig.getScoreValues(combinationNr, playerNumber) + " pkt");
+                uiConfig.getCombinationsTextView()[combinationNr].setEnabled(false);
+                uiConfig.setIsCombinationActive(false, combinationNr, playerNumber);
+                if (!uiConfig.checkIfAllCombinationsAreDone(playerNumber)) {
                     resetThrowCounter = true;
                 }
                 uiConfig.hideDices();
@@ -67,7 +63,7 @@ public class ScoreInput {
         for (int x = 0; x < 15; x++) {
 
 
-            uiConfig.getCombinations()[x].setOnClickListener(v -> {
+            uiConfig.getCombinationsTextView()[x].setOnClickListener(v -> {
 
             });
         }
