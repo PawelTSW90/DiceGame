@@ -532,7 +532,7 @@
         android:id="@+id/diceSlot1"
         android:layout_width="51dp"
         android:layout_height="54dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="102dp"
         android:layout_marginEnd="24dp"
         android:cropToPadding="true"
         android:padding="3dp"
@@ -545,7 +545,7 @@
         android:id="@+id/diceSlot2"
         android:layout_width="51dp"
         android:layout_height="54dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="102dp"
         android:layout_marginEnd="24dp"
         android:cropToPadding="true"
         android:padding="3dp"
@@ -560,7 +560,7 @@
         android:id="@+id/diceSlot3"
         android:layout_width="51dp"
         android:layout_height="54dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="102dp"
         android:layout_marginEnd="16dp"
         android:cropToPadding="true"
         android:padding="3dp"
@@ -609,24 +609,61 @@
         app:srcCompat="@drawable/dices_image"
         tools:ignore="ContentDescription" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/player_turn_message_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/player_turn_textview"
+            android:layout_width="366dp"
+            android:layout_height="161dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="50dp"
+            android:background="#801F8824"
+            android:gravity="center_horizontal"
+            android:text="TextView"
+            android:textSize="34sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/player_turn_message_start_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="50dp"
+            android:text="Start"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/player_names_input_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/start_button"
+            android:id="@+id/player_input_start_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
@@ -670,11 +707,30 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_name_one"
                 android:layout_width="match_parent"
-                android:inputType="text"
                 android:layout_height="match_parent"
                 android:imeOptions="actionDone"
+                android:inputType="text"
                 android:maxLength="15" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/player_name_textView"
+            style="@style/Widget.AppCompat.TextView.SpinnerItem"
+            android:layout_width="195dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="571dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="11dp"
+            android:background="#CA1313"
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/player_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

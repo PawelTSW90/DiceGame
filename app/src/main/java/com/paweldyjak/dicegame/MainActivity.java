@@ -41,20 +41,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startTwoPlayersGame() {
+//player names field
         String[] playersNames = new String[2];
+
         setContentView(R.layout.game_started_screen);
-        TextView playerTitle = findViewById(R.id.player_title);
-        EditText editTextPlayerOneName = findViewById(R.id.edit_text_name_one);
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        Button start = findViewById(R.id.start_button);
-        View boardLayout = findViewById(R.id.board_layout);
+        //create view components
+        View playerTurnLayout = this.findViewById(R.id.player_turn_message_layout);
         View playerNamesInputLayout = findViewById(R.id.player_names_input_layout);
+        View playerTurnMessageLayout = findViewById(R.id.player_turn_message_layout);
+
+
+        TextView playerTurnWindowTextView = this.findViewById(R.id.player_turn_textview);
+        TextView playerTitle = findViewById(R.id.player_title);
+        TextView playerNameText = findViewById(R.id.player_name_textView);
+
+        Button playerTurnStartButton = this.findViewById(R.id.player_turn_message_start_button);
+        Button start = findViewById(R.id.player_input_start_button);
+        EditText editTextPlayerOneName = findViewById(R.id.edit_text_name_one);
+
+        //creating input keyboard field
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        playerTurnMessageLayout.setVisibility(View.GONE);
         //allows to proceed when players name is at least one character long
         editTextPlayerOneName.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE && v.getText().length() > 0) {
                 {
                     start.setVisibility(View.VISIBLE);
+                    //hide keyboard after players name input finished
                     imm.hideSoftInputFromWindow(editTextPlayerOneName.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+
                     return true;
                 }
             } else {
@@ -62,27 +78,32 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
-        //set button to save players names
+//setting start button to save players names and start the game
         start.setOnClickListener(v -> {
-
             playersNames[0] = editTextPlayerOneName.getText().toString();
             playerTitle.setText("GRACZ 2");
             editTextPlayerOneName.setText(null);
+            start.setVisibility(View.INVISIBLE);
             start.setOnClickListener(v1 -> {
-                playersNames[1] = editTextPlayerOneName.getText().toString();
-                playerNamesInputLayout.setVisibility(View.INVISIBLE);
-                boardLayout.setVisibility(View.VISIBLE);
+                playerNamesInputLayout.setVisibility(View.GONE);
+                playerTurnLayout.setVisibility(View.VISIBLE);
+                playerTurnWindowTextView.setVisibility(View.VISIBLE);
+                playerTurnStartButton.setVisibility(View.VISIBLE);
+
             });
 
         });
-
-
         //creating class objects
         UIConfig uiConfig = new UIConfig(this);
         RerollDices rerollDices = new RerollDices(this, uiConfig);
         DicesScoreChecker dicesScoreChecker = new DicesScoreChecker(uiConfig);
         ScoreInput scoreInput = new ScoreInput(uiConfig);
         Dices dices = new Dices(this, scoreInput, dicesScoreChecker, uiConfig, rerollDices, playersNames);
+        //hiding start components
+        playerTurnLayout.setVisibility(View.INVISIBLE);
+        playerTurnWindowTextView.setVisibility(View.INVISIBLE);
+        playerTurnStartButton.setVisibility(View.INVISIBLE);
+        playerNameText.setVisibility(View.INVISIBLE);
         //configuring UI
         uiConfig.setDicesSlots();
         uiConfig.setDicesCombinations();

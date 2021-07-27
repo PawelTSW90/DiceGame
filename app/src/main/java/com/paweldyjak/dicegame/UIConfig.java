@@ -2,8 +2,13 @@ package com.paweldyjak.dicegame;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.Arrays;
 
@@ -12,11 +17,12 @@ public class UIConfig {
     private final TextView[] combinationsTextView = new TextView[16];
     private final TextView[] combinationsPointsTextView = new TextView[16];
     private TextView totalScoreTextView;
+    private TextView playerTurnWindowTextView;
     private final ImageView[] dicesSlots = new ImageView[5];
     private final boolean[] playerOneIsCombinationActive = new boolean[16];
     private final int[] playerOneScoreValues = new int[16];
     private int playerOneTotalScore = 0;
-    private int playerTwoTotalScore;
+    private int playerTwoTotalScore = 0;
     private final boolean[] playerTwoIsCombinationActive = new boolean[16];
     private final int[] playerTwoScoreValues = new int[16];
 
@@ -74,6 +80,8 @@ public class UIConfig {
         totalScoreTextView = ((Activity) context).findViewById(R.id.textView_score_pts);
 
     }
+
+
 
     public ImageView[] getDicesSlots() {
         return dicesSlots;
@@ -147,6 +155,62 @@ public class UIConfig {
             this.playerTwoScoreValues[combinationNr] = score;
         }
     }
+
+    public void setPlayerTurnWindow(String[] names, int turnNumber) {
+        playerTurnWindowTextView = ((Activity) context).findViewById(R.id.player_turn_textview);
+        View playerTurnLayout = ((Activity) context).findViewById(R.id.player_turn_message_layout);
+        TextView playerNameTextView = ((Activity)context).findViewById(R.id.player_name_textView);
+        Button start = ((Activity) context).findViewById(R.id.player_turn_message_start_button);
+        View gameBoard = ((Activity) context).findViewById(R.id.board_layout);
+        gameBoard.setVisibility(View.INVISIBLE);
+        playerTurnLayout.setVisibility(View.VISIBLE);
+        playerTurnWindowTextView.setVisibility(View.VISIBLE);
+        playerTurnWindowTextView.setText(""+names[0]);
+        start.setVisibility(View.VISIBLE);
+
+        start.setOnClickListener(v -> {
+            if (turnNumber == 1) {
+                playerTurnWindowTextView.setText(names[0]);
+                prepareScreenForPlayer(1);
+                playerNameTextView.setText(names[0]);
+            } else {
+                playerTurnWindowTextView.setText(names[1]);
+                prepareScreenForPlayer(2);
+                playerNameTextView.setText(names[1]);
+            }
+            playerTurnLayout.setVisibility(View.INVISIBLE);
+            gameBoard.setVisibility(View.VISIBLE);
+        });
+
+
+    }
+
+    public void prepareScreenForPlayer(int player) {
+        Log.i("testApp", ""+playerOneScoreValues[0]);
+
+        for (int x = 0; x < 15; x++) {
+            if (player == 1) {
+                if (!playerOneIsCombinationActive[x]) {
+                    getCombinationsTextView()[x].setEnabled(false);
+                }
+
+                combinationsPointsTextView[x].setText(playerOneScoreValues[x] +" pkt");
+                totalScoreTextView.setText(playerOneTotalScore +" pkt");
+            } else {
+                if (!playerTwoIsCombinationActive[x]) {
+                    getCombinationsTextView()[x].setEnabled(false);
+                }
+
+                combinationsPointsTextView[x].setText(playerTwoScoreValues[x] +" pkt");
+                totalScoreTextView.setText(playerTwoTotalScore +" pkt");
+
+            }
+
+        }
+
+
+    }
+
 
 
 }
