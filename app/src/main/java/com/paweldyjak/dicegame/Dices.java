@@ -17,9 +17,10 @@ public class Dices {
     private int throwNumber = 0;
     private final Sounds sounds;
     private int playerNumber = 1;
+    private String[] playersNames;
 
 
-    Dices(Context context, ScoreInput scoreInput, DicesScoreChecker dicesScoreChecker, UIConfig uiConfig, RerollDices rerollDices) {
+    Dices(Context context, ScoreInput scoreInput, DicesScoreChecker dicesScoreChecker, UIConfig uiConfig, RerollDices rerollDices, String[] playersNames) {
         this.context = context;
         this.scoreInput = scoreInput;
         this.dicesScoreChecker = dicesScoreChecker;
