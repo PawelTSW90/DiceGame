@@ -16,8 +16,9 @@ public class UIConfig {
     private final Context context;
     private final TextView[] combinationsTextView = new TextView[16];
     private final TextView[] combinationsPointsTextView = new TextView[16];
+    private String[] playersNames;
+    private int playerNumber = 2;
     private TextView totalScoreTextView;
-    private TextView playerTurnWindowTextView;
     private final ImageView[] dicesSlots = new ImageView[5];
     private final boolean[] playerOneIsCombinationActive = new boolean[16];
     private final int[] playerOneScoreValues = new int[16];
@@ -27,8 +28,9 @@ public class UIConfig {
     private final int[] playerTwoScoreValues = new int[16];
 
 
-    UIConfig(Context context) {
+    UIConfig(Context context, String[] playersNames) {
         this.context = context;
+        this.playersNames = playersNames;
         totalScoreTextView = new TextView(context);
 
     }
@@ -82,7 +84,6 @@ public class UIConfig {
     }
 
 
-
     public ImageView[] getDicesSlots() {
         return dicesSlots;
     }
@@ -95,7 +96,7 @@ public class UIConfig {
         return combinationsTextView;
     }
 
-    public boolean[] getIsCombinationActive(int playerNumber) {
+    public boolean[] getIsCombinationActive() {
         if (playerNumber == 1) {
             return playerOneIsCombinationActive;
         } else
@@ -107,7 +108,7 @@ public class UIConfig {
         Arrays.fill(playerTwoIsCombinationActive, true);
     }
 
-    public void setIsCombinationActive(boolean isCombinationActive, int combinationNr, int playerNumber) {
+    public void setIsCombinationActive(boolean isCombinationActive, int combinationNr) {
         if (playerNumber == 1) {
             this.playerOneIsCombinationActive[combinationNr] = isCombinationActive;
         } else {
@@ -115,7 +116,7 @@ public class UIConfig {
         }
     }
 
-    public void setTotalScore(int score, int playerNumber) {
+    public void setTotalScore(int score) {
         if (playerNumber == 1) {
             playerOneTotalScore += score;
             totalScoreTextView.setText(playerOneTotalScore + " pkt");
@@ -131,16 +132,16 @@ public class UIConfig {
         }
     }
 
-    public boolean checkIfAllCombinationsAreDone(int playerNumber) {
-        for (int x = 0; x < getIsCombinationActive(playerNumber).length; x++) {
-            if (getIsCombinationActive(playerNumber)[x]) {
+    public boolean checkIfAllCombinationsAreDone() {
+        for (int x = 0; x < getIsCombinationActive().length; x++) {
+            if (getIsCombinationActive()[x]) {
                 return false;
             }
         }
         return true;
     }
 
-    public int getScoreValues(int combinationNr, int playerNumber) {
+    public int getScoreValues(int combinationNr) {
         if (playerNumber == 1) {
             return playerOneScoreValues[combinationNr];
         } else {
@@ -148,7 +149,7 @@ public class UIConfig {
         }
     }
 
-    public void setScoreValues(int score, int combinationNr, int playerNumber) {
+    public void setScoreValues(int score, int combinationNr) {
         if (playerNumber == 1) {
             this.playerOneScoreValues[combinationNr] = score;
         } else {
@@ -156,61 +157,101 @@ public class UIConfig {
         }
     }
 
-    public void setPlayerTurnWindow(String[] names, int turnNumber) {
-        playerTurnWindowTextView = ((Activity) context).findViewById(R.id.player_turn_textview);
-        View playerTurnLayout = ((Activity) context).findViewById(R.id.player_turn_message_layout);
-        TextView playerNameTextView = ((Activity)context).findViewById(R.id.player_name_textView);
+    public void setPlayerTurnWindow() {
+        View boardLayout = ((Activity) context).findViewById(R.id.board_layout);
+        ImageView rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
+        TextView playerNameBoardTextView = ((Activity)context).findViewById(R.id.player_name_textView);
+        playerNameBoardTextView.setVisibility(View.INVISIBLE);
+        rollDicesButton.setVisibility(View.INVISIBLE);
+        View playerTurnMessageLayout = ((Activity) context).findViewById(R.id.player_turn_message_layout);
+        boardLayout.setVisibility(View.INVISIBLE);
+        playerTurnMessageLayout.setVisibility(View.VISIBLE);
         Button start = ((Activity) context).findViewById(R.id.player_turn_message_start_button);
-        View gameBoard = ((Activity) context).findViewById(R.id.board_layout);
-        gameBoard.setVisibility(View.INVISIBLE);
-        playerTurnLayout.setVisibility(View.VISIBLE);
-        playerTurnWindowTextView.setVisibility(View.VISIBLE);
-        playerTurnWindowTextView.setText(""+names[0]);
-        start.setVisibility(View.VISIBLE);
-
+        TextView playerNameTextView = ((Activity) context).findViewById(R.id.player_turn_textview);
+        if (playerNumber == 1) {
+            playerNameTextView.setText("" + playersNames[1]);
+        } else {
+            playerNameTextView.setText("" + playersNames[0]);
+        }
         start.setOnClickListener(v -> {
-            if (turnNumber == 1) {
-                playerTurnWindowTextView.setText(names[0]);
-                prepareScreenForPlayer(1);
-                playerNameTextView.setText(names[0]);
+            if (playerNumber == 1) {
+
+                prepareScreenForPlayer();
+                playerNameTextView.setText(playersNames[1]);
+                playerTurnMessageLayout.setVisibility(View.INVISIBLE);
+                boardLayout.setVisibility(View.VISIBLE);
+                playerNameBoardTextView.setVisibility(View.VISIBLE);
+                playerNameBoardTextView.setText(playersNames[1]);
+                rollDicesButton.setVisibility(View.VISIBLE);
+
             } else {
-                playerTurnWindowTextView.setText(names[1]);
-                prepareScreenForPlayer(2);
-                playerNameTextView.setText(names[1]);
+                prepareScreenForPlayer();
+                playerNameTextView.setText(playersNames[0]);
+                playerTurnMessageLayout.setVisibility(View.INVISIBLE);
+                boardLayout.setVisibility(View.VISIBLE);
+                playerNameBoardTextView.setVisibility(View.VISIBLE);
+                playerNameBoardTextView.setText(playersNames[0]);
+                rollDicesButton.setVisibility(View.VISIBLE);
+
             }
-            playerTurnLayout.setVisibility(View.INVISIBLE);
-            gameBoard.setVisibility(View.VISIBLE);
+
         });
 
 
     }
 
-    public void prepareScreenForPlayer(int player) {
-        Log.i("testApp", ""+playerOneScoreValues[0]);
+    public void prepareScreenForPlayer() {
 
         for (int x = 0; x < 15; x++) {
-            if (player == 1) {
-                if (!playerOneIsCombinationActive[x]) {
-                    getCombinationsTextView()[x].setEnabled(false);
-                }
-
-                combinationsPointsTextView[x].setText(playerOneScoreValues[x] +" pkt");
-                totalScoreTextView.setText(playerOneTotalScore +" pkt");
-            } else {
+            if (playerNumber == 1) {
                 if (!playerTwoIsCombinationActive[x]) {
                     getCombinationsTextView()[x].setEnabled(false);
+                } else{
+                    getCombinationsTextView()[x].setEnabled(true);
                 }
 
-                combinationsPointsTextView[x].setText(playerTwoScoreValues[x] +" pkt");
-                totalScoreTextView.setText(playerTwoTotalScore +" pkt");
+                combinationsPointsTextView[x].setText(playerTwoScoreValues[x] + " pkt");
+                totalScoreTextView.setText(playerTwoTotalScore + " pkt");
+
+            }
+            else {
+                if (!playerOneIsCombinationActive[x]) {
+                    getCombinationsTextView()[x].setEnabled(false);
+                } else{
+                    getCombinationsTextView()[x].setEnabled(true);
+                }
+
+                combinationsPointsTextView[x].setText(playerOneScoreValues[x] + " pkt");
+                totalScoreTextView.setText(playerOneTotalScore + " pkt");
 
             }
 
         }
 
+        if(playerNumber ==1){
+            playerNumber = 2;
+        } else{
+            playerNumber = 1;
+        }
+
 
     }
 
+    public String[] getPlayersNames() {
+        return playersNames;
+    }
+
+    public void setPlayersNames(String[] playersNames){
+        this.playersNames = playersNames;
+    }
+
+    public int getPlayerNumber() {
+        return playerNumber;
+    }
+
+    public void setPlayerNumber(int playerNumber){
+        this.playerNumber = playerNumber;
+    }
 
 
 }

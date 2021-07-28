@@ -2,7 +2,9 @@ package com.paweldyjak.dicegame;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import java.util.Random;
@@ -18,20 +20,15 @@ public class Dices {
     private boolean isFirstThrow = true;
     private int throwNumber = 0;
     private final Sounds sounds;
-    private int playerNumber = 1;
-    private final String[] playersNames;
 
 
-    Dices(Context context, ScoreInput scoreInput, DicesScoreChecker dicesScoreChecker, UIConfig uiConfig, RerollDices rerollDices, String[] playersNames) {
+    Dices(Context context, ScoreInput scoreInput, DicesScoreChecker dicesScoreChecker, UIConfig uiConfig, RerollDices rerollDices) {
         this.context = context;
         this.scoreInput = scoreInput;
         this.dicesScoreChecker = dicesScoreChecker;
         this.uiConfig = uiConfig;
         this.rerollDices = rerollDices;
-        this.playersNames = playersNames;
         sounds = new Sounds(context);
-        uiConfig.setPlayerTurnWindow(playersNames, playerNumber);
-
 
     }
 
@@ -40,10 +37,8 @@ public class Dices {
         ImageView rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
         rollDicesButton.setOnClickListener(v -> {
 
-
-
-                if (!uiConfig.checkIfAllCombinationsAreDone(playerNumber)) {
-            }
+            if (uiConfig.checkIfAllCombinationsAreDone()) {
+            } else {
                 if (scoreInput.getResetThrowCounter()) {
                     throwNumber = 0;
                     isFirstThrow = true;
@@ -67,6 +62,7 @@ public class Dices {
                     blockCombinations();
                     scoreInput.inputScore(dicesScoreChecker.checkSOS(dices, throwNumber), 15);
                 }
+            }
 
         });
 
@@ -175,14 +171,15 @@ public class Dices {
     public void blockCombinations() {
         for (int x = 0; x < 15; x++) {
             int combinationNr = x;
-            if (dicesScoreChecker.callCheckCombinationMethod(x, dices, isFirstThrow, 0) == 0 && uiConfig.getIsCombinationActive(playerNumber)[x]) {
+            if (dicesScoreChecker.callCheckCombinationMethod(x, dices, isFirstThrow, 0) == 0 && uiConfig.getIsCombinationActive()[x]) {
                 {
                     uiConfig.getCombinationsTextView()[x].setOnClickListener(v -> {
                         v.setEnabled(false);
-                        uiConfig.setIsCombinationActive(false, combinationNr, playerNumber);
+                        uiConfig.setIsCombinationActive(false, combinationNr);
                         scoreInput.setResetThrowCounter(true);
                         scoreInput.resetCombinationsListeners();
                         uiConfig.hideDices();
+                        uiConfig.setPlayerTurnWindow();
 
                     });
 

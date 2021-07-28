@@ -33,17 +33,18 @@ public class ScoreInput {
 
     public void inputScore(int scoreToInput, int combinationNr) {
         uiConfig.getCombinationsTextView()[combinationNr].setOnClickListener(v -> {
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive(playerNumber)[combinationNr] && !resetThrowCounter) {
-                uiConfig.setScoreValues(scoreToInput, combinationNr, playerNumber);
-                uiConfig.setTotalScore(scoreToInput, playerNumber);
-                uiConfig.getCombinationsPointsTextView()[combinationNr].setText(uiConfig.getScoreValues(combinationNr, playerNumber) + " pkt");
+            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[combinationNr] && !resetThrowCounter) {
+                uiConfig.setScoreValues(scoreToInput, combinationNr);
+                uiConfig.setTotalScore(scoreToInput);
+                uiConfig.getCombinationsPointsTextView()[combinationNr].setText(uiConfig.getScoreValues(combinationNr) + " pkt");
                 uiConfig.getCombinationsTextView()[combinationNr].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, combinationNr, playerNumber);
-                if (!uiConfig.checkIfAllCombinationsAreDone(playerNumber)) {
+                uiConfig.setIsCombinationActive(false, combinationNr);
+                if (!uiConfig.checkIfAllCombinationsAreDone()) {
                     resetThrowCounter = true;
                 }
                 uiConfig.hideDices();
                 resetCombinationsListeners();
+                uiConfig.setPlayerTurnWindow();
             }
 
 
@@ -62,11 +63,14 @@ public class ScoreInput {
     public void resetCombinationsListeners() {
         for (int x = 0; x < 15; x++) {
 
-
             uiConfig.getCombinationsTextView()[x].setOnClickListener(v -> {
 
             });
         }
+    }
+
+    public void setPlayerNumber(int playerNumber){
+        this.playerNumber = playerNumber;
     }
 
 
