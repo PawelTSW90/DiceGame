@@ -2,11 +2,14 @@ package com.paweldyjak.dicegame;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.paweldyjak.dicegame.layouts.FinalResultScreen;
 
 import org.w3c.dom.Text;
 
@@ -202,7 +205,7 @@ public class UIConfig {
 
     public void prepareScreenForPlayer() {
 
-        for (int x = 0; x < 15; x++) {
+        for (int x = 0; x < 16; x++) {
             if (playerNumber == 1) {
                 if (!playerTwoIsCombinationActive[x]) {
                     getCombinationsTextView()[x].setEnabled(false);
@@ -228,6 +231,7 @@ public class UIConfig {
 
         }
 
+
         if(playerNumber ==1){
             playerNumber = 2;
         } else{
@@ -241,17 +245,27 @@ public class UIConfig {
         return playersNames;
     }
 
+    public int getPlayerNumber(){
+        return playerNumber;
+    }
+
     public void setPlayersNames(String[] playersNames){
         this.playersNames = playersNames;
     }
 
-    public int getPlayerNumber() {
-        return playerNumber;
+    public int getPlayersTotalScore(int playerNumber){
+        if(playerNumber==1){
+            return playerOneTotalScore;
+        } else {
+            return playerTwoTotalScore;
+        }
     }
 
-    public void setPlayerNumber(int playerNumber){
-        this.playerNumber = playerNumber;
+    public void setFinalResultScreen(){
+        FinalResultScreen finalResultScreen = new FinalResultScreen(context, this);
+        finalResultScreen.setFinalResultScreen();
     }
+
 
 
 }

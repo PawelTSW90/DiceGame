@@ -2,9 +2,7 @@ package com.paweldyjak.dicegame;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.os.SystemClock;
 import android.widget.ImageView;
 
 import java.util.Random;
@@ -14,7 +12,7 @@ public class Dices {
     private final Context context;
     private final ScoreInput scoreInput;
     private final UIConfig uiConfig;
-    private final DicesScoreChecker dicesScoreChecker;
+    private final DicesCombinationsChecker dicesCombinationsChecker;
     private final RerollDices rerollDices;
     private final int[] dices = new int[5];
     private boolean isFirstThrow = true;
@@ -22,10 +20,10 @@ public class Dices {
     private final Sounds sounds;
 
 
-    Dices(Context context, ScoreInput scoreInput, DicesScoreChecker dicesScoreChecker, UIConfig uiConfig, RerollDices rerollDices) {
+    Dices(Context context, ScoreInput scoreInput, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, RerollDices rerollDices) {
         this.context = context;
         this.scoreInput = scoreInput;
-        this.dicesScoreChecker = dicesScoreChecker;
+        this.dicesCombinationsChecker = dicesCombinationsChecker;
         this.uiConfig = uiConfig;
         this.rerollDices = rerollDices;
         sounds = new Sounds(context);
@@ -36,6 +34,8 @@ public class Dices {
     public void setRollDicesButton() {
         ImageView rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
         rollDicesButton.setOnClickListener(v -> {
+
+
 
             if (uiConfig.checkIfAllCombinationsAreDone()) {
             } else {
@@ -60,7 +60,7 @@ public class Dices {
                 if (throwNumber == 3) {
                     rerollDices.setDicesRerolling(throwNumber);
                     blockCombinations();
-                    scoreInput.inputScore(dicesScoreChecker.checkSOS(dices, throwNumber), 15);
+                    scoreInput.inputScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
                 }
             }
 
@@ -149,29 +149,29 @@ public class Dices {
 
     // method sets combinations to be checked
     public void setCombinations() {
-        scoreInput.inputScore(dicesScoreChecker.checkOne(dices, isFirstThrow), 0);
-        scoreInput.inputScore(dicesScoreChecker.checkTwo(dices, isFirstThrow), 1);
-        scoreInput.inputScore(dicesScoreChecker.checkThree(dices, isFirstThrow), 2);
-        scoreInput.inputScore(dicesScoreChecker.checkFour(dices, isFirstThrow), 3);
-        scoreInput.inputScore(dicesScoreChecker.checkFive(dices, isFirstThrow), 4);
-        scoreInput.inputScore(dicesScoreChecker.checkSix(dices, isFirstThrow), 5);
-        scoreInput.inputScore(dicesScoreChecker.checkPair(dices, isFirstThrow), 6);
-        scoreInput.inputScore(dicesScoreChecker.checkTwoPairs(dices, isFirstThrow), 7);
-        scoreInput.inputScore(dicesScoreChecker.checkEvens(dices, isFirstThrow), 8);
-        scoreInput.inputScore(dicesScoreChecker.checkOdds(dices, isFirstThrow), 9);
-        scoreInput.inputScore(dicesScoreChecker.checkSmallStraight(dices, isFirstThrow), 10);
-        scoreInput.inputScore(dicesScoreChecker.checkLargeStraight(dices, isFirstThrow), 11);
-        scoreInput.inputScore(dicesScoreChecker.checkFullHouse(dices, isFirstThrow), 12);
-        scoreInput.inputScore(dicesScoreChecker.checkFourOfAKind(dices, isFirstThrow), 13);
-        scoreInput.inputScore(dicesScoreChecker.checkFiveOfAKind(dices, isFirstThrow), 14);
-        scoreInput.inputScore(dicesScoreChecker.checkSOS(dices, throwNumber), 15);
+        scoreInput.inputScore(dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0);
+        scoreInput.inputScore(dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1);
+        scoreInput.inputScore(dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2);
+        scoreInput.inputScore(dicesCombinationsChecker.checkFour(dices, isFirstThrow), 3);
+        scoreInput.inputScore(dicesCombinationsChecker.checkFive(dices, isFirstThrow), 4);
+        scoreInput.inputScore(dicesCombinationsChecker.checkSix(dices, isFirstThrow), 5);
+        scoreInput.inputScore(dicesCombinationsChecker.checkPair(dices, isFirstThrow), 6);
+        scoreInput.inputScore(dicesCombinationsChecker.checkTwoPairs(dices, isFirstThrow), 7);
+        scoreInput.inputScore(dicesCombinationsChecker.checkEvens(dices, isFirstThrow), 8);
+        scoreInput.inputScore(dicesCombinationsChecker.checkOdds(dices, isFirstThrow), 9);
+        scoreInput.inputScore(dicesCombinationsChecker.checkSmallStraight(dices, isFirstThrow), 10);
+        scoreInput.inputScore(dicesCombinationsChecker.checkLargeStraight(dices, isFirstThrow), 11);
+        scoreInput.inputScore(dicesCombinationsChecker.checkFullHouse(dices, isFirstThrow), 12);
+        scoreInput.inputScore(dicesCombinationsChecker.checkFourOfAKind(dices, isFirstThrow), 13);
+        scoreInput.inputScore(dicesCombinationsChecker.checkFiveOfAKind(dices, isFirstThrow), 14);
+        scoreInput.inputScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
     }
 
     // method allows to block one of a combinations after last throw
     public void blockCombinations() {
-        for (int x = 0; x < 15; x++) {
+        for (int x = 0; x < 16; x++) {
             int combinationNr = x;
-            if (dicesScoreChecker.callCheckCombinationMethod(x, dices, isFirstThrow, 0) == 0 && uiConfig.getIsCombinationActive()[x]) {
+            if (dicesCombinationsChecker.combinationChecker(x, dices, isFirstThrow, 0) == 0 && uiConfig.getIsCombinationActive()[x]) {
                 {
                     uiConfig.getCombinationsTextView()[x].setOnClickListener(v -> {
                         v.setEnabled(false);
@@ -179,7 +179,11 @@ public class Dices {
                         scoreInput.setResetThrowCounter(true);
                         scoreInput.resetCombinationsListeners();
                         uiConfig.hideDices();
-                        uiConfig.setPlayerTurnWindow();
+                        if (uiConfig.checkIfAllCombinationsAreDone() && uiConfig.getPlayerNumber() == 2) {
+                            uiConfig.setFinalResultScreen();
+                        } else {
+                            uiConfig.setPlayerTurnWindow();
+                        }
 
                     });
 

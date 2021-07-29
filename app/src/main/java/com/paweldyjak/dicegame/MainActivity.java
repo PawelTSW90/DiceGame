@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
         //creating class objects
         UIConfig uiConfig = new UIConfig(this, playersNames);
         RerollDices rerollDices = new RerollDices(this, uiConfig);
-        DicesScoreChecker dicesScoreChecker = new DicesScoreChecker(uiConfig);
+        DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(uiConfig);
         ScoreInput scoreInput = new ScoreInput(uiConfig);
-        Dices dices = new Dices(this, scoreInput, dicesScoreChecker, uiConfig, rerollDices);
+        Dices dices = new Dices(this, scoreInput, dicesCombinationsChecker, uiConfig, rerollDices);
 
         //configuring UI
         uiConfig.setDicesSlots();

@@ -1,6 +1,8 @@
 package com.paweldyjak.dicegame;
 
 
+import android.os.SystemClock;
+
 //class methods writes score into score table
 //score writing enabled when combination is correct, when it's not blocked, no other combination
 // has been used during this turn and no combination has been blocked during this turn
@@ -41,10 +43,13 @@ public class ScoreInput {
                 uiConfig.setIsCombinationActive(false, combinationNr);
                 if (!uiConfig.checkIfAllCombinationsAreDone()) {
                     resetThrowCounter = true;
+                    uiConfig.hideDices();
+                    resetCombinationsListeners();
+                    uiConfig.setPlayerTurnWindow();
+                } else if(uiConfig.getPlayerNumber()==2 && uiConfig.checkIfAllCombinationsAreDone()){
+                    uiConfig.setFinalResultScreen();
                 }
-                uiConfig.hideDices();
-                resetCombinationsListeners();
-                uiConfig.setPlayerTurnWindow();
+
             }
 
 

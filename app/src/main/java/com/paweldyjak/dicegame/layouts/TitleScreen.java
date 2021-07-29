@@ -1,11 +1,10 @@
 package com.paweldyjak.dicegame.layouts;
 
 import android.widget.Button;
-import androidx.appcompat.app.AppCompatActivity;
 import com.paweldyjak.dicegame.MainActivity;
 import com.paweldyjak.dicegame.R;
 
-public class TitleScreen extends AppCompatActivity {
+public class TitleScreen {
     MainActivity mainActivity;
     PlayerNamesInputScreen playerNamesInputScreen;
 
