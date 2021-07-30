@@ -1,40 +1,56 @@
-package com.paweldyjak.dicegame.layouts;
+package com.paweldyjak.dicegame.Fragments;
 
-import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.paweldyjak.dicegame.MainActivity;
 import com.paweldyjak.dicegame.R;
 
-public class PlayerNamesInputScreen {
+public class PlayerNamesInputScreenFragment extends Fragment {
+    View view;
     Context context;
     MainActivity mainActivity;
+    Button start;
+    EditText editTextPlayerOneName;
+    TextView playerTitle;
 
-    public PlayerNamesInputScreen(MainActivity mainActivity) {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.player_names_input_screen_fragment, container, false);
+        start = view.findViewById(R.id.player_input_start_button);
+        editTextPlayerOneName = view.findViewById(R.id.edit_text_name_one);
+        playerTitle = view.findViewById(R.id.player_title);
+        playerInputScreen(context);
+        return view;
+
+    }
+
+    public PlayerNamesInputScreenFragment(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
 
     public void playerInputScreen(Context context) {
         this.context = context;
-
-        ((Activity) context).setContentView(R.layout.player_names_input_screen);
         String[] playersNames = new String[2];
-        Button start = ((Activity) context).findViewById(R.id.player_input_start_button);
-        EditText editTextPlayerOneName = ((Activity) context).findViewById(R.id.edit_text_name_one);
-        TextView playerTitle = ((Activity) context).findViewById(R.id.player_title);
 
         //ad config
-        AdView mAdView = ((Activity) context).findViewById(R.id.adView);
+        AdView mAdView = view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         //allows to proceed when players name is at least one character long
 

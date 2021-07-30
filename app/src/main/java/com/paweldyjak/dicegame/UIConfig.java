@@ -2,16 +2,12 @@ package com.paweldyjak.dicegame;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.paweldyjak.dicegame.layouts.FinalResultScreen;
-
-import org.w3c.dom.Text;
+import com.paweldyjak.dicegame.Fragments.FinalResultScreenFragment;
 
 import java.util.Arrays;
 
@@ -262,8 +258,8 @@ public class UIConfig {
     }
 
     public void setFinalResultScreen(){
-        FinalResultScreen finalResultScreen = new FinalResultScreen(context, this);
-        finalResultScreen.setFinalResultScreen();
+        FinalResultScreenFragment finalResultScreenFragment = new FinalResultScreenFragment(context, this);
+        finalResultScreenFragment.setFinalResultScreen();
     }
 
 
