@@ -4,56 +4,57 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Bundle;
 import android.view.WindowManager;
-import com.paweldyjak.dicegame.Fragments.PlayerNamesInputScreenFragment;
-import com.paweldyjak.dicegame.Fragments.TitleScreenFragment;
+import com.paweldyjak.dicegame.Fragments.*;
 import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
+    public TitleScreenFragment titleScreenFragment;
+    public PlayerNamesInputScreenFragment playerNamesInputScreenFragment;
+    public PlayerTurnScreenFragment playerTurnScreenFragment;
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    FragmentTransaction fragmentTransaction;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        PlayerNamesInputScreenFragment playerNamesInputScreenFragment = new PlayerNamesInputScreenFragment(this);
-        TitleScreenFragment titleScreenFragment = new TitleScreenFragment(this, playerNamesInputScreenFragment);
+        playerNamesInputScreenFragment = new PlayerNamesInputScreenFragment(this);
+        titleScreenFragment = new TitleScreenFragment(this, playerNamesInputScreenFragment);
 
         //hides status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
-        setFragment(titleScreenFragment);
+        showTitleScreen();
+
+
     }
 
-    public void setFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_game_layout, fragment);
+    public void showTitleScreen() {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.title_screen_fragment_layout_slot, titleScreenFragment);
         fragmentTransaction.commit();
+
+
     }
 
-    public void startTwoPlayersGame(String[] playersNames) {
-        setContentView(R.layout.activity_main);
-        //creating class objects
-        UIConfig uiConfig = new UIConfig(this, playersNames);
-        RerollDices rerollDices = new RerollDices(this, uiConfig);
-        DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(uiConfig);
-        ScoreInput scoreInput = new ScoreInput(uiConfig);
-        Dices dices = new Dices(this, scoreInput, dicesCombinationsChecker, uiConfig, rerollDices);
+    public void addFragment(int layout, Fragment fragment){
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(layout, fragment);
+        fragmentTransaction.commit();
 
-        //configuring UI
-        uiConfig.setDicesSlots();
-        uiConfig.setDicesCombinations();
-        uiConfig.setAllCombinationsAsActive();
-        dices.setRollDicesButton();
-        uiConfig.setPlayersNames(playersNames);
-        uiConfig.setPlayerTurnWindow();
+    }
 
 
+
+    public void destroyFragment(Fragment fragmentToDestroy){
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.remove(fragmentToDestroy);
     }
 
 

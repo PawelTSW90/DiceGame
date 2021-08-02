@@ -16,7 +16,7 @@ public class TitleScreenFragment extends Fragment {
     MainActivity mainActivity;
     PlayerNamesInputScreenFragment playerNamesInputScreenFragment;
     View view;
-    Button twoPlayersButton;
+    Button startGameButton;
 
     public TitleScreenFragment(MainActivity mainActivity, PlayerNamesInputScreenFragment playerNamesInputScreenFragment) {
         this.mainActivity = mainActivity;
@@ -28,13 +28,18 @@ public class TitleScreenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.title_screen_fragment, container, false);
+        startGameButton = view.findViewById(R.id.twoPlayersButton);
         setTwoPlayersButton();
         return view;
     }
 
     public void setTwoPlayersButton() {
-        twoPlayersButton = view.findViewById(R.id.twoPlayersButton);
-        twoPlayersButton.setOnClickListener(v -> mainActivity.setFragment(playerNamesInputScreenFragment));
+        startGameButton.setOnClickListener(v -> {
+            mainActivity.addFragment(R.id.player_names_input_screen_fragment_layout_slot, playerNamesInputScreenFragment);
+
+        });
+
+
 
 
     }

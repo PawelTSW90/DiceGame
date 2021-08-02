@@ -77,7 +77,9 @@ public class PlayerNamesInputScreenFragment extends Fragment {
             start.setVisibility(View.INVISIBLE);
             start.setOnClickListener(v1 -> {
                 playersNames[1] = editTextPlayerOneName.getText().toString();
-                mainActivity.startTwoPlayersGame(playersNames);
+                mainActivity.destroyFragment(mainActivity.titleScreenFragment);
+                mainActivity.playerTurnScreenFragment = new PlayerTurnScreenFragment(mainActivity, playersNames);
+                mainActivity.addFragment(R.id.player_turn_message_layout_slot, mainActivity.playerTurnScreenFragment);
             });
 
 

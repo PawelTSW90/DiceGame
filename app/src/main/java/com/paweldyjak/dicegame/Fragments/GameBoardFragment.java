@@ -1,15 +1,21 @@
-package com.paweldyjak.dicegame;
+package com.paweldyjak.dicegame.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.SystemClock;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.fragment.app.Fragment;
+import com.paweldyjak.dicegame.*;
 import java.util.Random;
 
 
-public class Dices {
-    private final Context context;
+public class GameBoardFragment extends Fragment {
+    MainActivity mainActivity;
     private final ScoreInput scoreInput;
     private final UIConfig uiConfig;
     private final DicesCombinationsChecker dicesCombinationsChecker;
@@ -18,24 +24,36 @@ public class Dices {
     private boolean isFirstThrow = true;
     private int throwNumber = 0;
     private final Sounds sounds;
+    View view;
+    ImageView rollDicesButton;
 
 
-    Dices(Context context, ScoreInput scoreInput, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, RerollDices rerollDices) {
-        this.context = context;
+    public GameBoardFragment(MainActivity mainActivity, ScoreInput scoreInput, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, RerollDices rerollDices) {
+        this.mainActivity = mainActivity;
         this.scoreInput = scoreInput;
         this.dicesCombinationsChecker = dicesCombinationsChecker;
         this.uiConfig = uiConfig;
         this.rerollDices = rerollDices;
-        sounds = new Sounds(context);
+        sounds = new Sounds(mainActivity);
 
+    }
+
+
+    @Override
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.game_board_screen_fragment, container, false);
+        rollDicesButton = view.findViewById(R.id.roll_dices);
+        setRollDicesButton();
+        uiConfig.setDicesSlots(view);
+        uiConfig.setDicesCombinations(view);
+        uiConfig.setAllCombinationsAsActive();
+        mainActivity.destroyFragment(mainActivity.playerTurnScreenFragment);
+        return view;
     }
 
     //method configure roll dices button
     public void setRollDicesButton() {
-        ImageView rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
         rollDicesButton.setOnClickListener(v -> {
-
-
 
             if (uiConfig.checkIfAllCombinationsAreDone()) {
             } else {

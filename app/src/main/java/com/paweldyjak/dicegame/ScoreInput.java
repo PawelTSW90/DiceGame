@@ -11,7 +11,7 @@ public class ScoreInput {
     private boolean resetThrowCounter = false;
     private int playerNumber = 1;
 
-    ScoreInput(UIConfig uiConfig) {
+    public ScoreInput(UIConfig uiConfig) {
         this.uiConfig = uiConfig;
     }
     /*method inputs score for a specified combination. Combinations list:
@@ -43,7 +43,7 @@ public class ScoreInput {
                 uiConfig.setIsCombinationActive(false, combinationNr);
                 if (!uiConfig.checkIfAllCombinationsAreDone()) {
                     resetThrowCounter = true;
-                    uiConfig.hideDices();
+                    /*uiConfig.hideDices();*/
                     resetCombinationsListeners();
                     uiConfig.setPlayerTurnWindow();
                 } else if(uiConfig.getPlayerNumber()==2 && uiConfig.checkIfAllCombinationsAreDone()){

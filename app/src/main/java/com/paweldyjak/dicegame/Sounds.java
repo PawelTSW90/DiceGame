@@ -7,7 +7,7 @@ public class Sounds {
 
     private final Context context;
 
-    Sounds(Context context) {
+    public Sounds(Context context) {
         this.context = context;
     }
 
