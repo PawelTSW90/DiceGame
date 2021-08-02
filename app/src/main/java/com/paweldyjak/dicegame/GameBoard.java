@@ -1,21 +1,18 @@
-package com.paweldyjak.dicegame.Fragments;
+package com.paweldyjak.dicegame;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import androidx.fragment.app.Fragment;
-import com.paweldyjak.dicegame.*;
+import com.paweldyjak.dicegame.Fragments.PlayerTurnScreen;
+
 import java.util.Random;
 
 
-public class GameBoardFragment extends Fragment {
-    MainActivity mainActivity;
+public class GameBoard {
+    Context context;
     private final ScoreInput scoreInput;
     private final UIConfig uiConfig;
     private final DicesCombinationsChecker dicesCombinationsChecker;
@@ -24,36 +21,32 @@ public class GameBoardFragment extends Fragment {
     private boolean isFirstThrow = true;
     private int throwNumber = 0;
     private final Sounds sounds;
-    View view;
+    MainActivity mainActivity;
     ImageView rollDicesButton;
 
 
-    public GameBoardFragment(MainActivity mainActivity, ScoreInput scoreInput, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, RerollDices rerollDices) {
+    public GameBoard(MainActivity mainActivity, Context context, ScoreInput scoreInput, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, RerollDices rerollDices) {
+        this.context = context;
         this.mainActivity = mainActivity;
         this.scoreInput = scoreInput;
         this.dicesCombinationsChecker = dicesCombinationsChecker;
         this.uiConfig = uiConfig;
         this.rerollDices = rerollDices;
-        sounds = new Sounds(mainActivity);
+        sounds = new Sounds(context);
+        mainActivity.playerTurnScreen = new PlayerTurnScreen(mainActivity,uiConfig);
+        mainActivity.addFragment(R.id.player_turn_message_layout_slot, mainActivity.playerTurnScreen);
+        mainActivity.showPlayerTurnScreen(false);
 
     }
 
-
-    @Override
-    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.game_board_screen_fragment, container, false);
-        rollDicesButton = view.findViewById(R.id.roll_dices);
-        setRollDicesButton();
-        uiConfig.setDicesSlots(view);
-        uiConfig.setDicesCombinations(view);
-        uiConfig.setAllCombinationsAsActive();
-        mainActivity.destroyFragment(mainActivity.playerTurnScreenFragment);
-        return view;
-    }
 
     //method configure roll dices button
     public void setRollDicesButton() {
+        mainActivity.showPlayerTurnScreen(false);
+        mainActivity.destroyFragment(mainActivity.startGameScreen);
+        rollDicesButton = ((Activity)context).findViewById(R.id.roll_dices);
         rollDicesButton.setOnClickListener(v -> {
+            Log.i("testApp", ""+mainActivity.checkFragments());
 
             if (uiConfig.checkIfAllCombinationsAreDone()) {
             } else {
@@ -200,7 +193,7 @@ public class GameBoardFragment extends Fragment {
                         if (uiConfig.checkIfAllCombinationsAreDone() && uiConfig.getPlayerNumber() == 2) {
                             uiConfig.setFinalResultScreen();
                         } else {
-                            uiConfig.setPlayerTurnWindow();
+                            mainActivity.showPlayerTurnScreen(true);
                         }
 
                     });

@@ -17,7 +17,7 @@ import com.google.android.gms.ads.AdView;
 import com.paweldyjak.dicegame.MainActivity;
 import com.paweldyjak.dicegame.R;
 
-public class PlayerNamesInputScreenFragment extends Fragment {
+public class PlayerNamesInputScreen extends Fragment {
     View view;
     Context context;
     MainActivity mainActivity;
@@ -37,7 +37,7 @@ public class PlayerNamesInputScreenFragment extends Fragment {
 
     }
 
-    public PlayerNamesInputScreenFragment(MainActivity mainActivity) {
+    public PlayerNamesInputScreen(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
 
@@ -77,9 +77,9 @@ public class PlayerNamesInputScreenFragment extends Fragment {
             start.setVisibility(View.INVISIBLE);
             start.setOnClickListener(v1 -> {
                 playersNames[1] = editTextPlayerOneName.getText().toString();
-                mainActivity.destroyFragment(mainActivity.titleScreenFragment);
-                mainActivity.playerTurnScreenFragment = new PlayerTurnScreenFragment(mainActivity, playersNames);
-                mainActivity.addFragment(R.id.player_turn_message_layout_slot, mainActivity.playerTurnScreenFragment);
+                mainActivity.destroyFragment(mainActivity.titleScreen);
+                mainActivity.startGameScreen = new StartGameScreen(mainActivity, playersNames);
+                mainActivity.addFragment(R.id.player_turn_message_layout_slot, mainActivity.startGameScreen);
             });
 
 

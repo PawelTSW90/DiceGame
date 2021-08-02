@@ -12,15 +12,15 @@ import com.paweldyjak.dicegame.MainActivity;
 import com.paweldyjak.dicegame.R;
 
 
-public class TitleScreenFragment extends Fragment {
+public class TitleScreen extends Fragment {
     MainActivity mainActivity;
-    PlayerNamesInputScreenFragment playerNamesInputScreenFragment;
+    PlayerNamesInputScreen playerNamesInputScreen;
     View view;
     Button startGameButton;
 
-    public TitleScreenFragment(MainActivity mainActivity, PlayerNamesInputScreenFragment playerNamesInputScreenFragment) {
+    public TitleScreen(MainActivity mainActivity, PlayerNamesInputScreen playerNamesInputScreen) {
         this.mainActivity = mainActivity;
-        this.playerNamesInputScreenFragment = playerNamesInputScreenFragment;
+        this.playerNamesInputScreen = playerNamesInputScreen;
 
     }
 
@@ -35,7 +35,7 @@ public class TitleScreenFragment extends Fragment {
 
     public void setTwoPlayersButton() {
         startGameButton.setOnClickListener(v -> {
-            mainActivity.addFragment(R.id.player_names_input_screen_fragment_layout_slot, playerNamesInputScreenFragment);
+            mainActivity.addFragment(R.id.player_names_input_screen_fragment_layout_slot, playerNamesInputScreen);
 
         });
 

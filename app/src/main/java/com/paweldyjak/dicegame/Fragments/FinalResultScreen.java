@@ -13,12 +13,12 @@ import androidx.fragment.app.Fragment;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.UIConfig;
 
-public class FinalResultScreenFragment extends Fragment {
+public class FinalResultScreen extends Fragment {
     View view;
     Context context;
     UIConfig uiConfig;
 
-    public FinalResultScreenFragment(Context context, UIConfig uiConfig){
+    public FinalResultScreen(Context context, UIConfig uiConfig){
         this.context = context;
         this.uiConfig = uiConfig;
 

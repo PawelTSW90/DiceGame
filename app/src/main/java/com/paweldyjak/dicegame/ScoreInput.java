@@ -8,10 +8,12 @@ import android.os.SystemClock;
 // has been used during this turn and no combination has been blocked during this turn
 public class ScoreInput {
     private final UIConfig uiConfig;
+    private final MainActivity mainActivity;
     private boolean resetThrowCounter = false;
     private int playerNumber = 1;
 
-    public ScoreInput(UIConfig uiConfig) {
+    public ScoreInput(MainActivity mainActivity,UIConfig uiConfig) {
+        this.mainActivity = mainActivity;
         this.uiConfig = uiConfig;
     }
     /*method inputs score for a specified combination. Combinations list:
@@ -45,7 +47,8 @@ public class ScoreInput {
                     resetThrowCounter = true;
                     /*uiConfig.hideDices();*/
                     resetCombinationsListeners();
-                    uiConfig.setPlayerTurnWindow();
+                    uiConfig.hideDices();
+                    mainActivity.showPlayerTurnScreen(true);
                 } else if(uiConfig.getPlayerNumber()==2 && uiConfig.checkIfAllCombinationsAreDone()){
                     uiConfig.setFinalResultScreen();
                 }
