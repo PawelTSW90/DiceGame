@@ -6,12 +6,11 @@ import java.util.List;
 
 // class methods calculates user score and send it to ScoreInput class
 public class DicesCombinationsChecker {
-    UIConfig uiConfig;
+    private final UIConfig uiConfig;
 
     public DicesCombinationsChecker(UIConfig uiConfig) {
         this.uiConfig = uiConfig;
     }
-
 
     public int checkOne(int[] dices, boolean firstThrow) {
         if (!uiConfig.getIsCombinationActive()[0]) {
@@ -674,7 +673,7 @@ public class DicesCombinationsChecker {
 
 
     }
-
+        //method returns chosen combination check
     public int combinationChecker(int combinationNr, int[] dices, boolean firstThrow, int throwNumber) {
         switch (combinationNr) {
             case 0:

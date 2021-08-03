@@ -9,7 +9,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.ads.AdRequest;
@@ -18,20 +17,20 @@ import com.paweldyjak.dicegame.MainActivity;
 import com.paweldyjak.dicegame.R;
 
 public class PlayerNamesInputScreen extends Fragment {
-    View view;
-    Context context;
-    MainActivity mainActivity;
-    Button start;
-    EditText editTextPlayerOneName;
-    TextView playerTitle;
+    private View view;
+    private Context context;
+    private final MainActivity mainActivity;
+    private Button start;
+    private EditText playerNameEditText;
+    private TextView playerName;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.player_names_input_screen_fragment, container, false);
         start = view.findViewById(R.id.player_input_start_button);
-        editTextPlayerOneName = view.findViewById(R.id.edit_text_name_one);
-        playerTitle = view.findViewById(R.id.player_title);
+        playerNameEditText = view.findViewById(R.id.edit_text_name_one);
+        playerName = view.findViewById(R.id.player_title);
         playerInputScreen(context);
         return view;
 
@@ -50,17 +49,17 @@ public class PlayerNamesInputScreen extends Fragment {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
+
+
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         //allows to proceed when players name is at least one character long
-
-        editTextPlayerOneName.setOnEditorActionListener((v, actionId, event) -> {
+        playerNameEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (v.getText().length() > 0) {
                 {
                     start.setVisibility(View.VISIBLE);
                     //hide keyboard after players name input finished
-                    imm.hideSoftInputFromWindow(editTextPlayerOneName.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
-
+                    imm.hideSoftInputFromWindow(playerNameEditText.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
                     return true;
                 }
             } else {
@@ -71,15 +70,14 @@ public class PlayerNamesInputScreen extends Fragment {
         });
         //setting start button to save players names and start the game
         start.setOnClickListener(v -> {
-            playersNames[0] = editTextPlayerOneName.getText().toString();
-            playerTitle.setText("GRACZ 2");
-            editTextPlayerOneName.setText(null);
+            playersNames[0] = playerNameEditText.getText().toString();
+            playerName.setText("GRACZ 2");
+            playerNameEditText.setText(null);
             start.setVisibility(View.INVISIBLE);
             start.setOnClickListener(v1 -> {
-                playersNames[1] = editTextPlayerOneName.getText().toString();
-                mainActivity.destroyFragment(mainActivity.titleScreen);
-                mainActivity.startGameScreen = new StartGameScreen(mainActivity, playersNames);
-                mainActivity.addFragment(R.id.player_turn_message_layout_slot, mainActivity.startGameScreen);
+                playersNames[1] = playerNameEditText.getText().toString();
+                mainActivity.setStartGameScreen(new StartGameScreen(mainActivity, playersNames));
+                mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getStartGameScreen());
             });
 
 

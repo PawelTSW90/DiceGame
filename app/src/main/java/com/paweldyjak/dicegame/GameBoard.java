@@ -2,17 +2,13 @@ package com.paweldyjak.dicegame;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
-
 import com.paweldyjak.dicegame.Fragments.PlayerTurnScreen;
-
 import java.util.Random;
 
 
 public class GameBoard {
-    Context context;
+    private final Context context;
     private final ScoreInput scoreInput;
     private final UIConfig uiConfig;
     private final DicesCombinationsChecker dicesCombinationsChecker;
@@ -21,8 +17,7 @@ public class GameBoard {
     private boolean isFirstThrow = true;
     private int throwNumber = 0;
     private final Sounds sounds;
-    MainActivity mainActivity;
-    ImageView rollDicesButton;
+    private final MainActivity mainActivity;
 
 
     public GameBoard(MainActivity mainActivity, Context context, ScoreInput scoreInput, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, RerollDices rerollDices) {
@@ -33,20 +28,18 @@ public class GameBoard {
         this.uiConfig = uiConfig;
         this.rerollDices = rerollDices;
         sounds = new Sounds(context);
-        mainActivity.playerTurnScreen = new PlayerTurnScreen(mainActivity,uiConfig);
-        mainActivity.addFragment(R.id.player_turn_message_layout_slot, mainActivity.playerTurnScreen);
-        mainActivity.showPlayerTurnScreen(false);
+        mainActivity.setPlayerTurnScreen(new PlayerTurnScreen(mainActivity,uiConfig));
+        mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getPlayerTurnScreen());
+        mainActivity.showFragment(false);
 
     }
 
 
     //method configure roll dices button
     public void setRollDicesButton() {
-        mainActivity.showPlayerTurnScreen(false);
-        mainActivity.destroyFragment(mainActivity.startGameScreen);
-        rollDicesButton = ((Activity)context).findViewById(R.id.roll_dices);
+        mainActivity.showFragment(false);
+        ImageView rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
         rollDicesButton.setOnClickListener(v -> {
-            Log.i("testApp", ""+mainActivity.checkFragments());
 
             if (uiConfig.checkIfAllCombinationsAreDone()) {
             } else {
@@ -158,7 +151,7 @@ public class GameBoard {
     }
 
 
-    // method sets combinations to be checked
+    // method sets combinations for checking
     public void setCombinations() {
         scoreInput.inputScore(dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0);
         scoreInput.inputScore(dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1);
@@ -193,7 +186,7 @@ public class GameBoard {
                         if (uiConfig.checkIfAllCombinationsAreDone() && uiConfig.getPlayerNumber() == 2) {
                             uiConfig.setFinalResultScreen();
                         } else {
-                            mainActivity.showPlayerTurnScreen(true);
+                            mainActivity.showFragment(true);
                         }
 
                     });

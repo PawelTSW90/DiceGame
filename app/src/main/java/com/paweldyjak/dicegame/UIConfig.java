@@ -4,47 +4,40 @@ import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.paweldyjak.dicegame.Fragments.FinalResultScreen;
-
 import java.util.Arrays;
 
 public class UIConfig {
     private final Context context;
+    private final MainActivity mainActivity;
+    private final ImageView[] dicesSlots = new ImageView[5];
     private final TextView[] combinationsTextView = new TextView[16];
     private final TextView[] combinationsPointsTextView = new TextView[16];
+    private TextView currentPlayerName;
+    private TextView totalScoreTextView;
     private String[] playersNames;
     private int playerNumber = 2;
-    private TextView totalScoreTextView;
-    private final ImageView[] dicesSlots = new ImageView[5];
-    private final boolean[] playerOneIsCombinationActive = new boolean[16];
-    private final int[] playerOneScoreValues = new int[16];
     private int playerOneTotalScore = 0;
     private int playerTwoTotalScore = 0;
+    private final int[] playerOneCombinationsScore = new int[16];
+    private final int[] playerTwoCombinationsScore = new int[16];
+    private final boolean[] playerOneIsCombinationActive = new boolean[16];
     private final boolean[] playerTwoIsCombinationActive = new boolean[16];
-    private final int[] playerTwoScoreValues = new int[16];
-    private TextView playerNameBoardTextView;
 
 
-    public UIConfig(Context context, String[] playersNames) {
+    public UIConfig(MainActivity mainActivity, Context context, String[] playersNames) {
         this.context = context;
         this.playersNames = playersNames;
-        totalScoreTextView = new TextView(context);
+        this.mainActivity = mainActivity;
+
 
     }
-
-
-    public void setDicesSlots() {
+    public void setComponents() {
         dicesSlots[0] = (((Activity) context).findViewById(R.id.diceSlot1));
         dicesSlots[1] = (((Activity) context).findViewById(R.id.diceSlot2));
         dicesSlots[2] = (((Activity) context).findViewById(R.id.diceSlot3));
         dicesSlots[3] = (((Activity) context).findViewById(R.id.diceSlot4));
         dicesSlots[4] = (((Activity) context).findViewById(R.id.diceSlot5));
-
-    }
-
-
-    public void setDicesCombinations() {
         combinationsTextView[0] = ((Activity) context).findViewById(R.id.textView_1);
         combinationsPointsTextView[0] = ((Activity) context).findViewById(R.id.textView_1_pts);
         combinationsTextView[1] = ((Activity) context).findViewById(R.id.textView_2);
@@ -77,29 +70,10 @@ public class UIConfig {
         combinationsPointsTextView[14] = ((Activity) context).findViewById(R.id.textView_5ofAKind_pts);
         combinationsTextView[15] = ((Activity) context).findViewById(R.id.textView_sos);
         combinationsPointsTextView[15] = ((Activity) context).findViewById(R.id.textView_sos_pts);
+        totalScoreTextView = new TextView(context);
         totalScoreTextView = ((Activity) context).findViewById(R.id.textView_score_pts);
-        playerNameBoardTextView = ((Activity) context).findViewById(R.id.player_name_textView);
+        currentPlayerName = ((Activity) context).findViewById(R.id.player_name_textView);
 
-    }
-
-
-    public ImageView[] getDicesSlots() {
-        return dicesSlots;
-    }
-
-    public TextView[] getCombinationsPointsTextView() {
-        return combinationsPointsTextView;
-    }
-
-    public TextView[] getCombinationsTextView() {
-        return combinationsTextView;
-    }
-
-    public boolean[] getIsCombinationActive() {
-        if (playerNumber == 1) {
-            return playerOneIsCombinationActive;
-        } else
-            return playerTwoIsCombinationActive;
     }
 
     public void setAllCombinationsAsActive() {
@@ -107,13 +81,6 @@ public class UIConfig {
         Arrays.fill(playerTwoIsCombinationActive, true);
     }
 
-    public void setIsCombinationActive(boolean isCombinationActive, int combinationNr) {
-        if (playerNumber == 1) {
-            this.playerOneIsCombinationActive[combinationNr] = isCombinationActive;
-        } else {
-            this.playerTwoIsCombinationActive[combinationNr] = isCombinationActive;
-        }
-    }
 
     public void setTotalScore(int score) {
         if (playerNumber == 1) {
@@ -140,59 +107,92 @@ public class UIConfig {
         return true;
     }
 
-    public int getScoreValues(int combinationNr) {
-        if (playerNumber == 1) {
-            return playerOneScoreValues[combinationNr];
-        } else {
-            return playerTwoScoreValues[combinationNr];
-        }
-    }
 
-    public void setScoreValues(int score, int combinationNr) {
-        if (playerNumber == 1) {
-            this.playerOneScoreValues[combinationNr] = score;
-        } else {
-            this.playerTwoScoreValues[combinationNr] = score;
-        }
-    }
-
-    public void prepareScreenForPlayer() {
+    public void prepareScoreBoard() {
 
         for (int x = 0; x < 16; x++) {
             if (playerNumber == 2) {
-                if (!playerTwoIsCombinationActive[x]) {
-                    getCombinationsTextView()[x].setEnabled(false);
-                } else {
-                    getCombinationsTextView()[x].setEnabled(true);
-                }
-                combinationsPointsTextView[x].setText(playerTwoScoreValues[x] + " pkt");
+                getCombinationsTextView()[x].setEnabled(playerTwoIsCombinationActive[x]);
+                combinationsPointsTextView[x].setText(playerTwoCombinationsScore[x] + " pkt");
                 totalScoreTextView.setText(playerTwoTotalScore + " pkt");
 
             } else {
-                if (!playerOneIsCombinationActive[x]) {
-                    getCombinationsTextView()[x].setEnabled(false);
-                } else {
-                    getCombinationsTextView()[x].setEnabled(true);
-                }
-                combinationsPointsTextView[x].setText(playerOneScoreValues[x] + " pkt");
+                getCombinationsTextView()[x].setEnabled(playerOneIsCombinationActive[x]);
+                combinationsPointsTextView[x].setText(playerOneCombinationsScore[x] + " pkt");
                 totalScoreTextView.setText(playerOneTotalScore + " pkt");
 
             }
 
         }
 
+    }
 
-
-
+    public void configureUI(){
+        setComponents();
+        setAllCombinationsAsActive();
+    }
+        //generate final screen fragment
+    public void setFinalResultScreen() {
+        FinalResultScreen finalResultScreen = new FinalResultScreen(mainActivity, context, this);
+        mainActivity.replaceFragment(R.id.fragment_layout, finalResultScreen);
 
     }
 
-    public String[] getPlayersNames() {
-        return playersNames;
+
+    //setters and getters
+    public ImageView[] getDicesSlots() {
+        return dicesSlots;
+    }
+
+    public TextView[] getCombinationsPointsTextView() {
+        return combinationsPointsTextView;
+    }
+
+    public TextView[] getCombinationsTextView() {
+        return combinationsTextView;
+    }
+
+    public boolean[] getIsCombinationActive() {
+        if (playerNumber == 1) {
+            return playerOneIsCombinationActive;
+        } else
+            return playerTwoIsCombinationActive;
+    }
+
+    public void setIsCombinationActive(boolean isCombinationActive, int combinationNr) {
+        if (playerNumber == 1) {
+            this.playerOneIsCombinationActive[combinationNr] = isCombinationActive;
+        } else {
+            this.playerTwoIsCombinationActive[combinationNr] = isCombinationActive;
+        }
+    }
+
+    public int getCombinationScore(int combinationNr) {
+        if (playerNumber == 1) {
+            return playerOneCombinationsScore[combinationNr];
+        } else {
+            return playerTwoCombinationsScore[combinationNr];
+        }
+    }
+
+    public void setCombinationScore(int score, int combinationNr) {
+        if (playerNumber == 1) {
+            this.playerOneCombinationsScore[combinationNr] = score;
+        } else {
+            this.playerTwoCombinationsScore[combinationNr] = score;
+        }
     }
 
     public int getPlayerNumber() {
         return playerNumber;
+    }
+
+    public void setPlayerNumber(int playerNumber) {
+        this.playerNumber = playerNumber;
+    }
+
+    public String[] getPlayersNames() {
+        return playersNames;
     }
 
     public void setPlayersNames(String[] playersNames) {
@@ -207,16 +207,11 @@ public class UIConfig {
         }
     }
 
-    public void setFinalResultScreen() {
-        FinalResultScreen finalResultScreen = new FinalResultScreen(context, this);
-        finalResultScreen.setFinalResultScreen();
+    public TextView getCurrentPlayerName() {
+        return currentPlayerName;
     }
 
-    public TextView getPlayerNameBoardTextView() {
-        return playerNameBoardTextView;
-    }
 
-    public void setPlayerNumber(int playerNumber) {
-        this.playerNumber = playerNumber;
-    }
+
+
 }

@@ -1,13 +1,11 @@
 package com.paweldyjak.dicegame;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-
-
 import androidx.core.content.res.ResourcesCompat;
 
 public class RerollDices {
-    Context context;
-    UIConfig uiConfig;
+    private final Context context;
+    private final UIConfig uiConfig;
 
     public RerollDices(Context context, UIConfig uiConfig) {
         this.context = context;

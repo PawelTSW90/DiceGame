@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import com.paweldyjak.dicegame.Fragments.*;
@@ -13,13 +12,12 @@ import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
-    public TitleScreen titleScreen;
-    public PlayerNamesInputScreen playerNamesInputScreen;
-    public StartGameScreen startGameScreen;
-    public PlayerTurnScreen playerTurnScreen;
-    FragmentManager fragmentManager = getSupportFragmentManager();
-    FragmentTransaction fragmentTransaction;
-    View mainBoardLayout;
+    private TitleScreen titleScreen;
+    private StartGameScreen startGameScreen;
+    private PlayerTurnScreen playerTurnScreen;
+    private final FragmentManager fragmentManager = getSupportFragmentManager();
+    private FragmentTransaction fragmentTransaction;
+    private View mainBoardLayout;
 
 
     @Override
@@ -27,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        playerNamesInputScreen = new PlayerNamesInputScreen(this);
+        PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(this);
         titleScreen = new TitleScreen(this, playerNamesInputScreen);
         mainBoardLayout = findViewById(R.id.game_board_screen_layout);
 
@@ -43,24 +41,10 @@ public class MainActivity extends AppCompatActivity {
     public void showTitleScreen() {
         showMainBoard(false);
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.title_screen_fragment_layout_slot, titleScreen);
+        fragmentTransaction.add(R.id.fragment_layout, titleScreen);
         fragmentTransaction.commit();
 
 
-    }
-
-    public void addFragment(int layout, Fragment fragment) {
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(layout, fragment);
-        fragmentTransaction.commit();
-
-    }
-
-
-    public void destroyFragment(Fragment fragmentToDestroy) {
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.remove(fragmentToDestroy);
-        fragmentTransaction.commit();
     }
 
     public void showMainBoard(boolean showMainBoard) {
@@ -71,24 +55,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public int checkFragments(){
-        return fragmentManager.getFragments().size();
+    public void replaceFragment(int layout, Fragment fragment) {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(layout, fragment);
+        fragmentTransaction.commit();
     }
 
-    public void showPlayerTurnScreen(boolean show){
-        View messageLayout = findViewById(R.id.player_turn_message_layout_slot);
-        if(show){
-            Log.i("testApp", ""+checkFragments());
+    public void showFragment(boolean show) {
+        View fragmentLayout = findViewById(R.id.fragment_layout);
+        if (show) {
             mainBoardLayout.setVisibility(View.INVISIBLE);
-            messageLayout.setVisibility(View.VISIBLE);
+            fragmentLayout.setVisibility(View.VISIBLE);
             playerTurnScreen.displayTurnMessage();
 
 
-        } else{
-            messageLayout.setVisibility(View.INVISIBLE);
+        } else {
+            fragmentLayout.setVisibility(View.INVISIBLE);
             mainBoardLayout.setVisibility(View.VISIBLE);
         }
     }
 
+    public void setStartGameScreen(StartGameScreen startGameScreen) {
+        this.startGameScreen = startGameScreen;
+    }
 
+    public StartGameScreen getStartGameScreen() {
+        return startGameScreen;
+    }
+
+    public PlayerTurnScreen getPlayerTurnScreen() {
+        return playerTurnScreen;
+    }
+
+    public void setPlayerTurnScreen(PlayerTurnScreen playerTurnScreen) {
+        this.playerTurnScreen = playerTurnScreen;
+    }
 }

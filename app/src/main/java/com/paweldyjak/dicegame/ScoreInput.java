@@ -1,16 +1,14 @@
 package com.paweldyjak.dicegame;
 
+import android.util.Log;
 
-import android.os.SystemClock;
-
-//class methods writes score into score table
-//score writing enabled when combination is correct, when it's not blocked, no other combination
-// has been used during this turn and no combination has been blocked during this turn
+/*class methods writes score into score table
+score writing enabled when combination is correct, when it's not blocked, no other combination
+ has been used during this turn and no combination has been blocked during this turn*/
 public class ScoreInput {
     private final UIConfig uiConfig;
     private final MainActivity mainActivity;
     private boolean resetThrowCounter = false;
-    private int playerNumber = 1;
 
     public ScoreInput(MainActivity mainActivity,UIConfig uiConfig) {
         this.mainActivity = mainActivity;
@@ -38,17 +36,16 @@ public class ScoreInput {
     public void inputScore(int scoreToInput, int combinationNr) {
         uiConfig.getCombinationsTextView()[combinationNr].setOnClickListener(v -> {
             if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[combinationNr] && !resetThrowCounter) {
-                uiConfig.setScoreValues(scoreToInput, combinationNr);
+                uiConfig.setCombinationScore(scoreToInput, combinationNr);
                 uiConfig.setTotalScore(scoreToInput);
-                uiConfig.getCombinationsPointsTextView()[combinationNr].setText(uiConfig.getScoreValues(combinationNr) + " pkt");
+                uiConfig.getCombinationsPointsTextView()[combinationNr].setText(uiConfig.getCombinationScore(combinationNr) + " pkt");
                 uiConfig.getCombinationsTextView()[combinationNr].setEnabled(false);
                 uiConfig.setIsCombinationActive(false, combinationNr);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
+                if (!uiConfig.checkIfAllCombinationsAreDone() || uiConfig.getPlayerNumber()==1) {
                     resetThrowCounter = true;
-                    /*uiConfig.hideDices();*/
                     resetCombinationsListeners();
                     uiConfig.hideDices();
-                    mainActivity.showPlayerTurnScreen(true);
+                    mainActivity.showFragment(true);
                 } else if(uiConfig.getPlayerNumber()==2 && uiConfig.checkIfAllCombinationsAreDone()){
                     uiConfig.setFinalResultScreen();
                 }
@@ -77,9 +74,6 @@ public class ScoreInput {
         }
     }
 
-    public void setPlayerNumber(int playerNumber){
-        this.playerNumber = playerNumber;
-    }
 
 
 }
