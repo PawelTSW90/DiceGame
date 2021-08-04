@@ -2,8 +2,12 @@ package com.paweldyjak.dicegame;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.core.content.res.ResourcesCompat;
+
 import com.paweldyjak.dicegame.Fragments.FinalResultScreen;
 import java.util.Arrays;
 
@@ -180,6 +184,21 @@ public class UIConfig {
             this.playerOneCombinationsScore[combinationNr] = score;
         } else {
             this.playerTwoCombinationsScore[combinationNr] = score;
+        }
+    }
+
+    public void setDicesBorder(ImageView dice, boolean setBorder){
+        Drawable dicesBorder = ResourcesCompat.getDrawable(context.getResources(), R.drawable.dices_border, null);
+        if(setBorder){
+            dice.setBackground(dicesBorder);
+        } else{
+            dice.setBackground(null);
+        }
+    }
+
+    public void clearDicesBorder(){
+        for(ImageView dices: dicesSlots){
+            dices.setBackground(null);
         }
     }
 

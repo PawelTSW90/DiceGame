@@ -1,6 +1,8 @@
 package com.paweldyjak.dicegame;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
+
 import androidx.core.content.res.ResourcesCompat;
 
 public class RerollDices {
@@ -16,15 +18,15 @@ public class RerollDices {
 
 
     public void setDicesRerolling(int throwNumber) {
-        Drawable dicesBorder = ResourcesCompat.getDrawable(context.getResources(), R.drawable.dices_border, null);
+
         for (int x = 0; x < 5; x++) {
-            uiConfig.getDicesSlots()[x].setBackground(null);
+            uiConfig.clearDicesBorder();
             uiConfig.getDicesSlots()[x].setOnClickListener(v -> {
                 if(throwNumber!=3) {
                     if (v.getBackground() != null) {
                         v.setBackground(null);
                     } else {
-                        v.setBackground(dicesBorder);
+                        uiConfig.setDicesBorder(((ImageView)v), true);
                     }
                 }
 

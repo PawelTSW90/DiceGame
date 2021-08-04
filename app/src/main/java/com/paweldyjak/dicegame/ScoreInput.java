@@ -38,6 +38,7 @@ public class ScoreInput {
             if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[combinationNr] && !resetThrowCounter) {
                 uiConfig.setCombinationScore(scoreToInput, combinationNr);
                 uiConfig.setTotalScore(scoreToInput);
+                uiConfig.clearDicesBorder();
                 uiConfig.getCombinationsPointsTextView()[combinationNr].setText(uiConfig.getCombinationScore(combinationNr) + " pkt");
                 uiConfig.getCombinationsTextView()[combinationNr].setEnabled(false);
                 uiConfig.setIsCombinationActive(false, combinationNr);
