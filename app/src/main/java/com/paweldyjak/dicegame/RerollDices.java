@@ -6,11 +6,9 @@ import android.widget.ImageView;
 import androidx.core.content.res.ResourcesCompat;
 
 public class RerollDices {
-    private final Context context;
     private final UIConfig uiConfig;
 
-    public RerollDices(Context context, UIConfig uiConfig) {
-        this.context = context;
+    public RerollDices(UIConfig uiConfig) {
         this.uiConfig = uiConfig;
 
 

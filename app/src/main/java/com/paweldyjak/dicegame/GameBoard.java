@@ -3,8 +3,12 @@ package com.paweldyjak.dicegame;
 import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
+
+import androidx.core.content.ContextCompat;
+
 import com.paweldyjak.dicegame.Fragments.PlayerTurnScreen;
 import java.util.Random;
+import java.util.concurrent.Executor;
 
 
 public class GameBoard {
@@ -173,6 +177,7 @@ public class GameBoard {
 
     // method allows to block one of a combinations after last throw
     public void blockCombinations() {
+        Executor executor = ContextCompat.getMainExecutor(mainActivity);
         for (int x = 0; x < 16; x++) {
             int combinationNr = x;
             if (dicesCombinationsChecker.combinationChecker(x, dices, isFirstThrow, 0) == 0 && uiConfig.getIsCombinationActive()[x]) {
@@ -184,9 +189,28 @@ public class GameBoard {
                         scoreInput.resetCombinationsListeners();
                         uiConfig.hideDices();
                         if (uiConfig.checkIfAllCombinationsAreDone() && uiConfig.getPlayerNumber() == 2) {
-                            uiConfig.setFinalResultScreen();
+                            executor.execute(() -> {
+                                try {
+                                    sounds.playCrossOutCombinationSound();
+                                    Thread.sleep(2000);
+                                    uiConfig.setFinalResultScreen();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+
                         } else {
-                            mainActivity.showFragment(true);
+                            executor.execute(() -> {
+                                try {
+                                    sounds.playCrossOutCombinationSound();
+                                    Thread.sleep(2000);
+                                    mainActivity.showFragment(true);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                            });
+
                         }
 
                     });

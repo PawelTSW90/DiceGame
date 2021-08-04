@@ -33,7 +33,7 @@ public class StartGameScreen extends Fragment {
         nextTurnButton.setOnClickListener(v -> {
             //creating class objects
             UIConfig uiConfig = new UIConfig(mainActivity, mainActivity, names);
-            RerollDices rerollDices = new RerollDices(mainActivity, uiConfig);
+            RerollDices rerollDices = new RerollDices(uiConfig);
             DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(uiConfig);
             ScoreInput scoreInput = new ScoreInput(mainActivity,uiConfig);
             GameBoard gameBoard = new GameBoard(mainActivity, mainActivity, scoreInput, dicesCombinationsChecker, uiConfig, rerollDices);
