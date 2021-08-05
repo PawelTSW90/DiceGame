@@ -21,7 +21,11 @@
     <string name="punkty">0 pkt</string>
     <string name="pkt">pkt</string>
     <string name="content_description">android:contentDescription="@null"</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="two_players">2 players</string>
+    <string name="three_players">3 players</string>
+    <string name="four_players">4 players</string>
+    <string name="five_players">5 players</string>
+    <string name="six_players">6 players</string>
 
 </resources>
