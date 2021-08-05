@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.graphics.fonts.Font;
 import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -252,6 +251,15 @@ public class UIConfig {
         return currentPlayerName;
     }
 
+    public void setCombinationsSlots(int combinationsSlotNumber, int slotStatus){
+        if(playerNumber==1){
+            playerOneCombinationsSlots[combinationsSlotNumber] = slotStatus;
+        } else{
+            playerTwoCombinationsSlots[combinationsSlotNumber] = slotStatus;
+        }
+
+    }
+
     public void prepareCombinationsSlots(){
         for(int x = 0; x<combinationsSlots.length; x++){
             if(playerNumber ==1){
@@ -287,14 +295,7 @@ public class UIConfig {
 
     }
 
-    public void setCombinationsSlots(int combinationsSlotNumber, int slotStatus){
-        if(playerNumber==1){
-            playerOneCombinationsSlots[combinationsSlotNumber] = slotStatus;
-        } else{
-            playerTwoCombinationsSlots[combinationsSlotNumber] = slotStatus;
-        }
 
-    }
 
 
 

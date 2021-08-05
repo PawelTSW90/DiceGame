@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.ads.AdRequest;
@@ -50,7 +51,6 @@ public class PlayerNamesInputScreen extends Fragment {
         mAdView.loadAd(adRequest);
 
 
-
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         //allows to proceed when players name is at least one character long
@@ -68,18 +68,25 @@ public class PlayerNamesInputScreen extends Fragment {
 
             return false;
         });
-        //setting start button to save players names and start the game
+        //setting start button to save players names and start the game unless no player name entered
         start.setOnClickListener(v -> {
-            playersNames[0] = playerNameEditText.getText().toString();
-            playerName.setText("GRACZ 2");
-            playerNameEditText.setText(null);
-            start.setVisibility(View.INVISIBLE);
-            start.setOnClickListener(v1 -> {
-                playersNames[1] = playerNameEditText.getText().toString();
-                mainActivity.setStartGameScreen(new StartGameScreen(mainActivity, playersNames));
-                mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getStartGameScreen());
-            });
+            if (playerNameEditText.getText().length() < 1) {
 
+            } else {
+                playersNames[0] = playerNameEditText.getText().toString();
+                playerName.setText("GRACZ 2");
+                playerNameEditText.setText(null);
+                start.setVisibility(View.INVISIBLE);
+                start.setOnClickListener(v1 -> {
+                    if (playerNameEditText.getText().length() < 1) {
+
+                    } else {
+                        playersNames[1] = playerNameEditText.getText().toString();
+                        mainActivity.setStartGameScreen(new StartGameScreen(mainActivity, playersNames));
+                        mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getStartGameScreen());
+                    }
+                });
+            }
 
         });
 

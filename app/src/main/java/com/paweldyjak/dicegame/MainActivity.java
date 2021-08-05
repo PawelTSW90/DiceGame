@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
+
 import com.paweldyjak.dicegame.Fragments.*;
 import java.util.Objects;
 
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(layout, fragment);
         fragmentTransaction.commit();
     }
+
 
     public void showFragment(boolean show) {
         View fragmentLayout = findViewById(R.id.fragment_layout);
