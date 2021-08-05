@@ -187,10 +187,13 @@ public class GameBoard {
                         uiConfig.setIsCombinationActive(false, combinationNr);
                         scoreInput.setResetThrowCounter(true);
                         scoreInput.resetCombinationsListeners();
+                        uiConfig.setCombinationsSlots(combinationNr, 2);
+                        uiConfig.prepareCombinationsSlots();
                         uiConfig.hideDices();
                         if (uiConfig.checkIfAllCombinationsAreDone() && uiConfig.getPlayerNumber() == 2) {
                             executor.execute(() -> {
                                 try {
+
                                     sounds.playCrossOutCombinationSound();
                                     Thread.sleep(2000);
                                     uiConfig.setFinalResultScreen();

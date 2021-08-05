@@ -43,6 +43,7 @@ public class PlayerTurnScreen extends Fragment {
 
             } else {
                 uiConfig.prepareScoreBoard();
+
                 uiConfig.getCurrentPlayerName().setText((""+ uiConfig.getPlayersNames()[1]));
                 mainActivity.showFragment(false);
 
@@ -52,10 +53,12 @@ public class PlayerTurnScreen extends Fragment {
         //update player number
         if (uiConfig.getPlayerNumber() == 1) {
             uiConfig.setPlayerNumber(2);
+
         } else {
             uiConfig.setPlayerNumber(1);
 
         }
+        uiConfig.prepareCombinationsSlots();
     }
 
 }

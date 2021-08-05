@@ -2,7 +2,10 @@ package com.paweldyjak.dicegame;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.fonts.Font;
+import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +20,7 @@ public class UIConfig {
     private final ImageView[] dicesSlots = new ImageView[5];
     private final TextView[] combinationsTextView = new TextView[16];
     private final TextView[] combinationsPointsTextView = new TextView[16];
+    private final TextView[] combinationsSlots = new TextView[16];
     private TextView currentPlayerName;
     private TextView totalScoreTextView;
     private String[] playersNames;
@@ -25,6 +29,8 @@ public class UIConfig {
     private int playerTwoTotalScore = 0;
     private final int[] playerOneCombinationsScore = new int[16];
     private final int[] playerTwoCombinationsScore = new int[16];
+    private final int[] playerOneCombinationsSlots = new int [16];
+    private final int[] playerTwoCombinationsSlots = new int [16];
     private final boolean[] playerOneIsCombinationActive = new boolean[16];
     private final boolean[] playerTwoIsCombinationActive = new boolean[16];
 
@@ -44,36 +50,52 @@ public class UIConfig {
         dicesSlots[4] = (((Activity) context).findViewById(R.id.diceSlot5));
         combinationsTextView[0] = ((Activity) context).findViewById(R.id.textView_1);
         combinationsPointsTextView[0] = ((Activity) context).findViewById(R.id.textView_1_pts);
+        combinationsSlots[0] = ((Activity)context).findViewById(R.id.textView_1_slot);
         combinationsTextView[1] = ((Activity) context).findViewById(R.id.textView_2);
         combinationsPointsTextView[1] = ((Activity) context).findViewById(R.id.textView_2_pts);
+        combinationsSlots[1] = ((Activity)context).findViewById(R.id.textView_2_slot);
         combinationsTextView[2] = ((Activity) context).findViewById(R.id.textView_3);
         combinationsPointsTextView[2] = ((Activity) context).findViewById(R.id.textView_3_pts);
+        combinationsSlots[2] = ((Activity)context).findViewById(R.id.textView_3_slot);
         combinationsTextView[3] = ((Activity) context).findViewById(R.id.textView_4);
         combinationsPointsTextView[3] = ((Activity) context).findViewById(R.id.textView_4_pts);
+        combinationsSlots[3] = ((Activity)context).findViewById(R.id.textView_4_slot);
         combinationsTextView[4] = ((Activity) context).findViewById(R.id.textView_5);
         combinationsPointsTextView[4] = ((Activity) context).findViewById(R.id.textView_5_pts);
+        combinationsSlots[4] = ((Activity)context).findViewById(R.id.textView_5_slot);
         combinationsTextView[5] = ((Activity) context).findViewById(R.id.textView_6);
         combinationsPointsTextView[5] = ((Activity) context).findViewById(R.id.textView_6_pts);
+        combinationsSlots[5] = ((Activity)context).findViewById(R.id.textView_6_slot);
         combinationsTextView[6] = ((Activity) context).findViewById(R.id.textView_pair);
         combinationsPointsTextView[6] = ((Activity) context).findViewById(R.id.textView_pair_pts);
+        combinationsSlots[6] = ((Activity)context).findViewById(R.id.textView_pair_slot);
         combinationsTextView[7] = ((Activity) context).findViewById(R.id.textView_2pairs);
         combinationsPointsTextView[7] = ((Activity) context).findViewById(R.id.textView_2pairs_pts);
+        combinationsSlots[7] = ((Activity)context).findViewById(R.id.textView_2pairs_slot);
         combinationsTextView[8] = ((Activity) context).findViewById(R.id.textView_evens);
         combinationsPointsTextView[8] = ((Activity) context).findViewById(R.id.textView_evens_pts);
+        combinationsSlots[8] = ((Activity)context).findViewById(R.id.textView_evens_slot);
         combinationsTextView[9] = ((Activity) context).findViewById(R.id.textView_odds);
         combinationsPointsTextView[9] = ((Activity) context).findViewById(R.id.textView_odds_pts);
+        combinationsSlots[9] = ((Activity)context).findViewById(R.id.textView_odds_slot);
         combinationsTextView[10] = ((Activity) context).findViewById(R.id.textView_smallStraight);
         combinationsPointsTextView[10] = ((Activity) context).findViewById(R.id.textView_smallStraight_pts);
+        combinationsSlots[10] = ((Activity)context).findViewById(R.id.textView_smallStraight_slot);
         combinationsTextView[11] = ((Activity) context).findViewById(R.id.textView_largeStraight);
         combinationsPointsTextView[11] = ((Activity) context).findViewById(R.id.textView_largeStraight_pts);
+        combinationsSlots[11] = ((Activity)context).findViewById(R.id.textView_largeStraight_slot);
         combinationsTextView[12] = ((Activity) context).findViewById(R.id.textView_fullHouse);
         combinationsPointsTextView[12] = ((Activity) context).findViewById(R.id.textView_fullHouse_pts);
+        combinationsSlots[12] = ((Activity)context).findViewById(R.id.textView_fullHouse_slot);
         combinationsTextView[13] = ((Activity) context).findViewById(R.id.textView_4ofAKind);
         combinationsPointsTextView[13] = ((Activity) context).findViewById(R.id.textView_4ofAKind_pts);
+        combinationsSlots[13] = ((Activity)context).findViewById(R.id.textView_4ofAKind_slot);
         combinationsTextView[14] = ((Activity) context).findViewById(R.id.textView_5ofAKind);
         combinationsPointsTextView[14] = ((Activity) context).findViewById(R.id.textView_5ofAKind_pts);
+        combinationsSlots[14] = ((Activity)context).findViewById(R.id.textView_5ofAKind_slot);
         combinationsTextView[15] = ((Activity) context).findViewById(R.id.textView_sos);
         combinationsPointsTextView[15] = ((Activity) context).findViewById(R.id.textView_sos_pts);
+        combinationsSlots[15] = ((Activity)context).findViewById(R.id.textView_sos_slot);
         totalScoreTextView = new TextView(context);
         totalScoreTextView = ((Activity) context).findViewById(R.id.textView_score_pts);
         currentPlayerName = ((Activity) context).findViewById(R.id.player_name_textView);
@@ -228,6 +250,50 @@ public class UIConfig {
 
     public TextView getCurrentPlayerName() {
         return currentPlayerName;
+    }
+
+    public void prepareCombinationsSlots(){
+        for(int x = 0; x<combinationsSlots.length; x++){
+            if(playerNumber ==1){
+                if(playerOneCombinationsSlots[x]==1){
+                    combinationsSlots[x].setText("\u2713");
+                    combinationsSlots[x].setGravity(Gravity.CENTER);
+                    combinationsSlots[x].setTextSize(16);
+                    combinationsSlots[x].setTextColor(Color.rgb(27,182,33));
+                } else if(playerOneCombinationsSlots[x]==2){
+                    combinationsSlots[x].setText("X");
+                    combinationsSlots[x].setGravity(Gravity.CENTER);
+                    combinationsSlots[x].setTextSize(16);
+                    combinationsSlots[x].setTextColor(Color.rgb(140,17,17));
+                } else{
+                    combinationsSlots[x].setText("");
+                }
+            } else{
+                if(playerTwoCombinationsSlots[x]==1){
+                    combinationsSlots[x].setText("\u2713");
+                    combinationsSlots[x].setGravity(Gravity.CENTER);
+                    combinationsSlots[x].setTextSize(16);
+                    combinationsSlots[x].setTextColor(Color.rgb(27,182,33));
+                } else if(playerTwoCombinationsSlots[x]==2){
+                    combinationsSlots[x].setText("X");
+                    combinationsSlots[x].setGravity(Gravity.CENTER);
+                    combinationsSlots[x].setTextSize(16);
+                    combinationsSlots[x].setTextColor(Color.rgb(140,17,17));
+                } else{
+                    combinationsSlots[x].setText("");
+                }
+            }
+        }
+
+    }
+
+    public void setCombinationsSlots(int combinationsSlotNumber, int slotStatus){
+        if(playerNumber==1){
+            playerOneCombinationsSlots[combinationsSlotNumber] = slotStatus;
+        } else{
+            playerTwoCombinationsSlots[combinationsSlotNumber] = slotStatus;
+        }
+
     }
 
 

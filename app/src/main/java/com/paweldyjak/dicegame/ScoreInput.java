@@ -46,20 +46,23 @@ public class ScoreInput {
                 uiConfig.setCombinationScore(scoreToInput, combinationNr);
                 uiConfig.setTotalScore(scoreToInput);
                 uiConfig.clearDicesBorder();
+                uiConfig.hideDices();
                 uiConfig.getCombinationsPointsTextView()[combinationNr].setText(uiConfig.getCombinationScore(combinationNr) + " pkt");
                 uiConfig.getCombinationsTextView()[combinationNr].setEnabled(false);
                 uiConfig.setIsCombinationActive(false, combinationNr);
+                uiConfig.setCombinationsSlots(combinationNr, 1);
+                uiConfig.prepareCombinationsSlots();
                 if (!uiConfig.checkIfAllCombinationsAreDone() || uiConfig.getPlayerNumber()==1) {
                     executor.execute(() -> {
                         try {
                             Thread.sleep(2000);
+                            resetThrowCounter = true;
+                            resetCombinationsListeners();
+                            mainActivity.showFragment(true);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        resetThrowCounter = true;
-                        resetCombinationsListeners();
-                        uiConfig.hideDices();
-                        mainActivity.showFragment(true);
+
                     });
 
 
