@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.core.content.res.ResourcesCompat;
 
 import com.paweldyjak.dicegame.Fragments.FinalResultScreen;
@@ -108,12 +107,13 @@ public class UIConfig {
 
 
     public void setTotalScore(int score) {
+        String string = mainActivity.getResources().getString(R.string.points);
         if (playerNumber == 1) {
             playerOneTotalScore += score;
-            totalScoreTextView.setText(playerOneTotalScore + " pkt");
+            totalScoreTextView.setText(playerOneTotalScore +" "+string);
         } else {
             playerTwoTotalScore += score;
-            totalScoreTextView.setText(playerTwoTotalScore + " pkt");
+            totalScoreTextView.setText(playerTwoTotalScore +" "+string);
         }
     }
 
@@ -134,17 +134,18 @@ public class UIConfig {
 
 
     public void prepareScoreBoard() {
-
+        String string = mainActivity.getResources().getString(R.string.points);
         for (int x = 0; x < 16; x++) {
             if (playerNumber == 2) {
                 getCombinationsTextView()[x].setEnabled(playerTwoIsCombinationActive[x]);
-                combinationsPointsTextView[x].setText(playerTwoCombinationsScore[x] + " pkt");
-                totalScoreTextView.setText(playerTwoTotalScore + " pkt");
+
+                combinationsPointsTextView[x].setText(playerTwoCombinationsScore[x] +" "+string);
+                totalScoreTextView.setText(playerTwoTotalScore +" "+string);
 
             } else {
                 getCombinationsTextView()[x].setEnabled(playerOneIsCombinationActive[x]);
-                combinationsPointsTextView[x].setText(playerOneCombinationsScore[x] + " pkt");
-                totalScoreTextView.setText(playerOneTotalScore + " pkt");
+                combinationsPointsTextView[x].setText(playerOneCombinationsScore[x] +" "+string);
+                totalScoreTextView.setText(playerOneTotalScore +" "+string);
 
             }
 
@@ -268,13 +269,16 @@ public class UIConfig {
                     combinationsSlots[x].setGravity(Gravity.CENTER);
                     combinationsSlots[x].setTextSize(16);
                     combinationsSlots[x].setTextColor(Color.rgb(27,182,33));
+                    combinationsPointsTextView[x].setEnabled(true);
                 } else if(playerOneCombinationsSlots[x]==2){
                     combinationsSlots[x].setText("X");
                     combinationsSlots[x].setGravity(Gravity.CENTER);
                     combinationsSlots[x].setTextSize(16);
                     combinationsSlots[x].setTextColor(Color.rgb(140,17,17));
+                    combinationsPointsTextView[x].setEnabled(false);
                 } else{
                     combinationsSlots[x].setText("");
+                    combinationsPointsTextView[x].setEnabled(true);
                 }
             } else{
                 if(playerTwoCombinationsSlots[x]==1){
@@ -282,13 +286,16 @@ public class UIConfig {
                     combinationsSlots[x].setGravity(Gravity.CENTER);
                     combinationsSlots[x].setTextSize(16);
                     combinationsSlots[x].setTextColor(Color.rgb(27,182,33));
+                    combinationsPointsTextView[x].setEnabled(true);
                 } else if(playerTwoCombinationsSlots[x]==2){
                     combinationsSlots[x].setText("X");
                     combinationsSlots[x].setGravity(Gravity.CENTER);
                     combinationsSlots[x].setTextSize(16);
                     combinationsSlots[x].setTextColor(Color.rgb(140,17,17));
+                    combinationsPointsTextView[x].setEnabled(false);
                 } else{
                     combinationsSlots[x].setText("");
+                    combinationsPointsTextView[x].setEnabled(true);
                 }
             }
         }

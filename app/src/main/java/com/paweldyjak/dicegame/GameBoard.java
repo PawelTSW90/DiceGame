@@ -3,9 +3,7 @@ package com.paweldyjak.dicegame;
 import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
-
 import androidx.core.content.ContextCompat;
-
 import com.paweldyjak.dicegame.Fragments.PlayerTurnScreen;
 import java.util.Random;
 import java.util.concurrent.Executor;
@@ -45,8 +43,8 @@ public class GameBoard {
         ImageView rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
         rollDicesButton.setOnClickListener(v -> {
 
-            if (uiConfig.checkIfAllCombinationsAreDone()) {
-            } else {
+            if (!uiConfig.checkIfAllCombinationsAreDone()) {
+
                 if (scoreInput.getResetThrowCounter()) {
                     throwNumber = 0;
                     isFirstThrow = true;
@@ -193,7 +191,6 @@ public class GameBoard {
                         if (uiConfig.checkIfAllCombinationsAreDone() && uiConfig.getPlayerNumber() == 2) {
                             executor.execute(() -> {
                                 try {
-
                                     sounds.playCrossOutCombinationSound();
                                     Thread.sleep(2000);
                                     uiConfig.setFinalResultScreen();

@@ -29,4 +29,10 @@ public class Sounds {
         mediaPlayer.start();
         mediaPlayer.setOnCompletionListener(MediaPlayer::release);
     }
+
+    public void playTickSound(){
+        MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.tick);
+        mediaPlayer.start();
+        mediaPlayer.setOnCompletionListener(MediaPlayer::release);
+    }
 }

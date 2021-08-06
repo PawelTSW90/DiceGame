@@ -22,19 +22,20 @@
         <TextView
             android:id="@+id/player_name_textView"
             style="@style/Widget.AppCompat.TextView.SpinnerItem"
-            android:layout_width="233dp"
-            android:layout_height="45dp"
+            android:layout_width="243dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="48dp"
             android:background="#5B2FAA"
-            android:gravity="center"
-            android:text="TextView"
+            android:gravity="start"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/table_layout"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TableLayout
             android:id="@+id/table_layout"
-            android:layout_width="407dp"
-            android:layout_height="337dp"
+            android:layout_width="447dp"
+            android:layout_height="339dp"
             android:background="#901F8824"
             android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +62,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
+                    android:text="@string/zero_points" />
 
                 <TextView
                     android:id="@+id/textView_1_slot"
@@ -74,25 +75,25 @@
                     android:gravity="center" />
 
                 <TextView
-                    android:id="@+id/textView_pair"
+                    android:id="@+id/textView_evens"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/para" />
+                    android:text="@string/evens" />
 
                 <TextView
-                    android:id="@+id/textView_pair_pts"
+                    android:id="@+id/textView_evens_pts"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="62dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
+                    android:text="@string/zero_points" />
 
                 <TextView
-                    android:id="@+id/textView_pair_slot"
+                    android:id="@+id/textView_evens_slot"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="32dp"
                     android:layout_height="match_parent"
@@ -123,7 +124,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
+                    android:text="@string/zero_points" />
 
                 <TextView
                     android:id="@+id/textView_2_slot"
@@ -136,25 +137,25 @@
                     android:gravity="center" />
 
                 <TextView
-                    android:id="@+id/textView_2pairs"
+                    android:id="@+id/textView_odds"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/_2pary" />
+                    android:text="@string/odds" />
 
                 <TextView
-                    android:id="@+id/textView_2pairs_pts"
+                    android:id="@+id/textView_odds_pts"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
+                    android:text="@string/zero_points" />
 
                 <TextView
-                    android:id="@+id/textView_2pairs_slot"
+                    android:id="@+id/textView_odds_slot"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="32dp"
                     android:layout_height="match_parent"
@@ -184,7 +185,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
+                    android:text="@string/zero_points" />
 
                 <TextView
                     android:id="@+id/textView_3_slot"
@@ -196,25 +197,25 @@
                     android:background="@drawable/combination_tick_border" />
 
                 <TextView
-                    android:id="@+id/textView_evens"
+                    android:id="@+id/textView_smallStraight"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/parzyste" />
+                    android:text="@string/small_straight" />
 
                 <TextView
-                    android:id="@+id/textView_evens_pts"
+                    android:id="@+id/textView_smallStraight_pts"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
+                    android:text="@string/zero_points" />
 
                 <TextView
-                    android:id="@+id/textView_evens_slot"
+                    android:id="@+id/textView_smallStraight_slot"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="32dp"
                     android:layout_height="match_parent"
@@ -244,7 +245,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
+                    android:text="@string/zero_points" />
 
                 <TextView
                     android:id="@+id/textView_4_slot"
@@ -256,25 +257,25 @@
                     android:background="@drawable/combination_tick_border" />
 
                 <TextView
-                    android:id="@+id/textView_odds"
+                    android:id="@+id/textView_largeStraight"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/nieparzyste" />
+                    android:text="@string/large_straight" />
 
                 <TextView
-                    android:id="@+id/textView_odds_pts"
+                    android:id="@+id/textView_largeStraight_pts"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
+                    android:text="@string/zero_points" />
 
                 <TextView
-                    android:id="@+id/textView_odds_slot"
+                    android:id="@+id/textView_largeStraight_slot"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="32dp"
                     android:layout_height="match_parent"
@@ -304,7 +305,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
+                    android:text="@string/zero_points" />
 
                 <TextView
                     android:id="@+id/textView_5_slot"
@@ -316,25 +317,25 @@
                     android:background="@drawable/combination_tick_border" />
 
                 <TextView
-                    android:id="@+id/textView_smallStraight"
+                    android:id="@+id/textView_fullHouse"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/m_street" />
+                    android:text="@string/full_house" />
 
                 <TextView
-                    android:id="@+id/textView_smallStraight_pts"
+                    android:id="@+id/textView_fullHouse_pts"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
+                    android:text="@string/zero_points" />
 
                 <TextView
-                    android:id="@+id/textView_smallStraight_slot"
+                    android:id="@+id/textView_fullHouse_slot"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="32dp"
                     android:layout_height="match_parent"
@@ -364,70 +365,10 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
+                    android:text="@string/zero_points" />
 
                 <TextView
                     android:id="@+id/textView_6_slot"
-                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/combination_tick_border" />
-
-                <TextView
-                    android:id="@+id/textView_largeStraight"
-                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/d_street" />
-
-                <TextView
-                    android:id="@+id/textView_largeStraight_pts"
-                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
-
-                <TextView
-                    android:id="@+id/textView_largeStraight_slot"
-                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                    android:layout_width="32dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/combination_tick_border" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1.0">
-
-                <TextView
-                    android:id="@+id/textView_fullHouse"
-                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/full" />
-
-                <TextView
-                    android:id="@+id/textView_fullHouse_pts"
-                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
-
-                <TextView
-                    android:id="@+id/textView_fullHouse_slot"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -442,8 +383,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/kareta" />
-
+                    android:text="@string/four_of_a_kind" />
 
                 <TextView
                     android:id="@+id/textView_4ofAKind_pts"
@@ -452,10 +392,73 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
+                    android:text="@string/zero_points" />
 
                 <TextView
                     android:id="@+id/textView_4ofAKind_slot"
+                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                    android:layout_width="32dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/combination_tick_border" />
+
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0">
+
+                <TextView
+                    android:id="@+id/textView_pair"
+                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/pair" />
+
+                <TextView
+                    android:id="@+id/textView_pair_pts"
+                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/zero_points" />
+
+                <TextView
+                    android:id="@+id/textView_pair_slot"
+                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/combination_tick_border" />
+
+                <TextView
+                    android:id="@+id/textView_5ofAKind"
+                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/five_of_a_kind" />
+
+
+                <TextView
+                    android:id="@+id/textView_5ofAKind_pts"
+                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/zero_points" />
+
+                <TextView
+                    android:id="@+id/textView_5ofAKind_slot"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="32dp"
                     android:layout_height="match_parent"
@@ -471,25 +474,25 @@
 
 
                 <TextView
-                    android:id="@+id/textView_5ofAKind"
+                    android:id="@+id/textView_2pairs"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/general" />
+                    android:text="@string/two_pairs" />
 
                 <TextView
-                    android:id="@+id/textView_5ofAKind_pts"
+                    android:id="@+id/textView_2pairs_pts"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
+                    android:text="@string/zero_points" />
 
                 <TextView
-                    android:id="@+id/textView_5ofAKind_slot"
+                    android:id="@+id/textView_2pairs_slot"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -513,7 +516,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
+                    android:text="@string/zero_points" />
 
                 <TextView
                     android:id="@+id/textView_sos_slot"
@@ -538,7 +541,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/razem" />
+                    android:text="@string/score" />
 
                 <TextView
                     android:id="@+id/textView_score_pts"
@@ -547,7 +550,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/punkty" />
+                    android:text="@string/zero_points" />
             </TableRow>
 
         </TableLayout>
@@ -571,7 +574,7 @@
             android:layout_width="51dp"
             android:layout_height="54dp"
             android:layout_marginTop="102dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="14dp"
             android:cropToPadding="true"
             android:padding="3dp"
             android:scaleType="centerCrop"
@@ -584,7 +587,7 @@
             android:layout_width="51dp"
             android:layout_height="54dp"
             android:layout_marginTop="102dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="14dp"
             android:cropToPadding="true"
             android:padding="3dp"
             android:scaleType="centerCrop"
@@ -599,7 +602,7 @@
             android:layout_width="51dp"
             android:layout_height="54dp"
             android:layout_marginTop="102dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="6dp"
             android:cropToPadding="true"
             android:padding="3dp"
             android:scaleType="centerCrop"
@@ -613,7 +616,7 @@
             android:layout_width="51dp"
             android:layout_height="54dp"
             android:layout_marginTop="28dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="14dp"
             android:contentDescription="@string/content_description"
             android:cropToPadding="true"
             android:padding="3dp"
@@ -627,7 +630,7 @@
             android:layout_width="51dp"
             android:layout_height="54dp"
             android:layout_marginTop="28dp"
-            android:layout_marginEnd="52dp"
+            android:layout_marginEnd="42dp"
             android:contentDescription="@string/content_description"
             android:cropToPadding="true"
             android:padding="3dp"
@@ -649,8 +652,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_layout"
         android:layout_width="match_parent"
@@ -659,7 +660,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

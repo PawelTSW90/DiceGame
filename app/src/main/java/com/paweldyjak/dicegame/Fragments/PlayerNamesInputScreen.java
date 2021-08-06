@@ -32,6 +32,7 @@ public class PlayerNamesInputScreen extends Fragment {
         start = view.findViewById(R.id.player_input_start_button);
         playerNameEditText = view.findViewById(R.id.edit_text_name_one);
         playerName = view.findViewById(R.id.player_title);
+        playerName.setText(R.string.player_one);
         playerInputScreen(context);
         return view;
 
@@ -70,17 +71,13 @@ public class PlayerNamesInputScreen extends Fragment {
         });
         //setting start button to save players names and start the game unless no player name entered
         start.setOnClickListener(v -> {
-            if (playerNameEditText.getText().length() < 1) {
-
-            } else {
+            if (playerNameEditText.getText().length() >= 1) {
                 playersNames[0] = playerNameEditText.getText().toString();
-                playerName.setText("GRACZ 2");
+                playerName.setText(R.string.player_two);
                 playerNameEditText.setText(null);
                 start.setVisibility(View.INVISIBLE);
                 start.setOnClickListener(v1 -> {
-                    if (playerNameEditText.getText().length() < 1) {
-
-                    } else {
+                    if (playerNameEditText.getText().length() >= 1) {
                         playersNames[1] = playerNameEditText.getText().toString();
                         mainActivity.setStartGameScreen(new StartGameScreen(mainActivity, playersNames));
                         mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getStartGameScreen());

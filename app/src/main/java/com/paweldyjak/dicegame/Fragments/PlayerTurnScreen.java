@@ -30,21 +30,21 @@ public class PlayerTurnScreen extends Fragment {
 
     public void displayTurnMessage(){
         if (uiConfig.getPlayerNumber() == 1) {
-            playerName.setText("" + uiConfig.getPlayersNames()[1]);
+            playerName.setText(uiConfig.getPlayersNames()[1]);
         } else {
-            playerName.setText("" + uiConfig.getPlayersNames()[0]);
+            playerName.setText(uiConfig.getPlayersNames()[0]);
         }
         nextPlayerButton.setOnClickListener(v -> {
             if (uiConfig.getPlayerNumber() == 1) {
                 uiConfig.prepareScoreBoard();
-                uiConfig.getCurrentPlayerName().setText((""+ uiConfig.getPlayersNames()[0]));
+                uiConfig.getCurrentPlayerName().setText((uiConfig.getPlayersNames()[0]));
                 mainActivity.showFragment(false);
 
 
             } else {
                 uiConfig.prepareScoreBoard();
 
-                uiConfig.getCurrentPlayerName().setText((""+ uiConfig.getPlayersNames()[1]));
+                uiConfig.getCurrentPlayerName().setText((uiConfig.getPlayersNames()[1]));
                 mainActivity.showFragment(false);
 
             }

@@ -40,7 +40,7 @@ public class StartGameScreen extends Fragment {
             //configuring UI
             uiConfig.configureUI();
             uiConfig.setPlayersNames(names);
-            uiConfig.getCurrentPlayerName().setText(""+names[0]);
+            uiConfig.getCurrentPlayerName().setText(names[0]);
             gameBoard.setRollDicesButton();
             mainActivity.showMainBoard(true);
 

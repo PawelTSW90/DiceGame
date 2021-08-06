@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
-            android:text="Start"
+            android:text="@string/start"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,6 @@
         android:layout_marginBottom="130dp"
         android:background="#901F8824"
         android:gravity="center_horizontal"
-        android:text="GRACZ 1"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +56,7 @@
             android:layout_width="343dp"
             android:layout_height="60dp"
             android:layout_marginBottom="80dp"
-            android:hint="Imię:"
+            android:hint="@string/name"
             app:counterMaxLength="15"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -73,23 +72,4 @@
                 android:maxLength="15" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/player_name_textView"
-            style="@style/Widget.AppCompat.TextView.SpinnerItem"
-            android:layout_width="195dp"
-            android:layout_height="34dp"
-            android:layout_marginStart="571dp"
-            android:layout_marginTop="11dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="11dp"
-            android:background="#CA1313"
-            android:gravity="center"
-            android:text="TextView"
-            android:textSize="20sp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/player_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

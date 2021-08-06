@@ -13,13 +13,13 @@
         android:layout_width="616dp"
         android:layout_height="49dp"
         android:layout_marginStart="84dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="85dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="50dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/multiplayer_button"
+        app:layout_constraintBottom_toTopOf="@+id/play_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_textView">
@@ -39,7 +39,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/three_players_button"
@@ -51,7 +51,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/four_players_button"
@@ -63,7 +63,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/five_players_button"
@@ -75,7 +75,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/six_playersButton"
@@ -87,7 +87,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
     </LinearLayout>
 
     <TextView
@@ -95,27 +95,53 @@
         android:layout_width="345dp"
         android:layout_height="90dp"
         android:gravity="center"
-        android:text="KOŚCI"
+        android:text="@string/title"
         android:textSize="60sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/multiplayer_button"
+        android:id="@+id/hotseat_mode_button"
         android:layout_width="140dp"
         android:layout_height="50dp"
-        android:text="MULTIPLAYER"
+        android:text="@string/hotseat"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/title_textView"
+        app:layout_constraintVertical_bias="0.458" />
+
+    <Button
+        android:id="@+id/play_button"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:text="@string/play"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_textView"
+        app:layout_constraintVertical_bias="0.691" />
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:text="@string/back"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.975"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_textView"
+        app:layout_constraintVertical_bias="0.936" />
 
     <Button
         android:id="@+id/exit_button"
         android:layout_width="140dp"
         android:layout_height="50dp"
-        android:text="WYJŚCIE"
+        android:text="@string/exit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

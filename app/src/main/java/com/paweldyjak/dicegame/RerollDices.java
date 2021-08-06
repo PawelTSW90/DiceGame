@@ -1,9 +1,6 @@
 package com.paweldyjak.dicegame;
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
-import androidx.core.content.res.ResourcesCompat;
 
 public class RerollDices {
     private final UIConfig uiConfig;

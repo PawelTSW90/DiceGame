@@ -44,10 +44,11 @@ public class ScoreInput {
             if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[combinationNr] && !resetThrowCounter) {
                 sounds.playCombinationTickSound();
                 uiConfig.setCombinationScore(scoreToInput, combinationNr);
+                String points = uiConfig.getCombinationScore(combinationNr)+" pkt";
                 uiConfig.setTotalScore(scoreToInput);
                 uiConfig.clearDicesBorder();
                 uiConfig.hideDices();
-                uiConfig.getCombinationsPointsTextView()[combinationNr].setText(uiConfig.getCombinationScore(combinationNr) + " pkt");
+                uiConfig.getCombinationsPointsTextView()[combinationNr].setText(points);
                 uiConfig.getCombinationsTextView()[combinationNr].setEnabled(false);
                 uiConfig.setIsCombinationActive(false, combinationNr);
                 uiConfig.setCombinationsSlots(combinationNr, 1);
