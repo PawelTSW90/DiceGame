@@ -188,7 +188,7 @@ public class GameBoard {
                         uiConfig.setCombinationsSlots(combinationNr, 2);
                         uiConfig.prepareCombinationsSlots();
                         uiConfig.hideDices();
-                        if (uiConfig.checkIfAllCombinationsAreDone() && uiConfig.getPlayerNumber() == 2) {
+                        if (uiConfig.checkIfAllCombinationsAreDone() && uiConfig.getCurrentPlayerNumber() == uiConfig.getNumberOfPlayers()) {
                             executor.execute(() -> {
                                 try {
                                     sounds.playCrossOutCombinationSound();

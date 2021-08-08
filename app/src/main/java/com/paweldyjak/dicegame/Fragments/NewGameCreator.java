@@ -8,14 +8,16 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import com.paweldyjak.dicegame.*;
 
-public class StartGameScreen extends Fragment {
+public class NewGameCreator extends Fragment {
     private final MainActivity mainActivity;
     private Button nextTurnButton;
     private final String[] names;
+    private int numberOfPlayers;
 
-    public StartGameScreen(MainActivity mainActivity, String[] names) {
+    public NewGameCreator(MainActivity mainActivity, String[] names, int numberOfPlayers) {
         this.mainActivity = mainActivity;
         this.names = names;
+        this.numberOfPlayers = numberOfPlayers;
     }
 
     @Override
@@ -40,6 +42,7 @@ public class StartGameScreen extends Fragment {
             //configuring UI
             uiConfig.configureUI();
             uiConfig.setPlayersNames(names);
+            uiConfig.setNumberOfPlayers(numberOfPlayers);
             uiConfig.getCurrentPlayerName().setText(names[0]);
             gameBoard.setRollDicesButton();
             mainActivity.showMainBoard(true);

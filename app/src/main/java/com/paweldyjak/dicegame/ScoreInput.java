@@ -53,25 +53,23 @@ public class ScoreInput {
                 uiConfig.setIsCombinationActive(false, combinationNr);
                 uiConfig.setCombinationsSlots(combinationNr, 1);
                 uiConfig.prepareCombinationsSlots();
-                if (!uiConfig.checkIfAllCombinationsAreDone() || uiConfig.getPlayerNumber()==1) {
+                if (uiConfig.getCurrentPlayerNumber()==uiConfig.getNumberOfPlayers() && uiConfig.checkIfAllCombinationsAreDone()) {
+                    executor.execute(() -> {
+                        try {
+                            Thread.sleep(2000);
+                            uiConfig.setFinalResultScreen();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    });
+                } else{
                     executor.execute(() -> {
                         try {
                             Thread.sleep(2000);
                             resetThrowCounter = true;
                             resetCombinationsListeners();
                             mainActivity.showFragment(true);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                    });
-
-
-                } else if(uiConfig.getPlayerNumber()==2 && uiConfig.checkIfAllCombinationsAreDone()){
-                    executor.execute(() -> {
-                        try {
-                            Thread.sleep(2000);
-                            uiConfig.setFinalResultScreen();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

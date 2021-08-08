@@ -4,6 +4,10 @@
     <string name="title">KOŚCI</string>
     <string name="player_one">GRACZ 1</string>
     <string name="player_two">GRACZ 2</string>
+    <string name="player_three">GRACZ 3</string>
+    <string name="player_four">GRACZ 4</string>
+    <string name="player_five">GRACZ 5</string>
+    <string name="player_six">GRACZ 6</string>
     <string name="name">Imię:</string>
     <string name="start">START</string>
     <string name="_1">1</string>

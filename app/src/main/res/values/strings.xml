@@ -3,6 +3,10 @@
     <string name="title">Dice Game</string>
     <string name="player_one">PLAYER 1</string>
     <string name="player_two">PLAYER 2</string>
+    <string name="player_three">PLAYER 3</string>
+    <string name="player_four">PLAYER 4</string>
+    <string name="player_five">PLAYER 5</string>
+    <string name="player_six">PLAYER 6</string>
     <string name="name">Name:</string>
     <string name="start">START</string>
     <string name="_1">1</string>

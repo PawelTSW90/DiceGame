@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private TitleScreen titleScreen;
-    private StartGameScreen startGameScreen;
+    private NewGameCreator newGameCreator;
     private PlayerTurnScreen playerTurnScreen;
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentTransaction fragmentTransaction;
@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(this);
-        titleScreen = new TitleScreen(this, playerNamesInputScreen);
+
+        titleScreen = new TitleScreen(this);
         mainBoardLayout = findViewById(R.id.game_board_screen_layout);
 
         //hides status bar
@@ -76,12 +76,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void setStartGameScreen(StartGameScreen startGameScreen) {
-        this.startGameScreen = startGameScreen;
+    public void setStartGameScreen(NewGameCreator newGameCreator) {
+        this.newGameCreator = newGameCreator;
     }
 
-    public StartGameScreen getStartGameScreen() {
-        return startGameScreen;
+    public NewGameCreator getStartGameScreen() {
+        return newGameCreator;
     }
 
     public PlayerTurnScreen getPlayerTurnScreen() {

@@ -24,6 +24,7 @@ public class PlayerNamesInputScreen extends Fragment {
     private Button start;
     private EditText playerNameEditText;
     private TextView playerName;
+    private final int numberOfPlayers;
 
 
     @Override
@@ -38,13 +39,14 @@ public class PlayerNamesInputScreen extends Fragment {
 
     }
 
-    public PlayerNamesInputScreen(MainActivity mainActivity) {
+    public PlayerNamesInputScreen(MainActivity mainActivity, int numberOfPlayers) {
         this.mainActivity = mainActivity;
+        this.numberOfPlayers = numberOfPlayers;
     }
 
     public void playerInputScreen(Context context) {
         this.context = context;
-        String[] playersNames = new String[2];
+        String[] playersNames = new String[6];
 
         //ad config
         AdView mAdView = view.findViewById(R.id.adView);
@@ -69,6 +71,8 @@ public class PlayerNamesInputScreen extends Fragment {
 
             return false;
         });
+
+
         //setting start button to save players names and start the game unless no player name entered
         start.setOnClickListener(v -> {
             if (playerNameEditText.getText().length() >= 1) {
@@ -79,14 +83,76 @@ public class PlayerNamesInputScreen extends Fragment {
                 start.setOnClickListener(v1 -> {
                     if (playerNameEditText.getText().length() >= 1) {
                         playersNames[1] = playerNameEditText.getText().toString();
-                        mainActivity.setStartGameScreen(new StartGameScreen(mainActivity, playersNames));
-                        mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getStartGameScreen());
+                        playerNameEditText.setText(null);
+                        start.setVisibility(View.INVISIBLE);
+                        if (numberOfPlayers > 2) {
+                            playerName.setText(R.string.player_three);
+                            start.setOnClickListener(v2 -> {
+                                if (playerNameEditText.getText().length() >= 1) {
+                                    playersNames[2] = playerNameEditText.getText().toString();
+                                    playerNameEditText.setText(null);
+                                    start.setVisibility(View.INVISIBLE);
+                                    if (numberOfPlayers > 3) {
+                                        playerName.setText(R.string.player_four);
+                                        start.setOnClickListener(v3 -> {
+                                            if (playerNameEditText.getText().length() >= 1) {
+                                                playersNames[3] = playerNameEditText.getText().toString();
+                                                playerNameEditText.setText(null);
+                                                start.setVisibility(View.INVISIBLE);
+                                                if (numberOfPlayers > 4) {
+                                                    playerName.setText(R.string.player_five);
+                                                    start.setOnClickListener(v4 -> {
+                                                        if (playerNameEditText.getText().length() >= 1) {
+                                                            playersNames[4] = playerNameEditText.getText().toString();
+                                                            playerNameEditText.setText(null);
+                                                            start.setVisibility(View.INVISIBLE);
+                                                            if (numberOfPlayers > 5) {
+                                                                playerName.setText(R.string.player_six);
+                                                                start.setOnClickListener(v5 -> {
+                                                                    if (playerNameEditText.getText().length() >= 1) {
+                                                                        playersNames[5] = playerNameEditText.getText().toString();
+                                                                        mainActivity.setStartGameScreen(new NewGameCreator(mainActivity, playersNames, numberOfPlayers));
+                                                                        mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getStartGameScreen());
+                                                                    }
+                                                                });
+                                                            } else {
+                                                                mainActivity.setStartGameScreen(new NewGameCreator(mainActivity, playersNames, numberOfPlayers));
+                                                                mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getStartGameScreen());
+                                                            }
+                                                        }
+                                                    });
+                                                } else {
+                                                    mainActivity.setStartGameScreen(new NewGameCreator(mainActivity, playersNames, numberOfPlayers));
+                                                    mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getStartGameScreen());
+                                                }
+
+                                            }
+                                        });
+                                    } else {
+                                        mainActivity.setStartGameScreen(new NewGameCreator(mainActivity, playersNames, numberOfPlayers));
+                                        mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getStartGameScreen());
+                                    }
+                                }
+
+                            });
+
+                        } else {
+                            mainActivity.setStartGameScreen(new NewGameCreator(mainActivity, playersNames, numberOfPlayers));
+                            mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getStartGameScreen());
+                        }
+
                     }
                 });
+
+
             }
-
         });
-
-
     }
+
 }
+
+
+
+
+
+
