@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.fragment.app.Fragment;
+
 import com.paweldyjak.dicegame.*;
 
 public class PlayerTurnScreen extends Fragment {
@@ -33,27 +35,37 @@ public class PlayerTurnScreen extends Fragment {
         //update next player name
         switch (uiConfig.getCurrentPlayerNumber()) {
             case 1:
-
                 playerName.setText(uiConfig.getPlayersNames()[1]);
                 break;
             case 2:
-
-                playerName.setText(uiConfig.getPlayersNames()[2]);
+                if (uiConfig.getNumberOfPlayers() > 2) {
+                    playerName.setText(uiConfig.getPlayersNames()[2]);
+                } else {
+                    playerName.setText(uiConfig.getPlayersNames()[0]);
+                }
                 break;
             case 3:
-
-                playerName.setText(uiConfig.getPlayersNames()[3]);
+                if (uiConfig.getNumberOfPlayers() > 3) {
+                    playerName.setText(uiConfig.getPlayersNames()[3]);
+                } else {
+                    playerName.setText(uiConfig.getPlayersNames()[0]);
+                }
                 break;
             case 4:
-
-                playerName.setText(uiConfig.getPlayersNames()[4]);
+                if (uiConfig.getNumberOfPlayers() > 4) {
+                    playerName.setText(uiConfig.getPlayersNames()[4]);
+                } else {
+                    playerName.setText(uiConfig.getPlayersNames()[0]);
+                }
                 break;
             case 5:
-
-                playerName.setText(uiConfig.getPlayersNames()[5]);
+                if (uiConfig.getNumberOfPlayers() > 5) {
+                    playerName.setText(uiConfig.getPlayersNames()[5]);
+                } else {
+                    playerName.setText(uiConfig.getPlayersNames()[0]);
+                }
                 break;
             case 6:
-
                 playerName.setText(uiConfig.getPlayersNames()[0]);
                 break;
         }
