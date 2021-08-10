@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">DiceGame</string>
     <string name="title">Dice Game</string>
+    <string name="logout">LOGOUT</string>
+    <string name="welcome">WELCOME!</string>
     <string name="player_one">PLAYER 1</string>
     <string name="player_two">PLAYER 2</string>
     <string name="player_three">PLAYER 3</string>

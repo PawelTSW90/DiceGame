@@ -7,7 +7,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+
+import com.google.firebase.FirebaseApp;
 import com.paweldyjak.dicegame.Fragments.*;
+
 import java.util.Objects;
 
 
@@ -22,10 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_main);
-
         titleScreen = new TitleScreen(this);
         mainBoardLayout = findViewById(R.id.game_board_screen_layout);
 
@@ -33,18 +35,22 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
-        showTitleScreen();
+        showLoginScreen();
 
 
     }
 
-    public void showTitleScreen() {
+    public void showLoginScreen() {
         showMainBoard(false);
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_layout, titleScreen);
         fragmentTransaction.commit();
 
 
+    }
+
+    public void quitActivity(){
+        this.finish();
     }
 
     public void showMainBoard(boolean showMainBoard) {
@@ -90,5 +96,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void setPlayerTurnScreen(PlayerTurnScreen playerTurnScreen) {
         this.playerTurnScreen = playerTurnScreen;
+    }
+
+    @Override
+    public void onBackPressed(){
+
     }
 }

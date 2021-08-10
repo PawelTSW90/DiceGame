@@ -13,7 +13,6 @@ import java.util.Objects;
 public class RegisterActivity extends AppCompatActivity {
     private TextInputEditText email;
     private TextInputEditText password;
-    private Button register;
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -26,7 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         email = findViewById(R.id.email_editText);
         password = findViewById(R.id.password_editText);
-        register = findViewById(R.id.register_button2);
+        Button register = findViewById(R.id.register_button2);
         firebaseAuth = FirebaseAuth.getInstance();
 
         register.setOnClickListener(v -> {

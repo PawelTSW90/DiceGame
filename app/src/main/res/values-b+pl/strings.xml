@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">DiceGame</string>
     <string name="title">KOŚCI</string>
+    <string name="logout">WYLOGUJ</string>
+    <string name="welcome">WITAJ!</string>
     <string name="player_one">GRACZ 1</string>
     <string name="player_two">GRACZ 2</string>
     <string name="player_three">GRACZ 3</string>

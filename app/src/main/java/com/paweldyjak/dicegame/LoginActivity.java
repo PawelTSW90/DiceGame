@@ -19,7 +19,6 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
     private TextInputEditText email;
     private TextInputEditText password;
-    private Button login;
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -32,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         email = findViewById(R.id.email_editText_login);
         password = findViewById(R.id.password_editText_login);
-        login = findViewById(R.id.login_button);
+        Button login = findViewById(R.id.login_button);
         firebaseAuth = FirebaseAuth.getInstance();
         login.setOnClickListener(new View.OnClickListener() {
             @Override

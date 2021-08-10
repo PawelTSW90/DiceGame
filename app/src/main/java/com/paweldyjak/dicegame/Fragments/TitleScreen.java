@@ -1,11 +1,16 @@
 package com.paweldyjak.dicegame.Fragments;
 
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.paweldyjak.dicegame.*;
 
 
@@ -13,7 +18,7 @@ public class TitleScreen extends Fragment {
     private final MainActivity mainActivity;
     private Button playButton;
     private Button hotSeatButton;
-    private Button exitButton;
+    private Button logoutButton;
     private final Button[] playersNumberButtons = new Button[5];
     private Button backButton;
     private View playersNumberLayout;
@@ -30,9 +35,9 @@ public class TitleScreen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.title_screen_fragment, container, false);
         playButton = view.findViewById(R.id.play_button);
-        exitButton = view.findViewById(R.id.exit_button);
         hotSeatButton = view.findViewById(R.id.hotseat_mode_button);
         backButton = view.findViewById(R.id.back_button);
+        logoutButton = view.findViewById(R.id.logout_button_titleScreen);
         playersNumberButtons[0] = view.findViewById(R.id.two_players_button);
         playersNumberButtons[1] = view.findViewById(R.id.three_players_button);
         playersNumberButtons[2] = view.findViewById(R.id.four_players_button);
@@ -45,6 +50,15 @@ public class TitleScreen extends Fragment {
     }
 
     public void setButtons() {
+
+        logoutButton.setOnClickListener(v -> {
+            if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(mainActivity, "Logged out", Toast.LENGTH_SHORT).show();
+                mainActivity.quitActivity();
+
+            }
+        });
 
         playButton.setOnClickListener(v -> {
             sounds.playTickSound();
@@ -95,7 +109,7 @@ public class TitleScreen extends Fragment {
             sounds.playTickSound();
             mainActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
         });
-        exitButton.setOnClickListener(v -> System.exit(0));
+
 
 
     }
