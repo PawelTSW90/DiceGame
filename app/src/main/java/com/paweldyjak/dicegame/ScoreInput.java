@@ -1,6 +1,9 @@
 package com.paweldyjak.dicegame;
 
 import androidx.core.content.ContextCompat;
+
+import com.paweldyjak.dicegame.Activities.MainActivity;
+
 import java.util.concurrent.Executor;
 
 /*class methods writes score into score table

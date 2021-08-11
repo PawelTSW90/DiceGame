@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.paweldyjak.dicegame.MainActivity;
+import com.paweldyjak.dicegame.Activities.MainActivity;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.UIConfig;
 

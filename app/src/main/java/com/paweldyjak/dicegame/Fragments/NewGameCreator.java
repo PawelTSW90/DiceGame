@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import com.paweldyjak.dicegame.*;
+import com.paweldyjak.dicegame.Activities.MainActivity;
 
 public class NewGameCreator extends Fragment {
     private final MainActivity mainActivity;

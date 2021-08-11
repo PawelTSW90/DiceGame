@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
 import androidx.core.content.ContextCompat;
+
+import com.paweldyjak.dicegame.Activities.MainActivity;
 import com.paweldyjak.dicegame.Fragments.PlayerTurnScreen;
 import java.util.Random;
 import java.util.concurrent.Executor;

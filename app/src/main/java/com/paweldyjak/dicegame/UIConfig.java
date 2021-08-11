@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.core.content.res.ResourcesCompat;
 
+import com.paweldyjak.dicegame.Activities.MainActivity;
 import com.paweldyjak.dicegame.Fragments.FinalResultScreen;
 
 import java.util.Arrays;

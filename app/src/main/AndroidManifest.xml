@@ -10,17 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DiceGame">
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainMenuSettings"
             android:screenOrientation="landscape" />
 
+
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.MainActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".Activities.LoginActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".StartActivity"
+            android:name=".Activities.RegisterActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Activities.StartActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

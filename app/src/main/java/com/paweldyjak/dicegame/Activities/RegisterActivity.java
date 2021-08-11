@@ -1,4 +1,4 @@
-package com.paweldyjak.dicegame;
+package com.paweldyjak.dicegame.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.paweldyjak.dicegame.R;
 
 import java.util.Objects;
 

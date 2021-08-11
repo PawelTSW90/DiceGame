@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.paweldyjak.dicegame.*;
+import com.paweldyjak.dicegame.Activities.MainActivity;
 
 public class PlayerTurnScreen extends Fragment {
     private final UIConfig uiConfig;

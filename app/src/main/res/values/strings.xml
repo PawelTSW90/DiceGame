@@ -3,6 +3,9 @@
     <string name="title">Dice Game</string>
     <string name="logout">LOGOUT</string>
     <string name="welcome">WELCOME!</string>
+    <string name="settings">SETTINGS</string>
+    <string name="set_player_name">What is your name?</string>
+    <string name="set_player_name_2">Name must have a length between 3 and 10 characters</string>
     <string name="player_one">PLAYER 1</string>
     <string name="player_two">PLAYER 2</string>
     <string name="player_three">PLAYER 3</string>

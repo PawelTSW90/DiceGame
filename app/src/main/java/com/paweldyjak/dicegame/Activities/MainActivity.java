@@ -1,4 +1,4 @@
-package com.paweldyjak.dicegame;
+package com.paweldyjak.dicegame.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -10,6 +10,7 @@ import android.view.WindowManager;
 
 import com.google.firebase.FirebaseApp;
 import com.paweldyjak.dicegame.Fragments.*;
+import com.paweldyjak.dicegame.R;
 
 import java.util.Objects;
 
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game_board);
         titleScreen = new TitleScreen(this);
         mainBoardLayout = findViewById(R.id.game_board_screen_layout);
 

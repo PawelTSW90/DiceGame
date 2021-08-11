@@ -1,4 +1,4 @@
-package com.paweldyjak.dicegame;
+package com.paweldyjak.dicegame.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.paweldyjak.dicegame.Activities.LoginActivity;
+import com.paweldyjak.dicegame.Activities.MainActivity;
+import com.paweldyjak.dicegame.Activities.RegisterActivity;
+import com.paweldyjak.dicegame.R;
 
 import java.util.Objects;
 
