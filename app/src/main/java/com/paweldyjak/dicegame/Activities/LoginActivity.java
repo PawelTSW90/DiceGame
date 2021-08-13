@@ -1,5 +1,6 @@
 package com.paweldyjak.dicegame.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,10 +10,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.R;
 
 import java.util.Objects;
@@ -34,25 +38,39 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password_editText_login);
         Button login = findViewById(R.id.login_button);
         firebaseAuth = FirebaseAuth.getInstance();
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String txt_email = email.getText().toString();
-                String txt_password = password.getText().toString();
-                loginUser(txt_email, txt_password);
-            }
+        login.setOnClickListener(v -> {
+            String txt_email = email.getText().toString();
+            String txt_password = password.getText().toString();
+            loginUser(txt_email, txt_password);
         });
 
     }
 
     private void loginUser(String email, String password) {
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
+            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(LoginActivity.this, GameBoardActivity.class));
+            finish();
+        });
+    }
+
+    public String retrieveUserName(){
+        String userUID = FirebaseAuth.getInstance().getUid();
+        String name;
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("user").child(userUID).child("name");
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onSuccess(AuthResult authResult) {
-                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue().equals("false")){
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+        return "SIEMA";
     }
 }

@@ -10,14 +10,14 @@ import android.widget.TextView;
 
 import androidx.core.content.res.ResourcesCompat;
 
-import com.paweldyjak.dicegame.Activities.MainActivity;
+import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Fragments.FinalResultScreen;
 
 import java.util.Arrays;
 
 public class UIConfig {
     private final Context context;
-    private final MainActivity mainActivity;
+    private final GameBoardActivity gameBoardActivity;
     private final ImageView[] dicesSlots = new ImageView[5];
     private final TextView[] combinationsTextView = new TextView[16];
     private final TextView[] combinationsPointsTextView = new TextView[16];
@@ -33,10 +33,10 @@ public class UIConfig {
     private final int[] playersTotalScore = new int[6];
 
 
-    public UIConfig(MainActivity mainActivity, Context context, String[] playersNames) {
+    public UIConfig(GameBoardActivity gameBoardActivity, Context context, String[] playersNames) {
         this.context = context;
         this.playersNames = playersNames;
-        this.mainActivity = mainActivity;
+        this.gameBoardActivity = gameBoardActivity;
 
 
     }
@@ -108,7 +108,7 @@ public class UIConfig {
 
 
     public void setTotalScore(int score) {
-        String string = mainActivity.getResources().getString(R.string.points);
+        String string = gameBoardActivity.getResources().getString(R.string.points);
         switch (currentPlayerNumber) {
             case 1:
                 playersTotalScore[0] += score;
@@ -159,7 +159,7 @@ public class UIConfig {
 
 
     public void prepareScoreBoard() {
-        String string = mainActivity.getResources().getString(R.string.points);
+        String string = gameBoardActivity.getResources().getString(R.string.points);
         for (int x = 0; x < 16; x++) {
             switch (currentPlayerNumber) {
                 case 1:
@@ -213,8 +213,8 @@ public class UIConfig {
 
     //generate final screen fragment
     public void setFinalResultScreen() {
-        FinalResultScreen finalResultScreen = new FinalResultScreen(mainActivity, context, this);
-        mainActivity.replaceFragment(R.id.fragment_layout, finalResultScreen);
+        FinalResultScreen finalResultScreen = new FinalResultScreen(gameBoardActivity, context, this);
+        gameBoardActivity.replaceFragment(R.id.fragment_layout, finalResultScreen);
 
     }
 

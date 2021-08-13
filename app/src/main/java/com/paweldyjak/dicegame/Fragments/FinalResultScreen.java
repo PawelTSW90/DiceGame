@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.paweldyjak.dicegame.Activities.MainActivity;
+import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.UIConfig;
 
@@ -17,15 +17,15 @@ public class FinalResultScreen extends Fragment {
     private View view;
     private final Context context;
     private final UIConfig uiConfig;
-    private final MainActivity mainActivity;
+    private final GameBoardActivity gameBoardActivity;
     TextView playerOne;
     TextView playerTwo;
     TextView winnerPlayer;
 
-    public FinalResultScreen(MainActivity mainActivity, Context context, UIConfig uiConfig) {
+    public FinalResultScreen(GameBoardActivity gameBoardActivity, Context context, UIConfig uiConfig) {
         this.context = context;
         this.uiConfig = uiConfig;
-        this.mainActivity = mainActivity;
+        this.gameBoardActivity = gameBoardActivity;
 
     }
 
@@ -51,7 +51,7 @@ public class FinalResultScreen extends Fragment {
         playerOne.setText("" + uiConfig.getPlayersNames()[0] + "\n" + uiConfig.getPlayersTotalScore(1));
         playerTwo.setText("" + uiConfig.getPlayersNames()[1] + "\n" + uiConfig.getPlayersTotalScore(2));
         this.winnerPlayer.setText("ZWYCIĘZCĄ JEST:" + "\n" + winnerPlayer);
-        mainActivity.showFragment(true);
+        gameBoardActivity.showFragment(true);
 
 
     }

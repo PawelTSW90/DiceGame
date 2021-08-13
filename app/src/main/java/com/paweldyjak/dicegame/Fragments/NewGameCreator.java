@@ -7,16 +7,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import com.paweldyjak.dicegame.*;
-import com.paweldyjak.dicegame.Activities.MainActivity;
+import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 
 public class NewGameCreator extends Fragment {
-    private final MainActivity mainActivity;
+    private final GameBoardActivity gameBoardActivity;
     private Button nextTurnButton;
     private final String[] names;
     private int numberOfPlayers;
 
-    public NewGameCreator(MainActivity mainActivity, String[] names, int numberOfPlayers) {
-        this.mainActivity = mainActivity;
+    public NewGameCreator(GameBoardActivity gameBoardActivity, String[] names, int numberOfPlayers) {
+        this.gameBoardActivity = gameBoardActivity;
         this.names = names;
         this.numberOfPlayers = numberOfPlayers;
     }
@@ -35,18 +35,18 @@ public class NewGameCreator extends Fragment {
     public void startTwoPlayersGame(){
         nextTurnButton.setOnClickListener(v -> {
             //creating class objects
-            UIConfig uiConfig = new UIConfig(mainActivity, mainActivity, names);
+            UIConfig uiConfig = new UIConfig(gameBoardActivity, gameBoardActivity, names);
             RerollDices rerollDices = new RerollDices(uiConfig);
             DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(uiConfig);
-            ScoreInput scoreInput = new ScoreInput(mainActivity,uiConfig);
-            GameBoard gameBoard = new GameBoard(mainActivity, mainActivity, scoreInput, dicesCombinationsChecker, uiConfig, rerollDices);
+            ScoreInput scoreInput = new ScoreInput(gameBoardActivity,uiConfig);
+            GameBoard gameBoard = new GameBoard(gameBoardActivity, gameBoardActivity, scoreInput, dicesCombinationsChecker, uiConfig, rerollDices);
             //configuring UI
             uiConfig.configureUI();
             uiConfig.setPlayersNames(names);
             uiConfig.setNumberOfPlayers(numberOfPlayers);
             uiConfig.getCurrentPlayerName().setText(names[0]);
             gameBoard.setRollDicesButton();
-            mainActivity.showMainBoard(true);
+            gameBoardActivity.showMainBoard(true);
 
         });
     }

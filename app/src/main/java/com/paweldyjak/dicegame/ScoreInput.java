@@ -2,7 +2,7 @@ package com.paweldyjak.dicegame;
 
 import androidx.core.content.ContextCompat;
 
-import com.paweldyjak.dicegame.Activities.MainActivity;
+import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 
 import java.util.concurrent.Executor;
 
@@ -12,14 +12,14 @@ score writing enabled when combination is correct, when it's not blocked, no oth
 public class ScoreInput {
 
     private final UIConfig uiConfig;
-    private final MainActivity mainActivity;
+    private final GameBoardActivity gameBoardActivity;
     private boolean resetThrowCounter = false;
     private final Sounds sounds;
 
-    public ScoreInput(MainActivity mainActivity,UIConfig uiConfig) {
-        this.mainActivity = mainActivity;
+    public ScoreInput(GameBoardActivity gameBoardActivity, UIConfig uiConfig) {
+        this.gameBoardActivity = gameBoardActivity;
         this.uiConfig = uiConfig;
-        sounds = new Sounds(mainActivity);
+        sounds = new Sounds(gameBoardActivity);
     }
     /*method inputs score for a specified combination. Combinations list:
     combination nr 0 = 1
@@ -41,7 +41,7 @@ public class ScoreInput {
     */
 
     public void inputScore(int scoreToInput, int combinationNr) {
-        Executor executor = ContextCompat.getMainExecutor(mainActivity);
+        Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
         uiConfig.getCombinationsTextView()[combinationNr].setOnClickListener(v -> {
 
             if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[combinationNr] && !resetThrowCounter) {
@@ -72,7 +72,7 @@ public class ScoreInput {
                             Thread.sleep(2000);
                             resetThrowCounter = true;
                             resetCombinationsListeners();
-                            mainActivity.showFragment(true);
+                            gameBoardActivity.showFragment(true);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

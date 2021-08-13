@@ -4,6 +4,7 @@ package com.paweldyjak.dicegame.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +14,25 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.*;
-import com.paweldyjak.dicegame.Activities.MainActivity;
+import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Activities.MainMenuSettings;
 
 
 public class TitleScreen extends Fragment {
-    private final MainActivity mainActivity;
+    private final GameBoardActivity gameBoardActivity;
+    FirebaseAuth firebaseAuth;
+    DatabaseReference databaseReference;
     private Button playButton;
     private Button hotSeatButton;
     private Button logoutButton;
@@ -31,12 +41,14 @@ public class TitleScreen extends Fragment {
     private Button settingPlayerNameButton;
     private EditText nameEditText;
     private View playersNumberLayout;
+    private View userNameCreatorLayout;
     private ImageView settings;
     private final Sounds sounds;
+    private String userUID;
 
-    public TitleScreen(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
-        sounds = new Sounds(mainActivity);
+    public TitleScreen(GameBoardActivity gameBoardActivity) {
+        this.gameBoardActivity = gameBoardActivity;
+        sounds = new Sounds(gameBoardActivity);
 
     }
 
@@ -49,6 +61,7 @@ public class TitleScreen extends Fragment {
         backButton = view.findViewById(R.id.back_button);
         logoutButton = view.findViewById(R.id.logout_button_titleScreen);
         settingPlayerNameButton = view.findViewById(R.id.setting_player_name_button);
+        userNameCreatorLayout = view.findViewById(R.id.user_name_creator_layout);
         playersNumberButtons[0] = view.findViewById(R.id.two_players_button);
         playersNumberButtons[1] = view.findViewById(R.id.three_players_button);
         playersNumberButtons[2] = view.findViewById(R.id.four_players_button);
@@ -57,8 +70,10 @@ public class TitleScreen extends Fragment {
         playersNumberLayout = view.findViewById(R.id.players_number_layout);
         nameEditText = view.findViewById(R.id.setting_name_editText);
         settings = view.findViewById(R.id.settings_imageview);
+        firebaseAuth = FirebaseAuth.getInstance();
+        userUID = firebaseAuth.getUid();
         setButtons();
-        setPlayerNameInput();
+        checkIfUserCreatedName();
 
         return view;
     }
@@ -66,15 +81,15 @@ public class TitleScreen extends Fragment {
     public void setButtons() {
 
         settings.setOnClickListener(v -> {
-            Intent intent = new Intent(mainActivity, MainMenuSettings.class);
+            Intent intent = new Intent(gameBoardActivity, MainMenuSettings.class);
             startActivity(intent);
         });
 
         logoutButton.setOnClickListener(v -> {
             if(FirebaseAuth.getInstance().getCurrentUser()!=null){
                 FirebaseAuth.getInstance().signOut();
-                Toast.makeText(mainActivity, "Logged out", Toast.LENGTH_SHORT).show();
-                mainActivity.quitActivity();
+                Toast.makeText(gameBoardActivity, "Logged out", Toast.LENGTH_SHORT).show();
+                gameBoardActivity.quitActivity();
 
             }
         });
@@ -104,29 +119,29 @@ public class TitleScreen extends Fragment {
             hotSeatButton.setEnabled(false);
         });
         playersNumberButtons[0].setOnClickListener(v -> {
-            PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(mainActivity, 2);
+            PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(gameBoardActivity, 2);
             sounds.playTickSound();
-            mainActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
+            gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
         });
         playersNumberButtons[1].setOnClickListener(v -> {
-            PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(mainActivity, 3);
+            PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(gameBoardActivity, 3);
             sounds.playTickSound();
-            mainActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
+            gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
         });
         playersNumberButtons[2].setOnClickListener(v -> {
-            PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(mainActivity, 4);
+            PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(gameBoardActivity, 4);
             sounds.playTickSound();
-            mainActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
+            gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
         });
         playersNumberButtons[3].setOnClickListener(v -> {
-            PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(mainActivity, 5);
+            PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(gameBoardActivity, 5);
             sounds.playTickSound();
-            mainActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
+            gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
         });
         playersNumberButtons[4].setOnClickListener(v -> {
-            PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(mainActivity, 6);
+            PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(gameBoardActivity, 6);
             sounds.playTickSound();
-            mainActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
+            gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
         });
 
 
@@ -154,8 +169,31 @@ public class TitleScreen extends Fragment {
 
         settingPlayerNameButton.setOnClickListener(v -> {
             if(nameEditText.length() <3 || nameEditText.length()>10){
-                Toast.makeText(mainActivity, R.string.set_player_name_2, Toast.LENGTH_SHORT).show();
+                Toast.makeText(gameBoardActivity, R.string.set_player_name_2, Toast.LENGTH_SHORT).show();
+            } else{
+                databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUID).child("name");
+                databaseReference.setValue(nameEditText.getText().toString());
+
             }
         });
+    }
+
+    public void checkIfUserCreatedName(){
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUID).child("name");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue(String.class).equals("false")){
+                    userNameCreatorLayout.setVisibility(View.VISIBLE);
+                    setPlayerNameInput();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }

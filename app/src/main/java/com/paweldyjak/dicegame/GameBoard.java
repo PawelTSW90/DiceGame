@@ -5,7 +5,7 @@ import android.content.Context;
 import android.widget.ImageView;
 import androidx.core.content.ContextCompat;
 
-import com.paweldyjak.dicegame.Activities.MainActivity;
+import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Fragments.PlayerTurnScreen;
 import java.util.Random;
 import java.util.concurrent.Executor;
@@ -21,27 +21,27 @@ public class GameBoard {
     private boolean isFirstThrow = true;
     private int throwNumber = 0;
     private final Sounds sounds;
-    private final MainActivity mainActivity;
+    private final GameBoardActivity gameBoardActivity;
 
 
-    public GameBoard(MainActivity mainActivity, Context context, ScoreInput scoreInput, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, RerollDices rerollDices) {
+    public GameBoard(GameBoardActivity gameBoardActivity, Context context, ScoreInput scoreInput, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, RerollDices rerollDices) {
         this.context = context;
-        this.mainActivity = mainActivity;
+        this.gameBoardActivity = gameBoardActivity;
         this.scoreInput = scoreInput;
         this.dicesCombinationsChecker = dicesCombinationsChecker;
         this.uiConfig = uiConfig;
         this.rerollDices = rerollDices;
         sounds = new Sounds(context);
-        mainActivity.setPlayerTurnScreen(new PlayerTurnScreen(mainActivity,uiConfig));
-        mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getPlayerTurnScreen());
-        mainActivity.showFragment(false);
+        gameBoardActivity.setPlayerTurnScreen(new PlayerTurnScreen(gameBoardActivity,uiConfig));
+        gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getPlayerTurnScreen());
+        gameBoardActivity.showFragment(false);
 
     }
 
 
     //method configure roll dices button
     public void setRollDicesButton() {
-        mainActivity.showFragment(false);
+        gameBoardActivity.showFragment(false);
         ImageView rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
         rollDicesButton.setOnClickListener(v -> {
 
@@ -177,7 +177,7 @@ public class GameBoard {
 
     // method allows to block one of a combinations after last throw
     public void blockCombinations() {
-        Executor executor = ContextCompat.getMainExecutor(mainActivity);
+        Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
         for (int x = 0; x < 16; x++) {
             int combinationNr = x;
             if (dicesCombinationsChecker.combinationChecker(x, dices, isFirstThrow, 0) == 0 && uiConfig.getIsCombinationActive()[x]) {
@@ -206,7 +206,7 @@ public class GameBoard {
                                 try {
                                     sounds.playCrossOutCombinationSound();
                                     Thread.sleep(2000);
-                                    mainActivity.showFragment(true);
+                                    gameBoardActivity.showFragment(true);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }

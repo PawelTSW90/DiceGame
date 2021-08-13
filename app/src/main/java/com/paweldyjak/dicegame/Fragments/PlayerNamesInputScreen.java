@@ -14,13 +14,13 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.paweldyjak.dicegame.Activities.MainActivity;
+import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.R;
 
 public class PlayerNamesInputScreen extends Fragment {
     private View view;
     private Context context;
-    private final MainActivity mainActivity;
+    private final GameBoardActivity gameBoardActivity;
     private Button start;
     private EditText playerNameEditText;
     private TextView playerName;
@@ -39,8 +39,8 @@ public class PlayerNamesInputScreen extends Fragment {
 
     }
 
-    public PlayerNamesInputScreen(MainActivity mainActivity, int numberOfPlayers) {
-        this.mainActivity = mainActivity;
+    public PlayerNamesInputScreen(GameBoardActivity gameBoardActivity, int numberOfPlayers) {
+        this.gameBoardActivity = gameBoardActivity;
         this.numberOfPlayers = numberOfPlayers;
     }
 
@@ -111,34 +111,34 @@ public class PlayerNamesInputScreen extends Fragment {
                                                                 start.setOnClickListener(v5 -> {
                                                                     if (playerNameEditText.getText().length() >= 1) {
                                                                         playersNames[5] = playerNameEditText.getText().toString();
-                                                                        mainActivity.setStartGameScreen(new NewGameCreator(mainActivity, playersNames, numberOfPlayers));
-                                                                        mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getStartGameScreen());
+                                                                        gameBoardActivity.setStartGameScreen(new NewGameCreator(gameBoardActivity, playersNames, numberOfPlayers));
+                                                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getStartGameScreen());
                                                                     }
                                                                 });
                                                             } else {
-                                                                mainActivity.setStartGameScreen(new NewGameCreator(mainActivity, playersNames, numberOfPlayers));
-                                                                mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getStartGameScreen());
+                                                                gameBoardActivity.setStartGameScreen(new NewGameCreator(gameBoardActivity, playersNames, numberOfPlayers));
+                                                                gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getStartGameScreen());
                                                             }
                                                         }
                                                     });
                                                 } else {
-                                                    mainActivity.setStartGameScreen(new NewGameCreator(mainActivity, playersNames, numberOfPlayers));
-                                                    mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getStartGameScreen());
+                                                    gameBoardActivity.setStartGameScreen(new NewGameCreator(gameBoardActivity, playersNames, numberOfPlayers));
+                                                    gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getStartGameScreen());
                                                 }
 
                                             }
                                         });
                                     } else {
-                                        mainActivity.setStartGameScreen(new NewGameCreator(mainActivity, playersNames, numberOfPlayers));
-                                        mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getStartGameScreen());
+                                        gameBoardActivity.setStartGameScreen(new NewGameCreator(gameBoardActivity, playersNames, numberOfPlayers));
+                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getStartGameScreen());
                                     }
                                 }
 
                             });
 
                         } else {
-                            mainActivity.setStartGameScreen(new NewGameCreator(mainActivity, playersNames, numberOfPlayers));
-                            mainActivity.replaceFragment(R.id.fragment_layout, mainActivity.getStartGameScreen());
+                            gameBoardActivity.setStartGameScreen(new NewGameCreator(gameBoardActivity, playersNames, numberOfPlayers));
+                            gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getStartGameScreen());
                         }
 
                     }

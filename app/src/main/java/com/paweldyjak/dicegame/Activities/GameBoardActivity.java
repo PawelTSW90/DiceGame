@@ -15,7 +15,7 @@ import com.paweldyjak.dicegame.R;
 import java.util.Objects;
 
 
-public class MainActivity extends AppCompatActivity {
+public class GameBoardActivity extends AppCompatActivity {
     private TitleScreen titleScreen;
     private NewGameCreator newGameCreator;
     private PlayerTurnScreen playerTurnScreen;

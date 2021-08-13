@@ -10,17 +10,17 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.paweldyjak.dicegame.*;
-import com.paweldyjak.dicegame.Activities.MainActivity;
+import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 
 public class PlayerTurnScreen extends Fragment {
     private final UIConfig uiConfig;
     private TextView playerName;
     private Button nextPlayerButton;
-    private final MainActivity mainActivity;
+    private final GameBoardActivity gameBoardActivity;
 
-    public PlayerTurnScreen(MainActivity mainActivity, UIConfig uiConfig) {
+    public PlayerTurnScreen(GameBoardActivity gameBoardActivity, UIConfig uiConfig) {
         this.uiConfig = uiConfig;
-        this.mainActivity = mainActivity;
+        this.gameBoardActivity = gameBoardActivity;
     }
 
     @Override
@@ -92,7 +92,7 @@ public class PlayerTurnScreen extends Fragment {
                     break;
             }
             uiConfig.prepareScoreBoard();
-            mainActivity.showFragment(false);
+            gameBoardActivity.showFragment(false);
 
         });
         //update player number
