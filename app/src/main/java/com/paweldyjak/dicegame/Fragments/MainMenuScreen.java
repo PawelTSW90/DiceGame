@@ -4,7 +4,6 @@ package com.paweldyjak.dicegame.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,10 +25,9 @@ import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Activities.MainMenuSettings;
 
 
-public class TitleScreen extends Fragment {
+public class MainMenuScreen extends Fragment {
     private final GameBoardActivity gameBoardActivity;
-    FirebaseAuth firebaseAuth;
-    DatabaseReference databaseReference;
+    private DatabaseReference databaseReference;
     private Button playButton;
     private Button hotSeatButton;
     private Button logoutButton;
@@ -44,9 +39,9 @@ public class TitleScreen extends Fragment {
     private View userNameCreatorLayout;
     private ImageView settings;
     private final Sounds sounds;
-    private String userUID;
+    private String userName;
 
-    public TitleScreen(GameBoardActivity gameBoardActivity) {
+    public MainMenuScreen(GameBoardActivity gameBoardActivity) {
         this.gameBoardActivity = gameBoardActivity;
         sounds = new Sounds(gameBoardActivity);
 
@@ -55,7 +50,7 @@ public class TitleScreen extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.title_screen_fragment, container, false);
+        View view = inflater.inflate(R.layout.main_menu_screen_fragment, container, false);
         playButton = view.findViewById(R.id.play_button);
         hotSeatButton = view.findViewById(R.id.hotseat_mode_button);
         backButton = view.findViewById(R.id.back_button);
@@ -70,8 +65,9 @@ public class TitleScreen extends Fragment {
         playersNumberLayout = view.findViewById(R.id.players_number_layout);
         nameEditText = view.findViewById(R.id.setting_name_editText);
         settings = view.findViewById(R.id.settings_imageview);
-        firebaseAuth = FirebaseAuth.getInstance();
-        userUID = firebaseAuth.getUid();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        String userUID = firebaseAuth.getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUID).child("name");
         setButtons();
         checkIfUserCreatedName();
 
@@ -86,9 +82,9 @@ public class TitleScreen extends Fragment {
         });
 
         logoutButton.setOnClickListener(v -> {
-            if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 FirebaseAuth.getInstance().signOut();
-                Toast.makeText(gameBoardActivity, "Logged out", Toast.LENGTH_SHORT).show();
+                Toast.makeText(gameBoardActivity, getContext().getText(R.string.logged_out), Toast.LENGTH_SHORT).show();
                 gameBoardActivity.quitActivity();
 
             }
@@ -145,12 +141,12 @@ public class TitleScreen extends Fragment {
         });
 
 
-
     }
 
-    public void setPlayerNameInput(){
+    public void setPlayerNameInput() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-
+        playButton.setVisibility(View.INVISIBLE);
+        userNameCreatorLayout.setVisibility(View.VISIBLE);
         //allows to proceed when players name is at least one character long
         nameEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (v.getText().length() > 2) {
@@ -168,24 +164,28 @@ public class TitleScreen extends Fragment {
         });
 
         settingPlayerNameButton.setOnClickListener(v -> {
-            if(nameEditText.length() <3 || nameEditText.length()>10){
+            if (nameEditText.length() < 3 || nameEditText.length() > 10) {
                 Toast.makeText(gameBoardActivity, R.string.set_player_name_2, Toast.LENGTH_SHORT).show();
-            } else{
-                databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUID).child("name");
+            } else {
                 databaseReference.setValue(nameEditText.getText().toString());
+                userName = nameEditText.getText().toString();
+                userNameCreatorLayout.setVisibility(View.GONE);
+                playButton.setVisibility(View.VISIBLE);
+                Toast.makeText(gameBoardActivity, getContext().getString(R.string.hello) + " " + userName + " !", Toast.LENGTH_SHORT).show();
 
             }
         });
     }
 
-    public void checkIfUserCreatedName(){
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUID).child("name");
+    public void checkIfUserCreatedName() {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(String.class).equals("false")){
-                    userNameCreatorLayout.setVisibility(View.VISIBLE);
+                if (snapshot.getValue().equals("null")) {
+                    userName = "false";
                     setPlayerNameInput();
+                } else {
+                    userName = snapshot.getValue(String.class);
                 }
             }
 
@@ -195,5 +195,7 @@ public class TitleScreen extends Fragment {
             }
         });
 
+
     }
+
 }

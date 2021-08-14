@@ -16,7 +16,7 @@ import java.util.Objects;
 
 
 public class GameBoardActivity extends AppCompatActivity {
-    private TitleScreen titleScreen;
+    private MainMenuScreen mainMenuScreen;
     private NewGameCreator newGameCreator;
     private PlayerTurnScreen playerTurnScreen;
     private final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -29,7 +29,7 @@ public class GameBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_game_board);
-        titleScreen = new TitleScreen(this);
+        mainMenuScreen = new MainMenuScreen(this);
         mainBoardLayout = findViewById(R.id.game_board_screen_layout);
 
         //hides status bar
@@ -44,7 +44,7 @@ public class GameBoardActivity extends AppCompatActivity {
     public void showLoginScreen() {
         showMainBoard(false);
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_layout, titleScreen);
+        fragmentTransaction.add(R.id.fragment_layout, mainMenuScreen);
         fragmentTransaction.commit();
 
 

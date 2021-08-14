@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.paweldyjak.dicegame.R;
+
 import java.util.Objects;
 
 public class StartActivity extends AppCompatActivity {
@@ -27,11 +28,13 @@ public class StartActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
+
+        //if user is logged in, display main menu
         if (firebaseAuth.getCurrentUser() != null) {
             Intent intent = new Intent(this, GameBoardActivity.class);
             startActivity(intent);
         }
-
+        //if not display log in/register interface
         loginButton = findViewById(R.id.login_button);
         registerButton = findViewById(R.id.register_button);
         registerButton.setOnClickListener(v -> {
