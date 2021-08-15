@@ -1,19 +1,25 @@
 package com.paweldyjak.dicegame;
 
-import android.content.Context;
+import androidx.core.content.ContextCompat;
 
-//class methods writes score into score table
-//score writing enabled when combination is correct, when it's not blocked, no other combination
-// has been used during this turn and no combination has been blocked during this turn
+import com.paweldyjak.dicegame.Activities.GameBoardActivity;
+
+import java.util.concurrent.Executor;
+
+/*class methods writes score into score table
+score writing enabled when combination is correct, when it's not blocked, no other combination
+ has been used during this turn and no combination has been blocked during this turn*/
 public class ScoreInput {
-    Context context;
-    UIConfig uiConfig;
-    private boolean resetThrowCounter = false;
-    private int totalScore = 0;
 
-    ScoreInput(Context context, UIConfig uiConfig) {
+    private final UIConfig uiConfig;
+    private final GameBoardActivity gameBoardActivity;
+    private boolean resetThrowCounter = false;
+    private final Sounds sounds;
+
+    public ScoreInput(GameBoardActivity gameBoardActivity, UIConfig uiConfig) {
+        this.gameBoardActivity = gameBoardActivity;
         this.uiConfig = uiConfig;
-        this.context = context;
+        sounds = new Sounds(gameBoardActivity);
     }
     /*method inputs score for a specified combination. Combinations list:
     combination nr 0 = 1
@@ -35,19 +41,45 @@ public class ScoreInput {
     */
 
     public void inputScore(int scoreToInput, int combinationNr) {
-        uiConfig.getCombinations()[combinationNr].setOnClickListener(v -> {
+        Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
+        uiConfig.getCombinationsTextView()[combinationNr].setOnClickListener(v -> {
+
             if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[combinationNr] && !resetThrowCounter) {
-                uiConfig.setScoreValues(scoreToInput, combinationNr);
-                totalScore += scoreToInput;
-                uiConfig.setTotalScore(totalScore);
-                uiConfig.getCombinationsPoints()[combinationNr].setText(uiConfig.getScoreValues(combinationNr) + " pkt");
-                uiConfig.getCombinations()[combinationNr].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, combinationNr);
-                if (!uiConfig.checkIfAllCombinationsAreDone()) {
-                    resetThrowCounter = true;
-                }
+                sounds.playCombinationTickSound();
+                uiConfig.setCombinationScore(scoreToInput, combinationNr);
+                String points = uiConfig.getCombinationScore(combinationNr)+" pkt";
+                uiConfig.setTotalScore(scoreToInput);
+                uiConfig.clearDicesBorder();
                 uiConfig.hideDices();
-                resetCombinationsListeners();
+                uiConfig.getCombinationsPointsTextView()[combinationNr].setText(points);
+                uiConfig.getCombinationsTextView()[combinationNr].setEnabled(false);
+                uiConfig.setIsCombinationActive(false, combinationNr);
+                uiConfig.setCombinationsSlots(combinationNr, 1);
+                uiConfig.prepareCombinationsSlots();
+                if (uiConfig.getCurrentPlayerNumber()==uiConfig.getNumberOfPlayers() && uiConfig.checkIfAllCombinationsAreDone()) {
+                    executor.execute(() -> {
+                        try {
+                            Thread.sleep(2000);
+                            uiConfig.setFinalResultScreen();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    });
+                } else{
+                    executor.execute(() -> {
+                        try {
+                            Thread.sleep(2000);
+                            resetThrowCounter = true;
+                            resetCombinationsListeners();
+                            gameBoardActivity.showFragment(true);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    });
+                }
+
             }
 
 
@@ -66,12 +98,12 @@ public class ScoreInput {
     public void resetCombinationsListeners() {
         for (int x = 0; x < 15; x++) {
 
-
-            uiConfig.getCombinations()[x].setOnClickListener(v -> {
+            uiConfig.getCombinationsTextView()[x].setOnClickListener(v -> {
 
             });
         }
     }
+
 
 
 }

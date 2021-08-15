@@ -3,37 +3,50 @@ package com.paweldyjak.dicegame;
 import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
+import androidx.core.content.ContextCompat;
+
+import com.paweldyjak.dicegame.Activities.GameBoardActivity;
+import com.paweldyjak.dicegame.Fragments.PlayerTurnScreen;
 import java.util.Random;
+import java.util.concurrent.Executor;
 
 
-public class Dices {
+public class GameBoard {
     private final Context context;
     private final ScoreInput scoreInput;
     private final UIConfig uiConfig;
-    private final DicesScoreChecker dicesScoreChecker;
+    private final DicesCombinationsChecker dicesCombinationsChecker;
     private final RerollDices rerollDices;
     private final int[] dices = new int[5];
     private boolean isFirstThrow = true;
     private int throwNumber = 0;
     private final Sounds sounds;
+    private final GameBoardActivity gameBoardActivity;
 
 
-    Dices(Context context, ScoreInput scoreInput, DicesScoreChecker dicesScoreChecker, UIConfig uiConfig, RerollDices rerollDices) {
+    public GameBoard(GameBoardActivity gameBoardActivity, Context context, ScoreInput scoreInput, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, RerollDices rerollDices) {
         this.context = context;
+        this.gameBoardActivity = gameBoardActivity;
         this.scoreInput = scoreInput;
-        this.dicesScoreChecker = dicesScoreChecker;
+        this.dicesCombinationsChecker = dicesCombinationsChecker;
         this.uiConfig = uiConfig;
         this.rerollDices = rerollDices;
         sounds = new Sounds(context);
-
+        gameBoardActivity.setPlayerTurnScreen(new PlayerTurnScreen(gameBoardActivity,uiConfig));
+        gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getPlayerTurnScreen());
+        gameBoardActivity.showFragment(false);
 
     }
 
+
     //method configure roll dices button
     public void setRollDicesButton() {
+        gameBoardActivity.showFragment(false);
         ImageView rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
         rollDicesButton.setOnClickListener(v -> {
+
             if (!uiConfig.checkIfAllCombinationsAreDone()) {
+
                 if (scoreInput.getResetThrowCounter()) {
                     throwNumber = 0;
                     isFirstThrow = true;
@@ -55,9 +68,10 @@ public class Dices {
                 if (throwNumber == 3) {
                     rerollDices.setDicesRerolling(throwNumber);
                     blockCombinations();
-                    scoreInput.inputScore(dicesScoreChecker.checkSOS(dices, throwNumber), 15);
+                    scoreInput.inputScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
                 }
             }
+
         });
 
     }
@@ -141,38 +155,65 @@ public class Dices {
     }
 
 
-    // method sets combinations to be checked
+    // method sets combinations for checking
     public void setCombinations() {
-        scoreInput.inputScore(dicesScoreChecker.checkOne(dices, isFirstThrow), 0);
-        scoreInput.inputScore(dicesScoreChecker.checkTwo(dices, isFirstThrow), 1);
-        scoreInput.inputScore(dicesScoreChecker.checkThree(dices, isFirstThrow), 2);
-        scoreInput.inputScore(dicesScoreChecker.checkFour(dices, isFirstThrow), 3);
-        scoreInput.inputScore(dicesScoreChecker.checkFive(dices, isFirstThrow), 4);
-        scoreInput.inputScore(dicesScoreChecker.checkSix(dices, isFirstThrow), 5);
-        scoreInput.inputScore(dicesScoreChecker.checkPair(dices, isFirstThrow), 6);
-        scoreInput.inputScore(dicesScoreChecker.checkTwoPairs(dices, isFirstThrow), 7);
-        scoreInput.inputScore(dicesScoreChecker.checkEvens(dices, isFirstThrow), 8);
-        scoreInput.inputScore(dicesScoreChecker.checkOdds(dices, isFirstThrow), 9);
-        scoreInput.inputScore(dicesScoreChecker.checkSmallStraight(dices, isFirstThrow), 10);
-        scoreInput.inputScore(dicesScoreChecker.checkLargeStraight(dices, isFirstThrow), 11);
-        scoreInput.inputScore(dicesScoreChecker.checkFullHouse(dices, isFirstThrow), 12);
-        scoreInput.inputScore(dicesScoreChecker.checkFourOfAKind(dices, isFirstThrow), 13);
-        scoreInput.inputScore(dicesScoreChecker.checkFiveOfAKind(dices, isFirstThrow), 14);
-        scoreInput.inputScore(dicesScoreChecker.checkSOS(dices, throwNumber), 15);
+        scoreInput.inputScore(dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0);
+        scoreInput.inputScore(dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1);
+        scoreInput.inputScore(dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2);
+        scoreInput.inputScore(dicesCombinationsChecker.checkFour(dices, isFirstThrow), 3);
+        scoreInput.inputScore(dicesCombinationsChecker.checkFive(dices, isFirstThrow), 4);
+        scoreInput.inputScore(dicesCombinationsChecker.checkSix(dices, isFirstThrow), 5);
+        scoreInput.inputScore(dicesCombinationsChecker.checkPair(dices, isFirstThrow), 6);
+        scoreInput.inputScore(dicesCombinationsChecker.checkTwoPairs(dices, isFirstThrow), 7);
+        scoreInput.inputScore(dicesCombinationsChecker.checkEvens(dices, isFirstThrow), 8);
+        scoreInput.inputScore(dicesCombinationsChecker.checkOdds(dices, isFirstThrow), 9);
+        scoreInput.inputScore(dicesCombinationsChecker.checkSmallStraight(dices, isFirstThrow), 10);
+        scoreInput.inputScore(dicesCombinationsChecker.checkLargeStraight(dices, isFirstThrow), 11);
+        scoreInput.inputScore(dicesCombinationsChecker.checkFullHouse(dices, isFirstThrow), 12);
+        scoreInput.inputScore(dicesCombinationsChecker.checkFourOfAKind(dices, isFirstThrow), 13);
+        scoreInput.inputScore(dicesCombinationsChecker.checkFiveOfAKind(dices, isFirstThrow), 14);
+        scoreInput.inputScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
     }
 
     // method allows to block one of a combinations after last throw
     public void blockCombinations() {
-        for(int x = 0; x<15; x++){
+        Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
+        for (int x = 0; x < 16; x++) {
             int combinationNr = x;
-            if(dicesScoreChecker.callCheckCombinationMethod(x, dices, isFirstThrow,0)==0 && uiConfig.getIsCombinationActive()[x]){
+            if (dicesCombinationsChecker.combinationChecker(x, dices, isFirstThrow, 0) == 0 && uiConfig.getIsCombinationActive()[x]) {
                 {
-                    uiConfig.getCombinations()[x].setOnClickListener(v -> {
+                    uiConfig.getCombinationsTextView()[x].setOnClickListener(v -> {
                         v.setEnabled(false);
                         uiConfig.setIsCombinationActive(false, combinationNr);
                         scoreInput.setResetThrowCounter(true);
                         scoreInput.resetCombinationsListeners();
+                        uiConfig.setCombinationsSlots(combinationNr, 2);
+                        uiConfig.prepareCombinationsSlots();
                         uiConfig.hideDices();
+                        if (uiConfig.checkIfAllCombinationsAreDone() && uiConfig.getCurrentPlayerNumber() == uiConfig.getNumberOfPlayers()) {
+                            executor.execute(() -> {
+                                try {
+                                    sounds.playCrossOutCombinationSound();
+                                    Thread.sleep(2000);
+                                    uiConfig.setFinalResultScreen();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+
+                        } else {
+                            executor.execute(() -> {
+                                try {
+                                    sounds.playCrossOutCombinationSound();
+                                    Thread.sleep(2000);
+                                    gameBoardActivity.showFragment(true);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                            });
+
+                        }
 
                     });
 

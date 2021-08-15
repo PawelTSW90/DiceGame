@@ -1,6 +1,6 @@
-<!-- @drawable/image_border -->
+
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/cardview_dark_background"/>
-    <stroke android:width="3dp" android:color="#801F8824"/>
+
+    <stroke android:width="3dp" android:color="#5B2FAA"/>
     <padding android:left="3dp" android:top="3dp" android:right="3dp" android:bottom="3dp"/>
 </shape>

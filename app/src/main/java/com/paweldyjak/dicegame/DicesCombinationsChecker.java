@@ -5,13 +5,12 @@ import java.util.Collections;
 import java.util.List;
 
 // class methods calculates user score and send it to ScoreInput class
-public class DicesScoreChecker {
-    UIConfig uiConfig;
+public class DicesCombinationsChecker {
+    private final UIConfig uiConfig;
 
-    public DicesScoreChecker(UIConfig uiConfig) {
+    public DicesCombinationsChecker(UIConfig uiConfig) {
         this.uiConfig = uiConfig;
     }
-
 
     public int checkOne(int[] dices, boolean firstThrow) {
         if (!uiConfig.getIsCombinationActive()[0]) {
@@ -674,8 +673,8 @@ public class DicesScoreChecker {
 
 
     }
-
-    public int callCheckCombinationMethod(int combinationNr, int[] dices, boolean firstThrow, int throwNumber) {
+        //method returns chosen combination check
+    public int combinationChecker(int combinationNr, int[] dices, boolean firstThrow, int throwNumber) {
         switch (combinationNr) {
             case 0:
                 return checkOne(dices, firstThrow);
