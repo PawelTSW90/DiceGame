@@ -23,11 +23,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Activities.MainMenuSettings;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainMenuScreen extends Fragment {
     private final GameBoardActivity gameBoardActivity;
-    private DatabaseReference databaseReference;
+    private DatabaseReference checkIfNameCreatedReference;
+    private DatabaseReference checkIfNameIsAvailableReference;
     private Button playButton;
     private Button hotSeatButton;
     private Button logoutButton;
@@ -67,7 +70,8 @@ public class MainMenuScreen extends Fragment {
         settings = view.findViewById(R.id.settings_imageview);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         String userUID = firebaseAuth.getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUID).child("name");
+        checkIfNameCreatedReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUID).child("name");
+        checkIfNameIsAvailableReference = FirebaseDatabase.getInstance().getReference().child("namesInUse");
         setButtons();
         checkIfUserCreatedName();
 
@@ -167,18 +171,18 @@ public class MainMenuScreen extends Fragment {
             if (nameEditText.length() < 3 || nameEditText.length() > 10) {
                 Toast.makeText(gameBoardActivity, R.string.set_player_name_2, Toast.LENGTH_SHORT).show();
             } else {
-                databaseReference.setValue(nameEditText.getText().toString());
                 userName = nameEditText.getText().toString();
-                userNameCreatorLayout.setVisibility(View.GONE);
-                playButton.setVisibility(View.VISIBLE);
-                Toast.makeText(gameBoardActivity, getContext().getString(R.string.hello) + " " + userName + " !", Toast.LENGTH_SHORT).show();
+                checkIfNameIsAvailable();
+
+
+
 
             }
         });
     }
 
     public void checkIfUserCreatedName() {
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        checkIfNameCreatedReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue().equals("null")) {
@@ -186,6 +190,7 @@ public class MainMenuScreen extends Fragment {
                     setPlayerNameInput();
                 } else {
                     userName = snapshot.getValue(String.class);
+                    Toast.makeText(gameBoardActivity, getContext().getString(R.string.hello) + " " + userName + " !", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -194,6 +199,36 @@ public class MainMenuScreen extends Fragment {
 
             }
         });
+
+
+    }
+
+    public void checkIfNameIsAvailable(){
+        checkIfNameIsAvailableReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.child(userName).exists()){
+                    Toast.makeText(gameBoardActivity, R.string.username_in_use_error, Toast.LENGTH_SHORT).show();
+                } else{
+                    checkIfNameCreatedReference.setValue(nameEditText.getText().toString());
+                    Map<String, Object> map = new HashMap<>();
+                    map.put(userName, 0);
+                    checkIfNameIsAvailableReference.updateChildren(map);
+                    userName = nameEditText.getText().toString();
+                    userNameCreatorLayout.setVisibility(View.GONE);
+                    playButton.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
 
 
     }

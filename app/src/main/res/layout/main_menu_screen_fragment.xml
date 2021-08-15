@@ -192,7 +192,7 @@
             android:background="#901F8824"
             android:gravity="top|center_horizontal"
             android:text="@string/set_player_name"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
