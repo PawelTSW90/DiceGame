@@ -89,7 +89,7 @@ public class MainMenuScreen extends Fragment {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 FirebaseAuth.getInstance().signOut();
                 Toast.makeText(gameBoardActivity, getContext().getText(R.string.logged_out), Toast.LENGTH_SHORT).show();
-                gameBoardActivity.quitActivity();
+                getActivity().finish();
 
             }
         });

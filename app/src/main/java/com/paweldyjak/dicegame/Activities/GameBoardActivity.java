@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-
 import com.google.firebase.FirebaseApp;
 import com.paweldyjak.dicegame.Fragments.*;
 import com.paweldyjak.dicegame.R;
@@ -17,7 +16,6 @@ import java.util.Objects;
 
 public class GameBoardActivity extends AppCompatActivity {
     private MainMenuScreen mainMenuScreen;
-    private NewGameCreator newGameCreator;
     private PlayerTurnScreen playerTurnScreen;
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentTransaction fragmentTransaction;
@@ -31,18 +29,17 @@ public class GameBoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_board);
         mainMenuScreen = new MainMenuScreen(this);
         mainBoardLayout = findViewById(R.id.game_board_screen_layout);
-
         //hides status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
-        showLoginScreen();
+        showMenuScreen();
 
 
     }
 
-    public void showLoginScreen() {
-        showMainBoard(false);
+    public void showMenuScreen() {
+        showGameBoard(false);
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_layout, mainMenuScreen);
         fragmentTransaction.commit();
@@ -50,11 +47,8 @@ public class GameBoardActivity extends AppCompatActivity {
 
     }
 
-    public void quitActivity(){
-        this.finish();
-    }
 
-    public void showMainBoard(boolean showMainBoard) {
+    public void showGameBoard(boolean showMainBoard) {
         if (showMainBoard) {
             mainBoardLayout.setVisibility(View.VISIBLE);
         } else {
@@ -69,7 +63,7 @@ public class GameBoardActivity extends AppCompatActivity {
     }
 
 
-    public void showFragment(boolean show) {
+    public void showNewTurnScreen(boolean show) {
         View fragmentLayout = findViewById(R.id.fragment_layout);
         if (show) {
             mainBoardLayout.setVisibility(View.INVISIBLE);
@@ -81,18 +75,6 @@ public class GameBoardActivity extends AppCompatActivity {
             fragmentLayout.setVisibility(View.INVISIBLE);
             mainBoardLayout.setVisibility(View.VISIBLE);
         }
-    }
-
-    public void setStartGameScreen(NewGameCreator newGameCreator) {
-        this.newGameCreator = newGameCreator;
-    }
-
-    public NewGameCreator getStartGameScreen() {
-        return newGameCreator;
-    }
-
-    public PlayerTurnScreen getPlayerTurnScreen() {
-        return playerTurnScreen;
     }
 
     public void setPlayerTurnScreen(PlayerTurnScreen playerTurnScreen) {

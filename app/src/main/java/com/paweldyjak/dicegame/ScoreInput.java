@@ -72,7 +72,7 @@ public class ScoreInput {
                             Thread.sleep(2000);
                             resetThrowCounter = true;
                             resetCombinationsListeners();
-                            gameBoardActivity.showFragment(true);
+                            gameBoardActivity.showNewTurnScreen(true);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

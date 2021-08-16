@@ -3,10 +3,12 @@ package com.paweldyjak.dicegame;
 import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
+
 import androidx.core.content.ContextCompat;
 
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Fragments.PlayerTurnScreen;
+
 import java.util.Random;
 import java.util.concurrent.Executor;
 
@@ -32,16 +34,17 @@ public class GameBoard {
         this.uiConfig = uiConfig;
         this.rerollDices = rerollDices;
         sounds = new Sounds(context);
-        gameBoardActivity.setPlayerTurnScreen(new PlayerTurnScreen(gameBoardActivity,uiConfig));
-        gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getPlayerTurnScreen());
-        gameBoardActivity.showFragment(false);
+        PlayerTurnScreen playerTurnScreen = new PlayerTurnScreen(gameBoardActivity, uiConfig);
+        gameBoardActivity.replaceFragment(R.id.fragment_layout, playerTurnScreen);
+        gameBoardActivity.setPlayerTurnScreen(playerTurnScreen);
+        gameBoardActivity.showNewTurnScreen(false);
 
     }
 
 
     //method configure roll dices button
     public void setRollDicesButton() {
-        gameBoardActivity.showFragment(false);
+        gameBoardActivity.showNewTurnScreen(false);
         ImageView rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
         rollDicesButton.setOnClickListener(v -> {
 
@@ -206,7 +209,7 @@ public class GameBoard {
                                 try {
                                     sounds.playCrossOutCombinationSound();
                                     Thread.sleep(2000);
-                                    gameBoardActivity.showFragment(true);
+                                    gameBoardActivity.showNewTurnScreen(true);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }

@@ -111,34 +111,34 @@ public class PlayerNamesInputScreen extends Fragment {
                                                                 start.setOnClickListener(v5 -> {
                                                                     if (playerNameEditText.getText().length() >= 1) {
                                                                         playersNames[5] = playerNameEditText.getText().toString();
-                                                                        gameBoardActivity.setStartGameScreen(new NewGameCreator(gameBoardActivity, playersNames, numberOfPlayers));
-                                                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getStartGameScreen());
+                                                                        GameFragmentsManager gameFragmentsManager = new GameFragmentsManager(gameBoardActivity, playersNames, numberOfPlayers);
+                                                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, gameFragmentsManager);
                                                                     }
                                                                 });
                                                             } else {
-                                                                gameBoardActivity.setStartGameScreen(new NewGameCreator(gameBoardActivity, playersNames, numberOfPlayers));
-                                                                gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getStartGameScreen());
+                                                                GameFragmentsManager gameFragmentsManager = new GameFragmentsManager(gameBoardActivity, playersNames, numberOfPlayers);
+                                                                gameBoardActivity.replaceFragment(R.id.fragment_layout, gameFragmentsManager);
                                                             }
                                                         }
                                                     });
                                                 } else {
-                                                    gameBoardActivity.setStartGameScreen(new NewGameCreator(gameBoardActivity, playersNames, numberOfPlayers));
-                                                    gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getStartGameScreen());
+                                                    GameFragmentsManager gameFragmentsManager = new GameFragmentsManager(gameBoardActivity, playersNames, numberOfPlayers);
+                                                    gameBoardActivity.replaceFragment(R.id.fragment_layout, gameFragmentsManager);
                                                 }
 
                                             }
                                         });
                                     } else {
-                                        gameBoardActivity.setStartGameScreen(new NewGameCreator(gameBoardActivity, playersNames, numberOfPlayers));
-                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getStartGameScreen());
+                                        GameFragmentsManager gameFragmentsManager = new GameFragmentsManager(gameBoardActivity, playersNames, numberOfPlayers);
+                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, gameFragmentsManager);
                                     }
                                 }
 
                             });
 
                         } else {
-                            gameBoardActivity.setStartGameScreen(new NewGameCreator(gameBoardActivity, playersNames, numberOfPlayers));
-                            gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getStartGameScreen());
+                            GameFragmentsManager gameFragmentsManager = new GameFragmentsManager(gameBoardActivity, playersNames, numberOfPlayers);
+                            gameBoardActivity.replaceFragment(R.id.fragment_layout, gameFragmentsManager);
                         }
 
                     }

@@ -51,7 +51,7 @@ public class FinalResultScreen extends Fragment {
         playerOne.setText("" + uiConfig.getPlayersNames()[0] + "\n" + uiConfig.getPlayersTotalScore(1));
         playerTwo.setText("" + uiConfig.getPlayersNames()[1] + "\n" + uiConfig.getPlayersTotalScore(2));
         this.winnerPlayer.setText("ZWYCIĘZCĄ JEST:" + "\n" + winnerPlayer);
-        gameBoardActivity.showFragment(true);
+        gameBoardActivity.showNewTurnScreen(true);
 
 
     }

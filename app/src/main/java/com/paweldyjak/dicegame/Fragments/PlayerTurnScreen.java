@@ -92,7 +92,7 @@ public class PlayerTurnScreen extends Fragment {
                     break;
             }
             uiConfig.prepareScoreBoard();
-            gameBoardActivity.showFragment(false);
+            gameBoardActivity.showNewTurnScreen(false);
 
         });
         //update player number

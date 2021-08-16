@@ -9,13 +9,13 @@ import androidx.fragment.app.Fragment;
 import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 
-public class NewGameCreator extends Fragment {
+public class GameFragmentsManager extends Fragment {
     private final GameBoardActivity gameBoardActivity;
-    private Button nextTurnButton;
+    private Button startGameButton;
     private final String[] names;
-    private int numberOfPlayers;
+    private final int numberOfPlayers;
 
-    public NewGameCreator(GameBoardActivity gameBoardActivity, String[] names, int numberOfPlayers) {
+    public GameFragmentsManager(GameBoardActivity gameBoardActivity, String[] names, int numberOfPlayers) {
         this.gameBoardActivity = gameBoardActivity;
         this.names = names;
         this.numberOfPlayers = numberOfPlayers;
@@ -24,7 +24,7 @@ public class NewGameCreator extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.start_game_screen_fragment, container, false);
-        nextTurnButton = view.findViewById(R.id.start_game_button);
+        startGameButton = view.findViewById(R.id.start_game_button);
         TextView playerName = view.findViewById(R.id.start_game_textview);
         playerName.setText(names[0]);
         startTwoPlayersGame();
@@ -33,7 +33,7 @@ public class NewGameCreator extends Fragment {
 
 
     public void startTwoPlayersGame(){
-        nextTurnButton.setOnClickListener(v -> {
+        startGameButton.setOnClickListener(v -> {
             //creating class objects
             UIConfig uiConfig = new UIConfig(gameBoardActivity, gameBoardActivity, names);
             RerollDices rerollDices = new RerollDices(uiConfig);
@@ -46,7 +46,7 @@ public class NewGameCreator extends Fragment {
             uiConfig.setNumberOfPlayers(numberOfPlayers);
             uiConfig.getCurrentPlayerName().setText(names[0]);
             gameBoard.setRollDicesButton();
-            gameBoardActivity.showMainBoard(true);
+            gameBoardActivity.showGameBoard(true);
 
         });
     }
