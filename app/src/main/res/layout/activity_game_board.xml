@@ -19,6 +19,8 @@
         android:backgroundTintMode="src_over"
         android:id="@+id/game_board_screen_layout">
 
+
+
         <TextView
             android:id="@+id/player_name_textView"
             style="@style/Widget.AppCompat.TextView.SpinnerItem"
@@ -556,18 +558,19 @@
         </TableLayout>
 
         <com.google.android.gms.ads.AdView
-            android:id="@+id/adView_titleScreen"
+            android:id="@+id/adView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="4dp"
             app:adSize="BANNER"
             app:adUnitId="ca-app-pub-3940256099942544/6300978111"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.669"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageView
             android:id="@+id/diceSlot1"

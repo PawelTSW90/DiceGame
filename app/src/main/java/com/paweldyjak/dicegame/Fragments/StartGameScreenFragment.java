@@ -8,14 +8,15 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
+import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 
-public class GameFragmentsManager extends Fragment {
+public class StartGameScreenFragment extends Fragment {
     private final GameBoardActivity gameBoardActivity;
     private Button startGameButton;
     private final String[] names;
     private final int numberOfPlayers;
 
-    public GameFragmentsManager(GameBoardActivity gameBoardActivity, String[] names, int numberOfPlayers) {
+    public StartGameScreenFragment(GameBoardActivity gameBoardActivity, String[] names, int numberOfPlayers) {
         this.gameBoardActivity = gameBoardActivity;
         this.names = names;
         this.numberOfPlayers = numberOfPlayers;
@@ -27,25 +28,27 @@ public class GameFragmentsManager extends Fragment {
         startGameButton = view.findViewById(R.id.start_game_button);
         TextView playerName = view.findViewById(R.id.start_game_textview);
         playerName.setText(names[0]);
-        startTwoPlayersGame();
+        startHotSeatGame();
         return view;
     }
 
 
-    public void startTwoPlayersGame(){
+    public void startHotSeatGame(){
         startGameButton.setOnClickListener(v -> {
             //creating class objects
-            UIConfig uiConfig = new UIConfig(gameBoardActivity, gameBoardActivity, names);
+            UIConfig uiConfig = new UIConfig(gameBoardActivity);
+            HotSeatGame hotSeatGame = new HotSeatGame(uiConfig, gameBoardActivity, names);
             RerollDices rerollDices = new RerollDices(uiConfig);
-            DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(uiConfig);
-            ScoreInput scoreInput = new ScoreInput(gameBoardActivity,uiConfig);
-            GameBoard gameBoard = new GameBoard(gameBoardActivity, gameBoardActivity, scoreInput, dicesCombinationsChecker, uiConfig, rerollDices);
+            DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame);
+            ScoreInput scoreInput = new ScoreInput(gameBoardActivity,uiConfig, hotSeatGame);
+            GameBoardManager gameBoardManager = new GameBoardManager(gameBoardActivity, gameBoardActivity, scoreInput, dicesCombinationsChecker, uiConfig, rerollDices, hotSeatGame);
             //configuring UI
-            uiConfig.configureUI();
-            uiConfig.setPlayersNames(names);
-            uiConfig.setNumberOfPlayers(numberOfPlayers);
+            uiConfig.setComponents();
             uiConfig.getCurrentPlayerName().setText(names[0]);
-            gameBoard.setRollDicesButton();
+            hotSeatGame.setPlayersNames(names);
+            hotSeatGame.setNumberOfPlayers(numberOfPlayers);
+            hotSeatGame.setAllCombinationsAsActive();
+            gameBoardManager.setRollDicesButton();
             gameBoardActivity.showGameBoard(true);
 
         });

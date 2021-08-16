@@ -9,18 +9,23 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
+import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 
 public class PlayerTurnScreen extends Fragment {
     private final UIConfig uiConfig;
     private TextView playerName;
     private Button nextPlayerButton;
     private final GameBoardActivity gameBoardActivity;
+    private final HotSeatGame hotSeatGame;
 
-    public PlayerTurnScreen(GameBoardActivity gameBoardActivity, UIConfig uiConfig) {
+    public PlayerTurnScreen(GameBoardActivity gameBoardActivity, UIConfig uiConfig, HotSeatGame hotSeatGame) {
         this.uiConfig = uiConfig;
         this.gameBoardActivity = gameBoardActivity;
+        this.hotSeatGame = hotSeatGame;
     }
 
     @Override
@@ -28,112 +33,98 @@ public class PlayerTurnScreen extends Fragment {
         View view = inflater.inflate(R.layout.player_turn_screen_fragment, container, false);
         playerName = view.findViewById(R.id.player_turn_textview);
         nextPlayerButton = view.findViewById(R.id.player_turn_button);
+
+        AdView mAdView = view.findViewById(R.id.adView3);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         displayTurnMessage();
         return view;
     }
 
     public void displayTurnMessage() {
         //update next player name
-        switch (uiConfig.getCurrentPlayerNumber()) {
+        switch (hotSeatGame.getCurrentPlayerNumber()) {
             case 1:
-                playerName.setText(uiConfig.getPlayersNames()[1]);
+                playerName.setText(hotSeatGame.getPlayersNames()[1]);
                 break;
             case 2:
-                if (uiConfig.getNumberOfPlayers() > 2) {
-                    playerName.setText(uiConfig.getPlayersNames()[2]);
+                if (hotSeatGame.getNumberOfPlayers() > 2) {
+                    playerName.setText(hotSeatGame.getPlayersNames()[2]);
                 } else {
-                    playerName.setText(uiConfig.getPlayersNames()[0]);
+                    playerName.setText(hotSeatGame.getPlayersNames()[0]);
                 }
                 break;
             case 3:
-                if (uiConfig.getNumberOfPlayers() > 3) {
-                    playerName.setText(uiConfig.getPlayersNames()[3]);
+                if (hotSeatGame.getNumberOfPlayers() > 3) {
+                    playerName.setText(hotSeatGame.getPlayersNames()[3]);
                 } else {
-                    playerName.setText(uiConfig.getPlayersNames()[0]);
+                    playerName.setText(hotSeatGame.getPlayersNames()[0]);
                 }
                 break;
             case 4:
-                if (uiConfig.getNumberOfPlayers() > 4) {
-                    playerName.setText(uiConfig.getPlayersNames()[4]);
+                if (hotSeatGame.getNumberOfPlayers() > 4) {
+                    playerName.setText(hotSeatGame.getPlayersNames()[4]);
                 } else {
-                    playerName.setText(uiConfig.getPlayersNames()[0]);
+                    playerName.setText(hotSeatGame.getPlayersNames()[0]);
                 }
                 break;
             case 5:
-                if (uiConfig.getNumberOfPlayers() > 5) {
-                    playerName.setText(uiConfig.getPlayersNames()[5]);
+                if (hotSeatGame.getNumberOfPlayers() > 5) {
+                    playerName.setText(hotSeatGame.getPlayersNames()[5]);
                 } else {
-                    playerName.setText(uiConfig.getPlayersNames()[0]);
+                    playerName.setText(hotSeatGame.getPlayersNames()[0]);
                 }
                 break;
             case 6:
-                playerName.setText(uiConfig.getPlayersNames()[0]);
+                playerName.setText(hotSeatGame.getPlayersNames()[0]);
                 break;
         }
         nextPlayerButton.setOnClickListener(v -> {
-            switch (uiConfig.getCurrentPlayerNumber()) {
-                case 1:
-                    uiConfig.getCurrentPlayerName().setText((uiConfig.getPlayersNames()[0]));
-                    break;
-                case 2:
-                    uiConfig.getCurrentPlayerName().setText((uiConfig.getPlayersNames()[1]));
-                    break;
-                case 3:
-                    uiConfig.getCurrentPlayerName().setText((uiConfig.getPlayersNames()[2]));
-                    break;
-                case 4:
-                    uiConfig.getCurrentPlayerName().setText((uiConfig.getPlayersNames()[3]));
-                    break;
-                case 5:
-                    uiConfig.getCurrentPlayerName().setText((uiConfig.getPlayersNames()[4]));
-                    break;
-                case 6:
-                    uiConfig.getCurrentPlayerName().setText((uiConfig.getPlayersNames()[5]));
-                    break;
-            }
-            uiConfig.prepareScoreBoard();
+            int playerNumber = hotSeatGame.getCurrentPlayerNumber() - 1;
+            uiConfig.getCurrentPlayerName().setText((hotSeatGame.getPlayersNames()[playerNumber]));
+            hotSeatGame.prepareScoreBoard();
             gameBoardActivity.showNewTurnScreen(false);
 
         });
         //update player number
-        switch (uiConfig.getCurrentPlayerNumber()) {
+        switch (hotSeatGame.getCurrentPlayerNumber()) {
             case 1:
-                uiConfig.setCurrentPlayerNumber(2);
+                hotSeatGame.setCurrentPlayerNumber(2);
                 break;
             case 2:
-                if (uiConfig.getNumberOfPlayers() > 2) {
-                    uiConfig.setCurrentPlayerNumber(3);
+                if (hotSeatGame.getNumberOfPlayers() > 2) {
+                    hotSeatGame.setCurrentPlayerNumber(3);
                 } else {
-                    uiConfig.setCurrentPlayerNumber(1);
+                    hotSeatGame.setCurrentPlayerNumber(1);
                 }
                 break;
             case 3:
-                if (uiConfig.getNumberOfPlayers() > 3) {
-                    uiConfig.setCurrentPlayerNumber(4);
+                if (hotSeatGame.getNumberOfPlayers() > 3) {
+                    hotSeatGame.setCurrentPlayerNumber(4);
                 } else {
-                    uiConfig.setCurrentPlayerNumber(1);
+                    hotSeatGame.setCurrentPlayerNumber(1);
                 }
                 break;
             case 4:
-                if (uiConfig.getNumberOfPlayers() > 4) {
-                    uiConfig.setCurrentPlayerNumber(5);
+                if (hotSeatGame.getNumberOfPlayers() > 4) {
+                    hotSeatGame.setCurrentPlayerNumber(5);
                 } else {
-                    uiConfig.setCurrentPlayerNumber(1);
+                    hotSeatGame.setCurrentPlayerNumber(1);
                 }
                 break;
             case 5:
-                if (uiConfig.getNumberOfPlayers() > 5) {
-                    uiConfig.setCurrentPlayerNumber(6);
+                if (hotSeatGame.getNumberOfPlayers() > 5) {
+                    hotSeatGame.setCurrentPlayerNumber(6);
                 } else {
-                    uiConfig.setCurrentPlayerNumber(1);
+                    hotSeatGame.setCurrentPlayerNumber(1);
                 }
                 break;
             case 6:
-                uiConfig.setCurrentPlayerNumber(1);
+                hotSeatGame.setCurrentPlayerNumber(1);
 
                 break;
         }
-        uiConfig.prepareCombinationsSlots();
+        hotSeatGame.prepareCombinationsSlots();
     }
 
 }

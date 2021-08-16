@@ -1,9 +1,8 @@
 package com.paweldyjak.dicegame;
 
 import androidx.core.content.ContextCompat;
-
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
-
+import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 import java.util.concurrent.Executor;
 
 /*class methods writes score into score table
@@ -13,12 +12,14 @@ public class ScoreInput {
 
     private final UIConfig uiConfig;
     private final GameBoardActivity gameBoardActivity;
+    private final HotSeatGame hotSeatGame;
     private boolean resetThrowCounter = false;
     private final Sounds sounds;
 
-    public ScoreInput(GameBoardActivity gameBoardActivity, UIConfig uiConfig) {
+    public ScoreInput(GameBoardActivity gameBoardActivity, UIConfig uiConfig, HotSeatGame hotSeatGame) {
         this.gameBoardActivity = gameBoardActivity;
         this.uiConfig = uiConfig;
+        this.hotSeatGame = hotSeatGame;
         sounds = new Sounds(gameBoardActivity);
     }
     /*method inputs score for a specified combination. Combinations list:
@@ -44,23 +45,23 @@ public class ScoreInput {
         Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
         uiConfig.getCombinationsTextView()[combinationNr].setOnClickListener(v -> {
 
-            if (scoreToInput > 0 && uiConfig.getIsCombinationActive()[combinationNr] && !resetThrowCounter) {
+            if (scoreToInput > 0 && hotSeatGame.getIsCombinationActive()[combinationNr] && !resetThrowCounter) {
                 sounds.playCombinationTickSound();
-                uiConfig.setCombinationScore(scoreToInput, combinationNr);
-                String points = uiConfig.getCombinationScore(combinationNr)+" pkt";
-                uiConfig.setTotalScore(scoreToInput);
+                hotSeatGame.setCombinationScore(scoreToInput, combinationNr);
+                String points = hotSeatGame.getCombinationScore(combinationNr)+" pkt";
+                hotSeatGame.setTotalScore(scoreToInput);
                 uiConfig.clearDicesBorder();
                 uiConfig.hideDices();
                 uiConfig.getCombinationsPointsTextView()[combinationNr].setText(points);
                 uiConfig.getCombinationsTextView()[combinationNr].setEnabled(false);
-                uiConfig.setIsCombinationActive(false, combinationNr);
-                uiConfig.setCombinationsSlots(combinationNr, 1);
-                uiConfig.prepareCombinationsSlots();
-                if (uiConfig.getCurrentPlayerNumber()==uiConfig.getNumberOfPlayers() && uiConfig.checkIfAllCombinationsAreDone()) {
+                hotSeatGame.setIsCombinationActive(false, combinationNr);
+                hotSeatGame.setCombinationsSlots(combinationNr, 1);
+                hotSeatGame.prepareCombinationsSlots();
+                if (hotSeatGame.getCurrentPlayerNumber()== hotSeatGame.getNumberOfPlayers() && hotSeatGame.checkIfAllCombinationsAreDone()) {
                     executor.execute(() -> {
                         try {
                             Thread.sleep(2000);
-                            uiConfig.setFinalResultScreen();
+                            hotSeatGame.setFinalResultScreen();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -85,7 +86,6 @@ public class ScoreInput {
 
         });
     }
-
 
     public boolean getResetThrowCounter() {
         return resetThrowCounter;

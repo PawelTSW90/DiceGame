@@ -7,6 +7,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.FirebaseApp;
 import com.paweldyjak.dicegame.Fragments.*;
 import com.paweldyjak.dicegame.R;
@@ -33,6 +36,10 @@ public class GameBoardActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
+
+        AdView mAdView = findViewById(R.id.adView2);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         showMenuScreen();
 
 
@@ -80,9 +87,11 @@ public class GameBoardActivity extends AppCompatActivity {
     public void setPlayerTurnScreen(PlayerTurnScreen playerTurnScreen) {
         this.playerTurnScreen = playerTurnScreen;
     }
-
+    //disable back button
     @Override
     public void onBackPressed(){
 
     }
+
+
 }

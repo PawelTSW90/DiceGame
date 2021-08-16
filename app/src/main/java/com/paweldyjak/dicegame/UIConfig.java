@@ -2,41 +2,24 @@ package com.paweldyjak.dicegame;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.core.content.res.ResourcesCompat;
 
-import com.paweldyjak.dicegame.Activities.GameBoardActivity;
-import com.paweldyjak.dicegame.Fragments.FinalResultScreen;
-
-import java.util.Arrays;
 
 public class UIConfig {
     private final Context context;
-    private final GameBoardActivity gameBoardActivity;
     private final ImageView[] dicesSlots = new ImageView[5];
     private final TextView[] combinationsTextView = new TextView[16];
     private final TextView[] combinationsPointsTextView = new TextView[16];
     private final TextView[] combinationsSlots = new TextView[16];
     private TextView currentPlayerName;
     private TextView totalScoreTextView;
-    private String[] playersNames;
-    private int numberOfPlayers;
-    private int currentPlayerNumber = 6;
-    private final int[][] playersCombinationsScore = new int[6][16];
-    private final int[][] playersCombinationsSlots = new int[6][16];
-    private final boolean[][] playersIsCombinationActive = new boolean[6][16];
-    private final int[] playersTotalScore = new int[6];
 
 
-    public UIConfig(GameBoardActivity gameBoardActivity, Context context, String[] playersNames) {
+    public UIConfig(Context context) {
         this.context = context;
-        this.playersNames = playersNames;
-        this.gameBoardActivity = gameBoardActivity;
 
 
     }
@@ -101,121 +84,11 @@ public class UIConfig {
 
     }
 
-    public void setAllCombinationsAsActive() {
-        for (boolean[] row: playersIsCombinationActive)
-            Arrays.fill(row, true);
-    }
-
-
-    public void setTotalScore(int score) {
-        String string = gameBoardActivity.getResources().getString(R.string.points);
-        switch (currentPlayerNumber) {
-            case 1:
-                playersTotalScore[0] += score;
-                totalScoreTextView.setText(playersTotalScore[0] + " " + string);
-                break;
-            case 2:
-                playersTotalScore[1] += score;
-                totalScoreTextView.setText(playersTotalScore[1] + " " + string);
-                break;
-
-            case 3:
-                playersTotalScore[2] += score;
-                totalScoreTextView.setText(playersTotalScore[2] + " " + string);
-                break;
-
-            case 4:
-                playersTotalScore[3] += score;
-                totalScoreTextView.setText(playersTotalScore[3] + " " + string);
-                break;
-
-            case 5:
-                playersTotalScore[4] += score;
-                totalScoreTextView.setText(playersTotalScore[4] + " " + string);
-                break;
-
-            case 6:
-                playersTotalScore[5] += score;
-                totalScoreTextView.setText(playersTotalScore[5] + " " + string);
-                break;
-        }
-
-    }
 
     public void hideDices() {
         for (int x = 0; x < getDicesSlots().length; x++) {
             getDicesSlots()[x].setImageResource(0);
         }
-    }
-
-    public boolean checkIfAllCombinationsAreDone() {
-        for (int x = 0; x < getIsCombinationActive().length; x++) {
-            if (getIsCombinationActive()[x]) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
-    public void prepareScoreBoard() {
-        String string = gameBoardActivity.getResources().getString(R.string.points);
-        for (int x = 0; x < 16; x++) {
-            switch (currentPlayerNumber) {
-                case 1:
-                    getCombinationsTextView()[x].setEnabled(playersIsCombinationActive[0][x]);
-                    combinationsPointsTextView[x].setText(playersCombinationsScore[0][x] + " " + string);
-                    totalScoreTextView.setText(playersTotalScore[0] + " " + string);
-                    break;
-
-                case 2:
-                    getCombinationsTextView()[x].setEnabled(playersIsCombinationActive[1][x]);
-                    combinationsPointsTextView[x].setText(playersCombinationsScore[1][x] + " " + string);
-                    totalScoreTextView.setText(playersTotalScore[1] + " " + string);
-                    break;
-
-                case 3:
-                    getCombinationsTextView()[x].setEnabled(playersIsCombinationActive[2][x]);
-                    combinationsPointsTextView[x].setText(playersCombinationsScore[2][x] + " " + string);
-                    totalScoreTextView.setText(playersTotalScore[2] + " " + string);
-                    break;
-
-                case 4:
-                    getCombinationsTextView()[x].setEnabled(playersIsCombinationActive[3][x]);
-                    combinationsPointsTextView[x].setText(playersCombinationsScore[3][x] + " " + string);
-                    totalScoreTextView.setText(playersTotalScore[3] + " " + string);
-                    break;
-
-                case 5:
-                    getCombinationsTextView()[x].setEnabled(playersIsCombinationActive[4][x]);
-                    combinationsPointsTextView[x].setText(playersCombinationsScore[4][x] + " " + string);
-                    totalScoreTextView.setText(playersTotalScore[4] + " " + string);
-                    break;
-
-                case 6:
-                    getCombinationsTextView()[x].setEnabled(playersIsCombinationActive[5][x]);
-                    combinationsPointsTextView[x].setText(playersCombinationsScore[5][x] + " " + string);
-                    totalScoreTextView.setText(playersTotalScore[5] + " " + string);
-                    break;
-
-
-            }
-
-
-        }
-
-    }
-
-    public void configureUI() {
-        setComponents();
-        setAllCombinationsAsActive();
-    }
-
-    //generate final screen fragment
-    public void setFinalResultScreen() {
-        FinalResultScreen finalResultScreen = new FinalResultScreen(gameBoardActivity, context, this);
-        gameBoardActivity.replaceFragment(R.id.fragment_layout, finalResultScreen);
-
     }
 
 
@@ -232,97 +105,6 @@ public class UIConfig {
         return combinationsTextView;
     }
 
-    public boolean[] getIsCombinationActive() {
-        switch (currentPlayerNumber) {
-            case 1:
-                return playersIsCombinationActive[0];
-            case 2:
-                return playersIsCombinationActive[1];
-            case 3:
-                return playersIsCombinationActive[2];
-            case 4:
-                return playersIsCombinationActive[3];
-            case 5:
-                return playersIsCombinationActive[4];
-            case 6:
-                return playersIsCombinationActive[5];
-        }
-        return null;
-
-    }
-
-    public void setIsCombinationActive(boolean isCombinationActive, int combinationNr) {
-        switch (currentPlayerNumber) {
-            case 1:
-                this.playersIsCombinationActive[0][combinationNr] = isCombinationActive;
-                break;
-            case 2:
-                this.playersIsCombinationActive[1][combinationNr] = isCombinationActive;
-                break;
-            case 3:
-                this.playersIsCombinationActive[2][combinationNr] = isCombinationActive;
-                break;
-            case 4:
-                this.playersIsCombinationActive[3][combinationNr] = isCombinationActive;
-                break;
-            case 5:
-                this.playersIsCombinationActive[4][combinationNr] = isCombinationActive;
-                break;
-            case 6:
-                this.playersIsCombinationActive[5][combinationNr] = isCombinationActive;
-                break;
-
-        }
-
-
-    }
-
-    public int getCombinationScore(int combinationNr) {
-
-        switch (currentPlayerNumber) {
-            case 1:
-                return playersCombinationsScore[0][combinationNr];
-            case 2:
-                return playersCombinationsScore[1][combinationNr];
-            case 3:
-                return playersCombinationsScore[2][combinationNr];
-            case 4:
-                return playersCombinationsScore[3][combinationNr];
-            case 5:
-                return playersCombinationsScore[4][combinationNr];
-            case 6:
-                return playersCombinationsScore[5][combinationNr];
-        }
-        return 0;
-
-
-    }
-
-    public void setCombinationScore(int score, int combinationNr) {
-        switch (currentPlayerNumber) {
-
-            case 1:
-                this.playersCombinationsScore[0][combinationNr] = score;
-                break;
-            case 2:
-                this.playersCombinationsScore[1][combinationNr] = score;
-                break;
-            case 3:
-                this.playersCombinationsScore[2][combinationNr] = score;
-                break;
-            case 4:
-                this.playersCombinationsScore[3][combinationNr] = score;
-                break;
-            case 5:
-                this.playersCombinationsScore[4][combinationNr] = score;
-                break;
-            case 6:
-                this.playersCombinationsScore[5][combinationNr] = score;
-                break;
-        }
-
-
-    }
 
     public void setDicesBorder(ImageView dice, boolean setBorder) {
         Drawable dicesBorder = ResourcesCompat.getDrawable(context.getResources(), R.drawable.dices_border, null);
@@ -339,199 +121,16 @@ public class UIConfig {
         }
     }
 
-    public int getCurrentPlayerNumber() {
-        return currentPlayerNumber;
-    }
-
-    public void setCurrentPlayerNumber(int currentPlayerNumber) {
-        this.currentPlayerNumber = currentPlayerNumber;
-    }
-
-    public String[] getPlayersNames() {
-        return playersNames;
-    }
-
-    public void setPlayersNames(String[] playersNames) {
-        this.playersNames = playersNames;
-    }
-
-    public int getPlayersTotalScore(int playerNumber) {
-        switch (playerNumber) {
-            case 1:
-                return playersTotalScore[0];
-            case 2:
-                return playersTotalScore[1];
-            case 3:
-                return playersTotalScore[2];
-            case 4:
-                return playersTotalScore[3];
-            case 5:
-                return playersTotalScore[4];
-            case 6:
-                return playersTotalScore[5];
-        }
-        return 0;
-
-
-    }
 
     public TextView getCurrentPlayerName() {
         return currentPlayerName;
     }
 
-    public void setCombinationsSlots(int combinationsSlotNumber, int slotStatus) {
-
-        switch (currentPlayerNumber){
-            case 1:
-                playersCombinationsSlots[0][combinationsSlotNumber] = slotStatus;
-                break;
-            case 2:
-                playersCombinationsSlots[1][combinationsSlotNumber] = slotStatus;
-                break;
-            case 3:
-                playersCombinationsSlots[2][combinationsSlotNumber] = slotStatus;
-                break;
-            case 4:
-                playersCombinationsSlots[3][combinationsSlotNumber] = slotStatus;
-                break;
-            case 5:
-                playersCombinationsSlots[4][combinationsSlotNumber] = slotStatus;
-                break;
-            case 6:
-                playersCombinationsSlots[5][combinationsSlotNumber] = slotStatus;
-                break;
-        }
-
+    public TextView[] getCombinationsSlots() {
+        return combinationsSlots;
     }
 
-    public void prepareCombinationsSlots() {
-        for (int x = 0; x < combinationsSlots.length; x++) {
-            switch (currentPlayerNumber) {
-                case 1:
-                    if (playersCombinationsSlots[0][x] == 1) {
-                        combinationsSlots[x].setText("\u2713");
-                        combinationsSlots[x].setGravity(Gravity.CENTER);
-                        combinationsSlots[x].setTextSize(16);
-                        combinationsSlots[x].setTextColor(Color.rgb(27, 182, 33));
-                        combinationsPointsTextView[x].setEnabled(true);
-                    } else if (playersCombinationsSlots[0][x] == 2) {
-                        combinationsSlots[x].setText("X");
-                        combinationsSlots[x].setGravity(Gravity.CENTER);
-                        combinationsSlots[x].setTextSize(16);
-                        combinationsSlots[x].setTextColor(Color.rgb(140, 17, 17));
-                        combinationsPointsTextView[x].setEnabled(false);
-                    } else {
-                        combinationsSlots[x].setText("");
-                        combinationsPointsTextView[x].setEnabled(true);
-                    }
-                    break;
-
-                case 2:
-
-                    if (playersCombinationsSlots[1][x] == 1) {
-                        combinationsSlots[x].setText("\u2713");
-                        combinationsSlots[x].setGravity(Gravity.CENTER);
-                        combinationsSlots[x].setTextSize(16);
-                        combinationsSlots[x].setTextColor(Color.rgb(27, 182, 33));
-                        combinationsPointsTextView[x].setEnabled(true);
-                    } else if (playersCombinationsSlots[1][x] == 2) {
-                        combinationsSlots[x].setText("X");
-                        combinationsSlots[x].setGravity(Gravity.CENTER);
-                        combinationsSlots[x].setTextSize(16);
-                        combinationsSlots[x].setTextColor(Color.rgb(140, 17, 17));
-                        combinationsPointsTextView[x].setEnabled(false);
-                    } else {
-                        combinationsSlots[x].setText("");
-                        combinationsPointsTextView[x].setEnabled(true);
-                    }
-                    break;
-                case 3:
-
-                    if (playersCombinationsSlots[2][x] == 1) {
-                        combinationsSlots[x].setText("\u2713");
-                        combinationsSlots[x].setGravity(Gravity.CENTER);
-                        combinationsSlots[x].setTextSize(16);
-                        combinationsSlots[x].setTextColor(Color.rgb(27, 182, 33));
-                        combinationsPointsTextView[x].setEnabled(true);
-                    } else if (playersCombinationsSlots[2][x] == 2) {
-                        combinationsSlots[x].setText("X");
-                        combinationsSlots[x].setGravity(Gravity.CENTER);
-                        combinationsSlots[x].setTextSize(16);
-                        combinationsSlots[x].setTextColor(Color.rgb(140, 17, 17));
-                        combinationsPointsTextView[x].setEnabled(false);
-                    } else {
-                        combinationsSlots[x].setText("");
-                        combinationsPointsTextView[x].setEnabled(true);
-                    }
-                    break;
-                case 4:
-
-                    if (playersCombinationsSlots[3][x] == 1) {
-                        combinationsSlots[x].setText("\u2713");
-                        combinationsSlots[x].setGravity(Gravity.CENTER);
-                        combinationsSlots[x].setTextSize(16);
-                        combinationsSlots[x].setTextColor(Color.rgb(27, 182, 33));
-                        combinationsPointsTextView[x].setEnabled(true);
-                    } else if (playersCombinationsSlots[3][x] == 2) {
-                        combinationsSlots[x].setText("X");
-                        combinationsSlots[x].setGravity(Gravity.CENTER);
-                        combinationsSlots[x].setTextSize(16);
-                        combinationsSlots[x].setTextColor(Color.rgb(140, 17, 17));
-                        combinationsPointsTextView[x].setEnabled(false);
-                    } else {
-                        combinationsSlots[x].setText("");
-                        combinationsPointsTextView[x].setEnabled(true);
-                    }
-                    break;
-                case 5:
-
-                    if (playersCombinationsSlots[4][x] == 1) {
-                        combinationsSlots[x].setText("\u2713");
-                        combinationsSlots[x].setGravity(Gravity.CENTER);
-                        combinationsSlots[x].setTextSize(16);
-                        combinationsSlots[x].setTextColor(Color.rgb(27, 182, 33));
-                        combinationsPointsTextView[x].setEnabled(true);
-                    } else if (playersCombinationsSlots[4][x] == 2) {
-                        combinationsSlots[x].setText("X");
-                        combinationsSlots[x].setGravity(Gravity.CENTER);
-                        combinationsSlots[x].setTextSize(16);
-                        combinationsSlots[x].setTextColor(Color.rgb(140, 17, 17));
-                        combinationsPointsTextView[x].setEnabled(false);
-                    } else {
-                        combinationsSlots[x].setText("");
-                        combinationsPointsTextView[x].setEnabled(true);
-                    }
-                    break;
-                case 6:
-
-                    if (playersCombinationsSlots[5][x] == 1) {
-                        combinationsSlots[x].setText("\u2713");
-                        combinationsSlots[x].setGravity(Gravity.CENTER);
-                        combinationsSlots[x].setTextSize(16);
-                        combinationsSlots[x].setTextColor(Color.rgb(27, 182, 33));
-                        combinationsPointsTextView[x].setEnabled(true);
-                    } else if (playersCombinationsSlots[5][x] == 2) {
-                        combinationsSlots[x].setText("X");
-                        combinationsSlots[x].setGravity(Gravity.CENTER);
-                        combinationsSlots[x].setTextSize(16);
-                        combinationsSlots[x].setTextColor(Color.rgb(140, 17, 17));
-                        combinationsPointsTextView[x].setEnabled(false);
-                    } else {
-                        combinationsSlots[x].setText("");
-                        combinationsPointsTextView[x].setEnabled(true);
-                    }
-                    break;
-
-            }
-
-        }
-    }
-
-    public void setNumberOfPlayers(int numberOfPlayers) {
-        this.numberOfPlayers = numberOfPlayers;
-    }
-
-    public int getNumberOfPlayers() {
-        return numberOfPlayers;
+    public TextView getTotalScoreTextView() {
+        return totalScoreTextView;
     }
 }

@@ -8,7 +8,7 @@ import com.paweldyjak.dicegame.*;
 
 import java.util.Objects;
 
-public class MainMenuSettings extends AppCompatActivity {
+public class MainMenuSettingsActivity extends AppCompatActivity {
 
 
     @Override
