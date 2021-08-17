@@ -31,10 +31,6 @@ public class PlayerNamesInputScreen extends Fragment {
         playerName = view.findViewById(R.id.player_title);
         playerName.setText(R.string.player_one);
         playerInputScreen(context);
-        //ad config
-        AdView mAdView = view.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
         return view;
 

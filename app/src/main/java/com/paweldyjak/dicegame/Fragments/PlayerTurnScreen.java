@@ -33,10 +33,6 @@ public class PlayerTurnScreen extends Fragment {
         View view = inflater.inflate(R.layout.player_turn_screen_fragment, container, false);
         playerName = view.findViewById(R.id.player_turn_textview);
         nextPlayerButton = view.findViewById(R.id.player_turn_button);
-
-        AdView mAdView = view.findViewById(R.id.adView3);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
         displayTurnMessage();
         return view;
     }

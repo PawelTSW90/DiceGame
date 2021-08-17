@@ -40,8 +40,8 @@ public class StartGameScreenFragment extends Fragment {
             HotSeatGame hotSeatGame = new HotSeatGame(uiConfig, gameBoardActivity, names);
             RerollDices rerollDices = new RerollDices(uiConfig);
             DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame);
-            ScoreInput scoreInput = new ScoreInput(gameBoardActivity,uiConfig, hotSeatGame);
-            GameBoardManager gameBoardManager = new GameBoardManager(gameBoardActivity, gameBoardActivity, scoreInput, dicesCombinationsChecker, uiConfig, rerollDices, hotSeatGame);
+            ScoreInputSetter scoreInputSetter = new ScoreInputSetter(gameBoardActivity,uiConfig, hotSeatGame);
+            GameBoardManager gameBoardManager = new GameBoardManager(gameBoardActivity, gameBoardActivity, scoreInputSetter, dicesCombinationsChecker, uiConfig, rerollDices, hotSeatGame);
             //configuring UI
             uiConfig.setComponents();
             uiConfig.getCurrentPlayerName().setText(names[0]);

@@ -1,5 +1,7 @@
 package com.paweldyjak.dicegame;
 
+import android.view.View;
+
 import androidx.core.content.ContextCompat;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.HotSeatGame;
@@ -8,7 +10,7 @@ import java.util.concurrent.Executor;
 /*class methods writes score into score table
 score writing enabled when combination is correct, when it's not blocked, no other combination
  has been used during this turn and no combination has been blocked during this turn*/
-public class ScoreInput {
+public class ScoreInputSetter {
 
     private final UIConfig uiConfig;
     private final GameBoardActivity gameBoardActivity;
@@ -16,7 +18,7 @@ public class ScoreInput {
     private boolean resetThrowCounter = false;
     private final Sounds sounds;
 
-    public ScoreInput(GameBoardActivity gameBoardActivity, UIConfig uiConfig, HotSeatGame hotSeatGame) {
+    public ScoreInputSetter(GameBoardActivity gameBoardActivity, UIConfig uiConfig, HotSeatGame hotSeatGame) {
         this.gameBoardActivity = gameBoardActivity;
         this.uiConfig = uiConfig;
         this.hotSeatGame = hotSeatGame;
@@ -41,12 +43,12 @@ public class ScoreInput {
     combination nr 15 = Sos
     */
 
-    public void inputScore(int scoreToInput, int combinationNr) {
+    public void setScoreInputForViews(int scoreToInput, int combinationNr) {
         Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
         uiConfig.getCombinationsTextView()[combinationNr].setOnClickListener(v -> {
 
             if (scoreToInput > 0 && hotSeatGame.getIsCombinationActive()[combinationNr] && !resetThrowCounter) {
-                sounds.playCombinationTickSound();
+                sounds.playCompleteCombinationSound();
                 hotSeatGame.setCombinationScore(scoreToInput, combinationNr);
                 String points = hotSeatGame.getCombinationScore(combinationNr)+" pkt";
                 hotSeatGame.setTotalScore(scoreToInput);
@@ -85,7 +87,58 @@ public class ScoreInput {
 
 
         });
+
+        uiConfig.getCombinationsSlots()[combinationNr].setOnClickListener(v -> {
+            if (scoreToInput > 0 && hotSeatGame.getIsCombinationActive()[combinationNr] && !resetThrowCounter) {
+                sounds.playCompleteCombinationSound();
+                hotSeatGame.setCombinationScore(scoreToInput, combinationNr);
+                String points = hotSeatGame.getCombinationScore(combinationNr)+" pkt";
+                hotSeatGame.setTotalScore(scoreToInput);
+                uiConfig.clearDicesBorder();
+                uiConfig.hideDices();
+                uiConfig.getCombinationsPointsTextView()[combinationNr].setText(points);
+                uiConfig.getCombinationsTextView()[combinationNr].setEnabled(false);
+                hotSeatGame.setIsCombinationActive(false, combinationNr);
+                hotSeatGame.setCombinationsSlots(combinationNr, 1);
+                hotSeatGame.prepareCombinationsSlots();
+                if (hotSeatGame.getCurrentPlayerNumber()== hotSeatGame.getNumberOfPlayers() && hotSeatGame.checkIfAllCombinationsAreDone()) {
+                    executor.execute(() -> {
+                        try {
+                            Thread.sleep(2000);
+                            hotSeatGame.setFinalResultScreen();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    });
+                } else{
+                    executor.execute(() -> {
+                        try {
+                            Thread.sleep(2000);
+                            resetThrowCounter = true;
+                            resetCombinationsListeners();
+                            gameBoardActivity.showNewTurnScreen(true);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    });
+                }
+
+            }
+        });
+
+
+
+
+
+
+
+
+
     }
+
+
 
     public boolean getResetThrowCounter() {
         return resetThrowCounter;

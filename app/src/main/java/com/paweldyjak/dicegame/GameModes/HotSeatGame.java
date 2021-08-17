@@ -107,6 +107,10 @@ public class HotSeatGame {
 
     }
 
+    public int[] getPlayersScore(){
+        return playersTotalScore;
+    }
+
     public void setCombinationsSlots(int combinationsSlotNumber, int slotStatus) {
         playersCombinationsSlotsValues[currentPlayerNumber - 1][combinationsSlotNumber] = slotStatus;
 

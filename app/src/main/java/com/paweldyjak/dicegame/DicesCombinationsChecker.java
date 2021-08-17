@@ -154,78 +154,54 @@ public class DicesCombinationsChecker {
 
 
     public int checkPair(int[] dices, boolean firstThrow) {
+        int firstThrowValue = 4;
+        int notFirstThrowValue = 2;
+        int highestPairScore = 0;
         if (!hotSeatGame.getIsCombinationActive()[6]) {
             return 0;
         }
         List<Integer> valuesList = new ArrayList<>();
-        int one = 0, two = 0, three = 0, four = 0, five = 0, six = 0;
-        int highestPairScore = 0;
+        for (int x = 0; x < 6; x++) {
+            valuesList.add(x, 0);
+        }
         for (int x = 0; x < 5; x++) {
             switch (dices[x]) {
                 case 1:
-                    one++;
+                    valuesList.set(0, valuesList.get(0)+1);
                     break;
                 case 2:
-                    two++;
+                    valuesList.set(1, valuesList.get(1)+1);
                     break;
                 case 3:
-                    three++;
+                    valuesList.set(2, valuesList.get(2)+1);
                     break;
                 case 4:
-                    four++;
+                    valuesList.set(3, valuesList.get(3)+1);
                     break;
                 case 5:
-                    five++;
+                    valuesList.set(4, valuesList.get(4)+1);
                     break;
                 case 6:
-                    six++;
+                    valuesList.set(5, valuesList.get(5)+1);
                     break;
 
             }
-        }
-        if (one >= 2) {
-            if (firstThrow) {
-                highestPairScore = 4;
-            } else {
-                highestPairScore = 2;
-            }
-        }
-        if (two >= 2) {
-            if (firstThrow) {
-                highestPairScore = 8;
-            } else {
-                highestPairScore = 4;
-            }
+
 
         }
-        if (three >= 2) {
-            if (firstThrow) {
-                highestPairScore = 12;
-            } else {
-                highestPairScore = 6;
+        for(int x = 0; x<6; x++){
+
+            if(valuesList.get(x)>=2){
+                if(firstThrow){
+                    highestPairScore= firstThrowValue;
+                } else{
+                    highestPairScore = notFirstThrowValue;
+                }
             }
+            firstThrowValue+=4;
+            notFirstThrowValue+=2;
         }
-        if (four >= 2) {
-            if (firstThrow) {
-                highestPairScore = 16;
-            } else {
-                highestPairScore = 8;
-            }
-        }
-        if (five >= 2) {
-            if (firstThrow) {
-                highestPairScore = 20;
-            } else {
-                highestPairScore = 10;
-            }
-        }
-        if (six >= 2) {
-            if (firstThrow) {
-                highestPairScore = 24;
-            } else {
-                highestPairScore = 12;
-            }
-        }
+
         return highestPairScore;
     }
 
@@ -676,7 +652,8 @@ public class DicesCombinationsChecker {
 
 
     }
-        //method returns chosen combination check
+
+    //method returns chosen combination check
     public int combinationChecker(int combinationNr, int[] dices, boolean firstThrow, int throwNumber) {
         switch (combinationNr) {
             case 0:
