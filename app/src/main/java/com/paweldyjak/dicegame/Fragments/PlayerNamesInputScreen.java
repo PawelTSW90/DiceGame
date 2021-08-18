@@ -1,5 +1,4 @@
 package com.paweldyjak.dicegame.Fragments;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,16 +8,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.R;
 
 public class PlayerNamesInputScreen extends Fragment {
-    private View view;
     private Context context;
     private final GameBoardActivity gameBoardActivity;
     private Button start;
@@ -29,12 +25,13 @@ public class PlayerNamesInputScreen extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.player_names_input_screen_fragment, container, false);
+        View view = inflater.inflate(R.layout.player_names_input_screen_fragment, container, false);
         start = view.findViewById(R.id.player_input_start_button);
         playerNameEditText = view.findViewById(R.id.edit_text_name_one);
         playerName = view.findViewById(R.id.player_title);
         playerName.setText(R.string.player_one);
         playerInputScreen(context);
+
         return view;
 
     }
@@ -48,10 +45,6 @@ public class PlayerNamesInputScreen extends Fragment {
         this.context = context;
         String[] playersNames = new String[6];
 
-        //ad config
-        AdView mAdView = view.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
 
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -111,34 +104,34 @@ public class PlayerNamesInputScreen extends Fragment {
                                                                 start.setOnClickListener(v5 -> {
                                                                     if (playerNameEditText.getText().length() >= 1) {
                                                                         playersNames[5] = playerNameEditText.getText().toString();
-                                                                        gameBoardActivity.setStartGameScreen(new NewGameCreator(gameBoardActivity, playersNames, numberOfPlayers));
-                                                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getStartGameScreen());
+                                                                        StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, playersNames, numberOfPlayers);
+                                                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
                                                                     }
                                                                 });
                                                             } else {
-                                                                gameBoardActivity.setStartGameScreen(new NewGameCreator(gameBoardActivity, playersNames, numberOfPlayers));
-                                                                gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getStartGameScreen());
+                                                                StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, playersNames, numberOfPlayers);
+                                                                gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
                                                             }
                                                         }
                                                     });
                                                 } else {
-                                                    gameBoardActivity.setStartGameScreen(new NewGameCreator(gameBoardActivity, playersNames, numberOfPlayers));
-                                                    gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getStartGameScreen());
+                                                    StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, playersNames, numberOfPlayers);
+                                                    gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
                                                 }
 
                                             }
                                         });
                                     } else {
-                                        gameBoardActivity.setStartGameScreen(new NewGameCreator(gameBoardActivity, playersNames, numberOfPlayers));
-                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getStartGameScreen());
+                                        StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, playersNames, numberOfPlayers);
+                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
                                     }
                                 }
 
                             });
 
                         } else {
-                            gameBoardActivity.setStartGameScreen(new NewGameCreator(gameBoardActivity, playersNames, numberOfPlayers));
-                            gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getStartGameScreen());
+                            StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, playersNames, numberOfPlayers);
+                            gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
                         }
 
                     }

@@ -33,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
+
         email = findViewById(R.id.email_editText);
         password = findViewById(R.id.password_editText);
         Button register = findViewById(R.id.register_button2);
@@ -54,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void registerUser(String email, String password) {
 
 
-        if (!isNetworkConnected()) {
+        if (!isConnectedToNetwork()) {
             Toast.makeText(this, getApplicationContext().getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
         } else {
 
@@ -93,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
         databaseReference.child(userUID).child("password").setValue(password);
     }
 
-    private boolean isNetworkConnected() {
+    private boolean isConnectedToNetwork() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }

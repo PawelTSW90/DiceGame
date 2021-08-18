@@ -8,9 +8,7 @@ public class RerollDices {
     public RerollDices(UIConfig uiConfig) {
         this.uiConfig = uiConfig;
 
-
     }
-
 
     public void setDicesRerolling(int throwNumber) {
 
@@ -30,7 +28,6 @@ public class RerollDices {
         }
 
     }
-
     public boolean[] getSelectedDices() {
         boolean[] selectedDices = new boolean[5];
         for (int x = 0; x < 5; x++) {

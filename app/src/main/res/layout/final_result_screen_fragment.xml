@@ -1,50 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/final_result_screen_fragment"
     android:background="@drawable/background"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/winner_player_textview"
-        style="@style/Widget.AppCompat.TextView.SpinnerItem"
-        android:layout_width="614dp"
-        android:layout_height="130dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="50dp"
-        android:background="#901F8824"
-        android:gravity="center"
-        android:textSize="48sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#901F8824">
 
-    <TextView
-        android:id="@+id/player_two_result_textview"
-        style="@style/Widget.AppCompat.TextView.SpinnerItem"
-        android:layout_width="264dp"
-        android:layout_height="127dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="85dp"
-        android:background="#901F8824"
-        android:gravity="center"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="784dp"
+            android:layout_height="88dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
-    <TextView
-        android:id="@+id/player_one_result_textview"
-        style="@style/Widget.AppCompat.TextView.SpinnerItem"
-        android:layout_width="264dp"
-        android:layout_height="127dp"
-        android:layout_marginStart="85dp"
-        android:layout_marginTop="30dp"
-        android:background="#901F8824"
-        android:gravity="center"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/gold_medal_image"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:foregroundGravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.24000001"
+                app:srcCompat="@drawable/gold_medal" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/winner_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/player_two_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+        <TextView
+            android:id="@+id/player_two_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/player_three_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.02"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/winner_textview" />
+
+        <TextView
+            android:id="@+id/player_three_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/player_four_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.02"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_two_textview" />
+
+        <TextView
+            android:id="@+id/player_four_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/player_five_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.02"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_three_textview" />
+
+        <TextView
+            android:id="@+id/player_five_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/player_six_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.02"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_four_textview" />
+
+        <TextView
+            android:id="@+id/player_six_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.02"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/player_five_textview" />
+
+        <Button
+            android:id="@+id/rematch_button"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:text="@string/rematch"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.71"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.77" />
+
+        <Button
+            android:id="@+id/exit_button"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:text="@string/exit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.93"
+            app:layout_constraintStart_toStartOf="@+id/rematch_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.77" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

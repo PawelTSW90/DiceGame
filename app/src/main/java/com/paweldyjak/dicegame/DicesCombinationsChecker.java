@@ -1,19 +1,21 @@
 package com.paweldyjak.dicegame;
 
+import com.paweldyjak.dicegame.GameModes.HotSeatGame;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 // class methods calculates user score and send it to ScoreInput class
 public class DicesCombinationsChecker {
-    private final UIConfig uiConfig;
+    private final HotSeatGame hotSeatGame;
 
-    public DicesCombinationsChecker(UIConfig uiConfig) {
-        this.uiConfig = uiConfig;
+    public DicesCombinationsChecker(HotSeatGame hotSeatGame) {
+        this.hotSeatGame = hotSeatGame;
     }
 
     public int checkOne(int[] dices, boolean firstThrow) {
-        if (!uiConfig.getIsCombinationActive()[0]) {
+        if (!hotSeatGame.getIsCombinationActive()[0]) {
             return 0;
         }
         int nrOfOne = 0;
@@ -37,7 +39,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkTwo(int[] dices, boolean firstThrow) {
-        if (!uiConfig.getIsCombinationActive()[1]) {
+        if (!hotSeatGame.getIsCombinationActive()[1]) {
             return 0;
         }
         int nrOfTwo = 0;
@@ -60,7 +62,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkThree(int[] dices, boolean firstThrow) {
-        if (!uiConfig.getIsCombinationActive()[2]) {
+        if (!hotSeatGame.getIsCombinationActive()[2]) {
             return 0;
         }
         int nrOfThree = 0;
@@ -83,7 +85,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkFour(int[] dices, boolean firstThrow) {
-        if (!uiConfig.getIsCombinationActive()[3]) {
+        if (!hotSeatGame.getIsCombinationActive()[3]) {
             return 0;
         }
         int nrOfFour = 0;
@@ -106,7 +108,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkFive(int[] dices, boolean firstThrow) {
-        if (!uiConfig.getIsCombinationActive()[4]) {
+        if (!hotSeatGame.getIsCombinationActive()[4]) {
             return 0;
         }
         int nrOfFive = 0;
@@ -129,7 +131,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkSix(int[] dices, boolean firstThrow) {
-        if (!uiConfig.getIsCombinationActive()[5]) {
+        if (!hotSeatGame.getIsCombinationActive()[5]) {
             return 0;
         }
         int nrOfSix = 0;
@@ -152,82 +154,59 @@ public class DicesCombinationsChecker {
 
 
     public int checkPair(int[] dices, boolean firstThrow) {
-        if (!uiConfig.getIsCombinationActive()[6]) {
+        int firstThrowValue = 4;
+        int notFirstThrowValue = 2;
+        int highestPairScore = 0;
+        if (!hotSeatGame.getIsCombinationActive()[6]) {
             return 0;
         }
-        int one = 0, two = 0, three = 0, four = 0, five = 0, six = 0;
-        int highestPairScore = 0;
+        List<Integer> valuesList = new ArrayList<>();
+        for (int x = 0; x < 6; x++) {
+            valuesList.add(x, 0);
+        }
         for (int x = 0; x < 5; x++) {
             switch (dices[x]) {
                 case 1:
-                    one++;
+                    valuesList.set(0, valuesList.get(0)+1);
                     break;
                 case 2:
-                    two++;
+                    valuesList.set(1, valuesList.get(1)+1);
                     break;
                 case 3:
-                    three++;
+                    valuesList.set(2, valuesList.get(2)+1);
                     break;
                 case 4:
-                    four++;
+                    valuesList.set(3, valuesList.get(3)+1);
                     break;
                 case 5:
-                    five++;
+                    valuesList.set(4, valuesList.get(4)+1);
                     break;
                 case 6:
-                    six++;
+                    valuesList.set(5, valuesList.get(5)+1);
                     break;
 
             }
-        }
-        if (one >= 2) {
-            if (firstThrow) {
-                highestPairScore = 4;
-            } else {
-                highestPairScore = 2;
-            }
-        }
-        if (two >= 2) {
-            if (firstThrow) {
-                highestPairScore = 8;
-            } else {
-                highestPairScore = 4;
-            }
+
 
         }
-        if (three >= 2) {
-            if (firstThrow) {
-                highestPairScore = 12;
-            } else {
-                highestPairScore = 6;
+        for(int x = 0; x<6; x++){
+
+            if(valuesList.get(x)>=2){
+                if(firstThrow){
+                    highestPairScore= firstThrowValue;
+                } else{
+                    highestPairScore = notFirstThrowValue;
+                }
             }
+            firstThrowValue+=4;
+            notFirstThrowValue+=2;
         }
-        if (four >= 2) {
-            if (firstThrow) {
-                highestPairScore = 16;
-            } else {
-                highestPairScore = 8;
-            }
-        }
-        if (five >= 2) {
-            if (firstThrow) {
-                highestPairScore = 20;
-            } else {
-                highestPairScore = 10;
-            }
-        }
-        if (six >= 2) {
-            if (firstThrow) {
-                highestPairScore = 24;
-            } else {
-                highestPairScore = 12;
-            }
-        }
+
         return highestPairScore;
     }
 
     public int checkTwoPairs(int[] dices, boolean firstThrow) {
-        if (!uiConfig.getIsCombinationActive()[7]) {
+        if (!hotSeatGame.getIsCombinationActive()[7]) {
             return 0;
         }
         int one = 0, two = 0, three = 0, four = 0, five = 0, six = 0;
@@ -370,7 +349,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkEvens(int[] dices, boolean firstThrow) {
-        if (!uiConfig.getIsCombinationActive()[8]) {
+        if (!hotSeatGame.getIsCombinationActive()[8]) {
             return 0;
         }
 
@@ -400,7 +379,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkOdds(int[] dices, boolean firstThrow) {
-        if (!uiConfig.getIsCombinationActive()[9]) {
+        if (!hotSeatGame.getIsCombinationActive()[9]) {
             return 0;
         }
 
@@ -430,7 +409,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkSmallStraight(int[] dices, boolean firstThrow) {
-        if (!uiConfig.getIsCombinationActive()[10]) {
+        if (!hotSeatGame.getIsCombinationActive()[10]) {
             return 0;
         }
         List<Integer> smallStraight = new ArrayList<>();
@@ -460,7 +439,7 @@ public class DicesCombinationsChecker {
     }
 
     public int checkLargeStraight(int[] dices, boolean firstThrow) {
-        if (!uiConfig.getIsCombinationActive()[11]) {
+        if (!hotSeatGame.getIsCombinationActive()[11]) {
             return 0;
         }
         List<Integer> largeStraight = new ArrayList<>();
@@ -491,7 +470,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkFullHouse(int[] dices, boolean firstThrow) {
-        if (!uiConfig.getIsCombinationActive()[12]) {
+        if (!hotSeatGame.getIsCombinationActive()[12]) {
             return 0;
         }
         List<Integer> valuesList = new ArrayList<>();
@@ -558,7 +537,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkFourOfAKind(int[] dices, boolean firstThrow) {
-        if (!uiConfig.getIsCombinationActive()[13]) {
+        if (!hotSeatGame.getIsCombinationActive()[13]) {
             return 0;
         }
         int[] values = new int[6];
@@ -607,7 +586,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkFiveOfAKind(int[] dices, boolean firstThrow) {
-        if (!uiConfig.getIsCombinationActive()[14]) {
+        if (!hotSeatGame.getIsCombinationActive()[14]) {
             return 0;
         }
         int[] values = new int[6];
@@ -659,7 +638,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkSOS(int[] dices, int throwNumber) {
-        if (!uiConfig.getIsCombinationActive()[15]) {
+        if (!hotSeatGame.getIsCombinationActive()[15]) {
             return 0;
         }
         int sosSum = 0;
@@ -673,7 +652,8 @@ public class DicesCombinationsChecker {
 
 
     }
-        //method returns chosen combination check
+
+    //method returns chosen combination check
     public int combinationChecker(int combinationNr, int[] dices, boolean firstThrow, int throwNumber) {
         switch (combinationNr) {
             case 0:

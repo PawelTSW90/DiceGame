@@ -18,20 +18,26 @@ public class Sounds {
         mediaPlayer.setOnCompletionListener(MediaPlayer::release);
     }
 
-    public void playCombinationTickSound(){
+    public void playCompleteCombinationSound() {
         MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.combination_tick);
         mediaPlayer.start();
         mediaPlayer.setOnCompletionListener(MediaPlayer::release);
     }
 
-    public void playCrossOutCombinationSound(){
+    public void playEraseCombinationSound() {
         MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.cross_out_combination_sound);
         mediaPlayer.start();
         mediaPlayer.setOnCompletionListener(MediaPlayer::release);
     }
 
-    public void playTickSound(){
+    public void playTickSound() {
         MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.tick);
+        mediaPlayer.start();
+        mediaPlayer.setOnCompletionListener(MediaPlayer::release);
+    }
+
+    public void playFinalResultSound() {
+        MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.final_result);
         mediaPlayer.start();
         mediaPlayer.setOnCompletionListener(MediaPlayer::release);
     }

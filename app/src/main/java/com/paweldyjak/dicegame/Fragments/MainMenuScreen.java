@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
-import com.paweldyjak.dicegame.Activities.MainMenuSettings;
+import com.paweldyjak.dicegame.Activities.MainMenuSettingsActivity;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,7 +81,7 @@ public class MainMenuScreen extends Fragment {
     public void setButtons() {
 
         settings.setOnClickListener(v -> {
-            Intent intent = new Intent(gameBoardActivity, MainMenuSettings.class);
+            Intent intent = new Intent(gameBoardActivity, MainMenuSettingsActivity.class);
             startActivity(intent);
         });
 
@@ -89,7 +89,7 @@ public class MainMenuScreen extends Fragment {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 FirebaseAuth.getInstance().signOut();
                 Toast.makeText(gameBoardActivity, getContext().getText(R.string.logged_out), Toast.LENGTH_SHORT).show();
-                gameBoardActivity.quitActivity();
+                getActivity().finish();
 
             }
         });
@@ -118,32 +118,15 @@ public class MainMenuScreen extends Fragment {
             playersNumberLayout.setVisibility(View.VISIBLE);
             hotSeatButton.setEnabled(false);
         });
-        playersNumberButtons[0].setOnClickListener(v -> {
-            PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(gameBoardActivity, 2);
-            sounds.playTickSound();
-            gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
-        });
-        playersNumberButtons[1].setOnClickListener(v -> {
-            PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(gameBoardActivity, 3);
-            sounds.playTickSound();
-            gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
-        });
-        playersNumberButtons[2].setOnClickListener(v -> {
-            PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(gameBoardActivity, 4);
-            sounds.playTickSound();
-            gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
-        });
-        playersNumberButtons[3].setOnClickListener(v -> {
-            PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(gameBoardActivity, 5);
-            sounds.playTickSound();
-            gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
-        });
-        playersNumberButtons[4].setOnClickListener(v -> {
-            PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(gameBoardActivity, 6);
-            sounds.playTickSound();
-            gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
-        });
 
+        for(int x = 0; x<5; x++){
+            int finalX = x;
+            playersNumberButtons[x].setOnClickListener(v -> {
+                PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(gameBoardActivity, finalX +2);
+                sounds.playTickSound();
+                gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
+            });
+        }
 
     }
 

@@ -55,4 +55,5 @@
     <string name="play">GRAJ</string>
     <string name="back">COFNIJ</string>
     <string name="exit">WYJŚCIE</string>
+    <string name="rematch">REWANŻ</string>
 </resources>

@@ -54,5 +54,6 @@
     <string name="play">PLAY</string>
     <string name="back">BACK</string>
     <string name="exit">EXIT</string>
+    <string name="rematch">REMATCH</string>
 
 </resources>
