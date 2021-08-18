@@ -70,7 +70,7 @@ public class GameBoardActivity extends AppCompatActivity {
     }
 
 
-    public void showNewTurnScreen(boolean show) {
+    public void showFragment(boolean show) {
         View fragmentLayout = findViewById(R.id.fragment_layout);
         if (show) {
             mainBoardLayout.setVisibility(View.INVISIBLE);

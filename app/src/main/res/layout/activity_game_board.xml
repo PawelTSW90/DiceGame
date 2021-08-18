@@ -20,7 +20,6 @@
         android:id="@+id/game_board_screen_layout">
 
 
-
         <TextView
             android:id="@+id/player_name_textView"
             style="@style/Widget.AppCompat.TextView.SpinnerItem"

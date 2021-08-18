@@ -16,10 +16,11 @@ import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.Sounds;
+
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class FinalResultScreenFragment extends Fragment {
     private final GameBoardActivity gameBoardActivity;
@@ -48,6 +49,7 @@ public class FinalResultScreenFragment extends Fragment {
         playersTextViews[5] = view.findViewById(R.id.player_six_textview);
         rematchButton = view.findViewById(R.id.rematch_button);
         exitButton = view.findViewById(R.id.exit_button);
+        setButtons();
         setFinalResultScreen();
         return view;
     }
@@ -55,39 +57,29 @@ public class FinalResultScreenFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setFinalResultScreen() {
+        sounds.playFinalResultSound();
         int numberOfPlayers = hotSeatGame.getNumberOfPlayers();
+        int playerNr = 0;
         int[] playersTotalScore = hotSeatGame.getPlayersScore();
         String[] playersNames = hotSeatGame.getPlayersNames();
-        Map<String, Integer> playersResults = new HashMap<>();
+        Map<String, Integer> unsortedPlayersResults = new HashMap<>();
 
         for (int x = 0; x < numberOfPlayers; x++) {
-            playersResults.put(playersNames[x], playersTotalScore[x]);
+            unsortedPlayersResults.put(playersNames[x], playersTotalScore[x]);
         }
-        checkPlayersResults(playersResults);
+        LinkedHashMap<String, Integer> sortedPlayersResults;
+        sortedPlayersResults = sortPlayersResult(unsortedPlayersResults);
+        for(Map.Entry<String, Integer> entry: sortedPlayersResults.entrySet()){
+            String name = entry.getKey();
+            Integer score = entry.getValue();
+            playersTextViews[playerNr].setText(name + "-" + score+" "+ gameBoardActivity.getString(R.string.points));
+            playerNr++;
 
-        for(int x = 0; x<playersResults.size(); x++){
-            switch (x){
-                case 0:
-                    
-            }
         }
-
-        sounds.playFinalResultSound();
-        String winnerPlayer;
-        int winnerScore;
-        if (hotSeatGame.getPlayersTotalScore(1) > hotSeatGame.getPlayersTotalScore(2)) {
-            winnerPlayer = hotSeatGame.getPlayersNames()[0];
-            winnerScore = hotSeatGame.getPlayersTotalScore(1);
-
-        } else {
-            winnerPlayer = hotSeatGame.getPlayersNames()[1];
-            winnerScore = hotSeatGame.getPlayersTotalScore(2);
-        }
-        playersTextViews[0].setText(winnerPlayer + "-" + winnerScore + " " + R.string.points);
-        gameBoardActivity.showNewTurnScreen(true);
+        gameBoardActivity.showFragment(true);
 
 
-    }
+}
 
     public void setButtons() {
         exitButton.setOnClickListener(v -> {
@@ -99,11 +91,13 @@ public class FinalResultScreenFragment extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public Map<String, Integer> checkPlayersResults(Map<String, Integer> playersResults) {
-        return playersResults.entrySet()
+    public LinkedHashMap<String, Integer> sortPlayersResult(Map<String, Integer> unsortedPlayersMap) {
+        LinkedHashMap<String, Integer> sortedPlayersMap = new LinkedHashMap<>();
+        unsortedPlayersMap.entrySet()
                 .stream()
-                .sorted(Map.Entry.comparingByValue())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .forEachOrdered(x -> sortedPlayersMap.put(x.getKey(), x.getValue()));
+        return sortedPlayersMap;
     }
 
 

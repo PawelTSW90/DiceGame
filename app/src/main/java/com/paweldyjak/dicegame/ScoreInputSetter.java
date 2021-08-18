@@ -1,7 +1,5 @@
 package com.paweldyjak.dicegame;
 
-import android.view.View;
-
 import androidx.core.content.ContextCompat;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.HotSeatGame;
@@ -75,7 +73,7 @@ public class ScoreInputSetter {
                             Thread.sleep(2000);
                             resetThrowCounter = true;
                             resetCombinationsListeners();
-                            gameBoardActivity.showNewTurnScreen(true);
+                            gameBoardActivity.showFragment(true);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -117,7 +115,7 @@ public class ScoreInputSetter {
                             Thread.sleep(2000);
                             resetThrowCounter = true;
                             resetCombinationsListeners();
-                            gameBoardActivity.showNewTurnScreen(true);
+                            gameBoardActivity.showFragment(true);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
