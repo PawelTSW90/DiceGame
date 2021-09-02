@@ -2,7 +2,8 @@ package com.paweldyjak.dicegame.GameModes;
 import android.graphics.Color;
 import android.view.Gravity;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
-import com.paweldyjak.dicegame.Fragments.FinalResultScreenFragment;
+import com.paweldyjak.dicegame.Fragments.FinalResultMorePlayersFragment;
+import com.paweldyjak.dicegame.Fragments.FinalResultTwoPlayersFragment;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.UIConfig;
 
@@ -58,9 +59,14 @@ public class HotSeatGame {
 
     //generate final screen fragment
     public void setFinalResultScreen() {
-        FinalResultScreenFragment finalResultScreenFragment = new FinalResultScreenFragment(gameBoardActivity,this);
-        gameBoardActivity.replaceFragment(R.id.fragment_layout, finalResultScreenFragment);
+        if (numberOfPlayers < 3) {
+            FinalResultTwoPlayersFragment finalResultTwoPlayersFragment = new FinalResultTwoPlayersFragment(gameBoardActivity, this);
+            gameBoardActivity.replaceFragment(R.id.fragment_layout, finalResultTwoPlayersFragment);
 
+        } else{
+            FinalResultMorePlayersFragment finalResultMorePlayersFragment = new FinalResultMorePlayersFragment(gameBoardActivity, this);
+            gameBoardActivity.replaceFragment(R.id.fragment_layout, finalResultMorePlayersFragment);
+        }
     }
 
     public boolean[] getIsCombinationActive() {

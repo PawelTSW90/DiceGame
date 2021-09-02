@@ -3,7 +3,9 @@ package com.paweldyjak.dicegame.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class MainMenuScreen extends Fragment {
+public class MainMenuScreenFragment extends Fragment {
     private final GameBoardActivity gameBoardActivity;
     private DatabaseReference checkIfNameCreatedReference;
     private DatabaseReference checkIfNameIsAvailableReference;
@@ -44,7 +46,7 @@ public class MainMenuScreen extends Fragment {
     private final Sounds sounds;
     private String userName;
 
-    public MainMenuScreen(GameBoardActivity gameBoardActivity) {
+    public MainMenuScreenFragment(GameBoardActivity gameBoardActivity) {
         this.gameBoardActivity = gameBoardActivity;
         sounds = new Sounds(gameBoardActivity);
 
@@ -53,7 +55,7 @@ public class MainMenuScreen extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.main_menu_screen_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_main_menu_screen, container, false);
         playButton = view.findViewById(R.id.play_button);
         hotSeatButton = view.findViewById(R.id.hotseat_mode_button);
         backButton = view.findViewById(R.id.back_button);
@@ -122,9 +124,9 @@ public class MainMenuScreen extends Fragment {
         for(int x = 0; x<5; x++){
             int finalX = x;
             playersNumberButtons[x].setOnClickListener(v -> {
-                PlayerNamesInputScreen playerNamesInputScreen = new PlayerNamesInputScreen(gameBoardActivity, finalX +2);
+                PlayerNamesInputScreenFragment playerNamesInputScreenFragment = new PlayerNamesInputScreenFragment(gameBoardActivity, finalX +2);
                 sounds.playTickSound();
-                gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreen);
+                gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreenFragment);
             });
         }
 
@@ -165,55 +167,73 @@ public class MainMenuScreen extends Fragment {
     }
 
     public void checkIfUserCreatedName() {
-        checkIfNameCreatedReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue().equals("null")) {
-                    userName = "false";
-                    setPlayerNameInput();
-                } else {
-                    userName = snapshot.getValue(String.class);
-                    Toast.makeText(gameBoardActivity, getContext().getString(R.string.hello) + " " + userName + " !", Toast.LENGTH_SHORT).show();
+        if(!isConnectedToNetwork()){
+            Toast toast = Toast.makeText(gameBoardActivity, getContext().getString(R.string.offlineMode), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+            playButton.setVisibility(View.VISIBLE);
+        } else {
+
+            checkIfNameCreatedReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.getValue().equals("null")) {
+                        userName = "false";
+                        setPlayerNameInput();
+                    } else {
+                        userName = snapshot.getValue(String.class);
+                        Toast toast = Toast.makeText(gameBoardActivity, getContext().getString(R.string.hello) + " " + userName + " !", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                        playButton.setVisibility(View.VISIBLE);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }
 
 
     }
 
     public void checkIfNameIsAvailable(){
-        checkIfNameIsAvailableReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child(userName).exists()){
-                    Toast.makeText(gameBoardActivity, R.string.username_in_use_error, Toast.LENGTH_SHORT).show();
-                } else{
-                    checkIfNameCreatedReference.setValue(nameEditText.getText().toString());
-                    Map<String, Object> map = new HashMap<>();
-                    map.put(userName, 0);
-                    checkIfNameIsAvailableReference.updateChildren(map);
-                    userName = nameEditText.getText().toString();
-                    userNameCreatorLayout.setVisibility(View.GONE);
-                    playButton.setVisibility(View.VISIBLE);
+
+            checkIfNameIsAvailableReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.child(userName).exists()) {
+                        Toast.makeText(gameBoardActivity, R.string.username_in_use_error, Toast.LENGTH_SHORT).show();
+                    } else {
+                        checkIfNameCreatedReference.setValue(nameEditText.getText().toString());
+                        Map<String, Object> map = new HashMap<>();
+                        map.put(userName, 0);
+                        checkIfNameIsAvailableReference.updateChildren(map);
+                        userName = nameEditText.getText().toString();
+                        userNameCreatorLayout.setVisibility(View.GONE);
+                        playButton.setVisibility(View.VISIBLE);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
-
+                }
+            });
 
 
 
 
 
+
+
+    }
+
+    private boolean isConnectedToNetwork() {
+        ConnectivityManager cm = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
 }

@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FinalResultScreenFragment extends Fragment {
+public class FinalResultMorePlayersFragment extends Fragment {
     private final GameBoardActivity gameBoardActivity;
     private final HotSeatGame hotSeatGame;
     private Sounds sounds;
@@ -30,7 +30,7 @@ public class FinalResultScreenFragment extends Fragment {
     private Button rematchButton;
     private Button exitButton;
 
-    public FinalResultScreenFragment(GameBoardActivity gameBoardActivity, HotSeatGame hotSeatGame) {
+    public FinalResultMorePlayersFragment(GameBoardActivity gameBoardActivity, HotSeatGame hotSeatGame) {
         this.gameBoardActivity = gameBoardActivity;
         this.hotSeatGame = hotSeatGame;
 
@@ -39,7 +39,7 @@ public class FinalResultScreenFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.final_result_screen_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_final_result_screen_more_players, container, false);
         sounds = new Sounds(gameBoardActivity);
         playersTextViews[0] = view.findViewById(R.id.winner_textview);
         playersTextViews[1] = view.findViewById(R.id.player_two_textview);

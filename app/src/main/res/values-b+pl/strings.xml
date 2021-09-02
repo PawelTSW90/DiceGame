@@ -8,6 +8,8 @@
     <string name="settings">USTAWIENIA</string>
     <string name="password">hasło:</string>
     <string name="email">email:</string>
+    <string name="createName">STWÓRZ</string>
+    <string name="offlineMode">Tryb offline włączony</string>
     <string name="authentication_error">Błąd Logowania - Sprawdż nazwę użytkownika i hasło.</string>
     <string name="email_in_use_error">Podany adres email jest już używany.</string>
     <string name="wrong_email_error">Nieprawidłowy format email. Spróbuj ponownie.</string>
@@ -54,6 +56,7 @@
     <string name="hotseat">HOTSEAT</string>
     <string name="play">GRAJ</string>
     <string name="back">COFNIJ</string>
+    <string name="the_winner_is">Zwycięzcą jest </string>
     <string name="exit">WYJŚCIE</string>
     <string name="rematch">REWANŻ</string>
 </resources>

@@ -18,8 +18,8 @@ import java.util.Objects;
 
 
 public class GameBoardActivity extends AppCompatActivity {
-    private MainMenuScreen mainMenuScreen;
-    private PlayerTurnScreen playerTurnScreen;
+    private MainMenuScreenFragment mainMenuScreenFragment;
+    private PlayerTurnScreenFragment playerTurnScreenFragment;
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentTransaction fragmentTransaction;
     private View mainBoardLayout;
@@ -30,7 +30,7 @@ public class GameBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_game_board);
-        mainMenuScreen = new MainMenuScreen(this);
+        mainMenuScreenFragment = new MainMenuScreenFragment(this);
         mainBoardLayout = findViewById(R.id.game_board_screen_layout);
         //hides status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -48,7 +48,7 @@ public class GameBoardActivity extends AppCompatActivity {
     public void showMenuScreen() {
         showGameBoard(false);
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_layout, mainMenuScreen);
+        fragmentTransaction.add(R.id.fragment_layout, mainMenuScreenFragment);
         fragmentTransaction.commit();
 
 
@@ -75,7 +75,7 @@ public class GameBoardActivity extends AppCompatActivity {
         if (show) {
             mainBoardLayout.setVisibility(View.INVISIBLE);
             fragmentLayout.setVisibility(View.VISIBLE);
-            playerTurnScreen.displayTurnMessage();
+            playerTurnScreenFragment.displayTurnMessage();
 
 
         } else {
@@ -84,8 +84,8 @@ public class GameBoardActivity extends AppCompatActivity {
         }
     }
 
-    public void setPlayerTurnScreen(PlayerTurnScreen playerTurnScreen) {
-        this.playerTurnScreen = playerTurnScreen;
+    public void setPlayerTurnScreen(PlayerTurnScreenFragment playerTurnScreenFragment) {
+        this.playerTurnScreenFragment = playerTurnScreenFragment;
     }
     //disable back button
     @Override

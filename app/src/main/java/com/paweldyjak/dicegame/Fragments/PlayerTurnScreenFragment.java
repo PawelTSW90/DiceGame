@@ -13,14 +13,14 @@ import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 
-public class PlayerTurnScreen extends Fragment {
+public class PlayerTurnScreenFragment extends Fragment {
     private final UIConfig uiConfig;
     private TextView playerName;
     private Button nextPlayerButton;
     private final GameBoardActivity gameBoardActivity;
     private final HotSeatGame hotSeatGame;
 
-    public PlayerTurnScreen(GameBoardActivity gameBoardActivity, UIConfig uiConfig, HotSeatGame hotSeatGame) {
+    public PlayerTurnScreenFragment(GameBoardActivity gameBoardActivity, UIConfig uiConfig, HotSeatGame hotSeatGame) {
         this.uiConfig = uiConfig;
         this.gameBoardActivity = gameBoardActivity;
         this.hotSeatGame = hotSeatGame;
@@ -28,7 +28,7 @@ public class PlayerTurnScreen extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.player_turn_screen_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_player_turn_screen, container, false);
         playerName = view.findViewById(R.id.player_turn_textview);
         nextPlayerButton = view.findViewById(R.id.player_turn_button);
         displayTurnMessage();

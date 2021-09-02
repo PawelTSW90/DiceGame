@@ -5,7 +5,7 @@ import android.content.Context;
 import android.widget.ImageView;
 import androidx.core.content.ContextCompat;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
-import com.paweldyjak.dicegame.Fragments.PlayerTurnScreen;
+import com.paweldyjak.dicegame.Fragments.PlayerTurnScreenFragment;
 import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 
 import java.util.Random;
@@ -35,9 +35,9 @@ public class GameBoardManager {
         this.rerollDices = rerollDices;
         this.hotSeatGame = hotSeatGame;
         sounds = new Sounds(context);
-        PlayerTurnScreen playerTurnScreen = new PlayerTurnScreen(gameBoardActivity, uiConfig, hotSeatGame);
-        gameBoardActivity.replaceFragment(R.id.fragment_layout, playerTurnScreen);
-        gameBoardActivity.setPlayerTurnScreen(playerTurnScreen);
+        PlayerTurnScreenFragment playerTurnScreenFragment = new PlayerTurnScreenFragment(gameBoardActivity, uiConfig, hotSeatGame);
+        gameBoardActivity.replaceFragment(R.id.fragment_layout, playerTurnScreenFragment);
+        gameBoardActivity.setPlayerTurnScreen(playerTurnScreenFragment);
         gameBoardActivity.showFragment(false);
 
     }

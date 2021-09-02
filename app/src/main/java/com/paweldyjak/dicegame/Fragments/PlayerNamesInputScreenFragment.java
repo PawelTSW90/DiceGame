@@ -9,12 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.R;
 
-public class PlayerNamesInputScreen extends Fragment {
+public class PlayerNamesInputScreenFragment extends Fragment {
     private Context context;
     private final GameBoardActivity gameBoardActivity;
     private Button start;
@@ -25,7 +24,7 @@ public class PlayerNamesInputScreen extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.player_names_input_screen_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_player_names_input_screen, container, false);
         start = view.findViewById(R.id.player_input_start_button);
         playerNameEditText = view.findViewById(R.id.edit_text_name_one);
         playerName = view.findViewById(R.id.player_title);
@@ -36,7 +35,7 @@ public class PlayerNamesInputScreen extends Fragment {
 
     }
 
-    public PlayerNamesInputScreen(GameBoardActivity gameBoardActivity, int numberOfPlayers) {
+    public PlayerNamesInputScreenFragment(GameBoardActivity gameBoardActivity, int numberOfPlayers) {
         this.gameBoardActivity = gameBoardActivity;
         this.numberOfPlayers = numberOfPlayers;
     }
