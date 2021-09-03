@@ -31,11 +31,12 @@ import java.util.Map;
 
 public class MainMenuScreenFragment extends Fragment {
     private final GameBoardActivity gameBoardActivity;
-    private DatabaseReference checkIfNameCreatedReference;
-    private DatabaseReference checkIfNameIsAvailableReference;
+    private DatabaseReference userNameReference;
+    private DatabaseReference namesInUseReference;
     private Button playButton;
     private Button hotSeatButton;
     private Button logoutButton;
+    private Button offlineButton;
     private final Button[] playersNumberButtons = new Button[5];
     private Button backButton;
     private Button settingPlayerNameButton;
@@ -59,6 +60,7 @@ public class MainMenuScreenFragment extends Fragment {
         playButton = view.findViewById(R.id.play_button);
         hotSeatButton = view.findViewById(R.id.hotseat_mode_button);
         backButton = view.findViewById(R.id.back_button);
+        offlineButton = view.findViewById(R.id.offline_mode_button);
         logoutButton = view.findViewById(R.id.logout_button_titleScreen);
         settingPlayerNameButton = view.findViewById(R.id.setting_player_name_button);
         userNameCreatorLayout = view.findViewById(R.id.user_name_creator_layout);
@@ -72,10 +74,11 @@ public class MainMenuScreenFragment extends Fragment {
         settings = view.findViewById(R.id.settings_imageview);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         String userUID = firebaseAuth.getUid();
-        checkIfNameCreatedReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUID).child("name");
-        checkIfNameIsAvailableReference = FirebaseDatabase.getInstance().getReference().child("namesInUse");
+        userNameReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUID).child("name");
+        namesInUseReference = FirebaseDatabase.getInstance().getReference().child("namesInUse");
         setButtons();
         checkIfUserCreatedName();
+        setOfflineDetector();
 
         return view;
     }
@@ -167,14 +170,9 @@ public class MainMenuScreenFragment extends Fragment {
     }
 
     public void checkIfUserCreatedName() {
-        if(!isConnectedToNetwork()){
-            Toast toast = Toast.makeText(gameBoardActivity, getContext().getString(R.string.offlineMode), Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-            playButton.setVisibility(View.VISIBLE);
-        } else {
 
-            checkIfNameCreatedReference.addValueEventListener(new ValueEventListener() {
+
+            userNameReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getValue().equals("null")) {
@@ -197,20 +195,18 @@ public class MainMenuScreenFragment extends Fragment {
         }
 
 
-    }
-
     public void checkIfNameIsAvailable(){
 
-            checkIfNameIsAvailableReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            namesInUseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.child(userName).exists()) {
                         Toast.makeText(gameBoardActivity, R.string.username_in_use_error, Toast.LENGTH_SHORT).show();
                     } else {
-                        checkIfNameCreatedReference.setValue(nameEditText.getText().toString());
+                        userNameReference.setValue(nameEditText.getText().toString());
                         Map<String, Object> map = new HashMap<>();
                         map.put(userName, 0);
-                        checkIfNameIsAvailableReference.updateChildren(map);
+                        namesInUseReference.updateChildren(map);
                         userName = nameEditText.getText().toString();
                         userNameCreatorLayout.setVisibility(View.GONE);
                         playButton.setVisibility(View.VISIBLE);
@@ -223,17 +219,41 @@ public class MainMenuScreenFragment extends Fragment {
                 }
             });
 
-
-
-
-
-
-
     }
 
     private boolean isConnectedToNetwork() {
         ConnectivityManager cm = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
+    public void setOfflineDetector(){
+        if(!isConnectedToNetwork()){
+            offlineButton.setVisibility(View.VISIBLE);
+            playButton.setVisibility(View.VISIBLE);
+            offlineButton.setOnClickListener(v -> {
+                if (isConnectedToNetwork()) {
+
+                    userNameReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            userName = snapshot.getValue(String.class);
+                            offlineButton.setVisibility(View.INVISIBLE);
+                            Toast toast = Toast.makeText(gameBoardActivity, getContext().getString(R.string.hello) + " " + userName + " !", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+            });
+
+        }
+
     }
 
 }

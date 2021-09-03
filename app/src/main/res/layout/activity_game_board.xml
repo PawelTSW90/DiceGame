@@ -556,7 +556,7 @@
                 android:layout_height="43dp"
                 android:background="#5B2FAA"
                 android:gravity="center"
-                android:textSize="18sp" />
+                android:textSize="17sp" />
         </LinearLayout>
 
 

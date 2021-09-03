@@ -43,4 +43,5 @@ public class StartActivity extends AppCompatActivity {
             gameBoardActivity.finish();
         });
     }
+
 }

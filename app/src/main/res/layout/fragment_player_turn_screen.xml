@@ -17,7 +17,7 @@
         android:layout_marginBottom="130dp"
         android:background="#901F8824"
         android:gravity="center"
-        android:textSize="34sp"
+        android:textSize="30sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

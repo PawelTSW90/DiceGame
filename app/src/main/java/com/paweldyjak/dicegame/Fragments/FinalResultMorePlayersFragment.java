@@ -27,6 +27,7 @@ public class FinalResultMorePlayersFragment extends Fragment {
     private final HotSeatGame hotSeatGame;
     private Sounds sounds;
     private final TextView[] playersTextViews = new TextView[6];
+    private TextView winnerPlayer;
     private Button rematchButton;
     private Button exitButton;
 
@@ -41,14 +42,15 @@ public class FinalResultMorePlayersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_final_result_screen_more_players, container, false);
         sounds = new Sounds(gameBoardActivity);
-        playersTextViews[0] = view.findViewById(R.id.winner_textview);
-        playersTextViews[1] = view.findViewById(R.id.player_two_textview);
-        playersTextViews[2] = view.findViewById(R.id.player_three_textview);
-        playersTextViews[3] = view.findViewById(R.id.player_four_textview);
-        playersTextViews[4] = view.findViewById(R.id.player_five_textview);
-        playersTextViews[5] = view.findViewById(R.id.player_six_textview);
-        rematchButton = view.findViewById(R.id.rematch_button);
-        exitButton = view.findViewById(R.id.exit_button);
+        playersTextViews[0] = view.findViewById(R.id.first_place_more_players);
+        playersTextViews[1] = view.findViewById(R.id.second_place_more_players);
+        playersTextViews[2] = view.findViewById(R.id.third_place_more_players);
+        playersTextViews[3] = view.findViewById(R.id.fourth_place_more_players);
+        playersTextViews[4] = view.findViewById(R.id.fifth_place_more_players);
+        playersTextViews[5] = view.findViewById(R.id.sixth_place_more_players);
+        winnerPlayer = view.findViewById(R.id.winner_name_more_players);
+        rematchButton = view.findViewById(R.id.rematch_button_more_players);
+        exitButton = view.findViewById(R.id.exit_button_more_players);
         setButtons();
         setFinalResultScreen();
         return view;
@@ -72,8 +74,31 @@ public class FinalResultMorePlayersFragment extends Fragment {
         for(Map.Entry<String, Integer> entry: sortedPlayersResults.entrySet()){
             String name = entry.getKey();
             Integer score = entry.getValue();
-            playersTextViews[playerNr].setText(name + "-" + score+" "+ gameBoardActivity.getString(R.string.points));
-            playerNr++;
+            switch (playerNr){
+                case 0:
+                    winnerPlayer.setText(gameBoardActivity.getString(R.string.the_winner_is)+" " + name+" !!!");
+                    playersTextViews[playerNr].setText(name+"\n"+score+" "+ gameBoardActivity.getString(R.string.points));
+                    playerNr++;
+                    break;
+                case 1:
+                case 2:
+                    playersTextViews[playerNr].setText(name+"\n"+score+" "+ gameBoardActivity.getString(R.string.points));
+                    playerNr++;
+                    break;
+                case 3:
+                    playersTextViews[playerNr].setText("4."+name+" - "+score+" " + gameBoardActivity.getString(R.string.points));
+                    playerNr++;
+                    break;
+                case 4:
+                    playersTextViews[playerNr].setText("5."+name+" - "+score+" " + gameBoardActivity.getString(R.string.points));
+                    playerNr++;
+                    break;
+                case 5:
+                    playersTextViews[playerNr].setText("6."+name+" - "+score+" " + gameBoardActivity.getString(R.string.points));
+                    playerNr++;
+                    break;
+            }
+
 
         }
         gameBoardActivity.showFragment(true);

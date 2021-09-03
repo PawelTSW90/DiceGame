@@ -37,9 +37,9 @@ public class FinalResultTwoPlayersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_final_result_two_players, container, false);
         sounds = new Sounds(gameBoardActivity);
-        winnerTextView = view.findViewById(R.id.winner_name_textView);
-        playerOneTextView = view.findViewById(R.id.firstPlayer_textView);
-        playerTwoTextView = view.findViewById(R.id.second_player_textView);
+        winnerTextView = view.findViewById(R.id.winner_name_two_players);
+        playerOneTextView = view.findViewById(R.id.first_player_two_players);
+        playerTwoTextView = view.findViewById(R.id.second_player_two_players);
         playerOneImageView = view.findViewById(R.id.firstPlayerGoldMedal);
         playerTwoImageView = view.findViewById(R.id.secondPlayerGoldMedal);
         rematchButton = view.findViewById(R.id.rematch_button_twoPlayers);

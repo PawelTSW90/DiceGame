@@ -8,7 +8,6 @@
     <string name="password">password:</string>
     <string name="email">email:</string>
     <string name="createName">CREATE</string>
-    <string name="offlineMode">Offline mode ON</string>
     <string name="authentication_error">Authentication Error - Check your username and password.</string>
     <string name="email_in_use_error">This email is already in use.</string>
     <string name="wrong_email_error">Incorrect email format. Please try again.</string>
@@ -58,5 +57,6 @@
     <string name="the_winner_is">The winner is </string>
     <string name="exit">EXIT</string>
     <string name="rematch">REMATCH</string>
+    <string name="offline_mode">OFFLINE MODE</string>
 
 </resources>
