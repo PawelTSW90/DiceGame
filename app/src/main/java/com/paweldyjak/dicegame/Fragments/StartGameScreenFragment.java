@@ -28,13 +28,17 @@ public class StartGameScreenFragment extends Fragment {
         startGameButton = view.findViewById(R.id.start_game_button);
         TextView playerName = view.findViewById(R.id.start_game_textview);
         playerName.setText(names[0]);
-        startHotSeatGame();
+        startGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startHotSeatGame();
+            }
+        });
         return view;
     }
 
 
     public void startHotSeatGame(){
-        startGameButton.setOnClickListener(v -> {
             //creating class objects
             UIConfig uiConfig = new UIConfig(gameBoardActivity);
             HotSeatGame hotSeatGame = new HotSeatGame(uiConfig, gameBoardActivity, names);
@@ -50,8 +54,6 @@ public class StartGameScreenFragment extends Fragment {
             hotSeatGame.setAllCombinationsAsActive();
             gameBoardManager.setRollDicesButton();
             gameBoardActivity.showGameBoard(true);
-
-        });
     }
 
 
