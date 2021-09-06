@@ -73,7 +73,7 @@ public class ScoreInputSetter {
                             Thread.sleep(2000);
                             resetThrowCounter = true;
                             resetCombinationsListeners();
-                            gameBoardActivity.showFragment(true);
+                            gameBoardActivity.showNextTurnFragment();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -115,7 +115,7 @@ public class ScoreInputSetter {
                             Thread.sleep(2000);
                             resetThrowCounter = true;
                             resetCombinationsListeners();
-                            gameBoardActivity.showFragment(true);
+                            gameBoardActivity.showNextTurnFragment();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

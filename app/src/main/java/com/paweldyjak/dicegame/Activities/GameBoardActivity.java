@@ -69,19 +69,25 @@ public class GameBoardActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-
-    public void showFragment(boolean show) {
+    public void showFragment(){
         View fragmentLayout = findViewById(R.id.fragment_layout);
-        if (show) {
-            mainBoardLayout.setVisibility(View.INVISIBLE);
-            fragmentLayout.setVisibility(View.VISIBLE);
-            playerTurnScreenFragment.displayTurnMessage();
+        mainBoardLayout.setVisibility(View.INVISIBLE);
+        fragmentLayout.setVisibility(View.VISIBLE);
+    }
 
 
-        } else {
+    public void hideFragment() {
+        View fragmentLayout = findViewById(R.id.fragment_layout);
             fragmentLayout.setVisibility(View.INVISIBLE);
             mainBoardLayout.setVisibility(View.VISIBLE);
-        }
+
+    }
+
+    public void showNextTurnFragment(){
+        View fragmentLayout = findViewById(R.id.fragment_layout);
+        mainBoardLayout.setVisibility(View.INVISIBLE);
+        fragmentLayout.setVisibility(View.VISIBLE);
+        playerTurnScreenFragment.displayTurnMessage();
     }
 
     public void setPlayerTurnScreen(PlayerTurnScreenFragment playerTurnScreenFragment) {

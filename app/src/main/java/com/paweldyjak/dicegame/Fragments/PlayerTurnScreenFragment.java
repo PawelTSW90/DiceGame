@@ -77,7 +77,7 @@ public class PlayerTurnScreenFragment extends Fragment {
             int playerNumber = hotSeatGame.getCurrentPlayerNumber() - 1;
             uiConfig.getCurrentPlayerName().setText((hotSeatGame.getPlayersNames()[playerNumber]));
             hotSeatGame.prepareScoreBoard();
-            gameBoardActivity.showFragment(false);
+            gameBoardActivity.hideFragment();
 
         });
         //update player number

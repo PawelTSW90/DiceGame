@@ -19,31 +19,36 @@
             android:id="@+id/exit_button_more_players"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="@string/exit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.86"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/medals_layout"
+            app:layout_constraintVertical_bias="0.81" />
 
         <Button
             android:id="@+id/rematch_button_more_players"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="@string/rematch"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.14"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/medals_layout"
+            app:layout_constraintVertical_bias="0.81" />
 
         <LinearLayout
+            android:id="@+id/rest_of_the_players_result_layout"
             android:layout_width="782dp"
             android:layout_height="86dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.84000003">
+            app:layout_constraintTop_toBottomOf="@+id/winner_player_result_layout"
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/fourth_place_more_players"
@@ -68,14 +73,15 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/winner_player_result_layout"
             android:layout_width="784dp"
             android:layout_height="64dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.52">
+            app:layout_constraintTop_toBottomOf="@+id/top_three_players_result_layout"
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/winner_name_more_players"
@@ -86,18 +92,19 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/top_three_players_result_layout"
             android:layout_width="match_parent"
             android:layout_height="57dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.31">
+            app:layout_constraintTop_toBottomOf="@+id/medals_layout"
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/second_place_more_players"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="top|center_horizontal"
@@ -105,7 +112,7 @@
 
             <TextView
                 android:id="@+id/first_place_more_players"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="top|center_horizontal"
@@ -113,7 +120,7 @@
 
             <TextView
                 android:id="@+id/third_place_more_players"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="top|center_horizontal"
@@ -121,9 +128,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout3"
+            android:id="@+id/medals_layout"
             android:layout_width="match_parent"
-            android:layout_height="99dp"
+            android:layout_height="70dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

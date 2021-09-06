@@ -157,7 +157,7 @@ public class MainMenuScreenFragment extends Fragment {
 
         settingPlayerNameButton.setOnClickListener(v -> {
             if (nameEditText.length() < 3 || nameEditText.length() > 10) {
-                Toast.makeText(gameBoardActivity, R.string.set_player_name_2, Toast.LENGTH_SHORT).show();
+                Toast.makeText(gameBoardActivity, R.string.username_length_error, Toast.LENGTH_SHORT).show();
             } else {
                 userName = nameEditText.getText().toString();
                 checkIfNameIsAvailable();

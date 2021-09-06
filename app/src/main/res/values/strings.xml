@@ -16,8 +16,8 @@
     <string name="username_in_use_error">This username is already in use.</string>
     <string name="registration_successful">Registration successful!</string>
     <string name="connection_error">Please check your internet connection or try again later.</string>
-    <string name="set_player_name">What is your username?</string>
-    <string name="set_player_name_2">Name must have a length between 3 and 10 characters.</string>
+    <string name="set_username">What is your username?</string>
+    <string name="username_length_error">Name must have a length between 3 and 10 characters.</string>
     <string name="player_one">PLAYER 1</string>
     <string name="player_two">PLAYER 2</string>
     <string name="player_three">PLAYER 3</string>
@@ -55,6 +55,7 @@
     <string name="play">PLAY</string>
     <string name="back">BACK</string>
     <string name="the_winner_is">The winner is </string>
+    <string name="draw">DRAW !</string>
     <string name="exit">EXIT</string>
     <string name="rematch">REMATCH</string>
     <string name="offline_mode">OFFLINE MODE</string>

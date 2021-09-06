@@ -17,8 +17,8 @@
     <string name="username_in_use_error">Ta nazwa użytkownika jest już zajęta.</string>
     <string name="registration_successful">Rejestracja zakończona pomyślnie!</string>
     <string name="connection_error">Sprawdź swoje połączenie z internetem lub spróbuj ponownie później.</string>
-    <string name="set_player_name">Jak jest Twoja nazwa użytkownika?</string>
-    <string name="set_player_name_2">Długość imienia musi się mieścić w przedziale pomiędzy 3 a 10 znaków.</string>
+    <string name="set_username">Jak jest Twoja nazwa użytkownika?</string>
+    <string name="username_length_error">Długość imienia musi się mieścić w przedziale pomiędzy 3 a 10 znaków.</string>
     <string name="player_one">GRACZ 1</string>
     <string name="player_two">GRACZ 2</string>
     <string name="player_three">GRACZ 3</string>
@@ -56,6 +56,7 @@
     <string name="play">GRAJ</string>
     <string name="back">COFNIJ</string>
     <string name="the_winner_is">Zwycięzcą jest </string>
+    <string name="draw">REMIS !</string>
     <string name="exit">WYJŚCIE</string>
     <string name="rematch">REWANŻ</string>
     <string name="offline_mode">TRYB OFFLINE</string>

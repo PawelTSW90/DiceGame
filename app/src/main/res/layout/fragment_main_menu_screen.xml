@@ -209,7 +209,7 @@
             android:layout_height="146dp"
             android:background="#901F8824"
             android:gravity="top|center_horizontal"
-            android:text="@string/set_player_name"
+            android:text="@string/set_username"
             android:textSize="30sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"

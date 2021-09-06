@@ -38,14 +38,14 @@ public class GameBoardManager {
         PlayerTurnScreenFragment playerTurnScreenFragment = new PlayerTurnScreenFragment(gameBoardActivity, uiConfig, hotSeatGame);
         gameBoardActivity.replaceFragment(R.id.fragment_layout, playerTurnScreenFragment);
         gameBoardActivity.setPlayerTurnScreen(playerTurnScreenFragment);
-        gameBoardActivity.showFragment(false);
+        gameBoardActivity.hideFragment();
 
     }
 
 
     //method configure roll dices button
     public void setRollDicesButton() {
-        gameBoardActivity.showFragment(false);
+        gameBoardActivity.hideFragment();
         ImageView rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
         rollDicesButton.setOnClickListener(v -> {
 
@@ -210,7 +210,7 @@ public class GameBoardManager {
                                 try {
                                     sounds.playEraseCombinationSound();
                                     Thread.sleep(2000);
-                                    gameBoardActivity.showFragment(true);
+                                    gameBoardActivity.showNextTurnFragment();
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
@@ -246,7 +246,7 @@ public class GameBoardManager {
                                 try {
                                     sounds.playEraseCombinationSound();
                                     Thread.sleep(2000);
-                                    gameBoardActivity.showFragment(true);
+                                    gameBoardActivity.showNextTurnFragment();
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
