@@ -105,6 +105,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="top|center_horizontal"
+                android:lineSpacingMultiplier="0.5"
                 android:textSize="23sp" />
 
             <TextView
@@ -114,6 +115,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="top|center_horizontal"
+                android:lineSpacingMultiplier="0.5"
                 android:textSize="23sp" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,6 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Activities.MainMenuSettingsActivity;
+import com.paweldyjak.dicegame.Activities.MultiplayerQueueActivity;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +39,7 @@ public class MainMenuScreenFragment extends Fragment {
     private Button hotSeatButton;
     private Button logoutButton;
     private Button offlineButton;
+    private Button multiplayerButton;
     private final Button[] playersNumberButtons = new Button[5];
     private Button backButton;
     private Button settingPlayerNameButton;
@@ -62,6 +65,7 @@ public class MainMenuScreenFragment extends Fragment {
         backButton = view.findViewById(R.id.back_button);
         offlineButton = view.findViewById(R.id.offline_mode_button);
         logoutButton = view.findViewById(R.id.logout_button_titleScreen);
+        multiplayerButton = view.findViewById(R.id.multiplayer_mode_button);
         settingPlayerNameButton = view.findViewById(R.id.setting_player_name_button);
         userNameCreatorLayout = view.findViewById(R.id.user_name_creator_layout);
         playersNumberButtons[0] = view.findViewById(R.id.two_players_button);
@@ -103,6 +107,7 @@ public class MainMenuScreenFragment extends Fragment {
             sounds.playTickSound();
             backButton.setVisibility(View.VISIBLE);
             hotSeatButton.setVisibility(View.VISIBLE);
+            multiplayerButton.setVisibility(View.VISIBLE);
             playButton.setEnabled(false);
         });
 
@@ -111,8 +116,10 @@ public class MainMenuScreenFragment extends Fragment {
             if (playersNumberLayout.getVisibility() == View.VISIBLE) {
                 playersNumberLayout.setVisibility(View.INVISIBLE);
                 hotSeatButton.setEnabled(true);
+                multiplayerButton.setEnabled(true);
             } else if (hotSeatButton.getVisibility() == View.VISIBLE) {
                 hotSeatButton.setVisibility(View.INVISIBLE);
+                multiplayerButton.setVisibility(View.INVISIBLE);
                 playButton.setEnabled(true);
                 backButton.setVisibility(View.INVISIBLE);
             }
@@ -121,7 +128,16 @@ public class MainMenuScreenFragment extends Fragment {
         hotSeatButton.setOnClickListener(v -> {
             sounds.playTickSound();
             playersNumberLayout.setVisibility(View.VISIBLE);
+            multiplayerButton.setEnabled(false);
             hotSeatButton.setEnabled(false);
+        });
+
+        multiplayerButton.setOnClickListener(v->{
+            sounds.playTickSound();
+            Intent intent = new Intent(getContext(), MultiplayerQueueActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+
         });
 
         for(int x = 0; x<5; x++){
@@ -180,9 +196,7 @@ public class MainMenuScreenFragment extends Fragment {
                         setPlayerNameInput();
                     } else {
                         userName = snapshot.getValue(String.class);
-                        Toast toast = Toast.makeText(gameBoardActivity, getContext().getString(R.string.hello) + " " + userName + " !", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
+                        offlineButton.setText(userName);
                         playButton.setVisibility(View.VISIBLE);
                     }
                 }
@@ -237,10 +251,10 @@ public class MainMenuScreenFragment extends Fragment {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             userName = snapshot.getValue(String.class);
-                            offlineButton.setVisibility(View.INVISIBLE);
-                            Toast toast = Toast.makeText(gameBoardActivity, getContext().getString(R.string.hello) + " " + userName + " !", Toast.LENGTH_SHORT);
+                            offlineButton.setText(userName);
+                            /*Toast toast = Toast.makeText(gameBoardActivity, getContext().getString(R.string.hello) + " " + userName + " !", Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
+                            toast.show();*/
                         }
 
                         @Override

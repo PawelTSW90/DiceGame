@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.paweldyjak.dicegame">
+
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -11,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DiceGame">
+
         <activity
             android:name=".Activities.StartActivity"
             android:screenOrientation="landscape">
@@ -23,8 +25,6 @@
         <activity
             android:name=".Activities.MainMenuSettingsActivity"
             android:screenOrientation="landscape" />
-
-
         <activity
             android:name=".Activities.GameBoardActivity"
             android:screenOrientation="landscape" />
@@ -34,7 +34,8 @@
         <activity
             android:name=".Activities.RegisterActivity"
             android:screenOrientation="landscape" />
-
+        <activity android:name=".Activities.MultiplayerQueueActivity"
+            android:screenOrientation="landscape"/>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

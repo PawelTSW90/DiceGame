@@ -109,8 +109,22 @@
         android:text="@string/hotseat"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/multiplayer_mode_button"
+        app:layout_constraintHorizontal_bias="0.74"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.64" />
+
+    <Button
+        android:id="@+id/multiplayer_mode_button"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:text="@string/multiplayer"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/user_name_creator_layout"
+        app:layout_constraintEnd_toEndOf="@+id/user_name_creator_layout"
+        app:layout_constraintHorizontal_bias="0.67"
+        app:layout_constraintStart_toEndOf="@id/hotseat_mode_button"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.64" />
 
@@ -146,7 +160,7 @@
         android:layout_height="32dp"
         android:text="@string/offline_mode"
         android:textSize="10sp"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/user_name_creator_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

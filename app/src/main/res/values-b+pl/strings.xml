@@ -53,6 +53,7 @@
     <string name="five_players">5 graczy</string>
     <string name="six_players">6 graczy</string>
     <string name="hotseat">HOTSEAT</string>
+    <string name="multiplayer">MULTIPLAYER</string>
     <string name="play">GRAJ</string>
     <string name="back">COFNIJ</string>
     <string name="the_winner_is">Zwycięzcą jest </string>
@@ -60,4 +61,5 @@
     <string name="exit">WYJŚCIE</string>
     <string name="rematch">REWANŻ</string>
     <string name="offline_mode">TRYB OFFLINE</string>
+    <string name="opponent_search">Szukanie przeciwnika...</string>
 </resources>
