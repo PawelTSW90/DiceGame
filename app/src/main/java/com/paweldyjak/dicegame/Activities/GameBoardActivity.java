@@ -46,21 +46,12 @@ public class GameBoardActivity extends AppCompatActivity {
     }
 
     public void showMenuScreen() {
-        showGameBoard(false);
+        showFragment();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_layout, mainMenuScreenFragment);
         fragmentTransaction.commit();
 
 
-    }
-
-
-    public void showGameBoard(boolean showMainBoard) {
-        if (showMainBoard) {
-            mainBoardLayout.setVisibility(View.VISIBLE);
-        } else {
-            mainBoardLayout.setVisibility(View.INVISIBLE);
-        }
     }
 
     public void replaceFragment(int layout, Fragment fragment) {

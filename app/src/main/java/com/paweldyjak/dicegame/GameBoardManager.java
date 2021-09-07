@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
 import androidx.core.content.ContextCompat;
+
+import com.google.firebase.database.FirebaseDatabase;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Fragments.PlayerTurnScreenFragment;
 import com.paweldyjak.dicegame.GameModes.HotSeatGame;

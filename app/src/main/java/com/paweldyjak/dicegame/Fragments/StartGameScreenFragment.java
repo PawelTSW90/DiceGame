@@ -12,7 +12,6 @@ import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 
 public class StartGameScreenFragment extends Fragment {
     private final GameBoardActivity gameBoardActivity;
-    private Button startGameButton;
     private final String[] names;
     private final int numberOfPlayers;
 
@@ -25,7 +24,7 @@ public class StartGameScreenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start_game_screen, container, false);
-        startGameButton = view.findViewById(R.id.start_game_button);
+        Button startGameButton = view.findViewById(R.id.start_game_button);
         TextView playerName = view.findViewById(R.id.start_game_textview);
         playerName.setText(names[0]);
         startGameButton.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +52,7 @@ public class StartGameScreenFragment extends Fragment {
             hotSeatGame.setNumberOfPlayers(numberOfPlayers);
             hotSeatGame.setAllCombinationsAsActive();
             gameBoardManager.setRollDicesButton();
-            gameBoardActivity.showGameBoard(true);
+            gameBoardActivity.hideFragment();
     }
 
 
