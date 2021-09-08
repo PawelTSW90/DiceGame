@@ -7,11 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.core.content.res.ResourcesCompat;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Collections;
-
-
 public class UIConfig {
     private final Context context;
     private final ImageView[] dicesSlots = new ImageView[5];

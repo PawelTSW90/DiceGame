@@ -23,7 +23,7 @@ public class PlayerNamesInputScreenFragment extends Fragment {
     private EditText playerNameEditText;
     private TextView playerName;
     private final int numberOfPlayers;
-    String[] playersNames = new String[6];
+    private final String[] playersNames = new String[6];
 
 
     @Override

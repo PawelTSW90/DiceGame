@@ -3,15 +3,9 @@ package com.paweldyjak.dicegame.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +23,6 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
     private int playersInQueue;
     private String opponentUid;
     private String playerUid;
-    private boolean opponentFound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +67,6 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (!dataSnapshot.getKey().equals(playerUid)) {
                         opponentUid = dataSnapshot.getKey();
-                        opponentFound = true;
                         opponentFoundTextView.setText(opponentUid);
                         break;
 

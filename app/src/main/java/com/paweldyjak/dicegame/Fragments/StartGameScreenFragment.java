@@ -27,12 +27,7 @@ public class StartGameScreenFragment extends Fragment {
         Button startGameButton = view.findViewById(R.id.start_game_button);
         TextView playerName = view.findViewById(R.id.start_game_textview);
         playerName.setText(names[0]);
-        startGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startHotSeatGame();
-            }
-        });
+        startGameButton.setOnClickListener(v -> startHotSeatGame());
         return view;
     }
 

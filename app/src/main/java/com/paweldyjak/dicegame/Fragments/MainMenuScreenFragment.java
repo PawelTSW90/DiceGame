@@ -3,9 +3,7 @@ package com.paweldyjak.dicegame.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,19 +24,22 @@ import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Activities.MainMenuSettingsActivity;
 import com.paweldyjak.dicegame.Activities.MultiplayerQueueActivity;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class MainMenuScreenFragment extends Fragment {
     private final GameBoardActivity gameBoardActivity;
+    private ConnectionCheckerThread connectionCheckerThread;
     private DatabaseReference userNameReference;
     private DatabaseReference namesInUseReference;
     private Button playButton;
     private Button hotSeatButton;
     private Button logoutButton;
-    private Button offlineButton;
     private Button multiplayerButton;
     private final Button[] playersNumberButtons = new Button[5];
     private Button backButton;
@@ -59,11 +60,11 @@ public class MainMenuScreenFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_main_menu_screen, container, false);
         playButton = view.findViewById(R.id.play_button);
         hotSeatButton = view.findViewById(R.id.hotseat_mode_button);
         backButton = view.findViewById(R.id.back_button);
-        offlineButton = view.findViewById(R.id.offline_mode_button);
         logoutButton = view.findViewById(R.id.logout_button_titleScreen);
         multiplayerButton = view.findViewById(R.id.multiplayer_mode_button);
         settingPlayerNameButton = view.findViewById(R.id.setting_player_name_button);
@@ -80,14 +81,23 @@ public class MainMenuScreenFragment extends Fragment {
         String userUID = firebaseAuth.getUid();
         userNameReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUID).child("name");
         namesInUseReference = FirebaseDatabase.getInstance().getReference().child("namesInUse");
+        connectionCheckerThread = new ConnectionCheckerThread(getContext(), this);
         setButtons();
         checkIfUserCreatedName();
-        setOfflineDetector();
-
+        internetConnectionChecker();
         return view;
     }
 
     public void setButtons() {
+
+        for (int x = 0; x < 5; x++) {
+            int finalX = x;
+            playersNumberButtons[x].setOnClickListener(v -> {
+                PlayerNamesInputScreenFragment playerNamesInputScreenFragment = new PlayerNamesInputScreenFragment(gameBoardActivity, finalX + 2);
+                sounds.playTickSound();
+                gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreenFragment);
+            });
+        }
 
         settings.setOnClickListener(v -> {
             Intent intent = new Intent(gameBoardActivity, MainMenuSettingsActivity.class);
@@ -132,22 +142,13 @@ public class MainMenuScreenFragment extends Fragment {
             hotSeatButton.setEnabled(false);
         });
 
-        multiplayerButton.setOnClickListener(v->{
+        multiplayerButton.setOnClickListener(v -> {
             sounds.playTickSound();
             Intent intent = new Intent(getContext(), MultiplayerQueueActivity.class);
             startActivity(intent);
             getActivity().finish();
 
         });
-
-        for(int x = 0; x<5; x++){
-            int finalX = x;
-            playersNumberButtons[x].setOnClickListener(v -> {
-                PlayerNamesInputScreenFragment playerNamesInputScreenFragment = new PlayerNamesInputScreenFragment(gameBoardActivity, finalX +2);
-                sounds.playTickSound();
-                gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreenFragment);
-            });
-        }
 
     }
 
@@ -179,8 +180,6 @@ public class MainMenuScreenFragment extends Fragment {
                 checkIfNameIsAvailable();
 
 
-
-
             }
         });
     }
@@ -188,86 +187,59 @@ public class MainMenuScreenFragment extends Fragment {
     public void checkIfUserCreatedName() {
 
 
-            userNameReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.getValue().equals("null")) {
-                        userName = "false";
-                        setPlayerNameInput();
-                    } else {
-                        userName = snapshot.getValue(String.class);
-                        offlineButton.setText(userName);
-                        playButton.setVisibility(View.VISIBLE);
-                    }
+        userNameReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue().equals("null")) {
+                    playButton.setVisibility(View.INVISIBLE);
+                    userName = "false";
+                    setPlayerNameInput();
+                }  else {
+                    userName = snapshot.getValue(String.class);
                 }
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+    }
+
+    public void checkIfNameIsAvailable() {
+
+        namesInUseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child(userName).exists()) {
+                    Toast.makeText(gameBoardActivity, R.string.username_in_use_error, Toast.LENGTH_SHORT).show();
+                } else {
+                    userNameReference.setValue(nameEditText.getText().toString());
+                    Map<String, Object> map = new HashMap<>();
+                    map.put(userName, 0);
+                    namesInUseReference.updateChildren(map);
+                    userName = nameEditText.getText().toString();
+                    userNameCreatorLayout.setVisibility(View.INVISIBLE);
+                    playButton.setVisibility(View.VISIBLE);
                 }
-            });
-        }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-    public void checkIfNameIsAvailable(){
-
-            namesInUseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.child(userName).exists()) {
-                        Toast.makeText(gameBoardActivity, R.string.username_in_use_error, Toast.LENGTH_SHORT).show();
-                    } else {
-                        userNameReference.setValue(nameEditText.getText().toString());
-                        Map<String, Object> map = new HashMap<>();
-                        map.put(userName, 0);
-                        namesInUseReference.updateChildren(map);
-                        userName = nameEditText.getText().toString();
-                        userNameCreatorLayout.setVisibility(View.GONE);
-                        playButton.setVisibility(View.VISIBLE);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+            }
+        });
 
     }
 
-    private boolean isConnectedToNetwork() {
-        ConnectivityManager cm = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+
+    public void internetConnectionChecker(){
+        ScheduledExecutorService connectionChecker = Executors.newScheduledThreadPool(1);
+        connectionChecker.scheduleAtFixedRate(connectionCheckerThread, 2, 2, TimeUnit.SECONDS);
     }
 
-    public void setOfflineDetector(){
-        if(!isConnectedToNetwork()){
-            offlineButton.setVisibility(View.VISIBLE);
-            playButton.setVisibility(View.VISIBLE);
-            offlineButton.setOnClickListener(v -> {
-                if (isConnectedToNetwork()) {
-
-                    userNameReference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            userName = snapshot.getValue(String.class);
-                            offlineButton.setText(userName);
-                            /*Toast toast = Toast.makeText(gameBoardActivity, getContext().getString(R.string.hello) + " " + userName + " !", Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();*/
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-                }
-            });
-
-        }
-
+    public String getUserName(){
+        return userName;
     }
 
 }
