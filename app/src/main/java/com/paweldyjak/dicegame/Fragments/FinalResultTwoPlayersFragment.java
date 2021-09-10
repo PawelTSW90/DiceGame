@@ -8,17 +8,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
-
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
-import com.paweldyjak.dicegame.GameModes.HotSeatGame;
+import com.paweldyjak.dicegame.GameModes.GameMode;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.Sounds;
 
 public class FinalResultTwoPlayersFragment extends Fragment {
     private final GameBoardActivity gameBoardActivity;
-    private final HotSeatGame hotSeatGame;
+    private final GameMode gameMode;
     private Sounds sounds;
     private TextView winnerTextView;
     private TextView playerOneTextView;
@@ -28,9 +26,9 @@ public class FinalResultTwoPlayersFragment extends Fragment {
     private Button rematchButton;
     private Button exitButton;
 
-    public FinalResultTwoPlayersFragment(GameBoardActivity gameBoardActivity, HotSeatGame hotSeatGame) {
+    public FinalResultTwoPlayersFragment(GameBoardActivity gameBoardActivity, GameMode gameMode) {
         this.gameBoardActivity = gameBoardActivity;
-        this.hotSeatGame = hotSeatGame;
+        this.gameMode = gameMode;
     }
 
     @Override
@@ -59,8 +57,8 @@ public class FinalResultTwoPlayersFragment extends Fragment {
         });
 
         rematchButton.setOnClickListener(v -> {
-            StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, hotSeatGame.getPlayersNames(), hotSeatGame.getNumberOfPlayers());
-            gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
+            StartHotSeatGameFragment startHotSeatGameFragment = new StartHotSeatGameFragment(gameBoardActivity, gameMode.getPlayersNames(), gameMode.getNumberOfPlayers());
+            gameBoardActivity.replaceFragment(R.id.fragment_layout, startHotSeatGameFragment);
             gameBoardActivity.showFragment();
 
 
@@ -69,20 +67,20 @@ public class FinalResultTwoPlayersFragment extends Fragment {
 
     public void setFinalResultScreen() {
         String winnerPlayer = null;
-        if (hotSeatGame.getPlayersTotalScore(1) > hotSeatGame.getPlayersTotalScore(2)) {
-            winnerPlayer = hotSeatGame.getPlayersNames()[0];
+        if (gameMode.getPlayersTotalScore(1) > gameMode.getPlayersTotalScore(2)) {
+            winnerPlayer = gameMode.getPlayersNames()[0];
             playerOneImageView.setVisibility(View.VISIBLE);
-        } else if (hotSeatGame.getPlayersTotalScore(1) < hotSeatGame.getPlayersTotalScore(2)) {
-            winnerPlayer = hotSeatGame.getPlayersNames()[1];
+        } else if (gameMode.getPlayersTotalScore(1) < gameMode.getPlayersTotalScore(2)) {
+            winnerPlayer = gameMode.getPlayersNames()[1];
             playerTwoImageView.setVisibility(View.VISIBLE);
         } else{
             playerOneImageView.setVisibility(View.VISIBLE);
             playerTwoImageView.setVisibility(View.VISIBLE);
         }
         sounds.playFinalResultSound();
-        playerOneTextView.setText(hotSeatGame.getPlayersNames()[0] + "\n" + "\n" + hotSeatGame.getPlayersTotalScore(1) + " " + getContext().getText(R.string.points));
-        playerTwoTextView.setText(hotSeatGame.getPlayersNames()[1] + "\n" + "\n" + hotSeatGame.getPlayersTotalScore(2) + " " + getContext().getText(R.string.points));
-        if(hotSeatGame.getPlayersTotalScore(1)!=hotSeatGame.getPlayersTotalScore(2)) {
+        playerOneTextView.setText(gameMode.getPlayersNames()[0] + "\n" + "\n" + gameMode.getPlayersTotalScore(1) + " " + getContext().getText(R.string.points));
+        playerTwoTextView.setText(gameMode.getPlayersNames()[1] + "\n" + "\n" + gameMode.getPlayersTotalScore(2) + " " + getContext().getText(R.string.points));
+        if(gameMode.getPlayersTotalScore(1)!=gameMode.getPlayersTotalScore(2)) {
             winnerTextView.setText(getActivity().getString(R.string.the_winner_is) + " " + winnerPlayer + "!");
         } else{
             winnerTextView.setText(R.string.draw);

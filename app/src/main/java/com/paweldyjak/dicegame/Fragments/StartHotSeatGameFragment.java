@@ -1,5 +1,6 @@
 package com.paweldyjak.dicegame.Fragments;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,12 @@ import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 
-public class StartGameScreenFragment extends Fragment {
+public class StartHotSeatGameFragment extends Fragment {
     private final GameBoardActivity gameBoardActivity;
     private final String[] names;
     private final int numberOfPlayers;
 
-    public StartGameScreenFragment(GameBoardActivity gameBoardActivity, String[] names, int numberOfPlayers) {
+    public StartHotSeatGameFragment(GameBoardActivity gameBoardActivity, String[] names, int numberOfPlayers) {
         this.gameBoardActivity = gameBoardActivity;
         this.names = names;
         this.numberOfPlayers = numberOfPlayers;
@@ -33,6 +34,7 @@ public class StartGameScreenFragment extends Fragment {
 
 
     public void startHotSeatGame(){
+        Log.i("testApp", ""+numberOfPlayers);
             //creating class objects
             UIConfig uiConfig = new UIConfig(gameBoardActivity);
             HotSeatGame hotSeatGame = new HotSeatGame(uiConfig, gameBoardActivity, names);

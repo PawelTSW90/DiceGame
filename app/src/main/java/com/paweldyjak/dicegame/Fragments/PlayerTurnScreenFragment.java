@@ -6,24 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
-
 import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
-import com.paweldyjak.dicegame.GameModes.HotSeatGame;
+import com.paweldyjak.dicegame.GameModes.GameMode;
 
 public class PlayerTurnScreenFragment extends Fragment {
     private final UIConfig uiConfig;
     private TextView playerName;
     private Button nextPlayerButton;
     private final GameBoardActivity gameBoardActivity;
-    private final HotSeatGame hotSeatGame;
+    private final GameMode gameMode;
 
-    public PlayerTurnScreenFragment(GameBoardActivity gameBoardActivity, UIConfig uiConfig, HotSeatGame hotSeatGame) {
+    public PlayerTurnScreenFragment(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode) {
         this.uiConfig = uiConfig;
         this.gameBoardActivity = gameBoardActivity;
-        this.hotSeatGame = hotSeatGame;
+        this.gameMode = gameMode;
     }
 
     @Override
@@ -37,88 +35,88 @@ public class PlayerTurnScreenFragment extends Fragment {
 
     public void displayTurnMessage() {
         //update next player name
-        switch (hotSeatGame.getCurrentPlayerNumber()) {
+        switch (gameMode.getCurrentPlayerNumber()) {
             case 1:
-                playerName.setText(hotSeatGame.getPlayersNames()[1]);
+                playerName.setText(gameMode.getPlayersNames()[1]);
                 break;
             case 2:
-                if (hotSeatGame.getNumberOfPlayers() > 2) {
-                    playerName.setText(hotSeatGame.getPlayersNames()[2]);
+                if (gameMode.getNumberOfPlayers() > 2) {
+                    playerName.setText(gameMode.getPlayersNames()[2]);
                 } else {
-                    playerName.setText(hotSeatGame.getPlayersNames()[0]);
+                    playerName.setText(gameMode.getPlayersNames()[0]);
                 }
                 break;
             case 3:
-                if (hotSeatGame.getNumberOfPlayers() > 3) {
-                    playerName.setText(hotSeatGame.getPlayersNames()[3]);
+                if (gameMode.getNumberOfPlayers() > 3) {
+                    playerName.setText(gameMode.getPlayersNames()[3]);
                 } else {
-                    playerName.setText(hotSeatGame.getPlayersNames()[0]);
+                    playerName.setText(gameMode.getPlayersNames()[0]);
                 }
                 break;
             case 4:
-                if (hotSeatGame.getNumberOfPlayers() > 4) {
-                    playerName.setText(hotSeatGame.getPlayersNames()[4]);
+                if (gameMode.getNumberOfPlayers() > 4) {
+                    playerName.setText(gameMode.getPlayersNames()[4]);
                 } else {
-                    playerName.setText(hotSeatGame.getPlayersNames()[0]);
+                    playerName.setText(gameMode.getPlayersNames()[0]);
                 }
                 break;
             case 5:
-                if (hotSeatGame.getNumberOfPlayers() > 5) {
-                    playerName.setText(hotSeatGame.getPlayersNames()[5]);
+                if (gameMode.getNumberOfPlayers() > 5) {
+                    playerName.setText(gameMode.getPlayersNames()[5]);
                 } else {
-                    playerName.setText(hotSeatGame.getPlayersNames()[0]);
+                    playerName.setText(gameMode.getPlayersNames()[0]);
                 }
                 break;
             case 6:
-                playerName.setText(hotSeatGame.getPlayersNames()[0]);
+                playerName.setText(gameMode.getPlayersNames()[0]);
                 break;
         }
         nextPlayerButton.setOnClickListener(v -> {
-            int playerNumber = hotSeatGame.getCurrentPlayerNumber() - 1;
-            uiConfig.getCurrentPlayerName().setText((hotSeatGame.getPlayersNames()[playerNumber]));
-            hotSeatGame.prepareScoreBoard();
+            int playerNumber = gameMode.getCurrentPlayerNumber() - 1;
+            uiConfig.getCurrentPlayerName().setText((gameMode.getPlayersNames()[playerNumber]));
+            gameMode.prepareScoreBoard();
             gameBoardActivity.hideFragment();
 
         });
         //update player number
-        switch (hotSeatGame.getCurrentPlayerNumber()) {
+        switch (gameMode.getCurrentPlayerNumber()) {
             case 1:
-                hotSeatGame.setCurrentPlayerNumber(2);
+                gameMode.setCurrentPlayerNumber(2);
                 break;
             case 2:
-                if (hotSeatGame.getNumberOfPlayers() > 2) {
-                    hotSeatGame.setCurrentPlayerNumber(3);
+                if (gameMode.getNumberOfPlayers() > 2) {
+                    gameMode.setCurrentPlayerNumber(3);
                 } else {
-                    hotSeatGame.setCurrentPlayerNumber(1);
+                    gameMode.setCurrentPlayerNumber(1);
                 }
                 break;
             case 3:
-                if (hotSeatGame.getNumberOfPlayers() > 3) {
-                    hotSeatGame.setCurrentPlayerNumber(4);
+                if (gameMode.getNumberOfPlayers() > 3) {
+                    gameMode.setCurrentPlayerNumber(4);
                 } else {
-                    hotSeatGame.setCurrentPlayerNumber(1);
+                    gameMode.setCurrentPlayerNumber(1);
                 }
                 break;
             case 4:
-                if (hotSeatGame.getNumberOfPlayers() > 4) {
-                    hotSeatGame.setCurrentPlayerNumber(5);
+                if (gameMode.getNumberOfPlayers() > 4) {
+                    gameMode.setCurrentPlayerNumber(5);
                 } else {
-                    hotSeatGame.setCurrentPlayerNumber(1);
+                    gameMode.setCurrentPlayerNumber(1);
                 }
                 break;
             case 5:
-                if (hotSeatGame.getNumberOfPlayers() > 5) {
-                    hotSeatGame.setCurrentPlayerNumber(6);
+                if (gameMode.getNumberOfPlayers() > 5) {
+                    gameMode.setCurrentPlayerNumber(6);
                 } else {
-                    hotSeatGame.setCurrentPlayerNumber(1);
+                    gameMode.setCurrentPlayerNumber(1);
                 }
                 break;
             case 6:
-                hotSeatGame.setCurrentPlayerNumber(1);
+                gameMode.setCurrentPlayerNumber(1);
 
                 break;
         }
-        hotSeatGame.prepareCombinationsSlots();
+        gameMode.prepareCombinationsSlots();
     }
 
 }

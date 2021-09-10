@@ -1,26 +1,26 @@
 package com.paweldyjak.dicegame.GameModes;
+
 import android.graphics.Color;
 import android.view.Gravity;
+
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
-import com.paweldyjak.dicegame.Fragments.FinalResultMorePlayersFragment;
 import com.paweldyjak.dicegame.Fragments.FinalResultTwoPlayersFragment;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.UIConfig;
 
 import java.util.Arrays;
 
-public class HotSeatGame implements GameMode {
-    GameBoardActivity gameBoardActivity;
+public class MultiplayerGame implements GameMode {
     private final UIConfig uiConfig;
+    private final GameBoardActivity gameBoardActivity;
     private String[] playersNames;
-    private int numberOfPlayers;
-    private int currentPlayerNumber = 6;
+    private int currentPlayerNumber = 2;
     private final int[][] playersCombinationsScoreValues = new int[6][16];
     private final int[][] playersCombinationsSlotsValues = new int[6][16];
     private final boolean[][] playersIsCombinationActive = new boolean[6][16];
     private final int[] playersTotalScore = new int[6];
 
-    public HotSeatGame(UIConfig uiConfig, GameBoardActivity gameBoardActivity, String[] playersNames) {
+    public MultiplayerGame(UIConfig uiConfig, GameBoardActivity gameBoardActivity, String[] playersNames){
         this.uiConfig = uiConfig;
         this.gameBoardActivity = gameBoardActivity;
         this.playersNames = playersNames;
@@ -59,14 +59,9 @@ public class HotSeatGame implements GameMode {
 
     //generate final screen fragment
     public void setFinalResultScreen() {
-        if (numberOfPlayers < 3) {
             FinalResultTwoPlayersFragment finalResultTwoPlayersFragment = new FinalResultTwoPlayersFragment(gameBoardActivity, this);
             gameBoardActivity.replaceFragment(R.id.fragment_layout, finalResultTwoPlayersFragment);
 
-        } else{
-            FinalResultMorePlayersFragment finalResultMorePlayersFragment = new FinalResultMorePlayersFragment(gameBoardActivity, this);
-            gameBoardActivity.replaceFragment(R.id.fragment_layout, finalResultMorePlayersFragment);
-        }
     }
 
     public boolean[] getIsCombinationActive() {
@@ -146,13 +141,13 @@ public class HotSeatGame implements GameMode {
         }
     }
 
+    @Override
     public void setNumberOfPlayers(int numberOfPlayers) {
-        this.numberOfPlayers = numberOfPlayers;
+
     }
 
+    @Override
     public int getNumberOfPlayers() {
-        return numberOfPlayers;
+        return 0;
     }
-
-
 }

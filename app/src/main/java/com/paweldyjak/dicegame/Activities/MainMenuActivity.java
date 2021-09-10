@@ -108,12 +108,12 @@ public class MainMenuActivity extends AppCompatActivity {
     public void setButtons() {
 
         for (int x = 0; x < 5; x++) {
-            int finalX = x;
+            int numberOfPlayers = x+2;
             playersNumberButtons[x].setOnClickListener(v -> {
                 connectionChecker.shutdown();
                 sounds.playTickSound();
-                gameBoardActivity.setNumberOfPlayers(finalX + 2);
-                Intent intent = new Intent(this, gameBoardActivity.getClass());
+                Intent intent = new Intent(this, GameBoardActivity.class);
+                intent.putExtra("numberOfPlayers", numberOfPlayers);
                 startActivity(intent);
                 this.finish();
             });

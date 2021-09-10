@@ -10,7 +10,6 @@ import com.paweldyjak.dicegame.R;
 import java.util.Objects;
 
 public class StartActivity extends AppCompatActivity {
-    GameBoardActivity gameBoardActivity;
     MainMenuActivity mainMenuActivity;
     Button loginButton;
     Button registerButton;
@@ -22,7 +21,6 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         firebaseAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_start);
-        gameBoardActivity = new GameBoardActivity();
         mainMenuActivity = new MainMenuActivity();
         //hides status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);

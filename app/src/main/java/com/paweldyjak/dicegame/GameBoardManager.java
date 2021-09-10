@@ -4,12 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
 import androidx.core.content.ContextCompat;
-
-import com.google.firebase.database.FirebaseDatabase;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Fragments.PlayerTurnScreenFragment;
-import com.paweldyjak.dicegame.GameModes.HotSeatGame;
-
+import com.paweldyjak.dicegame.GameModes.GameMode;
 import java.util.Random;
 import java.util.concurrent.Executor;
 
@@ -20,7 +17,7 @@ public class GameBoardManager {
     private final UIConfig uiConfig;
     private final DicesCombinationsChecker dicesCombinationsChecker;
     private final RerollDices rerollDices;
-    private final HotSeatGame hotSeatGame;
+    private final GameMode gameMode;
     private final int[] dices = new int[5];
     private boolean isFirstThrow = true;
     private int throwNumber = 0;
@@ -28,16 +25,16 @@ public class GameBoardManager {
     private final GameBoardActivity gameBoardActivity;
 
 
-    public GameBoardManager(GameBoardActivity gameBoardActivity, Context context, ScoreInputSetter scoreInputSetter, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, RerollDices rerollDices, HotSeatGame hotSeatGame) {
+    public GameBoardManager(GameBoardActivity gameBoardActivity, Context context, ScoreInputSetter scoreInputSetter, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, RerollDices rerollDices, GameMode gameMode) {
         this.context = context;
         this.gameBoardActivity = gameBoardActivity;
         this.scoreInputSetter = scoreInputSetter;
         this.dicesCombinationsChecker = dicesCombinationsChecker;
         this.uiConfig = uiConfig;
         this.rerollDices = rerollDices;
-        this.hotSeatGame = hotSeatGame;
+        this.gameMode = gameMode;
         sounds = new Sounds(context);
-        PlayerTurnScreenFragment playerTurnScreenFragment = new PlayerTurnScreenFragment(gameBoardActivity, uiConfig, hotSeatGame);
+        PlayerTurnScreenFragment playerTurnScreenFragment = new PlayerTurnScreenFragment(gameBoardActivity, uiConfig, gameMode);
         gameBoardActivity.replaceFragment(R.id.fragment_layout, playerTurnScreenFragment);
         gameBoardActivity.setPlayerTurnScreen(playerTurnScreenFragment);
         gameBoardActivity.hideFragment();
@@ -51,7 +48,7 @@ public class GameBoardManager {
         ImageView rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
         rollDicesButton.setOnClickListener(v -> {
 
-            if (!hotSeatGame.checkIfAllCombinationsAreDone()) {
+            if (!gameMode.checkIfAllCombinationsAreDone()) {
 
                 if (scoreInputSetter.getResetThrowCounter()) {
                     throwNumber = 0;
@@ -186,22 +183,22 @@ public class GameBoardManager {
         Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
         for (int x = 0; x < 16; x++) {
             int combinationNr = x;
-            if (dicesCombinationsChecker.combinationChecker(x, dices, isFirstThrow, 0) == 0 && hotSeatGame.getIsCombinationActive()[x]) {
+            if (dicesCombinationsChecker.combinationChecker(x, dices, isFirstThrow, 0) == 0 && gameMode.getIsCombinationActive()[x]) {
                 {
                     uiConfig.getCombinationsTextView()[x].setOnClickListener(v -> {
                         v.setEnabled(false);
-                        hotSeatGame.setIsCombinationActive(false, combinationNr);
+                        gameMode.setIsCombinationActive(false, combinationNr);
                         scoreInputSetter.setResetThrowCounter(true);
                         scoreInputSetter.resetCombinationsListeners();
-                        hotSeatGame.setCombinationsSlots(combinationNr, 2);
-                        hotSeatGame.prepareCombinationsSlots();
+                        gameMode.setCombinationsSlots(combinationNr, 2);
+                        gameMode.prepareCombinationsSlots();
                         uiConfig.hideDices();
-                        if (hotSeatGame.checkIfAllCombinationsAreDone() && hotSeatGame.getCurrentPlayerNumber() == hotSeatGame.getNumberOfPlayers()) {
+                        if (gameMode.checkIfAllCombinationsAreDone() && gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers()) {
                             executor.execute(() -> {
                                 try {
                                     sounds.playEraseCombinationSound();
                                     Thread.sleep(2000);
-                                    hotSeatGame.setFinalResultScreen();
+                                    gameMode.setFinalResultScreen();
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
@@ -226,18 +223,18 @@ public class GameBoardManager {
                     int finalX = x;
                     uiConfig.getCombinationsSlots()[x].setOnClickListener(v->{
                         uiConfig.getCombinationsTextView()[finalX].setEnabled(false);
-                        hotSeatGame.setIsCombinationActive(false, combinationNr);
+                        gameMode.setIsCombinationActive(false, combinationNr);
                         scoreInputSetter.setResetThrowCounter(true);
                         scoreInputSetter.resetCombinationsListeners();
-                        hotSeatGame.setCombinationsSlots(combinationNr, 2);
-                        hotSeatGame.prepareCombinationsSlots();
+                        gameMode.setCombinationsSlots(combinationNr, 2);
+                        gameMode.prepareCombinationsSlots();
                         uiConfig.hideDices();
-                        if (hotSeatGame.checkIfAllCombinationsAreDone() && hotSeatGame.getCurrentPlayerNumber() == hotSeatGame.getNumberOfPlayers()) {
+                        if (gameMode.checkIfAllCombinationsAreDone() && gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers()) {
                             executor.execute(() -> {
                                 try {
                                     sounds.playEraseCombinationSound();
                                     Thread.sleep(2000);
-                                    hotSeatGame.setFinalResultScreen();
+                                    gameMode.setFinalResultScreen();
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }

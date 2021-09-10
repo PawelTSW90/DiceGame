@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.FirebaseApp;
@@ -23,12 +22,12 @@ public class GameBoardActivity extends AppCompatActivity {
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentTransaction fragmentTransaction;
     private View mainBoardLayout;
-    private int numberOfPlayers = 0;
-
+    private int numberOfPlayers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        numberOfPlayers = getIntent().getIntExtra("numberOfPlayers", 0);
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_game_board);
         playerNamesInputScreenFragment = new PlayerNamesInputScreenFragment(this, numberOfPlayers);
@@ -89,11 +88,11 @@ public class GameBoardActivity extends AppCompatActivity {
 
     }
 
-    public void setNumberOfPlayers(int numberOfPlayers){
-        this.numberOfPlayers = numberOfPlayers;
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
     }
 
-
-
-
+    public void setNumberOfPlayers(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
+    }
 }

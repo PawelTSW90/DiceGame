@@ -9,15 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
-import com.paweldyjak.dicegame.GameModes.HotSeatGame;
+import com.paweldyjak.dicegame.GameModes.GameMode;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.Sounds;
-
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -25,7 +22,7 @@ import java.util.Map;
 
 public class FinalResultMorePlayersFragment extends Fragment {
     private final GameBoardActivity gameBoardActivity;
-    private final HotSeatGame hotSeatGame;
+    private final GameMode gameMode;
     private Sounds sounds;
     private final TextView[] playersTextViews = new TextView[6];
     private TextView winnerPlayer;
@@ -34,9 +31,9 @@ public class FinalResultMorePlayersFragment extends Fragment {
     private ImageView bronzeMedalImageView;
     private ImageView silverMedalImageVIew;
 
-    public FinalResultMorePlayersFragment(GameBoardActivity gameBoardActivity, HotSeatGame hotSeatGame) {
+    public FinalResultMorePlayersFragment(GameBoardActivity gameBoardActivity, GameMode gameMode) {
         this.gameBoardActivity = gameBoardActivity;
-        this.hotSeatGame = hotSeatGame;
+        this.gameMode = gameMode;
 
     }
 
@@ -65,11 +62,11 @@ public class FinalResultMorePlayersFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setPlayersPositions() {
         sounds.playFinalResultSound();
-        int numberOfPlayers = hotSeatGame.getNumberOfPlayers();
+        int numberOfPlayers = gameMode.getNumberOfPlayers();
         int playerNr = 0;
         int[] sortedResults = new int[6];
-        int[] playersTotalScore = hotSeatGame.getPlayersScore();
-        String[] playersNames = hotSeatGame.getPlayersNames();
+        int[] playersTotalScore = gameMode.getPlayersScore();
+        String[] playersNames = gameMode.getPlayersNames();
         Map<String, Integer> unsortedPlayersResults = new HashMap<>();
 
         for (int x = 0; x < numberOfPlayers; x++) {
@@ -178,8 +175,8 @@ public class FinalResultMorePlayersFragment extends Fragment {
         });
 
         rematchButton.setOnClickListener(v -> {
-            StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, hotSeatGame.getPlayersNames(), hotSeatGame.getNumberOfPlayers());
-            gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
+            StartHotSeatGameFragment startHotSeatGameFragment = new StartHotSeatGameFragment(gameBoardActivity, gameMode.getPlayersNames(), gameMode.getNumberOfPlayers());
+            gameBoardActivity.replaceFragment(R.id.fragment_layout, startHotSeatGameFragment);
             gameBoardActivity.hideFragment();
 
 

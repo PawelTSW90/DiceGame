@@ -1,6 +1,7 @@
 package com.paweldyjak.dicegame.Fragments;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,7 @@ public class PlayerNamesInputScreenFragment extends Fragment {
 
         //setting start button to save players names and start the game unless no player name entered
         start.setOnClickListener(v -> {
+            Log.i("testApp",""+numberOfPlayers);
             if (playerNameEditText.getText().length() >2 && nameDuplicateChecker()) {
                 playersNames[0] = playerNameEditText.getText().toString();
                 playerName.setText(R.string.player_two);
@@ -107,8 +109,8 @@ public class PlayerNamesInputScreenFragment extends Fragment {
                                                                 start.setOnClickListener(v5 -> {
                                                                     if (playerNameEditText.getText().length() >2 && nameDuplicateChecker()) {
                                                                         playersNames[5] = playerNameEditText.getText().toString();
-                                                                        StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, playersNames, numberOfPlayers);
-                                                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
+                                                                        StartHotSeatGameFragment startHotSeatGameFragment = new StartHotSeatGameFragment(gameBoardActivity, playersNames, numberOfPlayers);
+                                                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, startHotSeatGameFragment);
                                                                     } else {
                                                                         if (!nameDuplicateChecker()) {
                                                                             displayNameInUseToast();
@@ -118,8 +120,8 @@ public class PlayerNamesInputScreenFragment extends Fragment {
                                                                     }
                                                                 });
                                                             } else {
-                                                                StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, playersNames, numberOfPlayers);
-                                                                gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
+                                                                StartHotSeatGameFragment startHotSeatGameFragment = new StartHotSeatGameFragment(gameBoardActivity, playersNames, numberOfPlayers);
+                                                                gameBoardActivity.replaceFragment(R.id.fragment_layout, startHotSeatGameFragment);
                                                             }
                                                         } else {
                                                             if (!nameDuplicateChecker()) {
@@ -130,8 +132,8 @@ public class PlayerNamesInputScreenFragment extends Fragment {
                                                         }
                                                     });
                                                 } else {
-                                                    StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, playersNames, numberOfPlayers);
-                                                    gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
+                                                    StartHotSeatGameFragment startHotSeatGameFragment = new StartHotSeatGameFragment(gameBoardActivity, playersNames, numberOfPlayers);
+                                                    gameBoardActivity.replaceFragment(R.id.fragment_layout, startHotSeatGameFragment);
                                                 }
 
                                             } else {
@@ -143,8 +145,8 @@ public class PlayerNamesInputScreenFragment extends Fragment {
                                             }
                                         });
                                     } else {
-                                        StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, playersNames, numberOfPlayers);
-                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
+                                        StartHotSeatGameFragment startHotSeatGameFragment = new StartHotSeatGameFragment(gameBoardActivity, playersNames, numberOfPlayers);
+                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, startHotSeatGameFragment);
                                     }
                                 } else {
                                     if (!nameDuplicateChecker()) {
@@ -157,8 +159,8 @@ public class PlayerNamesInputScreenFragment extends Fragment {
                             });
 
                         } else {
-                            StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, playersNames, numberOfPlayers);
-                            gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
+                            StartHotSeatGameFragment startHotSeatGameFragment = new StartHotSeatGameFragment(gameBoardActivity, playersNames, numberOfPlayers);
+                            gameBoardActivity.replaceFragment(R.id.fragment_layout, startHotSeatGameFragment);
                         }
 
                     } else {
