@@ -155,12 +155,12 @@
         app:layout_constraintVertical_bias="0.82" />
 
     <Button
-        android:id="@+id/offline_mode_button"
+        android:id="@+id/connection_status_button"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:text="@string/offline_mode"
         android:textSize="10sp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/user_name_creator_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

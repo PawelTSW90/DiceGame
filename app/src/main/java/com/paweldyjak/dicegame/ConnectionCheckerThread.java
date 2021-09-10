@@ -20,16 +20,17 @@ public class ConnectionCheckerThread implements Runnable {
 
     @Override
     public void run() {
-        connectionButton = ((Activity) context).findViewById(R.id.offline_mode_button);
-        ((Activity) context).runOnUiThread(() -> {
-            if (!isConnectedToNetwork()) {
-                connectionButton.setText(context.getText(R.string.offline_mode));
-            } else {
-                connectionButton.setText(mainMenuScreenFragment.getUserName());
-            }
+            connectionButton = ((Activity) context).findViewById(R.id.connection_status_button);
+            ((Activity) context).runOnUiThread(() -> {
+                if (!isConnectedToNetwork()) {
+                    connectionButton.setText(context.getText(R.string.offline_mode));
+                } else {
+                    connectionButton.setText(mainMenuScreenFragment.getUserName());
+                }
 
-        });
-    }
+            });
+        }
+
 
 
     private boolean isConnectedToNetwork() {

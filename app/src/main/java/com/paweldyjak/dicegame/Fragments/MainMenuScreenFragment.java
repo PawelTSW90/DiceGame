@@ -35,12 +35,14 @@ import java.util.concurrent.TimeUnit;
 public class MainMenuScreenFragment extends Fragment {
     private final GameBoardActivity gameBoardActivity;
     private ConnectionCheckerThread connectionCheckerThread;
+    private final ScheduledExecutorService connectionChecker = Executors.newScheduledThreadPool(1);
     private DatabaseReference userNameReference;
     private DatabaseReference namesInUseReference;
     private Button playButton;
     private Button hotSeatButton;
     private Button logoutButton;
     private Button multiplayerButton;
+    private Button connectionStatusButton;
     private final Button[] playersNumberButtons = new Button[5];
     private Button backButton;
     private Button settingPlayerNameButton;
@@ -65,6 +67,7 @@ public class MainMenuScreenFragment extends Fragment {
         playButton = view.findViewById(R.id.play_button);
         hotSeatButton = view.findViewById(R.id.hotseat_mode_button);
         backButton = view.findViewById(R.id.back_button);
+        connectionStatusButton = view.findViewById(R.id.connection_status_button);
         logoutButton = view.findViewById(R.id.logout_button_titleScreen);
         multiplayerButton = view.findViewById(R.id.multiplayer_mode_button);
         settingPlayerNameButton = view.findViewById(R.id.setting_player_name_button);
@@ -93,6 +96,7 @@ public class MainMenuScreenFragment extends Fragment {
         for (int x = 0; x < 5; x++) {
             int finalX = x;
             playersNumberButtons[x].setOnClickListener(v -> {
+                connectionChecker.shutdown();
                 PlayerNamesInputScreenFragment playerNamesInputScreenFragment = new PlayerNamesInputScreenFragment(gameBoardActivity, finalX + 2);
                 sounds.playTickSound();
                 gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreenFragment);
@@ -106,6 +110,7 @@ public class MainMenuScreenFragment extends Fragment {
 
         logoutButton.setOnClickListener(v -> {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                connectionChecker.shutdown();
                 FirebaseAuth.getInstance().signOut();
                 Toast.makeText(gameBoardActivity, getContext().getText(R.string.logged_out), Toast.LENGTH_SHORT).show();
                 getActivity().finish();
@@ -143,6 +148,7 @@ public class MainMenuScreenFragment extends Fragment {
         });
 
         multiplayerButton.setOnClickListener(v -> {
+            connectionChecker.shutdown();
             sounds.playTickSound();
             Intent intent = new Intent(getContext(), MultiplayerQueueActivity.class);
             startActivity(intent);
@@ -190,12 +196,19 @@ public class MainMenuScreenFragment extends Fragment {
         userNameReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue().equals("null")) {
-                    playButton.setVisibility(View.INVISIBLE);
-                    userName = "false";
-                    setPlayerNameInput();
-                }  else {
-                    userName = snapshot.getValue(String.class);
+                try {
+
+
+                    if (snapshot.getValue().equals("null")) {
+                        playButton.setVisibility(View.INVISIBLE);
+                        userName = "false";
+                        setPlayerNameInput();
+                    } else {
+                        userName = snapshot.getValue(String.class);
+                        connectionStatusButton.setVisibility(View.VISIBLE);
+                    }
+                }catch (NullPointerException ignored){
+
                 }
             }
 
@@ -221,6 +234,7 @@ public class MainMenuScreenFragment extends Fragment {
                     userName = nameEditText.getText().toString();
                     userNameCreatorLayout.setVisibility(View.INVISIBLE);
                     playButton.setVisibility(View.VISIBLE);
+                    connectionStatusButton.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -234,9 +248,9 @@ public class MainMenuScreenFragment extends Fragment {
 
 
     public void internetConnectionChecker(){
-        ScheduledExecutorService connectionChecker = Executors.newScheduledThreadPool(1);
-        connectionChecker.scheduleAtFixedRate(connectionCheckerThread, 2, 2, TimeUnit.SECONDS);
-    }
+            connectionChecker.scheduleAtFixedRate(connectionCheckerThread, 2, 2, TimeUnit.SECONDS);
+        }
+
 
     public String getUserName(){
         return userName;
