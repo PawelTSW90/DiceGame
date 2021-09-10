@@ -39,7 +39,6 @@ public class MainMenuActivity extends AppCompatActivity {
     private Button hotSeatButton;
     private Button logoutButton;
     private Button multiplayerButton;
-    private Button connectionStatusButton;
     private final Button[] playersNumberButtons = new Button[5];
     private Button backButton;
     private Button settingPlayerNameButton;
@@ -64,7 +63,6 @@ public class MainMenuActivity extends AppCompatActivity {
         playButton = findViewById(R.id.play_button);
         hotSeatButton = findViewById(R.id.hotseat_mode_button);
         backButton = findViewById(R.id.back_button);
-        connectionStatusButton = findViewById(R.id.connection_status_button);
         logoutButton = findViewById(R.id.logout_button_titleScreen);
         multiplayerButton = findViewById(R.id.multiplayer_mode_button);
         settingPlayerNameButton = findViewById(R.id.setting_player_name_button);
@@ -110,7 +108,7 @@ public class MainMenuActivity extends AppCompatActivity {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 connectionChecker.shutdown();
                 FirebaseAuth.getInstance().signOut();
-                Toast.makeText(gameBoardActivity, this.getText(R.string.logged_out), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, this.getText(R.string.logged_out), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, StartActivity.class);
                 startActivity(intent);
                 this.finish();
@@ -205,7 +203,6 @@ public class MainMenuActivity extends AppCompatActivity {
                         setPlayerNameInput();
                     } else {
                         userName = snapshot.getValue(String.class);
-                        connectionStatusButton.setVisibility(View.VISIBLE);
                     }
                 }catch (NullPointerException ignored){
 
@@ -234,7 +231,6 @@ public class MainMenuActivity extends AppCompatActivity {
                     userName = nameEditText.getText().toString();
                     userNameCreatorLayout.setVisibility(View.INVISIBLE);
                     playButton.setVisibility(View.VISIBLE);
-                    connectionStatusButton.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -248,7 +244,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
 
     public void internetConnectionChecker(){
-            connectionChecker.scheduleAtFixedRate(connectionCheckerThread, 2, 2, TimeUnit.SECONDS);
+            connectionChecker.scheduleAtFixedRate(connectionCheckerThread, 0, 1, TimeUnit.SECONDS);
         }
 
 
