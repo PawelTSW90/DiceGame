@@ -100,4 +100,9 @@ public class RegisterActivity extends AppCompatActivity {
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
+    @Override
+    public void onBackPressed(){
+
+    }
+
 }

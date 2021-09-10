@@ -11,8 +11,10 @@ import java.util.Objects;
 
 public class StartActivity extends AppCompatActivity {
     GameBoardActivity gameBoardActivity;
+    MainMenuActivity mainMenuActivity;
     Button loginButton;
     Button registerButton;
+    Button offlineModeButton;
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -21,6 +23,7 @@ public class StartActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_start);
         gameBoardActivity = new GameBoardActivity();
+        mainMenuActivity = new MainMenuActivity();
         //hides status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
@@ -28,7 +31,7 @@ public class StartActivity extends AppCompatActivity {
 
         //if user is logged in, display main menu
         if (firebaseAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(this, MainMenuActivity.class);
+            Intent intent = new Intent(this, mainMenuActivity.getClass());
             startActivity(intent);
         }
         //if not display log in/register interface
@@ -36,12 +39,24 @@ public class StartActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.register_button);
         registerButton.setOnClickListener(v -> {
             startActivity(new Intent(this, RegisterActivity.class));
-            gameBoardActivity.finish();
+            this.finish();
         });
         loginButton.setOnClickListener(v -> {
             startActivity(new Intent(this, LoginActivity.class));
-            gameBoardActivity.finish();
+            this.finish();
         });
+        //start game in offline mode
+        offlineModeButton = findViewById(R.id.offline_mode_button);
+        offlineModeButton.setOnClickListener(v->{
+            startActivity(new Intent(this,mainMenuActivity.getClass()));
+            this.finish();
+        });
+
+    }
+
+    @Override
+    public void onBackPressed(){
+
     }
 
 }

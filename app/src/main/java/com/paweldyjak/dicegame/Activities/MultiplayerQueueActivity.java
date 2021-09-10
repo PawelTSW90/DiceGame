@@ -89,4 +89,9 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed(){
+
+    }
+
 }

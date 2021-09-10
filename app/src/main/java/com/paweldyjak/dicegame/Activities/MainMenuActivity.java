@@ -3,7 +3,9 @@ package com.paweldyjak.dicegame.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -11,8 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -39,6 +44,7 @@ public class MainMenuActivity extends AppCompatActivity {
     private Button hotSeatButton;
     private Button logoutButton;
     private Button multiplayerButton;
+    private Button connectionStatusButton;
     private final Button[] playersNumberButtons = new Button[5];
     private Button backButton;
     private Button settingPlayerNameButton;
@@ -61,6 +67,7 @@ public class MainMenuActivity extends AppCompatActivity {
         gameBoardActivity = new GameBoardActivity();
         sounds = new Sounds(this);
         playButton = findViewById(R.id.play_button);
+        connectionStatusButton = findViewById(R.id.connection_status_button);
         hotSeatButton = findViewById(R.id.hotseat_mode_button);
         backButton = findViewById(R.id.back_button);
         logoutButton = findViewById(R.id.logout_button_titleScreen);
@@ -75,14 +82,27 @@ public class MainMenuActivity extends AppCompatActivity {
         playersNumberLayout = findViewById(R.id.players_number_layout);
         nameEditText = findViewById(R.id.setting_name_editText);
         settings = findViewById(R.id.settings_imageview);
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        String userUID = firebaseAuth.getUid();
-        userNameReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUID).child("name");
-        namesInUseReference = FirebaseDatabase.getInstance().getReference().child("namesInUse");
-        connectionCheckerThread = new ConnectionCheckerThread(this,this);
         setButtons();
-        checkIfUserCreatedName();
-        internetConnectionChecker();
+            try {
+                //online mode
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                String userUID = firebaseAuth.getUid();
+                userNameReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUID).child("name");
+                namesInUseReference = FirebaseDatabase.getInstance().getReference().child("namesInUse");
+                connectionCheckerThread = new ConnectionCheckerThread(this, this);
+                internetConnectionChecker();
+                checkIfUserCreatedName();
+            } catch (NullPointerException e){
+                //offline mode
+                connectionStatusButton.setText(R.string.go_online);
+                connectionStatusButton.setVisibility(View.VISIBLE);
+                connectionStatusButton.setOnClickListener(v ->{
+                    startActivity(new Intent(this, StartActivity.class));
+                    this.finish();
+                });
+
+            }
+
     }
 
     public void setButtons() {
@@ -92,7 +112,7 @@ public class MainMenuActivity extends AppCompatActivity {
             playersNumberButtons[x].setOnClickListener(v -> {
                 connectionChecker.shutdown();
                 sounds.playTickSound();
-                gameBoardActivity.setNumberOfPlayers(finalX+2);
+                gameBoardActivity.setNumberOfPlayers(finalX + 2);
                 Intent intent = new Intent(this, gameBoardActivity.getClass());
                 startActivity(intent);
                 this.finish();
@@ -204,7 +224,7 @@ public class MainMenuActivity extends AppCompatActivity {
                     } else {
                         userName = snapshot.getValue(String.class);
                     }
-                }catch (NullPointerException ignored){
+                } catch (NullPointerException ignored) {
 
                 }
             }
@@ -243,13 +263,23 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
 
-    public void internetConnectionChecker(){
-            connectionChecker.scheduleAtFixedRate(connectionCheckerThread, 0, 1, TimeUnit.SECONDS);
-        }
+    public void internetConnectionChecker() {
+        connectionChecker.scheduleAtFixedRate(connectionCheckerThread, 0, 1, TimeUnit.SECONDS);
+    }
 
 
-    public String getUserName(){
+    public String getUserName() {
         return userName;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    private boolean isConnectedToNetwork() {
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
 }

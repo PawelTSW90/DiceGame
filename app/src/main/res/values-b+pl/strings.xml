@@ -61,5 +61,6 @@
     <string name="exit">WYJŚCIE</string>
     <string name="rematch">REWANŻ</string>
     <string name="offline_mode">TRYB OFFLINE</string>
-    <string name="opponent_search">Szukanie przeciwnika...</string>
+    <string name="go_online">URUCHOM TRYB ONLINE</string>
+    <string name="opponent_search">Szukanie przeciwnika…</string>
 </resources>
