@@ -1,19 +1,18 @@
-package com.paweldyjak.dicegame.Fragments;
+package com.paweldyjak.dicegame.Activities;
 
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,19 +20,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.*;
-import com.paweldyjak.dicegame.Activities.GameBoardActivity;
-import com.paweldyjak.dicegame.Activities.MainMenuSettingsActivity;
-import com.paweldyjak.dicegame.Activities.MultiplayerQueueActivity;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
-public class MainMenuScreenFragment extends Fragment {
-    private final GameBoardActivity gameBoardActivity;
+public class MainMenuActivity extends AppCompatActivity {
+    private GameBoardActivity gameBoardActivity;
+    private Sounds sounds;
     private ConnectionCheckerThread connectionCheckerThread;
     private final ScheduledExecutorService connectionChecker = Executors.newScheduledThreadPool(1);
     private DatabaseReference userNameReference;
@@ -50,45 +47,44 @@ public class MainMenuScreenFragment extends Fragment {
     private View playersNumberLayout;
     private View userNameCreatorLayout;
     private ImageView settings;
-    private final Sounds sounds;
     private String userName;
-
-    public MainMenuScreenFragment(GameBoardActivity gameBoardActivity) {
-        this.gameBoardActivity = gameBoardActivity;
-        sounds = new Sounds(gameBoardActivity);
-
-    }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main_menu);
+        //hides status bar
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //hides title bar
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
-        View view = inflater.inflate(R.layout.fragment_main_menu_screen, container, false);
-        playButton = view.findViewById(R.id.play_button);
-        hotSeatButton = view.findViewById(R.id.hotseat_mode_button);
-        backButton = view.findViewById(R.id.back_button);
-        connectionStatusButton = view.findViewById(R.id.connection_status_button);
-        logoutButton = view.findViewById(R.id.logout_button_titleScreen);
-        multiplayerButton = view.findViewById(R.id.multiplayer_mode_button);
-        settingPlayerNameButton = view.findViewById(R.id.setting_player_name_button);
-        userNameCreatorLayout = view.findViewById(R.id.user_name_creator_layout);
-        playersNumberButtons[0] = view.findViewById(R.id.two_players_button);
-        playersNumberButtons[1] = view.findViewById(R.id.three_players_button);
-        playersNumberButtons[2] = view.findViewById(R.id.four_players_button);
-        playersNumberButtons[3] = view.findViewById(R.id.five_players_button);
-        playersNumberButtons[4] = view.findViewById(R.id.six_playersButton);
-        playersNumberLayout = view.findViewById(R.id.players_number_layout);
-        nameEditText = view.findViewById(R.id.setting_name_editText);
-        settings = view.findViewById(R.id.settings_imageview);
+        gameBoardActivity = new GameBoardActivity();
+        sounds = new Sounds(this);
+        playButton = findViewById(R.id.play_button);
+        hotSeatButton = findViewById(R.id.hotseat_mode_button);
+        backButton = findViewById(R.id.back_button);
+        connectionStatusButton = findViewById(R.id.connection_status_button);
+        logoutButton = findViewById(R.id.logout_button_titleScreen);
+        multiplayerButton = findViewById(R.id.multiplayer_mode_button);
+        settingPlayerNameButton = findViewById(R.id.setting_player_name_button);
+        userNameCreatorLayout = findViewById(R.id.user_name_creator_layout);
+        playersNumberButtons[0] = findViewById(R.id.two_players_button);
+        playersNumberButtons[1] = findViewById(R.id.three_players_button);
+        playersNumberButtons[2] = findViewById(R.id.four_players_button);
+        playersNumberButtons[3] = findViewById(R.id.five_players_button);
+        playersNumberButtons[4] = findViewById(R.id.six_playersButton);
+        playersNumberLayout = findViewById(R.id.players_number_layout);
+        nameEditText = findViewById(R.id.setting_name_editText);
+        settings = findViewById(R.id.settings_imageview);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         String userUID = firebaseAuth.getUid();
         userNameReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUID).child("name");
         namesInUseReference = FirebaseDatabase.getInstance().getReference().child("namesInUse");
-        connectionCheckerThread = new ConnectionCheckerThread(getContext(), this);
+        connectionCheckerThread = new ConnectionCheckerThread(this,this);
         setButtons();
         checkIfUserCreatedName();
         internetConnectionChecker();
-        return view;
     }
 
     public void setButtons() {
@@ -97,14 +93,16 @@ public class MainMenuScreenFragment extends Fragment {
             int finalX = x;
             playersNumberButtons[x].setOnClickListener(v -> {
                 connectionChecker.shutdown();
-                PlayerNamesInputScreenFragment playerNamesInputScreenFragment = new PlayerNamesInputScreenFragment(gameBoardActivity, finalX + 2);
                 sounds.playTickSound();
-                gameBoardActivity.replaceFragment(R.id.fragment_layout, playerNamesInputScreenFragment);
+                gameBoardActivity.setNumberOfPlayers(finalX+2);
+                Intent intent = new Intent(this, gameBoardActivity.getClass());
+                startActivity(intent);
+                this.finish();
             });
         }
 
         settings.setOnClickListener(v -> {
-            Intent intent = new Intent(gameBoardActivity, MainMenuSettingsActivity.class);
+            Intent intent = new Intent(this, MainMenuSettingsActivity.class);
             startActivity(intent);
         });
 
@@ -112,8 +110,10 @@ public class MainMenuScreenFragment extends Fragment {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 connectionChecker.shutdown();
                 FirebaseAuth.getInstance().signOut();
-                Toast.makeText(gameBoardActivity, getContext().getText(R.string.logged_out), Toast.LENGTH_SHORT).show();
-                getActivity().finish();
+                Toast.makeText(gameBoardActivity, this.getText(R.string.logged_out), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, StartActivity.class);
+                startActivity(intent);
+                this.finish();
 
             }
         });
@@ -150,16 +150,16 @@ public class MainMenuScreenFragment extends Fragment {
         multiplayerButton.setOnClickListener(v -> {
             connectionChecker.shutdown();
             sounds.playTickSound();
-            Intent intent = new Intent(getContext(), MultiplayerQueueActivity.class);
+            Intent intent = new Intent(this, MultiplayerQueueActivity.class);
             startActivity(intent);
-            getActivity().finish();
+            this.finish();
 
         });
 
     }
 
     public void setPlayerNameInput() {
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         playButton.setVisibility(View.INVISIBLE);
         userNameCreatorLayout.setVisibility(View.VISIBLE);
         //allows to proceed when players name is at least one character long

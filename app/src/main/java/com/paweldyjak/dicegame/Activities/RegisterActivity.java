@@ -63,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(this, getApplicationContext().getText(R.string.registration_successful), Toast.LENGTH_SHORT).show();
                             addUserToDatabase(email, password);
-                            Intent intent = new Intent(this, GameBoardActivity.class);
+                            Intent intent = new Intent(this, MainMenuActivity.class);
                             startActivity(intent);
                             this.finish();
                         } else {

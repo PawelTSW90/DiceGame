@@ -28,7 +28,7 @@ public class StartActivity extends AppCompatActivity {
 
         //if user is logged in, display main menu
         if (firebaseAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(this, GameBoardActivity.class);
+            Intent intent = new Intent(this, MainMenuActivity.class);
             startActivity(intent);
         }
         //if not display log in/register interface

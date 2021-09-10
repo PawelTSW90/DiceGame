@@ -5,17 +5,17 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.widget.Button;
 
-import com.paweldyjak.dicegame.Fragments.MainMenuScreenFragment;
+import com.paweldyjak.dicegame.Activities.MainMenuActivity;
 
 public class ConnectionCheckerThread implements Runnable {
-    private final MainMenuScreenFragment mainMenuScreenFragment;
+    private final MainMenuActivity mainMenuActivity;
     private final Context context;
     private Button connectionButton;
 
 
-    public ConnectionCheckerThread(Context context, MainMenuScreenFragment mainMenuScreenFragment) {
+    public ConnectionCheckerThread(Context context, MainMenuActivity mainMenuActivity) {
         this.context = context;
-        this.mainMenuScreenFragment = mainMenuScreenFragment;
+        this.mainMenuActivity = mainMenuActivity;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ConnectionCheckerThread implements Runnable {
                 if (!isConnectedToNetwork()) {
                     connectionButton.setText(context.getText(R.string.offline_mode));
                 } else {
-                    connectionButton.setText(mainMenuScreenFragment.getUserName());
+                    connectionButton.setText(mainMenuActivity.getUserName());
                 }
 
             });

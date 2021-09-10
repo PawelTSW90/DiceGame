@@ -18,11 +18,12 @@ import java.util.Objects;
 
 
 public class GameBoardActivity extends AppCompatActivity {
-    private MainMenuScreenFragment mainMenuScreenFragment;
+    private PlayerNamesInputScreenFragment playerNamesInputScreenFragment;
     private PlayerTurnScreenFragment playerTurnScreenFragment;
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentTransaction fragmentTransaction;
     private View mainBoardLayout;
+    private int numberOfPlayers = 0;
 
 
     @Override
@@ -30,25 +31,23 @@ public class GameBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_game_board);
-        mainMenuScreenFragment = new MainMenuScreenFragment(this);
+        playerNamesInputScreenFragment = new PlayerNamesInputScreenFragment(this, numberOfPlayers);
         mainBoardLayout = findViewById(R.id.game_board_screen_layout);
         //hides status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
-
         AdView mAdView = findViewById(R.id.adView2);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-        showMenuScreen();
-
+        showNamesInputFragment();
 
     }
 
-    public void showMenuScreen() {
+    public void showNamesInputFragment() {
         showFragment();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_layout, mainMenuScreenFragment);
+        fragmentTransaction.add(R.id.fragment_layout,playerNamesInputScreenFragment);
         fragmentTransaction.commit();
 
 
@@ -88,6 +87,10 @@ public class GameBoardActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
 
+    }
+
+    public void setNumberOfPlayers(int numberOfPlayers){
+        this.numberOfPlayers = numberOfPlayers;
     }
 
 
