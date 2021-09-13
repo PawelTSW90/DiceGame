@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
+import com.paweldyjak.dicegame.Activities.MainMenuActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.Sounds;
@@ -50,7 +51,7 @@ public class FinalResultTwoPlayersFragment extends Fragment {
 
     public void setButtons() {
         exitButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), GameBoardActivity.class);
+            Intent intent = new Intent(getContext(), MainMenuActivity.class);
             startActivity(intent);
             getActivity().finish();
 

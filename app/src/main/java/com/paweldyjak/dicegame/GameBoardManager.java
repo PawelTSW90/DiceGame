@@ -23,6 +23,7 @@ public class GameBoardManager {
     private int throwNumber = 0;
     private final Sounds sounds;
     private final GameBoardActivity gameBoardActivity;
+    private final Random randomValue = new Random();
 
 
     public GameBoardManager(GameBoardActivity gameBoardActivity, Context context, ScoreInputSetter scoreInputSetter, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, RerollDices rerollDices, GameMode gameMode) {
@@ -34,13 +35,8 @@ public class GameBoardManager {
         this.rerollDices = rerollDices;
         this.gameMode = gameMode;
         sounds = new Sounds(context);
-        PlayerTurnScreenFragment playerTurnScreenFragment = new PlayerTurnScreenFragment(gameBoardActivity, uiConfig, gameMode);
-        gameBoardActivity.replaceFragment(R.id.fragment_layout, playerTurnScreenFragment);
-        gameBoardActivity.setPlayerTurnScreen(playerTurnScreenFragment);
-        gameBoardActivity.hideFragment();
 
     }
-
 
     //method configure roll dices button
     public void setRollDicesButton() {
@@ -81,11 +77,9 @@ public class GameBoardManager {
 
     //method generates dices for display
     public void rollDices() {
-
-
         sounds.playRollDiceSound();
         boolean rerollAllDices = true;
-        Random randomValue = new Random();
+
         for (int x = 0; x < 5; x++) {
             int value = randomValue.nextInt(6 - 1 + 1) + 1;
             if (throwNumber >= 1) {

@@ -3,9 +3,7 @@ package com.paweldyjak.dicegame.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -13,10 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,7 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -44,7 +39,6 @@ public class MainMenuActivity extends AppCompatActivity {
     private Button hotSeatButton;
     private Button logoutButton;
     private Button multiplayerButton;
-    private Button connectionStatusButton;
     private final Button[] playersNumberButtons = new Button[5];
     private Button backButton;
     private Button settingPlayerNameButton;
@@ -67,7 +61,7 @@ public class MainMenuActivity extends AppCompatActivity {
         gameBoardActivity = new GameBoardActivity();
         sounds = new Sounds(this);
         playButton = findViewById(R.id.play_button);
-        connectionStatusButton = findViewById(R.id.connection_status_button);
+        Button connectionStatusButton = findViewById(R.id.connection_status_button);
         hotSeatButton = findViewById(R.id.hotseat_mode_button);
         backButton = findViewById(R.id.back_button);
         logoutButton = findViewById(R.id.logout_button_titleScreen);
@@ -114,6 +108,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 sounds.playTickSound();
                 Intent intent = new Intent(this, GameBoardActivity.class);
                 intent.putExtra("numberOfPlayers", numberOfPlayers);
+                intent.putExtra("MultiplayerMode", false);
                 startActivity(intent);
                 this.finish();
             });
@@ -275,11 +270,6 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-    }
-
-    private boolean isConnectedToNetwork() {
-        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
 }

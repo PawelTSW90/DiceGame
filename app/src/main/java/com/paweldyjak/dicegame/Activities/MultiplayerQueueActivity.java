@@ -1,10 +1,14 @@
 package com.paweldyjak.dicegame.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -13,6 +17,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.GameModes.MultiplayerGame;
@@ -27,7 +33,7 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
     private String opponentUid;
     private String playerUid;
     private String opponentName;
-    private String[] playersNames;
+    private volatile String[] playersNames;
     private DatabaseReference multiplayerRoomReference;
     private DatabaseReference playerNameReference;
 
@@ -43,13 +49,25 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
         opponentFoundTextView = findViewById(R.id.user_found_textView);
         multiplayerQueueReference = FirebaseDatabase.getInstance().getReference().child("multiplayerQueue");
         playerUid = firebaseAuth.getUid();
-        playerNameReference = FirebaseDatabase.getInstance().getReference().child("users").child(playerUid);
+        playerNameReference = FirebaseDatabase.getInstance().getReference().child("users").child(playerUid).child("name");
+        playersNames = new String[2];
         joinMultiplayerQueue();
         lookForOpponentPlayer();
     }
 
 
     public void joinMultiplayerQueue() {
+        playerNameReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                playersNames[0] = snapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         multiplayerQueueReference.child("playersInQueue").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -84,10 +102,10 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 opponentName = snapshot.getValue(String.class);
+                                playersNames[1] = snapshot.getValue(String.class);
                                 opponentFoundTextView.setText(opponentName);
-                                playersInQueue -= 2;
-                                multiplayerQueueReference.child("playersInQueue").setValue(playersInQueue);
                                 multiplayerQueueReference.child("playersUid").removeValue();
+                                startMultiplayerGame(playersNames);
 
                             }
 
@@ -96,11 +114,25 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
 
                             }
                         });
+                        multiplayerQueueReference.child("playersInQueue").runTransaction(new Transaction.Handler() {
+                            @NonNull
+                            @Override
+                            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                                currentData.setValue((Long) currentData.getValue() - 1);
+                                return Transaction.success(currentData);
+                            }
 
-                        break;
+                            @Override
+                            public void onComplete(@Nullable @org.jetbrains.annotations.Nullable DatabaseError error, boolean committed, @Nullable @org.jetbrains.annotations.Nullable DataSnapshot currentData) {
+
+                            }
+                        });
+
 
                     }
+
                 }
+
 
             }
 
@@ -116,6 +148,7 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
 
         }
 
+
     }
 
     @Override
@@ -123,27 +156,12 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
 
     }
 
-    public void startMultiplayerGame() {
+
+    public void startMultiplayerGame(String[] playersNames) {
         Executor executor = ContextCompat.getMainExecutor(this);
         executor.execute(() -> {
             try {
-                Thread.sleep(5000);
-                GameBoardActivity gameBoardActivity = new GameBoardActivity();
-                UIConfig uiConfig = new UIConfig(gameBoardActivity);
-                MultiplayerGame multiplayerGame = new MultiplayerGame(uiConfig, gameBoardActivity, playersNames);
-                RerollDices rerollDices = new RerollDices(uiConfig);
-                DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame);
-                ScoreInputSetter scoreInputSetter = new ScoreInputSetter(gameBoardActivity, uiConfig, multiplayerGame);
-                GameBoardManager gameBoardManager = new GameBoardManager(gameBoardActivity, gameBoardActivity, scoreInputSetter, dicesCombinationsChecker, uiConfig, rerollDices, multiplayerGame);
-                //configuring UI
-                uiConfig.setComponents();
-                playersNames[0] = "Pawel";
-                playersNames[1] = "Marta";
-                uiConfig.getCurrentPlayerName().setText(playersNames[0]);
-                multiplayerGame.setPlayersNames(playersNames);
-                multiplayerGame.setAllCombinationsAsActive();
-                gameBoardManager.setRollDicesButton();
-                gameBoardActivity.hideFragment();
+                Thread.sleep(3000);
 
 
             } catch (Exception e) {
@@ -152,6 +170,11 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
 
 
         });
+        GameBoardActivity gameBoardActivity = new GameBoardActivity();
+        Intent intent = new Intent(this, gameBoardActivity.getClass());
+        intent.putExtra("MultiplayerMode", true);
+        intent.putExtra("playersNames", playersNames);
+        startActivity(intent);
     }
 
 }

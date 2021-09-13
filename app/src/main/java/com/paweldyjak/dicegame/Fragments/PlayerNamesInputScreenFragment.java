@@ -1,7 +1,6 @@
 package com.paweldyjak.dicegame.Fragments;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
-
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.R;
 
@@ -72,7 +69,6 @@ public class PlayerNamesInputScreenFragment extends Fragment {
 
         //setting start button to save players names and start the game unless no player name entered
         start.setOnClickListener(v -> {
-            Log.i("testApp",""+numberOfPlayers);
             if (playerNameEditText.getText().length() >2 && nameDuplicateChecker()) {
                 playersNames[0] = playerNameEditText.getText().toString();
                 playerName.setText(R.string.player_two);
