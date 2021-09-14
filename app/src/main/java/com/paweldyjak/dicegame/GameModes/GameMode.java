@@ -40,4 +40,6 @@ public interface GameMode {
     void setNumberOfPlayers(int numberOfPlayers);
 
     int getNumberOfPlayers();
+
+    String getGameMode();
 }

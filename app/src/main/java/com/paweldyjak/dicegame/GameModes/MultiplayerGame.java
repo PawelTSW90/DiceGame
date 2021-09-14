@@ -19,6 +19,7 @@ public class MultiplayerGame implements GameMode {
     private final int[][] playersCombinationsSlotsValues = new int[6][16];
     private final boolean[][] playersIsCombinationActive = new boolean[6][16];
     private final int[] playersTotalScore = new int[6];
+    String gameMode = "MultiplayerMode";
 
     public MultiplayerGame(UIConfig uiConfig, GameBoardActivity gameBoardActivity, String[] playersNames){
         this.uiConfig = uiConfig;
@@ -148,6 +149,11 @@ public class MultiplayerGame implements GameMode {
 
     @Override
     public int getNumberOfPlayers() {
-        return 0;
+        return 2;
+    }
+
+    @Override
+    public String getGameMode() {
+        return gameMode;
     }
 }

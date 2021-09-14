@@ -9,15 +9,17 @@ import androidx.fragment.app.Fragment;
 import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 
-public class StartHotSeatGameFragment extends Fragment {
+public class StartGameScreenFragment extends Fragment {
     private final GameBoardActivity gameBoardActivity;
     private final String[] playersNames;
     private final int numberOfPlayers;
+    private final boolean multiplayerMode;
 
-    public StartHotSeatGameFragment(GameBoardActivity gameBoardActivity, String[] playersNames, int numberOfPlayers) {
+    public StartGameScreenFragment(GameBoardActivity gameBoardActivity, String[] playersNames, int numberOfPlayers, boolean multiplayerMode) {
         this.gameBoardActivity = gameBoardActivity;
         this.playersNames = playersNames;
         this.numberOfPlayers = numberOfPlayers;
+        this.multiplayerMode = multiplayerMode;
     }
 
     @Override
@@ -26,7 +28,13 @@ public class StartHotSeatGameFragment extends Fragment {
         Button startGameButton = view.findViewById(R.id.start_game_button);
         TextView playerName = view.findViewById(R.id.start_game_textview);
         playerName.setText(playersNames[0]);
-        startGameButton.setOnClickListener(v -> gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers));
+        startGameButton.setOnClickListener(v -> {
+            if(multiplayerMode){
+                gameBoardActivity.startMultiplayerGame(playersNames);
+            } else{
+                gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
+            }
+        });
         return view;
     }
 

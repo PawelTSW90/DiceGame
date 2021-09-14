@@ -4,14 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,8 +17,10 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.*;
-import com.paweldyjak.dicegame.GameModes.MultiplayerGame;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 
@@ -33,9 +31,12 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
     private String opponentUid;
     private String playerUid;
     private String opponentName;
-    private volatile String[] playersNames;
+    private String playerName;
+    private String[] playersNames;
     private DatabaseReference multiplayerRoomReference;
     private DatabaseReference playerNameReference;
+    private int playerRanking;
+    private int opponentRanking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +58,11 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
 
 
     public void joinMultiplayerQueue() {
+        //join multiplayer queue
         playerNameReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                playersNames[0] = snapshot.getValue(String.class);
+                playerName = snapshot.getValue(String.class);
             }
 
             @Override
@@ -68,6 +70,7 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
 
             }
         });
+        //update players in queue number
         multiplayerQueueReference.child("playersInQueue").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -83,6 +86,7 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
 
             }
         });
+        //create database entry for players in queue
         multiplayerQueueReference.child("playersUid").child(playerUid).setValue(0);
 
 
@@ -96,16 +100,16 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
                     if (!dataSnapshot.getKey().equals(playerUid)) {
                         opponentUid = dataSnapshot.getKey();
                         DatabaseReference opponentNameReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("name");
-                        multiplayerRoomReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("MultiplayerRoom").child(playerUid);
+                        multiplayerRoomReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid);
                         multiplayerRoomReference.setValue(0);
                         opponentNameReference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 opponentName = snapshot.getValue(String.class);
-                                playersNames[1] = snapshot.getValue(String.class);
+                                opponentName = snapshot.getValue(String.class);
                                 opponentFoundTextView.setText(opponentName);
                                 multiplayerQueueReference.child("playersUid").removeValue();
-                                startMultiplayerGame(playersNames);
+                                setPlayersOrder();
 
                             }
 
@@ -124,7 +128,6 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
 
                             @Override
                             public void onComplete(@Nullable @org.jetbrains.annotations.Nullable DatabaseError error, boolean committed, @Nullable @org.jetbrains.annotations.Nullable DataSnapshot currentData) {
-
                             }
                         });
 
@@ -164,10 +167,9 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
                 Thread.sleep(3000);
 
 
-            } catch (Exception e) {
+            } catch (Exception ignored) {
 
             }
-
 
         });
         GameBoardActivity gameBoardActivity = new GameBoardActivity();
@@ -175,6 +177,52 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
         intent.putExtra("MultiplayerMode", true);
         intent.putExtra("playersNames", playersNames);
         startActivity(intent);
+    }
+
+    public void setPlayersOrder(){
+        DatabaseReference playerRankingReference = FirebaseDatabase.getInstance().getReference().child("users").child(playerUid).child("ranking");
+        DatabaseReference opponentRankingReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("ranking");
+        playerRankingReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                playerRanking = snapshot.getValue(Integer.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        opponentRankingReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                opponentRanking = snapshot.getValue(Integer.class);
+                if(playerRanking>opponentRanking){
+                    playersNames[0] = playerName;
+                    playersNames[1] = opponentName;
+                } else if(opponentRanking>playerRanking){
+                    playersNames[0] = opponentName;
+                    playersNames[1] = playerName;
+                } else{
+                    List<String> players = new ArrayList<>();
+                    players.add(playerName);
+                    players.add(opponentName);
+                    Collections.sort(players);
+                    playersNames[0] = players.get(0);
+                    playersNames[1] = players.get(1);
+
+                }
+                startMultiplayerGame(playersNames);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
     }
 
 }

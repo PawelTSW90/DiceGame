@@ -50,7 +50,9 @@ public class GameBoardActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         if (multiplayerMode) {
-            startMultiplayerGame(playersNames);
+            StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(this, playersNames, 2, true);
+            replaceFragment(R.id.fragment_layout, startGameScreenFragment);
+            showFragment();
         } else {
             showNamesInputFragment();
         }

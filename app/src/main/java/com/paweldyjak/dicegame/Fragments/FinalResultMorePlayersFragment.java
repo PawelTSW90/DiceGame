@@ -176,8 +176,8 @@ public class FinalResultMorePlayersFragment extends Fragment {
         });
 
         rematchButton.setOnClickListener(v -> {
-            StartHotSeatGameFragment startHotSeatGameFragment = new StartHotSeatGameFragment(gameBoardActivity, gameMode.getPlayersNames(), gameMode.getNumberOfPlayers());
-            gameBoardActivity.replaceFragment(R.id.fragment_layout, startHotSeatGameFragment);
+            StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, gameMode.getPlayersNames(), gameMode.getNumberOfPlayers(), false);
+            gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
             gameBoardActivity.hideFragment();
 
 

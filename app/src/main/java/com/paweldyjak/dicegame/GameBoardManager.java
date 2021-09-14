@@ -5,7 +5,6 @@ import android.content.Context;
 import android.widget.ImageView;
 import androidx.core.content.ContextCompat;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
-import com.paweldyjak.dicegame.Fragments.PlayerTurnScreenFragment;
 import com.paweldyjak.dicegame.GameModes.GameMode;
 import java.util.Random;
 import java.util.concurrent.Executor;

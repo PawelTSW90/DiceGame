@@ -19,6 +19,7 @@ public class HotSeatGame implements GameMode {
     private final int[][] playersCombinationsSlotsValues = new int[6][16];
     private final boolean[][] playersIsCombinationActive = new boolean[6][16];
     private final int[] playersTotalScore = new int[6];
+    private String gameMode = "HotSeatMode";
 
     public HotSeatGame(UIConfig uiConfig, GameBoardActivity gameBoardActivity, String[] playersNames) {
         this.uiConfig = uiConfig;
@@ -152,6 +153,11 @@ public class HotSeatGame implements GameMode {
 
     public int getNumberOfPlayers() {
         return numberOfPlayers;
+    }
+
+    @Override
+    public String getGameMode() {
+        return gameMode;
     }
 
 
