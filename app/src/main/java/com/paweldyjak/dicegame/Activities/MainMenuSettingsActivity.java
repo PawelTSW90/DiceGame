@@ -20,4 +20,9 @@ public class MainMenuSettingsActivity extends AppCompatActivity {
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
     }
+
+    @Override
+    public void onBackPressed(){
+
+    }
 }

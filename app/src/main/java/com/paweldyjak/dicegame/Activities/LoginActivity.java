@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, getApplicationContext().getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
         } else {
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
-                startActivity(new Intent(LoginActivity.this, GameBoardActivity.class));
+                startActivity(new Intent(LoginActivity.this, MainMenuActivity.class));
                 finish();
             });
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnFailureListener(e -> Toast.makeText(LoginActivity.this, getApplicationContext().getText(R.string.authentication_error), Toast.LENGTH_SHORT).show());
@@ -54,6 +54,11 @@ public class LoginActivity extends AppCompatActivity {
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
+    @Override
+    public void onBackPressed(){
+
     }
 
 }

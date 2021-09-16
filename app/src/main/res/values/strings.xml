@@ -7,6 +7,7 @@
     <string name="settings">SETTINGS</string>
     <string name="password">password:</string>
     <string name="email">email:</string>
+    <string name="createName">CREATE</string>
     <string name="authentication_error">Authentication Error - Check your username and password.</string>
     <string name="email_in_use_error">This email is already in use.</string>
     <string name="wrong_email_error">Incorrect email format. Please try again.</string>
@@ -15,8 +16,8 @@
     <string name="username_in_use_error">This username is already in use.</string>
     <string name="registration_successful">Registration successful!</string>
     <string name="connection_error">Please check your internet connection or try again later.</string>
-    <string name="set_player_name">What is your username?</string>
-    <string name="set_player_name_2">Name must have a length between 3 and 10 characters.</string>
+    <string name="set_username">What is your username?</string>
+    <string name="username_length_error">Name must have a length between 3 and 10 characters.</string>
     <string name="player_one">PLAYER 1</string>
     <string name="player_two">PLAYER 2</string>
     <string name="player_three">PLAYER 3</string>
@@ -51,9 +52,15 @@
     <string name="five_players">5 players</string>
     <string name="six_players">6 players</string>
     <string name="hotseat">HOTSEAT</string>
+    <string name="multiplayer">MULTIPLAYER</string>
     <string name="play">PLAY</string>
     <string name="back">BACK</string>
+    <string name="the_winner_is">The winner is </string>
+    <string name="draw">DRAW !</string>
     <string name="exit">EXIT</string>
     <string name="rematch">REMATCH</string>
+    <string name="offline_mode">OFFLINE MODE</string>
+    <string name="go_online">START ONLINE MODE</string>
+    <string name="opponent_search">Searching for opponent…</string>
 
 </resources>

@@ -43,19 +43,19 @@
             android:layout_height="60dp"
             android:layout_marginBottom="80dp"
             android:hint="@string/name"
-            app:counterMaxLength="15"
+            app:counterMaxLength="10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_name_one"
+                android:id="@+id/edit_text_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:imeOptions="actionDone"
                 android:inputType="text"
-                android:maxLength="15" />
+                android:maxLength="10" />
         </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

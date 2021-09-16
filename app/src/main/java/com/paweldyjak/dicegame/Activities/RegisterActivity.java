@@ -23,7 +23,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputEditText email;
     private TextInputEditText password;
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference;
+    private DatabaseReference usersDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.password_editText);
         Button register = findViewById(R.id.register_button2);
         firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
+        usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users");
 
         register.setOnClickListener(v -> {
             String txt_email = email.getText().toString();
@@ -63,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(this, getApplicationContext().getText(R.string.registration_successful), Toast.LENGTH_SHORT).show();
                             addUserToDatabase(email, password);
-                            Intent intent = new Intent(this, GameBoardActivity.class);
+                            Intent intent = new Intent(this, MainMenuActivity.class);
                             startActivity(intent);
                             this.finish();
                         } else {
@@ -89,14 +89,20 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void addUserToDatabase(String email, String password) {
         String userUID = firebaseAuth.getUid();
-        databaseReference.child(userUID).child("name").setValue("null");
-        databaseReference.child(userUID).child("email").setValue(email);
-        databaseReference.child(userUID).child("password").setValue(password);
+        usersDatabaseReference.child(userUID).child("name").setValue("null");
+        usersDatabaseReference.child(userUID).child("email").setValue(email);
+        usersDatabaseReference.child(userUID).child("password").setValue(password);
+        usersDatabaseReference.child(userUID).child("ranking").setValue(0);
     }
 
     private boolean isConnectedToNetwork() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
+    @Override
+    public void onBackPressed(){
+
     }
 
 }
