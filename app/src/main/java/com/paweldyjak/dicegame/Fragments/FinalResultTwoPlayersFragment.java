@@ -46,7 +46,7 @@ public class FinalResultTwoPlayersFragment extends Fragment {
         exitButton = view.findViewById(R.id.exit_button_twoPlayers);
         multiplayerMode = gameMode.getGameMode().equals("MultiplayerMode");
         setButtons();
-        setFinalResultScreen();
+        setPlayersPosition();
 
         return view;
     }
@@ -59,16 +59,10 @@ public class FinalResultTwoPlayersFragment extends Fragment {
 
         });
 
-        rematchButton.setOnClickListener(v -> {
-            StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, gameMode.getPlayersNames(), gameMode.getNumberOfPlayers(), multiplayerMode);
-            gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
-            gameBoardActivity.showFragment();
-
-
-        });
+        rematchButton.setOnClickListener(v -> gameBoardActivity.startHotSeatGame(gameMode.getPlayersNames(), gameMode.getNumberOfPlayers()));
     }
 
-    public void setFinalResultScreen() {
+    public void setPlayersPosition() {
         String winnerPlayer = null;
         if (gameMode.getPlayersTotalScore(1) > gameMode.getPlayersTotalScore(2)) {
             winnerPlayer = gameMode.getPlayersNames()[0];

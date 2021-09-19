@@ -156,6 +156,16 @@ public class HotSeatGame implements GameMode {
     }
 
     @Override
+    public boolean getOpponentTurn() {
+        return false;
+    }
+
+    @Override
+    public void setOpponentTurn(boolean opponentTurn) {
+
+    }
+
+    @Override
     public String getGameMode() {
         return gameMode;
     }

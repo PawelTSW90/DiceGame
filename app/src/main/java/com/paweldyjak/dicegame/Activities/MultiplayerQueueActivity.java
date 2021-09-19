@@ -16,7 +16,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 
@@ -24,11 +26,11 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
     private DatabaseReference multiplayerQueueReference;
     private TextView opponentFoundTextView;
     private int playersInQueue;
+    private String[] playersNames;
     private String opponentUid;
     private String playerUid;
     private String opponentName;
     private String playerName;
-    private String[] playersNames;
     private int playerRanking;
     private int opponentRanking;
 
@@ -44,8 +46,8 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
         opponentFoundTextView = findViewById(R.id.user_found_textView);
         multiplayerQueueReference = FirebaseDatabase.getInstance().getReference().child("multiplayerQueue");
         playerUid = firebaseAuth.getUid();
-        playersNames = new String[2];
         joinMultiplayerQueue();
+        playersNames = new String[2];
         updatePlayersInQueueNumber();
         setPlayerName();
         lookForOpponentPlayer();
@@ -113,8 +115,13 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
     }
 
     public void createMultiplayerRoom() {
+        Map<String, Integer> opponentData = new HashMap<>();
+        opponentData.put("opponentsTurn", 0);
+        opponentData.put("combinationsPoints", 0);
+        opponentData.put("isCombinationActive", 0);
+        opponentData.put("totalScore",0);
         DatabaseReference multiplayerRoomReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid);
-        multiplayerRoomReference.setValue(0);
+        multiplayerRoomReference.setValue(opponentData);
     }
 
     public void getOpponentName() {
@@ -166,6 +173,7 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
         opponentRankingReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 opponentRanking = snapshot.getValue(Integer.class);
                 if (playerRanking > opponentRanking) {
                     playersNames[0] = playerName;
@@ -181,11 +189,20 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
                     playersNames[0] = players.get(0);
                     playersNames[1] = players.get(1);
                 }
+                updatePlayerTurnDatabaseValue();
                 startMultiplayerGame(playersNames);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    public void updatePlayerTurnDatabaseValue(){
+        if(playersNames[0].equals(playerName)){
+            DatabaseReference multiplayerRoomReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid);
+            multiplayerRoomReference.child("opponentsTurn").setValue(1);
+        }
+
     }
 }

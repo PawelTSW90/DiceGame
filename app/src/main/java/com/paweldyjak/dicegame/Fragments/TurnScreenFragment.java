@@ -11,14 +11,14 @@ import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
 
-public class PlayerTurnScreenFragment extends Fragment {
+public class TurnScreenFragment extends Fragment {
     private final UIConfig uiConfig;
     private TextView playerName;
     private Button nextPlayerButton;
     private final GameBoardActivity gameBoardActivity;
     private final GameMode gameMode;
 
-    public PlayerTurnScreenFragment(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode) {
+    public TurnScreenFragment(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode) {
         this.uiConfig = uiConfig;
         this.gameBoardActivity = gameBoardActivity;
         this.gameMode = gameMode;
@@ -26,7 +26,7 @@ public class PlayerTurnScreenFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_player_turn_screen, container, false);
+        View view = inflater.inflate(R.layout.fragment_turn_screen, container, false);
         playerName = view.findViewById(R.id.player_turn_textview);
         nextPlayerButton = view.findViewById(R.id.player_turn_button);
         displayTurnMessage();
@@ -71,13 +71,7 @@ public class PlayerTurnScreenFragment extends Fragment {
                 playerName.setText(gameMode.getPlayersNames()[0]);
                 break;
         }
-        nextPlayerButton.setOnClickListener(v -> {
-            int playerNumber = gameMode.getCurrentPlayerNumber() - 1;
-            uiConfig.getCurrentPlayerName().setText((gameMode.getPlayersNames()[playerNumber]));
-            gameMode.prepareScoreBoard();
-            gameBoardActivity.hideFragment();
 
-        });
         //update player number
         switch (gameMode.getCurrentPlayerNumber()) {
             case 1:
@@ -117,6 +111,14 @@ public class PlayerTurnScreenFragment extends Fragment {
                 break;
         }
         gameMode.prepareCombinationsSlots();
+
+        nextPlayerButton.setOnClickListener(v -> {
+            int playerNumber = gameMode.getCurrentPlayerNumber() - 1;
+            uiConfig.getCurrentPlayerName().setText((gameMode.getPlayersNames()[playerNumber]));
+            gameMode.prepareScoreBoard();
+            gameBoardActivity.hideFragment();
+
+        });
     }
 
 }

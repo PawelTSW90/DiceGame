@@ -114,6 +114,7 @@ public class ScoreInputSetter {
                             Thread.sleep(2000);
                             resetThrowCounter = true;
                             resetCombinationsListeners();
+                            gameMode.setOpponentTurn(!gameMode.getOpponentTurn());
                             gameBoardActivity.showNextTurnFragment();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
