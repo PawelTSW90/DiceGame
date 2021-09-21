@@ -2,16 +2,21 @@ package com.paweldyjak.dicegame;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
+
 import androidx.core.content.ContextCompat;
+
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
+
 import java.util.Random;
 import java.util.concurrent.Executor;
 
 
 public class GameBoardManager {
     private final Context context;
+    private ImageView rollDicesButton;
     private final ScoreInputSetter scoreInputSetter;
     private final UIConfig uiConfig;
     private final DicesCombinationsChecker dicesCombinationsChecker;
@@ -40,7 +45,7 @@ public class GameBoardManager {
     //method configure roll dices button
     public void setRollDicesButton() {
         gameBoardActivity.hideFragment();
-        ImageView rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
+        rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
         rollDicesButton.setOnClickListener(v -> {
 
             if (!gameMode.checkIfAllCombinationsAreDone()) {
@@ -56,7 +61,7 @@ public class GameBoardManager {
                         isFirstThrow = false;
                     }
                     rollDices();
-                    showDices();
+                    uiConfig.showDices(dices);
                     setCombinations();
                     throwNumber++;
                     rerollDices.setDicesRerolling(throwNumber);
@@ -73,6 +78,7 @@ public class GameBoardManager {
         });
 
     }
+
 
     //method generates dices for display
     public void rollDices() {
@@ -97,56 +103,8 @@ public class GameBoardManager {
                 dices[x] = value;
             }
         }
-
-
-    }
-
-    //method shows dices
-    public void showDices() {
-        for (int x = 0; x < 5; x++) {
-            uiConfig.getDicesSlots()[x].setImageResource(0);
-        }
-
-        int valueToDisplay;
-        for (int x = 0; x < 5; x++) {
-
-            valueToDisplay = dices[x];
-
-
-            for (int y = 0; y < 5; y++) {
-                if (uiConfig.getDicesSlots()[y].getDrawable() == null) {
-
-
-                    switch (valueToDisplay) {
-                        case 1:
-                            uiConfig.getDicesSlots()[y].setImageResource(R.drawable.dice1);
-                            y = 5;
-                            break;
-                        case 2:
-                            uiConfig.getDicesSlots()[y].setImageResource(R.drawable.dice2);
-                            y = 5;
-                            break;
-                        case 3:
-                            uiConfig.getDicesSlots()[y].setImageResource(R.drawable.dice3);
-                            y = 5;
-                            break;
-                        case 4:
-                            uiConfig.getDicesSlots()[y].setImageResource(R.drawable.dice4);
-                            y = 5;
-                            break;
-                        case 5:
-                            uiConfig.getDicesSlots()[y].setImageResource(R.drawable.dice5);
-                            y = 5;
-                            break;
-                        case 6:
-                            uiConfig.getDicesSlots()[y].setImageResource(R.drawable.dice6);
-                            y = 5;
-                            break;
-                    }
-
-                }
-            }
-        }
+        //upload to database dices values for opponent to display
+        uiConfig.updateDatabaseDicesValue(dices);
 
     }
 
@@ -214,7 +172,7 @@ public class GameBoardManager {
                     });
 
                     int finalX = x;
-                    uiConfig.getCombinationsSlots()[x].setOnClickListener(v->{
+                    uiConfig.getCombinationsSlots()[x].setOnClickListener(v -> {
                         uiConfig.getCombinationsTextView()[finalX].setEnabled(false);
                         gameMode.setIsCombinationActive(false, combinationNr);
                         scoreInputSetter.setResetThrowCounter(true);
@@ -253,5 +211,11 @@ public class GameBoardManager {
             }
         }
     }
+
+    public void hideRollDices() {
+        rollDicesButton.setVisibility(View.INVISIBLE);
+    }
+
+
 }
 

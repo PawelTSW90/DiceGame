@@ -134,6 +134,7 @@ public class MultiplayerTurnScreenFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.getValue(Integer.class)==1){
                     gameMode.prepareScoreBoard();
+                    gameBoardActivity.getUiConfig().watchOpponentScreen();
                     gameBoardActivity.hideFragment();
                 }
             }

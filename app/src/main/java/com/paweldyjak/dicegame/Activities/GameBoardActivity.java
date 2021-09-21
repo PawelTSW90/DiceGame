@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import com.google.android.gms.ads.AdRequest;
@@ -33,6 +32,8 @@ public class GameBoardActivity extends AppCompatActivity {
     private View mainBoardLayout;
     private DatabaseReference playerNameReference;
     private boolean multiplayerMode;
+    private UIConfig uiConfig;
+    private GameBoardManager gameBoardManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +113,7 @@ public class GameBoardActivity extends AppCompatActivity {
 
     public void startHotSeatGame(String[] playersNames, int numberOfPlayers) {
         //creating class objects
-        UIConfig uiConfig = new UIConfig(this);
+        UIConfig uiConfig = new UIConfig(this, null);
         HotSeatGame hotSeatGame = new HotSeatGame(uiConfig, this, playersNames);
         RerollDices rerollDices = new RerollDices(uiConfig);
         turnScreenFragment = new TurnScreenFragment(this, uiConfig, hotSeatGame);
@@ -133,13 +134,15 @@ public class GameBoardActivity extends AppCompatActivity {
     public void startMultiplayerGame(String[] playersNames, String opponentUid) {
         //creating class objects
 
-        UIConfig uiConfig = new UIConfig(this);
+        UIConfig uiConfig = new UIConfig(this, opponentUid);
+        this.uiConfig = uiConfig;
         MultiplayerGame multiplayerGame = new MultiplayerGame(uiConfig, this, playersNames);
         RerollDices rerollDices = new RerollDices(uiConfig);
         multiplayerTurnScreenFragment = new MultiplayerTurnScreenFragment(this, uiConfig, multiplayerGame, opponentUid);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame);
         ScoreInputSetter scoreInputSetter = new ScoreInputSetter(this, uiConfig, multiplayerGame);
         GameBoardManager gameBoardManager = new GameBoardManager(this, this, scoreInputSetter, dicesCombinationsChecker, uiConfig, rerollDices, multiplayerGame);
+        this.gameBoardManager = gameBoardManager;
         //configuring UI
         uiConfig.setComponents();
         uiConfig.setCurrentPlayerName(playersNames[0]);
@@ -167,5 +170,11 @@ public class GameBoardActivity extends AppCompatActivity {
         });
 
     }
+    public UIConfig getUiConfig(){
+        return uiConfig;
+    }
 
+    public GameBoardManager getGameBoardManager(){
+        return gameBoardManager;
+    }
 }
