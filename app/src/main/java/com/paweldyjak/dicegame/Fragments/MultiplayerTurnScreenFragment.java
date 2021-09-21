@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,19 +26,21 @@ import com.paweldyjak.dicegame.UIConfig;
 
 
 public class MultiplayerTurnScreenFragment extends Fragment {
+    private DatabaseReference multiplayerRoomReference;
     private final UIConfig uiConfig;
     private TextView playerName;
     private Button nextPlayerButton;
     private final GameBoardActivity gameBoardActivity;
     private final GameMode gameMode;
+    private final String opponentUid;
     private boolean opponentTurn;
-    private String opponentUid;
 
 
-    public MultiplayerTurnScreenFragment(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode) {
+    public MultiplayerTurnScreenFragment(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode, String opponentUid) {
         this.gameBoardActivity = gameBoardActivity;
         this.uiConfig = uiConfig;
         this.gameMode = gameMode;
+        this.opponentUid = opponentUid;
     }
 
     @Override
@@ -45,6 +48,9 @@ public class MultiplayerTurnScreenFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_multiplayer_turn_screen, container, false);
         playerName = view.findViewById(R.id.multiplayer_player_turn_textview);
         nextPlayerButton = view.findViewById(R.id.multiplayer_player_turn_button);
+        multiplayerRoomReference =FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid())
+                .child("multiplayerRoom").child(opponentUid);
+        setNextPlayerName();
         checkPlayerTurn();
         return view;
     }
@@ -58,41 +64,40 @@ public class MultiplayerTurnScreenFragment extends Fragment {
         }
 
         nextPlayerButton.setOnClickListener(v -> {
-            int playerNumber = gameMode.getCurrentPlayerNumber() - 1;
-            uiConfig.getCurrentPlayerName().setText((gameMode.getPlayersNames()[playerNumber]));
+            updateBoardPlayerName();
             gameMode.prepareScoreBoard();
+            updateOpponentTurnStartedValue();
             gameBoardActivity.hideFragment();
         });
-        updateCurrentPlayerNumber();
+
     }
 
-    public void checkPlayerTurn(){
+    public void updateBoardPlayerName(){
+        if(gameMode.getCurrentPlayerNumber()==1){
+            uiConfig.setCurrentPlayerName(gameMode.getPlayersNames()[1]);
+            gameMode.setCurrentPlayerNumber(2);
+        } else{
+            uiConfig.setCurrentPlayerName(gameMode.getPlayersNames()[0]);
+            gameMode.setCurrentPlayerNumber(1);
+        }
+        gameMode.prepareCombinationsSlots();
+    }
 
-        DatabaseReference opponentUidReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid()).child("multiplayerRoom");
-        opponentUidReference.addListenerForSingleValueEvent(new ValueEventListener() {
+    public void checkPlayerTurn() {
+        DatabaseReference opponentTurnStarted = multiplayerRoomReference.child("opponentTurn");
+        opponentTurnStarted.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    opponentUid = dataSnapshot.getKey();
+                if (snapshot.getValue(Integer.class) == 0) {
+                    nextPlayerButton.setVisibility(View.VISIBLE);
+                    opponentTurn = false;
 
+                } else {
+                    nextPlayerButton.setVisibility(View.INVISIBLE);
+                    opponentTurn = true;
                 }
-                opponentUidReference.child(opponentUid).child("opponentsTurn").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.getValue(Integer.class)==0){
-                            nextPlayerButton.setVisibility(View.VISIBLE);
-                        } else{
-                            nextPlayerButton.setVisibility(View.INVISIBLE);
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
+                displayTurnMessage(opponentTurn);
+                displayOpponentBoard();
 
             }
 
@@ -104,14 +109,39 @@ public class MultiplayerTurnScreenFragment extends Fragment {
 
     }
 
-    public void updateCurrentPlayerNumber() {
-        if (gameMode.getCurrentPlayerNumber() == 1) {
+    public void setNextPlayerName(){
+        if(gameMode.getCurrentPlayerNumber()==1){
             playerName.setText(gameMode.getPlayersNames()[1]);
-            gameMode.setCurrentPlayerNumber(2);
-        } else {
-            gameMode.setCurrentPlayerNumber(1);
+        } else{
             playerName.setText(gameMode.getPlayersNames()[0]);
         }
-        gameMode.prepareCombinationsSlots();
+    }
+
+
+
+
+    //update opponentTurnStarted value in opponents database record
+    public void updateOpponentTurnStartedValue() {
+        DatabaseReference opponentTurnStartedFieldReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom")
+                .child(FirebaseAuth.getInstance().getUid()).child("opponentTurnStarted");
+        opponentTurnStartedFieldReference.setValue(1);
+    }
+
+    public void displayOpponentBoard(){
+        DatabaseReference opponentTurnStartedReference = multiplayerRoomReference.child("opponentTurnStarted");
+        opponentTurnStartedReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue(Integer.class)==1){
+                    gameMode.prepareScoreBoard();
+                    gameBoardActivity.hideFragment();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

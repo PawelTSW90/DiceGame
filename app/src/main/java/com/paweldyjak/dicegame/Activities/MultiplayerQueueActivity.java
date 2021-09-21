@@ -3,10 +3,12 @@ package com.paweldyjak.dicegame.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.TextView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -14,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -42,12 +45,13 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
+
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         opponentFoundTextView = findViewById(R.id.user_found_textView);
         multiplayerQueueReference = FirebaseDatabase.getInstance().getReference().child("multiplayerQueue");
         playerUid = firebaseAuth.getUid();
-        joinMultiplayerQueue();
         playersNames = new String[2];
+        joinMultiplayerQueue();
         updatePlayersInQueueNumber();
         setPlayerName();
         lookForOpponentPlayer();
@@ -71,6 +75,7 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
                     multiplayerQueueReference.child("playersInQueue").setValue(playersInQueue);
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -84,6 +89,7 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 playerName = snapshot.getValue(String.class);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -104,6 +110,7 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -116,12 +123,15 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
 
     public void createMultiplayerRoom() {
         Map<String, Integer> opponentData = new HashMap<>();
-        opponentData.put("opponentsTurn", 0);
+        opponentData.put("opponentTurn", 0);
+        opponentData.put("opponentTurnStarted", 0);
         opponentData.put("combinationsPoints", 0);
         opponentData.put("isCombinationActive", 0);
-        opponentData.put("totalScore",0);
+        opponentData.put("totalScore", 0);
         DatabaseReference multiplayerRoomReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid);
         multiplayerRoomReference.setValue(opponentData);
+        setCombinationPointsValues();
+        setIsCombinationActiveValues();
     }
 
     public void getOpponentName() {
@@ -139,6 +149,7 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public void onBackPressed() {
     }
@@ -155,9 +166,11 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
         Intent intent = new Intent(this, gameBoardActivity.getClass());
         intent.putExtra("MultiplayerMode", true);
         intent.putExtra("playersNames", playersNames);
+        intent.putExtra("opponentUid", opponentUid);
         startActivity(intent);
     }
 
+    //sort players by ranking
     public void setPlayersOrder() {
         DatabaseReference playerRankingReference = FirebaseDatabase.getInstance().getReference().child("users").child(playerUid).child("ranking");
         DatabaseReference opponentRankingReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("ranking");
@@ -166,6 +179,7 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 playerRanking = snapshot.getValue(Integer.class);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -182,6 +196,7 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
                     playersNames[0] = opponentName;
                     playersNames[1] = playerName;
                 } else {
+                    //if players ranking is the same, sort players by alphabetic order
                     List<String> players = new ArrayList<>();
                     players.add(playerName);
                     players.add(opponentName);
@@ -192,17 +207,41 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
                 updatePlayerTurnDatabaseValue();
                 startMultiplayerGame(playersNames);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
     }
 
-    public void updatePlayerTurnDatabaseValue(){
-        if(playersNames[0].equals(playerName)){
+    public void updatePlayerTurnDatabaseValue() {
+        if (playersNames[0].equals(playerName)) {
             DatabaseReference multiplayerRoomReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid);
-            multiplayerRoomReference.child("opponentsTurn").setValue(1);
+            multiplayerRoomReference.child("opponentTurn").setValue(1);
         }
 
     }
+
+    public void setCombinationPointsValues() {
+        Map<String, Integer> valuesMap = new HashMap<>();
+        for(int x = 0; x <16; x++){
+            valuesMap.put(String.valueOf(x+1), 0);
+        }
+        DatabaseReference combinationsPointsReference = FirebaseDatabase.getInstance().
+                getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("combinationsPoints");
+        combinationsPointsReference.setValue(valuesMap);
+
+    }
+
+    public void setIsCombinationActiveValues(){
+        Map<String, Boolean> valuesMap = new HashMap<>();
+        for(int x = 0; x<16; x++){
+            valuesMap.put(String.valueOf(x+1), true);
+        }
+        DatabaseReference isCombinationActiveReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).
+                child("multiplayerRoom").child(playerUid).child("isCombinationActive");
+        isCombinationActiveReference.setValue(valuesMap);
+    }
+
+
 }

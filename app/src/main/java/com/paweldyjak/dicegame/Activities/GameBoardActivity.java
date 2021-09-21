@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import com.google.android.gms.ads.AdRequest;
@@ -39,6 +40,7 @@ public class GameBoardActivity extends AppCompatActivity {
         int numberOfPlayers = getIntent().getIntExtra("numberOfPlayers", 0);
         multiplayerMode = getIntent().getBooleanExtra("MultiplayerMode", false);
         String[] playersNames = getIntent().getStringArrayExtra("playersNames");
+        String opponentUid = getIntent().getStringExtra("opponentUid");
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_game_board);
         playerNamesInputScreenFragment = new PlayerNamesInputScreenFragment(this, numberOfPlayers);
@@ -52,7 +54,7 @@ public class GameBoardActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         if (multiplayerMode) {
-            startMultiplayerGame(playersNames);
+            startMultiplayerGame(playersNames, opponentUid);
         } else {
             showNamesInputFragment();
         }
@@ -128,19 +130,19 @@ public class GameBoardActivity extends AppCompatActivity {
         showFragment();
     }
 
-    public void startMultiplayerGame(String[] playersNames) {
+    public void startMultiplayerGame(String[] playersNames, String opponentUid) {
         //creating class objects
 
         UIConfig uiConfig = new UIConfig(this);
         MultiplayerGame multiplayerGame = new MultiplayerGame(uiConfig, this, playersNames);
         RerollDices rerollDices = new RerollDices(uiConfig);
-        multiplayerTurnScreenFragment = new MultiplayerTurnScreenFragment(this, uiConfig, multiplayerGame);
+        multiplayerTurnScreenFragment = new MultiplayerTurnScreenFragment(this, uiConfig, multiplayerGame, opponentUid);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame);
         ScoreInputSetter scoreInputSetter = new ScoreInputSetter(this, uiConfig, multiplayerGame);
         GameBoardManager gameBoardManager = new GameBoardManager(this, this, scoreInputSetter, dicesCombinationsChecker, uiConfig, rerollDices, multiplayerGame);
         //configuring UI
         uiConfig.setComponents();
-        uiConfig.getCurrentPlayerName().setText(playersNames[0]);
+        uiConfig.setCurrentPlayerName(playersNames[0]);
         multiplayerGame.setPlayersNames(playersNames);
         multiplayerGame.setNumberOfPlayers(2);
         multiplayerGame.setAllCombinationsAsActive();

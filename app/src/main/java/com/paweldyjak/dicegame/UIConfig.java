@@ -197,6 +197,10 @@ public class UIConfig {
         return currentPlayerName;
     }
 
+    public void setCurrentPlayerName(String currentPlayerName) {
+        this.currentPlayerName.setText(currentPlayerName);
+    }
+
     public TextView[] getCombinationsSlots() {
         return combinationsSlots;
     }
