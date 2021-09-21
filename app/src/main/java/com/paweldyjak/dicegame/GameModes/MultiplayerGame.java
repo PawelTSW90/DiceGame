@@ -19,9 +19,9 @@ public class MultiplayerGame implements GameMode {
     private final int[][] playersCombinationsSlotsValues = new int[6][16];
     private final boolean[][] playersIsCombinationActive = new boolean[6][16];
     private final int[] playersTotalScore = new int[6];
-    String gameMode = "MultiplayerMode";
+    private boolean opponentTurn = false;
 
-    public MultiplayerGame(UIConfig uiConfig, GameBoardActivity gameBoardActivity, String[] playersNames){
+    public MultiplayerGame(UIConfig uiConfig, GameBoardActivity gameBoardActivity, String[] playersNames) {
         this.uiConfig = uiConfig;
         this.gameBoardActivity = gameBoardActivity;
         this.playersNames = playersNames;
@@ -60,8 +60,8 @@ public class MultiplayerGame implements GameMode {
 
     //generate final screen fragment
     public void setFinalResultScreen() {
-            FinalResultTwoPlayersFragment finalResultTwoPlayersFragment = new FinalResultTwoPlayersFragment(gameBoardActivity, this);
-            gameBoardActivity.replaceFragment(R.id.fragment_layout, finalResultTwoPlayersFragment);
+        FinalResultTwoPlayersFragment finalResultTwoPlayersFragment = new FinalResultTwoPlayersFragment(gameBoardActivity, this);
+        gameBoardActivity.replaceFragment(R.id.fragment_layout, finalResultTwoPlayersFragment);
 
     }
 
@@ -109,7 +109,7 @@ public class MultiplayerGame implements GameMode {
 
     }
 
-    public int[] getPlayersScore(){
+    public int[] getPlayersScore() {
         return playersTotalScore;
     }
 
@@ -153,7 +153,17 @@ public class MultiplayerGame implements GameMode {
     }
 
     @Override
+    public boolean getOpponentTurn() {
+        return opponentTurn;
+    }
+
+    @Override
+    public void setOpponentTurn(boolean opponentTurn) {
+        this.opponentTurn = opponentTurn;
+    }
+
+    @Override
     public String getGameMode() {
-        return gameMode;
+        return "MultiplayerMode";
     }
 }

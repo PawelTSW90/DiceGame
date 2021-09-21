@@ -41,5 +41,9 @@ public interface GameMode {
 
     int getNumberOfPlayers();
 
+    boolean getOpponentTurn();
+
+    void setOpponentTurn(boolean opponentTurn);
+
     String getGameMode();
 }

@@ -105,8 +105,7 @@ public class PlayerNamesInputScreenFragment extends Fragment {
                                                                 start.setOnClickListener(v5 -> {
                                                                     if (playerNameEditText.getText().length() >2 && nameDuplicateChecker()) {
                                                                         playersNames[5] = playerNameEditText.getText().toString();
-                                                                        StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, playersNames, numberOfPlayers, false);
-                                                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
+                                                                        gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
                                                                     } else {
                                                                         if (!nameDuplicateChecker()) {
                                                                             displayNameInUseToast();
@@ -116,8 +115,7 @@ public class PlayerNamesInputScreenFragment extends Fragment {
                                                                     }
                                                                 });
                                                             } else {
-                                                                StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, playersNames, numberOfPlayers, false);
-                                                                gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
+                                                                gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
                                                             }
                                                         } else {
                                                             if (!nameDuplicateChecker()) {
@@ -128,8 +126,7 @@ public class PlayerNamesInputScreenFragment extends Fragment {
                                                         }
                                                     });
                                                 } else {
-                                                    StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, playersNames, numberOfPlayers, false);
-                                                    gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
+                                                    gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
                                                 }
 
                                             } else {
@@ -141,8 +138,7 @@ public class PlayerNamesInputScreenFragment extends Fragment {
                                             }
                                         });
                                     } else {
-                                        StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, playersNames, numberOfPlayers, false);
-                                        gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
+                                        gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
                                     }
                                 } else {
                                     if (!nameDuplicateChecker()) {
@@ -155,8 +151,7 @@ public class PlayerNamesInputScreenFragment extends Fragment {
                             });
 
                         } else {
-                            StartGameScreenFragment startGameScreenFragment = new StartGameScreenFragment(gameBoardActivity, playersNames, numberOfPlayers, false);
-                            gameBoardActivity.replaceFragment(R.id.fragment_layout, startGameScreenFragment);
+                            gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
                         }
 
                     } else {

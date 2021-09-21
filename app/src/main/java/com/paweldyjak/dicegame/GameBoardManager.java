@@ -238,6 +238,7 @@ public class GameBoardManager {
                                 try {
                                     sounds.playEraseCombinationSound();
                                     Thread.sleep(2000);
+                                    gameMode.setOpponentTurn(!gameMode.getOpponentTurn());
                                     gameBoardActivity.showNextTurnFragment();
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
