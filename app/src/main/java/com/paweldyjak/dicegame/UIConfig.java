@@ -3,18 +3,9 @@ package com.paweldyjak.dicegame;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class UIConfig {
     private final String playerUid = FirebaseAuth.getInstance().getUid();
@@ -26,7 +17,7 @@ public class UIConfig {
     private final TextView[] combinationsSlots = new TextView[16];
     private TextView currentPlayerName;
     private TextView totalScoreTextView;
-    private List<Integer> opponentDices = new ArrayList<>(5);
+
 
 
     public UIConfig(GameBoardActivity gameBoardActivity, String opponentUid) {
@@ -222,30 +213,6 @@ public class UIConfig {
         return totalScoreTextView;
     }
 
-    public void watchOpponentScreen() {
-        gameBoardActivity.getGameBoardManager().hideRollDices();
-        checkOpponentDices();
-        hideDices();
-    }
-
-    public void checkOpponentDices() {
-        FirebaseDatabase.getInstance().getReference().child("users").child(playerUid).child("multiplayerRoom").child(opponentUid).child("dices").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                opponentDices = new ArrayList<>();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    opponentDices.add(dataSnapshot.getValue(Integer.class));
-                }
-                showOpponentDices();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
 
     //method shows dices
     public void showDices(int[] dices) {
@@ -296,62 +263,13 @@ public class UIConfig {
 
     }
 
-    public void showOpponentDices() {
-        for (int x = 0; x < 5; x++) {
-            dicesSlots[x].setImageResource(0);
-        }
-
-        int valueToDisplay;
-        for (int x = 0; x < 5; x++) {
-
-            valueToDisplay = opponentDices.get(x);
 
 
-            for (int y = 0; y < 5; y++) {
-                if (dicesSlots[y].getDrawable() == null) {
-
-
-                    switch (valueToDisplay) {
-                        case 1:
-                            dicesSlots[y].setImageResource(R.drawable.dice1);
-                            y = 5;
-                            break;
-                        case 2:
-                            dicesSlots[y].setImageResource(R.drawable.dice2);
-                            y = 5;
-                            break;
-                        case 3:
-                            dicesSlots[y].setImageResource(R.drawable.dice3);
-                            y = 5;
-                            break;
-                        case 4:
-                            dicesSlots[y].setImageResource(R.drawable.dice4);
-                            y = 5;
-                            break;
-                        case 5:
-                            dicesSlots[y].setImageResource(R.drawable.dice5);
-                            y = 5;
-                            break;
-                        case 6:
-                            dicesSlots[y].setImageResource(R.drawable.dice6);
-                            y = 5;
-                            break;
-                    }
-
-                }
-            }
-        }
-
+    public String getPlayerUid() {
+        return playerUid;
     }
 
-    public void updateDatabaseDicesValue(int[] dicesValues) {
-        Map<String, Integer> dices = new HashMap<>();
-        for(int x = 0; x<5; x++){
-            dices.put(String.valueOf(x+1),dicesValues[x]);
-        }
-
-FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("dices").setValue(dices);
-
+    public String getOpponentUid() {
+        return opponentUid;
     }
-
 }

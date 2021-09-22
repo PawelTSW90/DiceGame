@@ -19,6 +19,7 @@ public class GameBoardManager {
     private ImageView rollDicesButton;
     private final ScoreInputSetter scoreInputSetter;
     private final UIConfig uiConfig;
+    private final OpponentOnlineUIConfig opponentOnlineUIConfig;
     private final DicesCombinationsChecker dicesCombinationsChecker;
     private final RerollDices rerollDices;
     private final GameMode gameMode;
@@ -30,12 +31,13 @@ public class GameBoardManager {
     private final Random randomValue = new Random();
 
 
-    public GameBoardManager(GameBoardActivity gameBoardActivity, Context context, ScoreInputSetter scoreInputSetter, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, RerollDices rerollDices, GameMode gameMode) {
+    public GameBoardManager(GameBoardActivity gameBoardActivity, Context context, ScoreInputSetter scoreInputSetter, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, OpponentOnlineUIConfig opponentOnlineUIConfig, RerollDices rerollDices, GameMode gameMode) {
         this.context = context;
         this.gameBoardActivity = gameBoardActivity;
         this.scoreInputSetter = scoreInputSetter;
         this.dicesCombinationsChecker = dicesCombinationsChecker;
         this.uiConfig = uiConfig;
+        this.opponentOnlineUIConfig = opponentOnlineUIConfig;
         this.rerollDices = rerollDices;
         this.gameMode = gameMode;
         sounds = new Sounds(context);
@@ -71,7 +73,11 @@ public class GameBoardManager {
                 if (throwNumber == 3) {
                     rerollDices.setDicesRerolling(throwNumber);
                     blockCombinations();
-                    scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
+                    if(gameMode.getGameMode().equals("HotSeatMode")) {
+                        scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
+                    } else{
+                        scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber),15);
+                    }
                 }
             }
 
@@ -103,30 +109,51 @@ public class GameBoardManager {
                 dices[x] = value;
             }
         }
-        //upload to database dices values for opponent to display
-        uiConfig.updateDatabaseDicesValue(dices);
+        if(gameMode.getGameMode().equals("MultiplayerMode")) {
+            //upload to database dices values for opponent to display
+            opponentOnlineUIConfig.updateDatabaseWithDicesValues(dices);
+        }
 
     }
 
 
     // method sets combinations for checking
     public void setCombinations() {
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0);
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1);
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2);
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkFour(dices, isFirstThrow), 3);
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkFive(dices, isFirstThrow), 4);
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkSix(dices, isFirstThrow), 5);
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkPair(dices, isFirstThrow), 6);
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkTwoPairs(dices, isFirstThrow), 7);
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkEvens(dices, isFirstThrow), 8);
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkOdds(dices, isFirstThrow), 9);
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkSmallStraight(dices, isFirstThrow), 10);
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkLargeStraight(dices, isFirstThrow), 11);
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkFullHouse(dices, isFirstThrow), 12);
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkFourOfAKind(dices, isFirstThrow), 13);
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkFiveOfAKind(dices, isFirstThrow), 14);
-        scoreInputSetter.setScoreInputForViews(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
+        if(gameMode.getGameMode().equals("HotSeatMode")) {
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFour(dices, isFirstThrow), 3);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFive(dices, isFirstThrow), 4);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSix(dices, isFirstThrow), 5);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkPair(dices, isFirstThrow), 6);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkTwoPairs(dices, isFirstThrow), 7);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkEvens(dices, isFirstThrow), 8);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkOdds(dices, isFirstThrow), 9);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSmallStraight(dices, isFirstThrow), 10);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkLargeStraight(dices, isFirstThrow), 11);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFullHouse(dices, isFirstThrow), 12);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFourOfAKind(dices, isFirstThrow), 13);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFiveOfAKind(dices, isFirstThrow), 14);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
+        } else if(gameMode.getGameMode().equals("MultiplayerMode")){
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFour(dices, isFirstThrow), 3);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFive(dices, isFirstThrow), 4);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSix(dices, isFirstThrow), 5);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkPair(dices, isFirstThrow), 6);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkTwoPairs(dices, isFirstThrow), 7);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkEvens(dices, isFirstThrow), 8);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkOdds(dices, isFirstThrow), 9);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSmallStraight(dices, isFirstThrow), 10);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkLargeStraight(dices, isFirstThrow), 11);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFullHouse(dices, isFirstThrow), 12);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFourOfAKind(dices, isFirstThrow), 13);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFiveOfAKind(dices, isFirstThrow), 14);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
+        }
     }
 
     // method allows to block one of a combinations after last throw

@@ -2,7 +2,8 @@ package com.paweldyjak.dicegame.GameModes;
 
 import android.graphics.Color;
 import android.view.Gravity;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Fragments.FinalResultTwoPlayersFragment;
 import com.paweldyjak.dicegame.R;
@@ -14,6 +15,8 @@ public class MultiplayerGame implements GameMode {
     private final UIConfig uiConfig;
     private final GameBoardActivity gameBoardActivity;
     private String[] playersNames;
+    private final String opponentUid;
+    private final String playerUid = FirebaseAuth.getInstance().getUid();
     private int currentPlayerNumber = 2;
     private final int[][] playersCombinationsScoreValues = new int[6][16];
     private final int[][] playersCombinationsSlotsValues = new int[6][16];
@@ -21,10 +24,11 @@ public class MultiplayerGame implements GameMode {
     private final int[] playersTotalScore = new int[6];
     private boolean opponentTurn = false;
 
-    public MultiplayerGame(UIConfig uiConfig, GameBoardActivity gameBoardActivity, String[] playersNames) {
+    public MultiplayerGame(UIConfig uiConfig, GameBoardActivity gameBoardActivity, String[] playersNames,String opponentUID) {
         this.uiConfig = uiConfig;
         this.gameBoardActivity = gameBoardActivity;
         this.playersNames = playersNames;
+        this.opponentUid = opponentUID;
     }
 
     public void setAllCombinationsAsActive() {
@@ -34,8 +38,9 @@ public class MultiplayerGame implements GameMode {
 
     public void setTotalScore(int score) {
         String string = gameBoardActivity.getResources().getString(R.string.points);
-
         playersTotalScore[currentPlayerNumber - 1] += score;
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom")
+                .child(playerUid).child("totalScore").setValue(playersTotalScore[currentPlayerNumber-1]);
         uiConfig.getTotalScoreTextView().setText(playersTotalScore[currentPlayerNumber - 1] + " " + string);
     }
 
@@ -72,6 +77,8 @@ public class MultiplayerGame implements GameMode {
     }
 
     public void setIsCombinationActive(boolean isCombinationActive, int combinationNr) {
+FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid)
+        .child("isCombinationActive").child(String.valueOf(combinationNr+1)).setValue(isCombinationActive);
 
         this.playersIsCombinationActive[currentPlayerNumber - 1][combinationNr] = isCombinationActive;
 
@@ -84,7 +91,10 @@ public class MultiplayerGame implements GameMode {
     }
 
     public void setCombinationScore(int score, int combinationNr) {
-        this.playersCombinationsScoreValues[currentPlayerNumber - 1][combinationNr] = score;
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid)
+                .child("combinationsPoints").child(String.valueOf(combinationNr+1)).setValue(score);
+
+        playersCombinationsScoreValues[currentPlayerNumber - 1][combinationNr] = score;
 
     }
 
@@ -114,6 +124,8 @@ public class MultiplayerGame implements GameMode {
     }
 
     public void setCombinationsSlots(int combinationsSlotNumber, int slotStatus) {
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom")
+                .child(playerUid).child("combinationsSlots").child(String.valueOf(combinationsSlotNumber+1)).setValue(slotStatus);
         playersCombinationsSlotsValues[currentPlayerNumber - 1][combinationsSlotNumber] = slotStatus;
 
 
@@ -166,4 +178,6 @@ public class MultiplayerGame implements GameMode {
     public String getGameMode() {
         return "MultiplayerMode";
     }
+
+
 }

@@ -5,8 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,7 +132,7 @@ public class MultiplayerTurnScreenFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.getValue(Integer.class)==1){
                     gameMode.prepareScoreBoard();
-                    gameBoardActivity.getUiConfig().watchOpponentScreen();
+                    gameBoardActivity.getOpponentOnlineUIConfig().displayOpponentScreen();
                     gameBoardActivity.hideFragment();
                 }
             }

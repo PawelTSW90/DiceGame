@@ -128,11 +128,13 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
         opponentData.put("opponentTurnStarted", 0);
         opponentData.put("combinationsPoints", 0);
         opponentData.put("isCombinationActive", 0);
+        opponentData.put("combinationsSlots", 0);
         opponentData.put("dices", 0);
         opponentData.put("totalScore", 0);
         databaseReference.child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).setValue(opponentData);
         setCombinationPointsValues();
         setIsCombinationActiveValues();
+        setCombinationsSlotsValues();
         setDices();
     }
 
@@ -239,6 +241,14 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
         }
         databaseReference.child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("isCombinationActive").setValue(valuesMap);
 
+    }
+
+    public void setCombinationsSlotsValues(){
+        Map<String, Integer> valuesMap = new HashMap<>();
+        for(int x = 0; x<16; x++){
+            valuesMap.put(String.valueOf(x+1), 0);
+        }
+        databaseReference.child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("combinationsSlots").setValue(valuesMap);
     }
 
     public void setDices() {

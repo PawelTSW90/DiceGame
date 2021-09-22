@@ -32,7 +32,7 @@ public class GameBoardActivity extends AppCompatActivity {
     private View mainBoardLayout;
     private DatabaseReference playerNameReference;
     private boolean multiplayerMode;
-    private UIConfig uiConfig;
+    private OpponentOnlineUIConfig opponentOnlineUIConfig;
     private GameBoardManager gameBoardManager;
 
     @Override
@@ -119,7 +119,7 @@ public class GameBoardActivity extends AppCompatActivity {
         turnScreenFragment = new TurnScreenFragment(this, uiConfig, hotSeatGame);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame);
         ScoreInputSetter scoreInputSetter = new ScoreInputSetter(this, uiConfig, hotSeatGame);
-        GameBoardManager gameBoardManager = new GameBoardManager(this, this, scoreInputSetter, dicesCombinationsChecker, uiConfig, rerollDices, hotSeatGame);
+        GameBoardManager gameBoardManager = new GameBoardManager(this, this, scoreInputSetter, dicesCombinationsChecker, uiConfig, null, rerollDices, hotSeatGame);
         //configuring UI
         uiConfig.setComponents();
         uiConfig.getCurrentPlayerName().setText(playersNames[0]);
@@ -135,13 +135,14 @@ public class GameBoardActivity extends AppCompatActivity {
         //creating class objects
 
         UIConfig uiConfig = new UIConfig(this, opponentUid);
-        this.uiConfig = uiConfig;
-        MultiplayerGame multiplayerGame = new MultiplayerGame(uiConfig, this, playersNames);
+        OpponentOnlineUIConfig opponentOnlineUIConfig = new OpponentOnlineUIConfig(this, uiConfig, opponentUid);
+        this.opponentOnlineUIConfig = opponentOnlineUIConfig;
+        MultiplayerGame multiplayerGame = new MultiplayerGame(uiConfig, this,playersNames,opponentUid);
         RerollDices rerollDices = new RerollDices(uiConfig);
         multiplayerTurnScreenFragment = new MultiplayerTurnScreenFragment(this, uiConfig, multiplayerGame, opponentUid);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame);
         ScoreInputSetter scoreInputSetter = new ScoreInputSetter(this, uiConfig, multiplayerGame);
-        GameBoardManager gameBoardManager = new GameBoardManager(this, this, scoreInputSetter, dicesCombinationsChecker, uiConfig, rerollDices, multiplayerGame);
+        GameBoardManager gameBoardManager = new GameBoardManager(this, this, scoreInputSetter, dicesCombinationsChecker, uiConfig, opponentOnlineUIConfig, rerollDices, multiplayerGame);
         this.gameBoardManager = gameBoardManager;
         //configuring UI
         uiConfig.setComponents();
@@ -170,8 +171,9 @@ public class GameBoardActivity extends AppCompatActivity {
         });
 
     }
-    public UIConfig getUiConfig(){
-        return uiConfig;
+
+    public OpponentOnlineUIConfig getOpponentOnlineUIConfig() {
+        return opponentOnlineUIConfig;
     }
 
     public GameBoardManager getGameBoardManager(){
