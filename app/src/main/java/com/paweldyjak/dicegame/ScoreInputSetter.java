@@ -1,21 +1,14 @@
 package com.paweldyjak.dicegame;
-import android.os.Build;
-import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
+import com.paweldyjak.dicegame.Activities.ScoreInputListener;
 import com.paweldyjak.dicegame.GameModes.GameMode;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Executor;
 
 /*class methods writes score into score table
 score writing enabled when combination is correct, when it's not blocked, no other combination
@@ -54,116 +47,23 @@ public class ScoreInputSetter {
     */
 
     public void updatePlayerScore(int scoreToInput, int combinationNumber) {
-        Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
-        uiConfig.getCombinationsTextView()[combinationNumber].setOnClickListener(v -> {
 
-            if (scoreToInput > 0 && gameMode.getIsCombinationActive()[combinationNumber] && !resetThrowCounter) {
-                sounds.playCompleteCombinationSound();
-                gameMode.setCombinationScore(scoreToInput, combinationNumber);
-                String points = gameMode.getCombinationScore(combinationNumber) + " pkt";
-                gameMode.setTotalScore(scoreToInput);
-                uiConfig.clearDicesBorder();
-                uiConfig.hideDices();
-                uiConfig.getCombinationsPointsTextView()[combinationNumber].setText(points);
-                uiConfig.getCombinationsTextView()[combinationNumber].setEnabled(false);
-                gameMode.setIsCombinationActive(false, combinationNumber);
-                gameMode.setCombinationsSlots(combinationNumber, 1);
-                gameMode.prepareCombinationsSlots();
-                if (gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers() && gameMode.checkIfAllCombinationsAreDone()) {
-                    executor.execute(() -> {
-                        try {
-                            Thread.sleep(2000);
-                            gameMode.setFinalResultScreen();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                    });
-                } else {
-                    executor.execute(() -> {
-                        try {
-                            Thread.sleep(2000);
-                            resetThrowCounter = true;
-                            resetCombinationsListeners();
-                            gameBoardActivity.showNextTurnFragment();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                    });
-                }
-
-            }
-
-
-        });
-        uiConfig.getCombinationsSlots()[combinationNumber].setOnClickListener(v -> {
-            if (scoreToInput > 0 && gameMode.getIsCombinationActive()[combinationNumber] && !resetThrowCounter) {
-                sounds.playCompleteCombinationSound();
-                gameMode.setCombinationScore(scoreToInput, combinationNumber);
-                String points = gameMode.getCombinationScore(combinationNumber) + " pkt";
-                gameMode.setTotalScore(scoreToInput);
-                uiConfig.clearDicesBorder();
-                uiConfig.hideDices();
-                uiConfig.getCombinationsPointsTextView()[combinationNumber].setText(points);
-                uiConfig.getCombinationsTextView()[combinationNumber].setEnabled(false);
-                gameMode.setIsCombinationActive(false, combinationNumber);
-                gameMode.setCombinationsSlots(combinationNumber, 1);
-                gameMode.prepareCombinationsSlots();
-                if (gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers() && gameMode.checkIfAllCombinationsAreDone()) {
-                    executor.execute(() -> {
-                        try {
-                            Thread.sleep(2000);
-                            gameMode.setFinalResultScreen();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                    });
-                } else {
-                    executor.execute(() -> {
-                        try {
-                            Thread.sleep(2000);
-                            resetThrowCounter = true;
-                            resetCombinationsListeners();
-                            gameMode.setOpponentTurn(!gameMode.getOpponentTurn());
-                            gameBoardActivity.showNextTurnFragment();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                    });
-                }
-
-            }
-        });
+        uiConfig.getCombinationsTextView()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, this, uiConfig, resetThrowCounter, scoreToInput, combinationNumber, gameMode.getIsCombinationActive()[combinationNumber]));
+        uiConfig.getCombinationsSlots()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, this, uiConfig, resetThrowCounter, scoreToInput, combinationNumber, gameMode.getIsCombinationActive()[combinationNumber]));
 
 
     }
 
-    public void updateDatabasePlayerScore(int scoreToInput, int combinationNumber){
+    public void updateDatabasePlayerScore(int scoreToInput, int combinationNumber) {
+
         FirebaseDatabase.getInstance().getReference().child("users").child(uiConfig.getOpponentUid()).child("multiplayerRoom").child(uiConfig.getPlayerUid())
                 .child("isCombinationActive").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    if(dataSnapshot.getKey().equals(String.valueOf(combinationNumber))){
-                        if(dataSnapshot.getValue(Boolean.class)){
-                            uiConfig.getCombinationsTextView()[combinationNumber].setOnClickListener(v -> {
-                                if(scoreToInput>0 && !resetThrowCounter){
-                                    sounds.playCompleteCombinationSound();
-                                    gameMode.setCombinationScore(scoreToInput, combinationNumber);
-                                    String points = gameMode.getCombinationScore(combinationNumber) + " pkt";
-                                    gameMode.setTotalScore(scoreToInput);
-                                    uiConfig.clearDicesBorder();
-                                    uiConfig.hideDices();
-                                    uiConfig.getCombinationsPointsTextView()[combinationNumber].setText(points);
-                                    uiConfig.getCombinationsTextView()[combinationNumber].setEnabled(false);
-                                    gameMode.setIsCombinationActive(false, combinationNumber);
-                                    gameMode.setCombinationsSlots(combinationNumber, 1);
-                                    gameMode.prepareCombinationsSlots();
-                                }
-                            });
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.getKey().equals(String.valueOf(combinationNumber))) {
+                        if (dataSnapshot.getValue(Boolean.class)) {
+                            uiConfig.getCombinationsTextView()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, ScoreInputSetter.this, uiConfig, resetThrowCounter, scoreToInput, combinationNumber, true));
                         }
                     }
                 }
@@ -175,6 +75,7 @@ public class ScoreInputSetter {
             }
         });
     }
+
 
 
 
@@ -195,15 +96,4 @@ public class ScoreInputSetter {
             });
         }
     }
-
-    /*@RequiresApi(api = Build.VERSION_CODES.N)
-    public void updateScoreDatabase(int combinationNumber, int points){
-        Map<String, Integer> combinationPointsValues = new HashMap<>();
-        for(int x = 0; x<16; x++){
-            combinationPointsValues.put(String.valueOf(x + 1), 0);
-        }
-        combinationPointsValues.replace(String.valueOf(combinationNumber), points);
-        FirebaseDatabase.getInstance().getReference().child("users").child(uiConfig.getOpponentUid()).child("multiplayerRoom").child(uiConfig.getPlayerUid())
-                .child("combinationsPoints").setValue(combinationPointsValues);
-    }*/
 }

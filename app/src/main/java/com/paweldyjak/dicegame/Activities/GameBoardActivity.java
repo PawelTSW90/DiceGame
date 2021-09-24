@@ -99,8 +99,7 @@ public class GameBoardActivity extends AppCompatActivity {
         if(!multiplayerMode) {
             turnScreenFragment.displayTurnMessage();
         } else{
-            multiplayerTurnScreenFragment.checkPlayerTurn();
-            showFragment();
+            multiplayerTurnScreenFragment.displayTurnMessage();
         }
     }
 
@@ -135,9 +134,10 @@ public class GameBoardActivity extends AppCompatActivity {
         //creating class objects
 
         UIConfig uiConfig = new UIConfig(this, opponentUid);
-        OpponentOnlineUIConfig opponentOnlineUIConfig = new OpponentOnlineUIConfig(this, uiConfig, opponentUid);
+
         this.opponentOnlineUIConfig = opponentOnlineUIConfig;
         MultiplayerGame multiplayerGame = new MultiplayerGame(uiConfig, this,playersNames,opponentUid);
+        OpponentOnlineUIConfig opponentOnlineUIConfig = new OpponentOnlineUIConfig(this, uiConfig, opponentUid);
         RerollDices rerollDices = new RerollDices(uiConfig);
         multiplayerTurnScreenFragment = new MultiplayerTurnScreenFragment(this, uiConfig, multiplayerGame, opponentUid);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame);

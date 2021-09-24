@@ -2,14 +2,22 @@ package com.paweldyjak.dicegame.GameModes;
 
 import android.graphics.Color;
 import android.view.Gravity;
+
+import androidx.annotation.NonNull;
+
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Fragments.FinalResultTwoPlayersFragment;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.UIConfig;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class MultiplayerGame implements GameMode {
     private final UIConfig uiConfig;
@@ -24,7 +32,7 @@ public class MultiplayerGame implements GameMode {
     private final int[] playersTotalScore = new int[6];
     private boolean opponentTurn = false;
 
-    public MultiplayerGame(UIConfig uiConfig, GameBoardActivity gameBoardActivity, String[] playersNames,String opponentUID) {
+    public MultiplayerGame(UIConfig uiConfig, GameBoardActivity gameBoardActivity, String[] playersNames, String opponentUID) {
         this.uiConfig = uiConfig;
         this.gameBoardActivity = gameBoardActivity;
         this.playersNames = playersNames;
@@ -40,7 +48,7 @@ public class MultiplayerGame implements GameMode {
         String string = gameBoardActivity.getResources().getString(R.string.points);
         playersTotalScore[currentPlayerNumber - 1] += score;
         FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom")
-                .child(playerUid).child("totalScore").setValue(playersTotalScore[currentPlayerNumber-1]);
+                .child(playerUid).child("totalScore").setValue(playersTotalScore[currentPlayerNumber - 1]);
         uiConfig.getTotalScoreTextView().setText(playersTotalScore[currentPlayerNumber - 1] + " " + string);
     }
 
@@ -54,12 +62,44 @@ public class MultiplayerGame implements GameMode {
     }
 
     public void prepareScoreBoard() {
-        String string = gameBoardActivity.getResources().getString(R.string.points);
-        for (int x = 0; x < 16; x++) {
-            uiConfig.getCombinationsTextView()[x].setEnabled(playersIsCombinationActive[currentPlayerNumber - 1][x]);
-            uiConfig.getCombinationsPointsTextView()[x].setText(playersCombinationsScoreValues[currentPlayerNumber - 1][x] + " " + string);
-            uiConfig.getTotalScoreTextView().setText(playersTotalScore[currentPlayerNumber - 1] + " " + string);
-        }
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid)
+                .child("combinationsPoints").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Map<String, Integer> pointsMap = new LinkedHashMap<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    pointsMap.put(dataSnapshot.getKey(), dataSnapshot.getValue(Integer.class));
+                }
+                int tmp;
+                for (int x = 0; x < 16; x++) {
+                    tmp = x + 1;
+                    String tmpValue = String.valueOf(tmp);
+                    uiConfig.getCombinationsPointsTextView()[x].setText(pointsMap.get(tmpValue) + " " + gameBoardActivity.getString(R.string.points));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(playerUid).child("multiplayerRoom")
+                .child(opponentUid).child("totalScore").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int totalScore;
+                totalScore = snapshot.getValue(Integer.class);
+                uiConfig.getTotalScoreTextView().setText(totalScore + " " + gameBoardActivity.getString(R.string.points));
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 
@@ -77,8 +117,8 @@ public class MultiplayerGame implements GameMode {
     }
 
     public void setIsCombinationActive(boolean isCombinationActive, int combinationNr) {
-FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid)
-        .child("isCombinationActive").child(String.valueOf(combinationNr+1)).setValue(isCombinationActive);
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid)
+                .child("isCombinationActive").child(String.valueOf(combinationNr + 1)).setValue(isCombinationActive);
 
         this.playersIsCombinationActive[currentPlayerNumber - 1][combinationNr] = isCombinationActive;
 
@@ -92,7 +132,7 @@ FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).
 
     public void setCombinationScore(int score, int combinationNr) {
         FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid)
-                .child("combinationsPoints").child(String.valueOf(combinationNr+1)).setValue(score);
+                .child("combinationsPoints").child(String.valueOf(combinationNr + 1)).setValue(score);
 
         playersCombinationsScoreValues[currentPlayerNumber - 1][combinationNr] = score;
 
@@ -125,7 +165,7 @@ FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).
 
     public void setCombinationsSlots(int combinationsSlotNumber, int slotStatus) {
         FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom")
-                .child(playerUid).child("combinationsSlots").child(String.valueOf(combinationsSlotNumber+1)).setValue(slotStatus);
+                .child(playerUid).child("combinationsSlots").child(String.valueOf(combinationsSlotNumber + 1)).setValue(slotStatus);
         playersCombinationsSlotsValues[currentPlayerNumber - 1][combinationsSlotNumber] = slotStatus;
 
 
@@ -134,20 +174,15 @@ FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).
     public void prepareCombinationsSlots() {
         for (int x = 0; x < uiConfig.getCombinationsSlots().length; x++) {
             if (playersCombinationsSlotsValues[currentPlayerNumber - 1][x] == 1) {
-                uiConfig.getCombinationsSlots()[x].setText("\u2713");
-                uiConfig.getCombinationsSlots()[x].setGravity(Gravity.CENTER);
-                uiConfig.getCombinationsSlots()[x].setTextSize(16);
-                uiConfig.getCombinationsSlots()[x].setTextColor(Color.rgb(27, 182, 33));
+                int[] green = {27, 182, 33};
+                uiConfig.prepareCombinationsSlotForNextPlayer(x, "\u2713", Gravity.CENTER, 16, green, false);
                 uiConfig.getCombinationsPointsTextView()[x].setEnabled(true);
             } else if (playersCombinationsSlotsValues[currentPlayerNumber - 1][x] == 2) {
-                uiConfig.getCombinationsSlots()[x].setText("X");
-                uiConfig.getCombinationsSlots()[x].setGravity(Gravity.CENTER);
-                uiConfig.getCombinationsSlots()[x].setTextSize(16);
-                uiConfig.getCombinationsSlots()[x].setTextColor(Color.rgb(140, 17, 17));
+                int[] red = {140, 17,16};
+                uiConfig.prepareCombinationsSlotForNextPlayer(x, "X", Gravity.CENTER, 16, red, false);
                 uiConfig.getCombinationsPointsTextView()[x].setEnabled(false);
             } else {
-                uiConfig.getCombinationsSlots()[x].setText("");
-                uiConfig.getCombinationsPointsTextView()[x].setEnabled(true);
+                uiConfig.prepareCombinationsSlotForNextPlayer(0, null, 0, 0, null, true);
             }
 
 
@@ -177,6 +212,24 @@ FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).
     @Override
     public String getGameMode() {
         return "MultiplayerMode";
+    }
+
+    @Override
+    public void updatePlayerName() {
+            if(currentPlayerNumber==1){
+                uiConfig.setCurrentPlayerName(playersNames[1]);
+               currentPlayerNumber = 2;
+            } else{
+                uiConfig.setCurrentPlayerName(playersNames[0]);
+                currentPlayerNumber = 1;
+            }
+
+
+    }
+
+    public void updateOpponentTurnDatabase(){
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("opponentTurn").setValue(0);
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("opponentTurnStarted").setValue(0);
     }
 
 

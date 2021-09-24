@@ -169,5 +169,10 @@ public class HotSeatGame implements GameMode {
         return "HotSeatMode";
     }
 
+    @Override
+    public void updatePlayerName() {
+
+    }
+
 
 }

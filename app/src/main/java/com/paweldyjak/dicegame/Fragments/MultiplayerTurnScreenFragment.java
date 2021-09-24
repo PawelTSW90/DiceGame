@@ -26,12 +26,11 @@ import com.paweldyjak.dicegame.UIConfig;
 public class MultiplayerTurnScreenFragment extends Fragment {
     private DatabaseReference multiplayerRoomReference;
     private final UIConfig uiConfig;
-    private TextView playerName;
+    private TextView playerNameTextview;
     private Button nextPlayerButton;
     private final GameBoardActivity gameBoardActivity;
     private final GameMode gameMode;
     private final String opponentUid;
-    private boolean opponentTurn;
 
 
     public MultiplayerTurnScreenFragment(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode, String opponentUid) {
@@ -44,25 +43,36 @@ public class MultiplayerTurnScreenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_multiplayer_turn_screen, container, false);
-        playerName = view.findViewById(R.id.multiplayer_player_turn_textview);
+        playerNameTextview = view.findViewById(R.id.multiplayer_player_turn_textview);
         nextPlayerButton = view.findViewById(R.id.multiplayer_player_turn_button);
         multiplayerRoomReference =FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid())
                 .child("multiplayerRoom").child(opponentUid);
-        setNextPlayerName();
-        checkPlayerTurn();
+        displayTurnMessage();
         return view;
     }
 
 
-    public void displayTurnMessage(boolean opponentTurn) {
-        if (opponentTurn) {
-            nextPlayerButton.setVisibility(View.INVISIBLE);
-        } else {
-            nextPlayerButton.setVisibility(View.VISIBLE);
-        }
+    public void displayTurnMessage() {
+        setNextPlayerName();
+        DatabaseReference opponentTurnStarted = multiplayerRoomReference.child("opponentTurn");
+        opponentTurnStarted.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue(Integer.class) == 0) {
+                    nextPlayerButton.setVisibility(View.VISIBLE);
 
+                } else {
+                    nextPlayerButton.setVisibility(View.INVISIBLE);
+                    displayOpponentBoard();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         nextPlayerButton.setOnClickListener(v -> {
-            updateBoardPlayerName();
+            gameMode.prepareCombinationsSlots();
             gameMode.prepareScoreBoard();
             updateOpponentTurnStartedValue();
             gameBoardActivity.hideFragment();
@@ -70,48 +80,13 @@ public class MultiplayerTurnScreenFragment extends Fragment {
 
     }
 
-    public void updateBoardPlayerName(){
-        if(gameMode.getCurrentPlayerNumber()==1){
-            uiConfig.setCurrentPlayerName(gameMode.getPlayersNames()[1]);
-            gameMode.setCurrentPlayerNumber(2);
-        } else{
-            uiConfig.setCurrentPlayerName(gameMode.getPlayersNames()[0]);
-            gameMode.setCurrentPlayerNumber(1);
-        }
-        gameMode.prepareCombinationsSlots();
-    }
 
-    public void checkPlayerTurn() {
-        DatabaseReference opponentTurnStarted = multiplayerRoomReference.child("opponentTurn");
-        opponentTurnStarted.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(Integer.class) == 0) {
-                    nextPlayerButton.setVisibility(View.VISIBLE);
-                    opponentTurn = false;
-
-                } else {
-                    nextPlayerButton.setVisibility(View.INVISIBLE);
-                    opponentTurn = true;
-                }
-                displayTurnMessage(opponentTurn);
-                displayOpponentBoard();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
 
     public void setNextPlayerName(){
         if(gameMode.getCurrentPlayerNumber()==1){
-            playerName.setText(gameMode.getPlayersNames()[1]);
+            playerNameTextview.setText(gameMode.getPlayersNames()[1]);
         } else{
-            playerName.setText(gameMode.getPlayersNames()[0]);
+            playerNameTextview.setText(gameMode.getPlayersNames()[0]);
         }
     }
 

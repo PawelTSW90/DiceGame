@@ -46,4 +46,7 @@ public interface GameMode {
     void setOpponentTurn(boolean opponentTurn);
 
     String getGameMode();
+
+void updatePlayerName();
+
 }

@@ -1,5 +1,6 @@
 package com.paweldyjak.dicegame;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -261,6 +262,19 @@ public class UIConfig {
             }
         }
 
+    }
+
+    public void prepareCombinationsSlotForNextPlayer(int combinationNumber, String text, int gravity, int textSize, int[] textColor, boolean emptySlot){
+        if(emptySlot){
+            combinationsSlots[combinationNumber].setText("");
+            combinationsPointsTextView[combinationNumber].setEnabled(true);
+        } else {
+            combinationsSlots[combinationNumber].setText(text);
+            combinationsSlots[combinationNumber].setGravity(gravity);
+            combinationsSlots[combinationNumber].setTextSize(textSize);
+            combinationsSlots[combinationNumber].setTextColor(Color.rgb(textColor[0], textColor[1], textColor[2]));
+
+        }
     }
 
 
