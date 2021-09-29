@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
-
-import com.google.firebase.database.DatabaseReference;
 import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
@@ -87,7 +85,7 @@ public class TurnScreenFragment extends Fragment {
         nextPlayerButton.setOnClickListener(v -> {
             int playerNumber = gameMode.getCurrentPlayerNumber() - 1;
             uiConfig.getCurrentPlayerName().setText((gameMode.getPlayersNames()[playerNumber]));
-            gameMode.prepareScoreBoard();
+            gameMode.updateGameBoard();
             gameBoardActivity.hideFragment();
 
         });

@@ -36,6 +36,7 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
     private String playerName;
     private int playerRanking;
     private int opponentRanking;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +46,17 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
-
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         opponentFoundTextView = findViewById(R.id.user_found_textView);
         multiplayerQueueReference = FirebaseDatabase.getInstance().getReference().child("multiplayerQueue");
         playerUid = firebaseAuth.getUid();
         playersNames = new String[2];
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         joinMultiplayerQueue();
         updatePlayersInQueueNumber();
         setPlayerName();
         lookForOpponentPlayer();
+
     }
 
     public void joinMultiplayerQueue() {
@@ -83,8 +85,7 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
     }
 
     public void setPlayerName() {
-        DatabaseReference playerNameReference = FirebaseDatabase.getInstance().getReference().child("users").child(playerUid).child("name");
-        playerNameReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("users").child(playerUid).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 playerName = snapshot.getValue(String.class);
@@ -127,16 +128,18 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
         opponentData.put("opponentTurnStarted", 0);
         opponentData.put("combinationsPoints", 0);
         opponentData.put("isCombinationActive", 0);
+        opponentData.put("combinationsSlots", 0);
+        opponentData.put("dices", 0);
         opponentData.put("totalScore", 0);
-        DatabaseReference multiplayerRoomReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid);
-        multiplayerRoomReference.setValue(opponentData);
+        databaseReference.child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).setValue(opponentData);
         setCombinationPointsValues();
         setIsCombinationActiveValues();
+        setCombinationsSlotsValues();
+        setDices();
     }
 
     public void getOpponentName() {
-        DatabaseReference opponentNameReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("name");
-        opponentNameReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("users").child(opponentUid).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 opponentName = snapshot.getValue(String.class);
@@ -216,31 +219,44 @@ public class MultiplayerQueueActivity extends AppCompatActivity {
 
     public void updatePlayerTurnDatabaseValue() {
         if (playersNames[0].equals(playerName)) {
-            DatabaseReference multiplayerRoomReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid);
-            multiplayerRoomReference.child("opponentTurn").setValue(1);
+            databaseReference.child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("opponentTurn").setValue(1);
         }
 
     }
 
     public void setCombinationPointsValues() {
         Map<String, Integer> valuesMap = new HashMap<>();
-        for(int x = 0; x <16; x++){
-            valuesMap.put(String.valueOf(x+1), 0);
+        for (int x = 0; x < 16; x++) {
+            valuesMap.put(String.valueOf(x + 1), 0);
         }
-        DatabaseReference combinationsPointsReference = FirebaseDatabase.getInstance().
-                getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("combinationsPoints");
-        combinationsPointsReference.setValue(valuesMap);
+        databaseReference.child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("combinationsPoints").setValue(valuesMap);
+
 
     }
 
-    public void setIsCombinationActiveValues(){
+    public void setIsCombinationActiveValues() {
         Map<String, Boolean> valuesMap = new HashMap<>();
-        for(int x = 0; x<16; x++){
-            valuesMap.put(String.valueOf(x+1), true);
+        for (int x = 0; x < 16; x++) {
+            valuesMap.put(String.valueOf(x + 1), true);
         }
-        DatabaseReference isCombinationActiveReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).
-                child("multiplayerRoom").child(playerUid).child("isCombinationActive");
-        isCombinationActiveReference.setValue(valuesMap);
+        databaseReference.child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("isCombinationActive").setValue(valuesMap);
+
+    }
+
+    public void setCombinationsSlotsValues(){
+        Map<String, Integer> valuesMap = new HashMap<>();
+        for(int x = 0; x<16; x++){
+            valuesMap.put(String.valueOf(x+1), 0);
+        }
+        databaseReference.child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("combinationsSlots").setValue(valuesMap);
+    }
+
+    public void setDices() {
+        Map<String, Integer> valuesMap = new HashMap<>();
+        for (int x = 0; x < 5; x++) {
+            valuesMap.put(String.valueOf(x + 1), 0);
+        }
+        databaseReference.child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("dices").setValue(valuesMap);
     }
 
 

@@ -3,47 +3,49 @@ package com.paweldyjak.dicegame.GameModes;
 
 public interface GameMode {
 
+    boolean checkIfAllCombinationsAreDone();
+
+    void updateGameBoard();
+
+    void setFinalResultScreen();
+
+    void prepareCombinationsSlots();
+
+
     void setAllCombinationsAsActive();
 
     void setTotalScore(int score);
 
-    boolean checkIfAllCombinationsAreDone();
-
-    void prepareScoreBoard();
-
-    void setFinalResultScreen();
-
-    boolean[] getIsCombinationActive();
-
     void setIsCombinationActive(boolean isCombinationActive, int combinationNr);
 
-    int getCombinationScore(int combinationNr);
+    void setCombinationsPointsValues(int score, int combinationNr);
 
-    void setCombinationScore(int score, int combinationNr);
+    void setCombinationsSlots(int combinationsSlotNumber, int slotStatus);
 
-    int getCurrentPlayerNumber();
+    void setNumberOfPlayers(int numberOfPlayers);
+
+    void setPlayersNames(String[] playersNames);
 
     void setCurrentPlayerNumber(int currentPlayerNumber);
 
+    String getGameMode();
+
     String[] getPlayersNames();
 
-    void setPlayersNames(String[] playersNames);
+    int getNumberOfPlayers();
 
     int getPlayersTotalScore(int playerNumber);
 
     int[] getPlayersScore();
 
-    void setCombinationsSlots(int combinationsSlotNumber, int slotStatus);
+    boolean[] getIsCombinationActive();
 
-    void prepareCombinationsSlots();
+    int getCurrentPlayerNumber();
 
-    void setNumberOfPlayers(int numberOfPlayers);
 
-    int getNumberOfPlayers();
 
-    boolean getOpponentTurn();
 
-    void setOpponentTurn(boolean opponentTurn);
 
-    String getGameMode();
+
+
 }
