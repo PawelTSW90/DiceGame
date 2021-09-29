@@ -167,39 +167,39 @@ public class DicesCombinationsChecker {
         for (int x = 0; x < 5; x++) {
             switch (dices[x]) {
                 case 1:
-                    valuesList.set(0, valuesList.get(0)+1);
+                    valuesList.set(0, valuesList.get(0) + 1);
                     break;
                 case 2:
-                    valuesList.set(1, valuesList.get(1)+1);
+                    valuesList.set(1, valuesList.get(1) + 1);
                     break;
                 case 3:
-                    valuesList.set(2, valuesList.get(2)+1);
+                    valuesList.set(2, valuesList.get(2) + 1);
                     break;
                 case 4:
-                    valuesList.set(3, valuesList.get(3)+1);
+                    valuesList.set(3, valuesList.get(3) + 1);
                     break;
                 case 5:
-                    valuesList.set(4, valuesList.get(4)+1);
+                    valuesList.set(4, valuesList.get(4) + 1);
                     break;
                 case 6:
-                    valuesList.set(5, valuesList.get(5)+1);
+                    valuesList.set(5, valuesList.get(5) + 1);
                     break;
 
             }
 
 
         }
-        for(int x = 0; x<6; x++){
+        for (int x = 0; x < 6; x++) {
 
-            if(valuesList.get(x)>=2){
-                if(firstThrow){
-                    highestPairScore= firstThrowValue;
-                } else{
+            if (valuesList.get(x) >= 2) {
+                if (firstThrow) {
+                    highestPairScore = firstThrowValue;
+                } else {
                     highestPairScore = notFirstThrowValue;
                 }
             }
-            firstThrowValue+=4;
-            notFirstThrowValue+=2;
+            firstThrowValue += 4;
+            notFirstThrowValue += 2;
         }
 
         return highestPairScore;
@@ -570,6 +570,9 @@ public class DicesCombinationsChecker {
             if (values[x] >= 4) {
                 checkCombination = true;
                 score = values[x] * (x + 1);
+                if(values[x]==5){
+                    score-=values[x];
+                }
             }
         }
 

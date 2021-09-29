@@ -15,10 +15,10 @@ public class HotSeatGame implements GameMode {
     private String[] playersNames;
     private int numberOfPlayers;
     private int currentPlayerNumber = 6;
-    private final int[][] playersCombinationsScoreValues = new int[6][16];
-    private final int[][] playersCombinationsSlotsValues = new int[6][16];
-    private final boolean[][] playersIsCombinationActive = new boolean[6][16];
-    private final int[] playersTotalScore = new int[6];
+    private final int[][] combinationsPointsValues = new int[6][16];
+    private final int[][] combinationsSlotsValues = new int[6][16];
+    private final boolean[][] isCombinationActive = new boolean[6][16];
+    private final int[] totalScore = new int[6];
 
     public HotSeatGame(UIConfig uiConfig, GameBoardActivity gameBoardActivity, String[] playersNames) {
         this.uiConfig = uiConfig;
@@ -27,15 +27,15 @@ public class HotSeatGame implements GameMode {
     }
 
     public void setAllCombinationsAsActive() {
-        for (boolean[] row : playersIsCombinationActive)
+        for (boolean[] row : isCombinationActive)
             Arrays.fill(row, true);
     }
 
     public void setTotalScore(int score) {
         String string = gameBoardActivity.getResources().getString(R.string.points);
 
-        playersTotalScore[currentPlayerNumber - 1] += score;
-        uiConfig.getTotalScoreTextView().setText(playersTotalScore[currentPlayerNumber - 1] + " " + string);
+        totalScore[currentPlayerNumber - 1] += score;
+        uiConfig.getTotalScore().setText(totalScore[currentPlayerNumber - 1] + " " + string);
     }
 
     public boolean checkIfAllCombinationsAreDone() {
@@ -47,12 +47,12 @@ public class HotSeatGame implements GameMode {
         return true;
     }
 
-    public void prepareScoreBoard() {
+    public void updateGameBoard() {
         String string = gameBoardActivity.getResources().getString(R.string.points);
         for (int x = 0; x < 16; x++) {
-            uiConfig.getCombinationsTextView()[x].setEnabled(playersIsCombinationActive[currentPlayerNumber - 1][x]);
-            uiConfig.getCombinationsPointsTextView()[x].setText(playersCombinationsScoreValues[currentPlayerNumber - 1][x] + " " + string);
-            uiConfig.getTotalScoreTextView().setText(playersTotalScore[currentPlayerNumber - 1] + " " + string);
+            uiConfig.getCombinationsText()[x].setEnabled(isCombinationActive[currentPlayerNumber - 1][x]);
+            uiConfig.getCombinationsPoints()[x].setText(combinationsPointsValues[currentPlayerNumber - 1][x] + " " + string);
+            uiConfig.getTotalScore().setText(totalScore[currentPlayerNumber - 1] + " " + string);
         }
 
     }
@@ -71,24 +71,24 @@ public class HotSeatGame implements GameMode {
 
     public boolean[] getIsCombinationActive() {
 
-        return playersIsCombinationActive[currentPlayerNumber - 1];
+        return isCombinationActive[currentPlayerNumber - 1];
 
     }
 
     public void setIsCombinationActive(boolean isCombinationActive, int combinationNr) {
 
-        this.playersIsCombinationActive[currentPlayerNumber - 1][combinationNr] = isCombinationActive;
+        this.isCombinationActive[currentPlayerNumber - 1][combinationNr] = isCombinationActive;
 
     }
 
     public int getCombinationScore(int combinationNr) {
 
-        return playersCombinationsScoreValues[currentPlayerNumber - 1][combinationNr];
+        return combinationsPointsValues[currentPlayerNumber - 1][combinationNr];
 
     }
 
-    public void setCombinationScore(int score, int combinationNr) {
-        this.playersCombinationsScoreValues[currentPlayerNumber - 1][combinationNr] = score;
+    public void setCombinationsPointsValues(int score, int combinationNr) {
+        this.combinationsPointsValues[currentPlayerNumber - 1][combinationNr] = score;
 
     }
 
@@ -109,37 +109,37 @@ public class HotSeatGame implements GameMode {
     }
 
     public int getPlayersTotalScore(int playerNumber) {
-        return playersTotalScore[playerNumber - 1];
+        return totalScore[playerNumber - 1];
 
     }
 
     public int[] getPlayersScore(){
-        return playersTotalScore;
+        return totalScore;
     }
 
     public void setCombinationsSlots(int combinationsSlotNumber, int slotStatus) {
-        playersCombinationsSlotsValues[currentPlayerNumber - 1][combinationsSlotNumber] = slotStatus;
+        combinationsSlotsValues[currentPlayerNumber - 1][combinationsSlotNumber] = slotStatus;
 
 
     }
 
     public void prepareCombinationsSlots() {
         for (int x = 0; x < uiConfig.getCombinationsSlots().length; x++) {
-            if (playersCombinationsSlotsValues[currentPlayerNumber - 1][x] == 1) {
+            if (combinationsSlotsValues[currentPlayerNumber - 1][x] == 1) {
                 uiConfig.getCombinationsSlots()[x].setText("\u2713");
                 uiConfig.getCombinationsSlots()[x].setGravity(Gravity.CENTER);
                 uiConfig.getCombinationsSlots()[x].setTextSize(16);
                 uiConfig.getCombinationsSlots()[x].setTextColor(Color.rgb(27, 182, 33));
-                uiConfig.getCombinationsPointsTextView()[x].setEnabled(true);
-            } else if (playersCombinationsSlotsValues[currentPlayerNumber - 1][x] == 2) {
+                uiConfig.getCombinationsPoints()[x].setEnabled(true);
+            } else if (combinationsSlotsValues[currentPlayerNumber - 1][x] == 2) {
                 uiConfig.getCombinationsSlots()[x].setText("X");
                 uiConfig.getCombinationsSlots()[x].setGravity(Gravity.CENTER);
                 uiConfig.getCombinationsSlots()[x].setTextSize(16);
                 uiConfig.getCombinationsSlots()[x].setTextColor(Color.rgb(140, 17, 17));
-                uiConfig.getCombinationsPointsTextView()[x].setEnabled(false);
+                uiConfig.getCombinationsPoints()[x].setEnabled(false);
             } else {
                 uiConfig.getCombinationsSlots()[x].setText("");
-                uiConfig.getCombinationsPointsTextView()[x].setEnabled(true);
+                uiConfig.getCombinationsPoints()[x].setEnabled(true);
             }
 
 
@@ -155,24 +155,10 @@ public class HotSeatGame implements GameMode {
     }
 
     @Override
-    public boolean getOpponentTurn() {
-        return false;
-    }
-
-    @Override
-    public void setOpponentTurn(boolean opponentTurn) {
-
-    }
-
-    @Override
     public String getGameMode() {
         return "HotSeatMode";
     }
 
-    @Override
-    public void updatePlayerName() {
-
-    }
 
 
 }

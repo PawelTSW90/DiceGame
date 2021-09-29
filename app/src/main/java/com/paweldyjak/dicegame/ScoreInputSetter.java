@@ -7,7 +7,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
-import com.paweldyjak.dicegame.Activities.ScoreInputListener;
 import com.paweldyjak.dicegame.GameModes.GameMode;
 
 /*class methods writes score into score table
@@ -19,13 +18,11 @@ public class ScoreInputSetter {
     private final GameBoardActivity gameBoardActivity;
     private final GameMode gameMode;
     private boolean resetThrowCounter = false;
-    private final Sounds sounds;
 
     public ScoreInputSetter(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode) {
         this.gameBoardActivity = gameBoardActivity;
         this.uiConfig = uiConfig;
         this.gameMode = gameMode;
-        sounds = new Sounds(gameBoardActivity);
     }
     /*method inputs score for a specified combination. Combinations list:
     combination nr 0 = 1
@@ -48,7 +45,7 @@ public class ScoreInputSetter {
 
     public void updatePlayerScore(int scoreToInput, int combinationNumber) {
 
-        uiConfig.getCombinationsTextView()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, this, uiConfig, resetThrowCounter, scoreToInput, combinationNumber, gameMode.getIsCombinationActive()[combinationNumber]));
+        uiConfig.getCombinationsText()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, this, uiConfig, resetThrowCounter, scoreToInput, combinationNumber, gameMode.getIsCombinationActive()[combinationNumber]));
         uiConfig.getCombinationsSlots()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, this, uiConfig, resetThrowCounter, scoreToInput, combinationNumber, gameMode.getIsCombinationActive()[combinationNumber]));
 
 
@@ -63,7 +60,9 @@ public class ScoreInputSetter {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (dataSnapshot.getKey().equals(String.valueOf(combinationNumber))) {
                         if (dataSnapshot.getValue(Boolean.class)) {
-                            uiConfig.getCombinationsTextView()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, ScoreInputSetter.this, uiConfig, resetThrowCounter, scoreToInput, combinationNumber, true));
+                            uiConfig.getCombinationsText()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, ScoreInputSetter.this, uiConfig, resetThrowCounter, scoreToInput, combinationNumber, true));
+                            uiConfig.getCombinationsSlots()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, ScoreInputSetter.this, uiConfig, resetThrowCounter, scoreToInput, combinationNumber, true));
+
                         }
                     }
                 }
@@ -91,7 +90,7 @@ public class ScoreInputSetter {
     public void resetCombinationsListeners() {
         for (int x = 0; x < 15; x++) {
 
-            uiConfig.getCombinationsTextView()[x].setOnClickListener(v -> {
+            uiConfig.getCombinationsText()[x].setOnClickListener(v -> {
 
             });
         }

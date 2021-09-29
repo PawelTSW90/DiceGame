@@ -1,22 +1,13 @@
 package com.paweldyjak.dicegame;
 
-import android.app.Activity;
-import android.content.Context;
-import android.view.View;
-import android.widget.ImageView;
-
 import androidx.core.content.ContextCompat;
-
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
-
 import java.util.Random;
 import java.util.concurrent.Executor;
 
 
 public class GameBoardManager {
-    private final Context context;
-    private ImageView rollDicesButton;
     private final ScoreInputSetter scoreInputSetter;
     private final UIConfig uiConfig;
     private final OpponentOnlineUIConfig opponentOnlineUIConfig;
@@ -31,8 +22,7 @@ public class GameBoardManager {
     private final Random randomValue = new Random();
 
 
-    public GameBoardManager(GameBoardActivity gameBoardActivity, Context context, ScoreInputSetter scoreInputSetter, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, OpponentOnlineUIConfig opponentOnlineUIConfig, RerollDices rerollDices, GameMode gameMode) {
-        this.context = context;
+    public GameBoardManager(GameBoardActivity gameBoardActivity, ScoreInputSetter scoreInputSetter, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, OpponentOnlineUIConfig opponentOnlineUIConfig, RerollDices rerollDices, GameMode gameMode) {
         this.gameBoardActivity = gameBoardActivity;
         this.scoreInputSetter = scoreInputSetter;
         this.dicesCombinationsChecker = dicesCombinationsChecker;
@@ -40,15 +30,14 @@ public class GameBoardManager {
         this.opponentOnlineUIConfig = opponentOnlineUIConfig;
         this.rerollDices = rerollDices;
         this.gameMode = gameMode;
-        sounds = new Sounds(context);
+        sounds = new Sounds(gameBoardActivity);
 
     }
 
     //method configure roll dices button
     public void setRollDicesButton() {
         gameBoardActivity.hideFragment();
-        rollDicesButton = ((Activity) context).findViewById(R.id.roll_dices);
-        rollDicesButton.setOnClickListener(v -> {
+        uiConfig.getRollDicesButton().setOnClickListener(v -> {
 
             if (!gameMode.checkIfAllCombinationsAreDone()) {
 
@@ -119,24 +108,7 @@ public class GameBoardManager {
 
     // method sets combinations for checking
     public void setCombinations() {
-        if(gameMode.getGameMode().equals("HotSeatMode")) {
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFour(dices, isFirstThrow), 3);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFive(dices, isFirstThrow), 4);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSix(dices, isFirstThrow), 5);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkPair(dices, isFirstThrow), 6);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkTwoPairs(dices, isFirstThrow), 7);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkEvens(dices, isFirstThrow), 8);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkOdds(dices, isFirstThrow), 9);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSmallStraight(dices, isFirstThrow), 10);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkLargeStraight(dices, isFirstThrow), 11);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFullHouse(dices, isFirstThrow), 12);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFourOfAKind(dices, isFirstThrow), 13);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFiveOfAKind(dices, isFirstThrow), 14);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
-        } else if(gameMode.getGameMode().equals("MultiplayerMode")){
+        if(gameMode.getGameMode().equals("MultiplayerMode")) {
             scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0);
             scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1);
             scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2);
@@ -153,6 +125,24 @@ public class GameBoardManager {
             scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFourOfAKind(dices, isFirstThrow), 13);
             scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFiveOfAKind(dices, isFirstThrow), 14);
             scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
+
+        } else {
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFour(dices, isFirstThrow), 3);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFive(dices, isFirstThrow), 4);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSix(dices, isFirstThrow), 5);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkPair(dices, isFirstThrow), 6);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkTwoPairs(dices, isFirstThrow), 7);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkEvens(dices, isFirstThrow), 8);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkOdds(dices, isFirstThrow), 9);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSmallStraight(dices, isFirstThrow), 10);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkLargeStraight(dices, isFirstThrow), 11);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFullHouse(dices, isFirstThrow), 12);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFourOfAKind(dices, isFirstThrow), 13);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFiveOfAKind(dices, isFirstThrow), 14);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
         }
     }
 
@@ -163,14 +153,14 @@ public class GameBoardManager {
             int combinationNr = x;
             if (dicesCombinationsChecker.combinationChecker(x, dices, isFirstThrow, 0) == 0 && gameMode.getIsCombinationActive()[x]) {
                 {
-                    uiConfig.getCombinationsTextView()[x].setOnClickListener(v -> {
+                    uiConfig.getCombinationsText()[x].setOnClickListener(v -> {
                         v.setEnabled(false);
                         gameMode.setIsCombinationActive(false, combinationNr);
                         scoreInputSetter.setResetThrowCounter(true);
                         scoreInputSetter.resetCombinationsListeners();
                         gameMode.setCombinationsSlots(combinationNr, 2);
                         gameMode.prepareCombinationsSlots();
-                        uiConfig.hideDices();
+                        uiConfig.setDicesVisibility(false);
                         if (gameMode.checkIfAllCombinationsAreDone() && gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers()) {
                             executor.execute(() -> {
                                 try {
@@ -200,13 +190,13 @@ public class GameBoardManager {
 
                     int finalX = x;
                     uiConfig.getCombinationsSlots()[x].setOnClickListener(v -> {
-                        uiConfig.getCombinationsTextView()[finalX].setEnabled(false);
+                        uiConfig.getCombinationsText()[finalX].setEnabled(false);
                         gameMode.setIsCombinationActive(false, combinationNr);
                         scoreInputSetter.setResetThrowCounter(true);
                         scoreInputSetter.resetCombinationsListeners();
                         gameMode.setCombinationsSlots(combinationNr, 2);
                         gameMode.prepareCombinationsSlots();
-                        uiConfig.hideDices();
+                        uiConfig.setDicesVisibility(false);
                         if (gameMode.checkIfAllCombinationsAreDone() && gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers()) {
                             executor.execute(() -> {
                                 try {
@@ -223,7 +213,6 @@ public class GameBoardManager {
                                 try {
                                     sounds.playEraseCombinationSound();
                                     Thread.sleep(2000);
-                                    gameMode.setOpponentTurn(!gameMode.getOpponentTurn());
                                     gameBoardActivity.showNextTurnFragment();
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
@@ -238,11 +227,6 @@ public class GameBoardManager {
             }
         }
     }
-
-    public void hideRollDices() {
-        rollDicesButton.setVisibility(View.INVISIBLE);
-    }
-
 
 }
 

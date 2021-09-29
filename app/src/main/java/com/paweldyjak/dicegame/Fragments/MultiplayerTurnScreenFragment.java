@@ -61,7 +61,7 @@ public class MultiplayerTurnScreenFragment extends Fragment {
                 if (snapshot.getValue(Integer.class) == 0) {
                     nextPlayerButton.setVisibility(View.VISIBLE);
 
-                } else {
+                } else if (snapshot.getValue(Integer.class)==1) {
                     nextPlayerButton.setVisibility(View.INVISIBLE);
                     displayOpponentBoard();
                 }
@@ -72,9 +72,10 @@ public class MultiplayerTurnScreenFragment extends Fragment {
             }
         });
         nextPlayerButton.setOnClickListener(v -> {
-            gameMode.prepareCombinationsSlots();
-            gameMode.prepareScoreBoard();
+            gameMode.updateGameBoard();
             updateOpponentTurnStartedValue();
+            uiConfig.setRollDicesVisibility(true);
+            uiConfig.setDicesVisibility(false);
             gameBoardActivity.hideFragment();
         });
 
@@ -84,9 +85,9 @@ public class MultiplayerTurnScreenFragment extends Fragment {
 
     public void setNextPlayerName(){
         if(gameMode.getCurrentPlayerNumber()==1){
-            playerNameTextview.setText(gameMode.getPlayersNames()[1]);
-        } else{
             playerNameTextview.setText(gameMode.getPlayersNames()[0]);
+        } else{
+            playerNameTextview.setText(gameMode.getPlayersNames()[1]);
         }
     }
 
@@ -106,7 +107,7 @@ public class MultiplayerTurnScreenFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.getValue(Integer.class)==1){
-                    gameMode.prepareScoreBoard();
+                    gameMode.updateGameBoard();
                     gameBoardActivity.getOpponentOnlineUIConfig().displayOpponentScreen();
                     gameBoardActivity.hideFragment();
                 }

@@ -1,8 +1,6 @@
 package com.paweldyjak.dicegame;
 
-import android.graphics.Color;
 import android.os.Build;
-import android.view.Gravity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -15,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
+import com.paweldyjak.dicegame.GameModes.MultiplayerGame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,26 +26,32 @@ public class OpponentOnlineUIConfig {
     private final String playerUid = FirebaseAuth.getInstance().getUid();
     private final GameBoardActivity gameBoardActivity;
     private final UIConfig uiConfig;
+    private final GameMode gameMode;
     private List<Integer> opponentDices = new ArrayList<>(5);
     private final String opponentUid;
     private Sounds sounds;
+    public int[][] opponentCombinationsSlotsValues;
 
-    public OpponentOnlineUIConfig(GameBoardActivity gameBoardActivity, UIConfig uiConfig, String opponentUid) {
+    public OpponentOnlineUIConfig(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode, String opponentUid) {
         this.gameBoardActivity = gameBoardActivity;
         this.uiConfig = uiConfig;
+        this.gameMode = gameMode;
         this.opponentUid = opponentUid;
 
     }
 
     public void displayOpponentScreen() {
-        gameBoardActivity.getGameBoardManager().hideRollDices();
+        opponentCombinationsSlotsValues = ((MultiplayerGame) gameMode).getCombinationsSlotsValues();
         sounds = new Sounds(gameBoardActivity);
-        uiConfig.hideDices();
+        uiConfig.setRollDicesVisibility(false);
+        uiConfig.setDicesVisibility(false);
+        resetOpponentDices();
         checkOpponentDices();
         checkOpponentCombinations();
         checkOpponentTotalScore();
         checkOpponentIsCombinationActive();
         checkOpponentCombinationSlot();
+
 
     }
 
@@ -82,6 +87,7 @@ public class OpponentOnlineUIConfig {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void displayOpponentDices() {
+        uiConfig.setDicesVisibility(true);
         boolean containsZero = false;
 
         for (int x = 0; x < 5; x++) {
@@ -152,7 +158,8 @@ public class OpponentOnlineUIConfig {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     pointsMap.put(dataSnapshot.getKey(), dataSnapshot.getValue(Integer.class));
                 }
-                displayOpponentCombinationsPoints(pointsMap);
+                setOpponentCombinationValue(pointsMap);
+
             }
 
             @Override
@@ -163,14 +170,14 @@ public class OpponentOnlineUIConfig {
     }
 
 
-    public void displayOpponentCombinationsPoints(Map<String, Integer> pointsMap) {
+    public void setOpponentCombinationValue(Map<String, Integer> pointsMap) {
         int tmp;
         for (int x = 0; x < 16; x++) {
             tmp = x + 1;
             String tmpValue = String.valueOf(tmp);
-
-            uiConfig.getCombinationsPointsTextView()[x].setText(pointsMap.get(tmpValue) + " " + gameBoardActivity.getString(R.string.points));
+            gameMode.setCombinationsPointsValues(pointsMap.get(tmpValue), x);
         }
+
 
 
     }
@@ -180,8 +187,7 @@ public class OpponentOnlineUIConfig {
                 .child(opponentUid).child("totalScore").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int totalScore;
-                totalScore = snapshot.getValue(Integer.class);
+                int totalScore = snapshot.getValue(Integer.class);
                 displayOpponentTotalScore(totalScore);
             }
 
@@ -193,11 +199,9 @@ public class OpponentOnlineUIConfig {
     }
 
     public void displayOpponentTotalScore(int totalScore) {
-        if (totalScore != 0) {
-            sounds.playCompleteCombinationSound();
-            uiConfig.getTotalScoreTextView().setText(totalScore + " " + gameBoardActivity.getString(R.string.points));
+        gameMode.setTotalScore(totalScore);
 
-        }
+
 
     }
 
@@ -226,9 +230,13 @@ public class OpponentOnlineUIConfig {
         for (int x = 0; x < 16; x++) {
             tmp = x + 1;
             if (!valuesMap.get(String.valueOf(tmp))) {
-                uiConfig.getCombinationsTextView()[x].setEnabled(false);
+                gameMode.setIsCombinationActive(false, x);
+            } else {
+                gameMode.setIsCombinationActive(true, x);
             }
         }
+
+
     }
 
     public void checkOpponentCombinationSlot() {
@@ -241,6 +249,7 @@ public class OpponentOnlineUIConfig {
                     valuesMap.put(dataSnapshot.getKey(), dataSnapshot.getValue(Integer.class));
                 }
                 displayOpponentCombinationSlot(valuesMap);
+
             }
 
             @Override
@@ -252,51 +261,66 @@ public class OpponentOnlineUIConfig {
 
     public void displayOpponentCombinationSlot(Map<String, Integer> valuesMap) {
         Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
+        if (!testMethod(valuesMap)) {
+            sounds.playCompleteCombinationSound();
+            int tmp;
+            for (int x = 0; x < 16; x++) {
+                tmp = x + 1;
+                if (valuesMap.get(String.valueOf(tmp)) == 1) {
+                    gameMode.setCombinationsSlots(x, 1);
+                } else if (valuesMap.get(String.valueOf(tmp)) == 2) {
+                    gameMode.setCombinationsSlots(x, 2);
+                } else {
+                    gameMode.setCombinationsSlots(x, 0);
+                }
+            }
+            gameMode.updateGameBoard();
 
-        int tmp;
+
+            /*updatePlayerTurnDatabase();
+            ((MultiplayerGame) gameMode).changeCurrentPlayer();
+            executor.execute(() -> {
+                try {
+                    Thread.sleep(2000);
+                    gameBoardActivity.showNextTurnFragment();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            });*/
+
+        }
+
+    }
+
+
+    public void updatePlayerTurnDatabase() {
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("opponentTurn").setValue(1);
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("opponentTurnStarted").setValue(0);
+    }
+
+    public void resetOpponentDices() {
+        Map<String, Integer> valuesMap = new HashMap<>();
+        for (int x = 0; x < 5; x++) {
+            valuesMap.put(String.valueOf(x + 1), 0);
+        }
+        FirebaseDatabase.getInstance().getReference().child("users").child(playerUid).child("multiplayerRoom").child(opponentUid).child("dices").setValue(valuesMap);
+    }
+
+    
+
+    public boolean testMethod(Map<String, Integer> valuesMap) {
+
+        int[] updatedOpponentCombinationsSlotsValues = new int[16];
         for (int x = 0; x < 16; x++) {
-            tmp = x + 1;
-            String tmpValue = String.valueOf(tmp);
-            if (valuesMap.get(tmpValue) == 1) {
-                uiConfig.getCombinationsSlots()[x].setText("\u2713");
-                uiConfig.getCombinationsSlots()[x].setGravity(Gravity.CENTER);
-                uiConfig.getCombinationsSlots()[x].setTextSize(16);
-                uiConfig.getCombinationsSlots()[x].setTextColor(Color.rgb(27, 182, 33));
-                executor.execute(() -> {
-                    try {
-                        Thread.sleep(2000);
-                        updatePlayerTurnDatabase();
-                        gameBoardActivity.showNextTurnFragment();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                });
-
-            } else if (valuesMap.get(tmpValue) == 2) {
-                uiConfig.getCombinationsSlots()[x].setText("X");
-                uiConfig.getCombinationsSlots()[x].setGravity(Gravity.CENTER);
-                uiConfig.getCombinationsSlots()[x].setTextSize(16);
-                uiConfig.getCombinationsSlots()[x].setTextColor(Color.rgb(140, 17, 17));
-                uiConfig.getCombinationsPointsTextView()[x].setEnabled(false);
-                executor.execute(() -> {
-                    try {
-                        Thread.sleep(2000);
-                        updatePlayerTurnDatabase();
-                        gameBoardActivity.showNextTurnFragment();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                });
-
+            int tmpValues = x + 1;
+            String tmp = String.valueOf(tmpValues);
+            updatedOpponentCombinationsSlotsValues[x] = valuesMap.get(tmp);
+            if (opponentCombinationsSlotsValues[gameMode.getCurrentPlayerNumber() - 1][x] != updatedOpponentCombinationsSlotsValues[x]) {
+                return false;
             }
         }
+
+        return true;
     }
-
-    public void updatePlayerTurnDatabase(){
-        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("opponentTurn").setValue(1);
-    }
-
-
 }
