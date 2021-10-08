@@ -81,12 +81,6 @@ public class HotSeatGame implements GameMode {
 
     }
 
-    public int getCombinationScore(int combinationNr) {
-
-        return combinationsPointsValues[currentPlayerNumber - 1][combinationNr];
-
-    }
-
     public void setCombinationsPointsValues(int score, int combinationNr) {
         this.combinationsPointsValues[currentPlayerNumber - 1][combinationNr] = score;
 
@@ -153,12 +147,5 @@ public class HotSeatGame implements GameMode {
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
-
-    @Override
-    public String getGameMode() {
-        return "HotSeatMode";
-    }
-
-
 
 }

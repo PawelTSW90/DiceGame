@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
+import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 
 public class TurnScreenFragment extends Fragment {
     private final UIConfig uiConfig;
@@ -81,7 +82,7 @@ public class TurnScreenFragment extends Fragment {
                 gameMode.setCurrentPlayerNumber(1);
                 break;
         }
-        gameMode.prepareCombinationsSlots();
+        ((HotSeatGame)gameMode).prepareCombinationsSlots();
         nextPlayerButton.setOnClickListener(v -> {
             int playerNumber = gameMode.getCurrentPlayerNumber() - 1;
             uiConfig.getCurrentPlayerName().setText((gameMode.getPlayersNames()[playerNumber]));

@@ -52,13 +52,14 @@ public class ScoreInputSetter {
     }
 
     public void updateDatabasePlayerScore(int scoreToInput, int combinationNumber) {
-
+        //create database variable increased by one
+        int databaseCombinationNumber = combinationNumber+1;
         FirebaseDatabase.getInstance().getReference().child("users").child(uiConfig.getOpponentUid()).child("multiplayerRoom").child(uiConfig.getPlayerUid())
                 .child("isCombinationActive").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if (dataSnapshot.getKey().equals(String.valueOf(combinationNumber))) {
+                    if (dataSnapshot.getKey().equals(String.valueOf(databaseCombinationNumber))) {
                         if (dataSnapshot.getValue(Boolean.class)) {
                             uiConfig.getCombinationsText()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, ScoreInputSetter.this, uiConfig, resetThrowCounter, scoreToInput, combinationNumber, true));
                             uiConfig.getCombinationsSlots()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, ScoreInputSetter.this, uiConfig, resetThrowCounter, scoreToInput, combinationNumber, true));
@@ -74,9 +75,6 @@ public class ScoreInputSetter {
             }
         });
     }
-
-
-
 
 
     public boolean getResetThrowCounter() {

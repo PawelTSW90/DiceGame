@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
+import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 import com.paweldyjak.dicegame.GameModes.MultiplayerGame;
 
 import java.util.concurrent.Executor;
@@ -39,13 +40,13 @@ public class ScoreInputListener implements View.OnClickListener {
             updateBoardValues(scoreToInput, combinationNumber);
             gameMode.updateGameBoard();
             prepareBoardForNextPlayer();
+            if (gameMode instanceof MultiplayerGame) {
+
+                ((MultiplayerGame) gameMode).updateOpponentTurnDatabase();
+            }
             if (gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers() && gameMode.checkIfAllCombinationsAreDone()) {
                 executor.execute(() -> {
                     try {
-                        if(gameMode instanceof MultiplayerGame){
-                            ((MultiplayerGame)gameMode).changeCurrentPlayer();
-                            ((MultiplayerGame) gameMode).updateOpponentTurnDatabase();
-                        }
                         Thread.sleep(2000);
                         gameMode.setFinalResultScreen();
                     } catch (InterruptedException e) {
@@ -56,13 +57,12 @@ public class ScoreInputListener implements View.OnClickListener {
             } else {
                 executor.execute(() -> {
                     try {
-                        if(gameMode instanceof MultiplayerGame){
-                            ((MultiplayerGame)gameMode).changeCurrentPlayer();
-                            ((MultiplayerGame) gameMode).updateOpponentTurnDatabase();
-                        }
                         Thread.sleep(2000);
                         scoreInputSetter.setResetThrowCounter(true);
                         resetCombinationsListeners();
+                        if (gameMode instanceof MultiplayerGame) {
+                            ((MultiplayerGame) gameMode).changeCurrentPlayer();
+                        }
                         gameBoardActivity.showNextTurnFragment();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -77,15 +77,17 @@ public class ScoreInputListener implements View.OnClickListener {
     public void updateBoardValues(int scoreToInput, int combinationNumber) {
         Sounds sounds = new Sounds(gameBoardActivity);
         sounds.playCompleteCombinationSound();
-        if(gameMode instanceof MultiplayerGame){
-            ((MultiplayerGame)gameMode).setCombinationsSlotsInDatabase(combinationNumber, 1);
-            ((MultiplayerGame)gameMode).setCombinationsPointsInDatabase(scoreToInput, combinationNumber);
-            ((MultiplayerGame)gameMode).setTotalScoreInDatabase(scoreToInput);
-            ((MultiplayerGame)gameMode).setIsCombinationActiveInDatabase(false, combinationNumber);
+        if (gameMode instanceof MultiplayerGame) {
+            ((MultiplayerGame) gameMode).setCombinationsSlotsInDatabase(combinationNumber, 1);
+            ((MultiplayerGame) gameMode).setCombinationsPointsInDatabase(scoreToInput, combinationNumber);
+            ((MultiplayerGame) gameMode).setTotalScoreInDatabase(scoreToInput);
+            ((MultiplayerGame) gameMode).setIsCombinationActiveInDatabase(false, combinationNumber);
+
         }
-        gameMode.setCombinationsSlots(combinationNumber, 1);
         gameMode.setCombinationsPointsValues(scoreToInput, combinationNumber);
-        gameMode.setTotalScore(scoreToInput);
+        gameMode.setCombinationsSlots(combinationNumber, 1);
+        int totalScore = gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber()) + scoreToInput;
+        gameMode.setTotalScore(totalScore);
         gameMode.setIsCombinationActive(false, combinationNumber);
 
     }
@@ -93,7 +95,9 @@ public class ScoreInputListener implements View.OnClickListener {
     public void prepareBoardForNextPlayer() {
         uiConfig.clearDicesBorder();
         uiConfig.setDicesVisibility(false);
-        gameMode.prepareCombinationsSlots();
+        if (gameMode instanceof HotSeatGame) {
+            ((HotSeatGame) gameMode).prepareCombinationsSlots();
+        }
 
 
     }
@@ -102,6 +106,10 @@ public class ScoreInputListener implements View.OnClickListener {
         for (int x = 0; x < 15; x++) {
 
             uiConfig.getCombinationsText()[x].setOnClickListener(v -> {
+
+            });
+
+            uiConfig.getCombinationsSlots()[x].setOnClickListener(v -> {
 
             });
         }

@@ -31,6 +31,7 @@ public class MultiplayerTurnScreenFragment extends Fragment {
     private final GameBoardActivity gameBoardActivity;
     private final GameMode gameMode;
     private final String opponentUid;
+    private boolean displayBoardListenerRunning = false;
 
 
     public MultiplayerTurnScreenFragment(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode, String opponentUid) {
@@ -55,7 +56,7 @@ public class MultiplayerTurnScreenFragment extends Fragment {
     public void displayTurnMessage() {
         setNextPlayerName();
         DatabaseReference opponentTurnStarted = multiplayerRoomReference.child("opponentTurn");
-        opponentTurnStarted.addListenerForSingleValueEvent(new ValueEventListener() {
+        opponentTurnStarted.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue(Integer.class) == 0) {
@@ -63,7 +64,10 @@ public class MultiplayerTurnScreenFragment extends Fragment {
 
                 } else if (snapshot.getValue(Integer.class)==1) {
                     nextPlayerButton.setVisibility(View.INVISIBLE);
-                    displayOpponentBoard();
+                    if(!displayBoardListenerRunning) {
+                        displayOpponentBoard();
+                        displayBoardListenerRunning = true;
+                    }
                 }
             }
             @Override
@@ -73,7 +77,7 @@ public class MultiplayerTurnScreenFragment extends Fragment {
         });
         nextPlayerButton.setOnClickListener(v -> {
             gameMode.updateGameBoard();
-            updateOpponentTurnStartedValue();
+            updatePlayerTurnStartedValue();
             uiConfig.setRollDicesVisibility(true);
             uiConfig.setDicesVisibility(false);
             gameBoardActivity.hideFragment();
@@ -95,7 +99,7 @@ public class MultiplayerTurnScreenFragment extends Fragment {
 
 
     //update opponentTurnStarted value in opponents database record
-    public void updateOpponentTurnStartedValue() {
+    public void updatePlayerTurnStartedValue() {
         DatabaseReference opponentTurnStartedFieldReference = FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom")
                 .child(FirebaseAuth.getInstance().getUid()).child("opponentTurnStarted");
         opponentTurnStartedFieldReference.setValue(1);

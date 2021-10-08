@@ -16,10 +16,10 @@ public class MultiplayerGame implements GameMode {
     private final String opponentUid;
     private final String playerUid = FirebaseAuth.getInstance().getUid();
     private int currentPlayerNumber = 1;
-    private int[][] combinationsPointsValues = new int[6][16];
-    private int[][] combinationsSlotsValues = new int[6][16];
-    private boolean[][] isCombinationActive = new boolean[6][16];
-    private int[] totalScore = new int[6];
+    private final int[][] combinationsPointsValues = new int[6][16];
+    private final int[][] combinationsSlotsValues = new int[6][16];
+    private final boolean[][] isCombinationActive = new boolean[6][16];
+    private final int[] totalScore = new int[6];
 
     public MultiplayerGame(UIConfig uiConfig, GameBoardActivity gameBoardActivity, String[] playersNames, String opponentUID) {
         this.uiConfig = uiConfig;
@@ -71,14 +71,6 @@ public class MultiplayerGame implements GameMode {
         return isCombinationActive[currentPlayerNumber - 1];
 
     }
-
-
-    public int getCombinationsPointsValues(int playerNumber,int combinationNr) {
-
-        return combinationsPointsValues[playerNumber][combinationNr];
-
-    }
-
     public int getCurrentPlayerNumber() {
         return currentPlayerNumber;
     }
@@ -104,11 +96,6 @@ public class MultiplayerGame implements GameMode {
         return totalScore;
     }
 
-
-    public void prepareCombinationsSlots() {
-
-    }
-
     @Override
     public void setNumberOfPlayers(int numberOfPlayers) {
 
@@ -119,21 +106,56 @@ public class MultiplayerGame implements GameMode {
         return 2;
     }
 
-    @Override
-    public String getGameMode() {
-        return "MultiplayerMode";
-    }
-
-    public void updateOpponentTurnDatabase() {
-        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("opponentTurn").setValue(0);
-        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("opponentTurnStarted").setValue(0);
-        FirebaseDatabase.getInstance().getReference().child("users").child(playerUid).child("multiplayerRoom").child(opponentUid).child("opponentTurn").setValue(1);
-        FirebaseDatabase.getInstance().getReference().child("users").child(playerUid).child("multiplayerRoom").child(opponentUid).child("opponentTurnStarted").setValue(0);
-    }
-
     public int[][] getCombinationsSlotsValues() {
         return combinationsSlotsValues;
     }
+
+    //set values in device
+    public void setCombinationsPointsValues(int score, int combinationNr) {
+        combinationsPointsValues[currentPlayerNumber - 1][combinationNr] = score;
+
+    }
+
+    public void setTotalScore(int score) {
+        totalScore[currentPlayerNumber - 1] = score;
+    }
+
+    public void setIsCombinationActive(boolean isCombinationActiveValue, int combinationNr) {
+
+
+        isCombinationActive[currentPlayerNumber - 1][combinationNr] = isCombinationActiveValue;
+
+    }
+
+    public void setCombinationsSlots(int combinationsSlotNumber, int slotStatus) {
+        combinationsSlotsValues[currentPlayerNumber - 1][combinationsSlotNumber] = slotStatus;
+
+    }
+
+    //set values in database
+    public void setCombinationsSlotsInDatabase(int combinationsSlotNumber, int slotStatus) {
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom")
+                .child(playerUid).child("combinationsSlots").child(String.valueOf(combinationsSlotNumber + 1)).setValue(slotStatus);
+    }
+
+    public void setIsCombinationActiveInDatabase(boolean isCombinationActive, int combinationNr) {
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid)
+                .child("isCombinationActive").child(String.valueOf(combinationNr + 1)).setValue(isCombinationActive);
+    }
+
+    public void setTotalScoreInDatabase(int score) {
+        score += totalScore[currentPlayerNumber-1];
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom")
+                .child(playerUid).child("totalScore").setValue(score);
+    }
+
+    public void setCombinationsPointsInDatabase(int score, int combinationNr) {
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid)
+                .child("combinationsPoints").child(String.valueOf(combinationNr + 1)).setValue(score);
+    }
+
+
+
 
     public void changeCurrentPlayer() {
         if (currentPlayerNumber == 1) {
@@ -149,47 +171,9 @@ public class MultiplayerGame implements GameMode {
         }
     }
 
-
-    public void setCombinationsPointsValues(int score, int combinationNr) {
-        combinationsPointsValues[currentPlayerNumber - 1][combinationNr] = score;
-
-    }
-
-    public void setCombinationsPointsInDatabase(int score, int combinationNr) {
-        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid)
-                .child("combinationsPoints").child(String.valueOf(combinationNr + 1)).setValue(score);
-    }
-
-    public void setTotalScore(int score) {
-        totalScore[currentPlayerNumber - 1] += score;
-    }
-
-    public void setTotalScoreInDatabase(int score) {
-        totalScore[currentPlayerNumber - 1] += score;
-        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom")
-                .child(playerUid).child("totalScore").setValue(totalScore[currentPlayerNumber - 1]);
-    }
-
-    public void setIsCombinationActive(boolean isCombinationActive, int combinationNr) {
-
-
-        this.isCombinationActive[currentPlayerNumber - 1][combinationNr] = isCombinationActive;
-
-    }
-
-    public void setIsCombinationActiveInDatabase(boolean isCombinationActive, int combinationNr) {
-        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid)
-                .child("isCombinationActive").child(String.valueOf(combinationNr + 1)).setValue(isCombinationActive);
-    }
-
-    public void setCombinationsSlots(int combinationsSlotNumber, int slotStatus) {
-        combinationsSlotsValues[currentPlayerNumber - 1][combinationsSlotNumber] = slotStatus;
-
-    }
-
-    public void setCombinationsSlotsInDatabase(int combinationsSlotNumber, int slotStatus) {
-        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom")
-                .child(playerUid).child("combinationsSlots").child(String.valueOf(combinationsSlotNumber + 1)).setValue(slotStatus);
+    public void updateOpponentTurnDatabase() {
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("opponentTurn").setValue(0);
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("opponentTurnStarted").setValue(0);
     }
 
     public void updateGameBoard() {
