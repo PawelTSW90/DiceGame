@@ -9,9 +9,6 @@ public interface GameMode {
 
     void setFinalResultScreen();
 
-    void prepareCombinationsSlots();
-
-
     void setAllCombinationsAsActive();
 
     void setTotalScore(int score);
@@ -27,8 +24,6 @@ public interface GameMode {
     void setPlayersNames(String[] playersNames);
 
     void setCurrentPlayerNumber(int currentPlayerNumber);
-
-    String getGameMode();
 
     String[] getPlayersNames();
 

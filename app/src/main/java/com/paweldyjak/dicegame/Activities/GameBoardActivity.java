@@ -24,7 +24,7 @@ public class GameBoardActivity extends AppCompatActivity {
     private FragmentTransaction fragmentTransaction;
     private View mainBoardLayout;
     private boolean multiplayerMode;
-    private OpponentOnlineUIConfig opponentOnlineUIConfig;
+    private OpponentUIConfig opponentUIConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +89,7 @@ public class GameBoardActivity extends AppCompatActivity {
         if (!multiplayerMode) {
             turnScreenFragment.displayTurnMessage();
         } else {
-            multiplayerTurnScreenFragment.displayTurnMessage();
+            multiplayerTurnScreenFragment.setNextPlayerName();
         }
     }
 
@@ -104,11 +104,10 @@ public class GameBoardActivity extends AppCompatActivity {
         //creating class objects
         UIConfig uiConfig = new UIConfig(this, null);
         HotSeatGame hotSeatGame = new HotSeatGame(uiConfig, this, playersNames);
-        RerollDices rerollDices = new RerollDices(uiConfig);
         turnScreenFragment = new TurnScreenFragment(this, uiConfig, hotSeatGame);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame);
         ScoreInputSetter scoreInputSetter = new ScoreInputSetter(this, uiConfig, hotSeatGame);
-        GameBoardManager gameBoardManager = new GameBoardManager(this, scoreInputSetter, dicesCombinationsChecker, uiConfig, null, rerollDices, hotSeatGame);
+        GameBoardManager gameBoardManager = new GameBoardManager(this, scoreInputSetter, dicesCombinationsChecker, uiConfig, null,hotSeatGame);
         //configuring UI
         uiConfig.setComponents();
         uiConfig.getCurrentPlayerName().setText(playersNames[0]);
@@ -124,13 +123,12 @@ public class GameBoardActivity extends AppCompatActivity {
         //creating class objects
         UIConfig uiConfig = new UIConfig(this, opponentUid);
         MultiplayerGame multiplayerGame = new MultiplayerGame(uiConfig, this, playersNames, opponentUid);
-        OpponentOnlineUIConfig opponentOnlineUIConfig = new OpponentOnlineUIConfig(this, uiConfig, multiplayerGame, opponentUid);
-        this.opponentOnlineUIConfig = opponentOnlineUIConfig;
-        RerollDices rerollDices = new RerollDices(uiConfig);
+        OpponentUIConfig opponentUIConfig = new OpponentUIConfig(this, uiConfig, multiplayerGame, opponentUid);
+        this.opponentUIConfig = opponentUIConfig;
         multiplayerTurnScreenFragment = new MultiplayerTurnScreenFragment(this, uiConfig, multiplayerGame, opponentUid);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame);
         ScoreInputSetter scoreInputSetter = new ScoreInputSetter(this, uiConfig, multiplayerGame);
-        GameBoardManager gameBoardManager = new GameBoardManager(this, scoreInputSetter, dicesCombinationsChecker, uiConfig, opponentOnlineUIConfig, rerollDices, multiplayerGame);
+        GameBoardManager gameBoardManager = new GameBoardManager(this, scoreInputSetter, dicesCombinationsChecker, uiConfig, opponentUIConfig,multiplayerGame);
         //configuring UI
         uiConfig.setComponents();
         uiConfig.setCurrentPlayerName(playersNames[0]);
@@ -142,8 +140,8 @@ public class GameBoardActivity extends AppCompatActivity {
         showFragment();
     }
 
-    public OpponentOnlineUIConfig getOpponentOnlineUIConfig() {
-        return opponentOnlineUIConfig;
+    public OpponentUIConfig getOpponentOnlineUIConfig() {
+        return opponentUIConfig;
     }
 
 }
