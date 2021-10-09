@@ -85,12 +85,4 @@ public class ScoreInputSetter {
         this.resetThrowCounter = resetThrowCounter;
     }
 
-    public void resetCombinationsListeners() {
-        for (int x = 0; x < 15; x++) {
-
-            uiConfig.getCombinationsText()[x].setOnClickListener(v -> {
-
-            });
-        }
-    }
 }

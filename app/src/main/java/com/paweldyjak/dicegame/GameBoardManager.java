@@ -1,16 +1,11 @@
 package com.paweldyjak.dicegame;
 
 import android.widget.ImageView;
-
-import androidx.core.content.ContextCompat;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
 import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 import com.paweldyjak.dicegame.GameModes.MultiplayerGame;
-
 import java.util.Random;
-import java.util.concurrent.Executor;
-
 
 public class GameBoardManager {
     private final ScoreInputSetter scoreInputSetter;
@@ -26,7 +21,7 @@ public class GameBoardManager {
     private final Random randomValue = new Random();
 
 
-    public GameBoardManager(GameBoardActivity gameBoardActivity, ScoreInputSetter scoreInputSetter, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, OpponentUIConfig opponentUIConfig,GameMode gameMode) {
+    public GameBoardManager(GameBoardActivity gameBoardActivity, ScoreInputSetter scoreInputSetter, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, OpponentUIConfig opponentUIConfig, GameMode gameMode) {
         this.gameBoardActivity = gameBoardActivity;
         this.scoreInputSetter = scoreInputSetter;
         this.dicesCombinationsChecker = dicesCombinationsChecker;
@@ -65,10 +60,10 @@ public class GameBoardManager {
                 if (throwNumber == 3) {
                     setDicesRerolling(throwNumber);
                     blockCombinations();
-                    if(gameMode instanceof HotSeatGame) {
+                    if (gameMode instanceof HotSeatGame) {
                         scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
-                    } else{
-                        scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber),15);
+                    } else {
+                        scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
                     }
                 }
             }
@@ -101,7 +96,7 @@ public class GameBoardManager {
                 dices[x] = value;
             }
         }
-        if(gameMode instanceof MultiplayerGame) {
+        if (gameMode instanceof MultiplayerGame) {
             //upload to database dices values for opponent to display
             opponentUIConfig.updateDatabaseWithDicesValues(dices);
         }
@@ -113,11 +108,11 @@ public class GameBoardManager {
         for (int x = 0; x < 5; x++) {
             uiConfig.clearDicesBorder();
             uiConfig.getDicesSlots()[x].setOnClickListener(v -> {
-                if(throwNumber!=3) {
+                if (throwNumber != 3) {
                     if (v.getBackground() != null) {
                         v.setBackground(null);
                     } else {
-                        uiConfig.setDicesBorder(((ImageView)v), true);
+                        uiConfig.setDicesBorder(((ImageView) v), true);
                     }
                 }
 
@@ -142,7 +137,7 @@ public class GameBoardManager {
 
     // method sets combinations for checking
     public void setCombinations() {
-        if(gameMode instanceof MultiplayerGame) {
+        if (gameMode instanceof MultiplayerGame) {
             scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0);
             scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1);
             scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2);
@@ -182,84 +177,11 @@ public class GameBoardManager {
 
     // method allows to block one of a combinations after last throw
     public void blockCombinations() {
-        Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
         for (int x = 0; x < 16; x++) {
-            int combinationNr = x;
             if (dicesCombinationsChecker.combinationChecker(x, dices, isFirstThrow, 0) == 0 && gameMode.getIsCombinationActive()[x]) {
                 {
-                    uiConfig.getCombinationsText()[x].setOnClickListener(v -> {
-                        v.setEnabled(false);
-                        gameMode.setIsCombinationActive(false, combinationNr);
-                        scoreInputSetter.setResetThrowCounter(true);
-                        scoreInputSetter.resetCombinationsListeners();
-                        gameMode.setCombinationsSlots(combinationNr, 2);
-                        if(gameMode instanceof HotSeatGame) {
-                            ((HotSeatGame)gameMode).prepareCombinationsSlots();
-                        }
-                        uiConfig.setDicesVisibility(false);
-                        if (gameMode.checkIfAllCombinationsAreDone() && gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers()) {
-                            executor.execute(() -> {
-                                try {
-                                    sounds.playEraseCombinationSound();
-                                    Thread.sleep(2000);
-                                    gameMode.setFinalResultScreen();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            });
-
-                        } else {
-                            executor.execute(() -> {
-                                try {
-                                    sounds.playEraseCombinationSound();
-                                    Thread.sleep(2000);
-                                    gameBoardActivity.showNextTurnFragment();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-
-                            });
-
-                        }
-
-                    });
-
-                    int finalX = x;
-                    uiConfig.getCombinationsSlots()[x].setOnClickListener(v -> {
-                        uiConfig.getCombinationsText()[finalX].setEnabled(false);
-                        gameMode.setIsCombinationActive(false, combinationNr);
-                        scoreInputSetter.setResetThrowCounter(true);
-                        scoreInputSetter.resetCombinationsListeners();
-                        gameMode.setCombinationsSlots(combinationNr, 2);
-                        if(gameMode instanceof HotSeatGame) {
-                            ((HotSeatGame)gameMode).prepareCombinationsSlots();
-                        }
-                        uiConfig.setDicesVisibility(false);
-                        if (gameMode.checkIfAllCombinationsAreDone() && gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers()) {
-                            executor.execute(() -> {
-                                try {
-                                    sounds.playEraseCombinationSound();
-                                    Thread.sleep(2000);
-                                    gameMode.setFinalResultScreen();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            });
-
-                        } else {
-                            executor.execute(() -> {
-                                try {
-                                    sounds.playEraseCombinationSound();
-                                    Thread.sleep(2000);
-                                    gameBoardActivity.showNextTurnFragment();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-
-                            });
-
-                        }
-                    });
+                    uiConfig.getCombinationsText()[x].setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, scoreInputSetter, uiConfig, sounds, x));
+                    uiConfig.getCombinationsSlots()[x].setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, scoreInputSetter, uiConfig, sounds, x));
 
                 }
             }

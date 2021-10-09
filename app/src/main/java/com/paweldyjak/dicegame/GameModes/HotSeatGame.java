@@ -34,7 +34,7 @@ public class HotSeatGame implements GameMode {
     public void setTotalScore(int score) {
         String string = gameBoardActivity.getResources().getString(R.string.points);
 
-        totalScore[currentPlayerNumber - 1] += score;
+        totalScore[currentPlayerNumber - 1] = score;
         uiConfig.getTotalScore().setText(totalScore[currentPlayerNumber - 1] + " " + string);
     }
 
