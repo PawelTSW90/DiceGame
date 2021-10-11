@@ -274,7 +274,7 @@ public class UIConfig {
 
     }
 
-    public void updateCombinationsSlots(int combinationStatus, int combinationNumber) {
+    public void updateCombinationsUI(int combinationStatus, int combinationNumber) {
         /*combination status:
 
         0 - enabled, empty
@@ -285,6 +285,7 @@ public class UIConfig {
             combinationsSlots[combinationNumber].setText("");
             combinationsPoints[combinationNumber].setEnabled(true);
             combinationsText[combinationNumber].setEnabled(true);
+            combinationsSlots[combinationNumber].setEnabled(true);
         } else if (combinationStatus == 1) {
             combinationsSlots[combinationNumber].setText("\u2713");
             combinationsSlots[combinationNumber].setGravity(Gravity.CENTER);
@@ -292,6 +293,7 @@ public class UIConfig {
             combinationsSlots[combinationNumber].setTextColor(Color.rgb(27, 182, 33));
             combinationsPoints[combinationNumber].setEnabled(true);
             combinationsText[combinationNumber].setEnabled(false);
+            combinationsSlots[combinationNumber].setEnabled(false);
 
         } else {
             combinationsSlots[combinationNumber].setText("X");
@@ -300,6 +302,7 @@ public class UIConfig {
             combinationsSlots[combinationNumber].setTextColor(Color.rgb(140, 17, 16));
             combinationsPoints[combinationNumber].setEnabled(false);
             combinationsText[combinationNumber].setEnabled(false);
+            combinationsSlots[combinationNumber].setEnabled(false);
         }
     }
 
@@ -327,4 +330,5 @@ public class UIConfig {
             rollDicesButton.setVisibility(View.INVISIBLE);
         }
     }
+
 }

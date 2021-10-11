@@ -79,6 +79,11 @@ public class MultiplayerGame implements GameMode {
         this.currentPlayerNumber = currentPlayerNumber;
     }
 
+    @Override
+    public int getCombinationsPointsValues(int playerNumber, int combinationNumber) {
+        return combinationsPointsValues[playerNumber][combinationNumber];
+    }
+
     public String[] getPlayersNames() {
         return playersNames;
     }
@@ -180,11 +185,11 @@ public class MultiplayerGame implements GameMode {
 
         for (int x = 0; x < uiConfig.getCombinationsSlots().length; x++) {
             if (combinationsSlotsValues[currentPlayerNumber - 1][x] == 1) {
-                uiConfig.updateCombinationsSlots(1, x);
+                uiConfig.updateCombinationsUI(1, x);
             } else if (combinationsSlotsValues[currentPlayerNumber - 1][x] == 2) {
-                uiConfig.updateCombinationsSlots(2, x);
+                uiConfig.updateCombinationsUI(2, x);
             } else {
-                uiConfig.updateCombinationsSlots(0, x);
+                uiConfig.updateCombinationsUI(0, x);
             }
             uiConfig.getCombinationsPoints()[x].setText(combinationsPointsValues[currentPlayerNumber - 1][x] + " " + gameBoardActivity.getString(R.string.points));
             uiConfig.getTotalScore().setText(totalScore[currentPlayerNumber - 1] + " " + gameBoardActivity.getString(R.string.points));

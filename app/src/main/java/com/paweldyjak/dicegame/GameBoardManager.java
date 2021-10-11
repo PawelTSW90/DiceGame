@@ -1,16 +1,23 @@
 package com.paweldyjak.dicegame;
 
+import android.util.Log;
 import android.widget.ImageView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
 import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 import com.paweldyjak.dicegame.GameModes.MultiplayerGame;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class GameBoardManager {
+    private final String playerUid = FirebaseAuth.getInstance().getUid();
     private final ScoreInputSetter scoreInputSetter;
     private final UIConfig uiConfig;
-    private final OpponentUIConfig opponentUIConfig;
     private final DicesCombinationsChecker dicesCombinationsChecker;
     private final GameMode gameMode;
     private final int[] dices = new int[5];
@@ -19,15 +26,16 @@ public class GameBoardManager {
     private final Sounds sounds;
     private final GameBoardActivity gameBoardActivity;
     private final Random randomValue = new Random();
+    private final String opponentUid;
 
 
-    public GameBoardManager(GameBoardActivity gameBoardActivity, ScoreInputSetter scoreInputSetter, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, OpponentUIConfig opponentUIConfig, GameMode gameMode) {
+    public GameBoardManager(GameBoardActivity gameBoardActivity, ScoreInputSetter scoreInputSetter, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, GameMode gameMode, String opponentUid) {
         this.gameBoardActivity = gameBoardActivity;
         this.scoreInputSetter = scoreInputSetter;
         this.dicesCombinationsChecker = dicesCombinationsChecker;
         this.uiConfig = uiConfig;
-        this.opponentUIConfig = opponentUIConfig;
         this.gameMode = gameMode;
+        this.opponentUid = opponentUid;
         sounds = new Sounds(gameBoardActivity);
 
     }
@@ -37,36 +45,35 @@ public class GameBoardManager {
         gameBoardActivity.hideFragment();
         uiConfig.getRollDicesButton().setOnClickListener(v -> {
 
-            if (!gameMode.checkIfAllCombinationsAreDone()) {
+            if (scoreInputSetter.getResetThrowCounter()) {
+                throwNumber = 0;
+                isFirstThrow = true;
+                scoreInputSetter.setResetThrowCounter(false);
 
-                if (scoreInputSetter.getResetThrowCounter()) {
-                    throwNumber = 0;
-                    isFirstThrow = true;
-                    scoreInputSetter.setResetThrowCounter(false);
-
+            }
+            if (throwNumber < 3) {
+                if (throwNumber > 0) {
+                    isFirstThrow = false;
                 }
-                if (throwNumber < 3) {
-                    if (throwNumber > 0) {
-                        isFirstThrow = false;
-                    }
-                    rollDices();
-                    uiConfig.showDices(dices);
-                    setCombinations();
-                    throwNumber++;
-                    setDicesRerolling(throwNumber);
+                rollDices();
+                uiConfig.showDices(dices);
+                setCombinations();
+                throwNumber++;
+                setDicesRerolling(throwNumber);
 
-                }
+            }
 
-                if (throwNumber == 3) {
-                    setDicesRerolling(throwNumber);
-                    blockCombinations();
-                    if (gameMode instanceof HotSeatGame) {
-                        scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
-                    } else {
-                        scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
-                    }
+            if (throwNumber == 3) {
+                setDicesRerolling(throwNumber);
+                blockCombinations();
+                //disable SoS blocking
+                if (gameMode instanceof HotSeatGame) {
+                    scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15, this);
+                } else {
+                    scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15, this);
                 }
             }
+
 
         });
 
@@ -98,7 +105,7 @@ public class GameBoardManager {
         }
         if (gameMode instanceof MultiplayerGame) {
             //upload to database dices values for opponent to display
-            opponentUIConfig.updateDatabaseWithDicesValues(dices);
+            updateDatabaseWithDicesValues(dices);
         }
 
     }
@@ -135,57 +142,89 @@ public class GameBoardManager {
     }
 
 
-    // method sets combinations for checking
+    // method checks which combinations are available
     public void setCombinations() {
         if (gameMode instanceof MultiplayerGame) {
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0);
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1);
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2);
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFour(dices, isFirstThrow), 3);
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFive(dices, isFirstThrow), 4);
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSix(dices, isFirstThrow), 5);
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkPair(dices, isFirstThrow), 6);
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkTwoPairs(dices, isFirstThrow), 7);
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkEvens(dices, isFirstThrow), 8);
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkOdds(dices, isFirstThrow), 9);
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSmallStraight(dices, isFirstThrow), 10);
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkLargeStraight(dices, isFirstThrow), 11);
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFullHouse(dices, isFirstThrow), 12);
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFourOfAKind(dices, isFirstThrow), 13);
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFiveOfAKind(dices, isFirstThrow), 14);
-            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0, this);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1, this);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2, this);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFour(dices, isFirstThrow), 3, this);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFive(dices, isFirstThrow), 4, this);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSix(dices, isFirstThrow), 5, this);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkPair(dices, isFirstThrow), 6, this);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkTwoPairs(dices, isFirstThrow), 7, this);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkEvens(dices, isFirstThrow), 8, this);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkOdds(dices, isFirstThrow), 9, this);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSmallStraight(dices, isFirstThrow), 10, this);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkLargeStraight(dices, isFirstThrow), 11, this);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFullHouse(dices, isFirstThrow), 12, this);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFourOfAKind(dices, isFirstThrow), 13, this);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkFiveOfAKind(dices, isFirstThrow), 14, this);
+            scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15, this);
 
         } else {
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFour(dices, isFirstThrow), 3);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFive(dices, isFirstThrow), 4);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSix(dices, isFirstThrow), 5);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkPair(dices, isFirstThrow), 6);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkTwoPairs(dices, isFirstThrow), 7);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkEvens(dices, isFirstThrow), 8);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkOdds(dices, isFirstThrow), 9);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSmallStraight(dices, isFirstThrow), 10);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkLargeStraight(dices, isFirstThrow), 11);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFullHouse(dices, isFirstThrow), 12);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFourOfAKind(dices, isFirstThrow), 13);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFiveOfAKind(dices, isFirstThrow), 14);
-            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0, this);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1, this);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2, this);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFour(dices, isFirstThrow), 3, this);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFive(dices, isFirstThrow), 4, this);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSix(dices, isFirstThrow), 5, this);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkPair(dices, isFirstThrow), 6, this);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkTwoPairs(dices, isFirstThrow), 7, this);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkEvens(dices, isFirstThrow), 8, this);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkOdds(dices, isFirstThrow), 9, this);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSmallStraight(dices, isFirstThrow), 10, this);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkLargeStraight(dices, isFirstThrow), 11, this);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFullHouse(dices, isFirstThrow), 12, this);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFourOfAKind(dices, isFirstThrow), 13, this);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkFiveOfAKind(dices, isFirstThrow), 14, this);
+            scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15, this);
         }
     }
 
-    // method allows to block one of a combinations after last throw
+    // method allows to block combinations after last throw
     public void blockCombinations() {
         for (int x = 0; x < 16; x++) {
             if (dicesCombinationsChecker.combinationChecker(x, dices, isFirstThrow, 0) == 0 && gameMode.getIsCombinationActive()[x]) {
                 {
-                    uiConfig.getCombinationsText()[x].setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, scoreInputSetter, uiConfig, sounds, x));
-                    uiConfig.getCombinationsSlots()[x].setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, scoreInputSetter, uiConfig, sounds, x));
+                    uiConfig.getCombinationsText()[x].setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, scoreInputSetter, uiConfig, this, sounds, x));
+                    uiConfig.getCombinationsSlots()[x].setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, scoreInputSetter, uiConfig, this, sounds, x));
 
                 }
             }
         }
+    }
+
+    public void updatePlayerBoard() {
+        String string = gameBoardActivity.getResources().getString(R.string.points);
+        for (int x = 0; x < uiConfig.getCombinationsSlots().length; x++) {
+            uiConfig.updateCombinationsUI(gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][x], x);
+            uiConfig.getCombinationsPoints()[x].setText(gameMode.getCombinationsPointsValues(gameMode.getCurrentPlayerNumber(), x) + " " + string);
+        }
+
+        uiConfig.getTotalScore().setText(gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber() - 1) + " " + string);
+
+
+    }
+
+
+    public void displayNextPlayerBoard() {
+        String string = gameBoardActivity.getResources().getString(R.string.points);
+        for (int x = 0; x < 16; x++) {
+            uiConfig.updateCombinationsUI(gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][x], x);
+            uiConfig.getCombinationsPoints()[x].setText(gameMode.getCombinationsPointsValues(gameMode.getCurrentPlayerNumber(), x) + " " + string);
+            uiConfig.getTotalScore().setText(gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber() - 1) + " " + string);
+        }
+    }
+
+    public void updateDatabaseWithDicesValues(int[] dicesValues) {
+        Map<String, Integer> dices = new HashMap<>();
+        for (int x = 0; x < 5; x++) {
+            dices.put(String.valueOf(x + 1), dicesValues[x]);
+        }
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("dices").setValue(dices);
+
     }
 
 }

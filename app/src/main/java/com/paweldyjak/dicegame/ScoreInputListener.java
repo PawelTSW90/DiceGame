@@ -17,12 +17,13 @@ public class ScoreInputListener implements View.OnClickListener {
     private final GameMode gameMode;
     private final ScoreInputSetter scoreInputSetter;
     private final UIConfig uiConfig;
+    private final GameBoardManager gameBoardManager;
     private final boolean resetThrowCounter;
     private final int scoreToInput;
     private final int combinationNumber;
     private final boolean isCombinationActive;
 
-    public ScoreInputListener(GameBoardActivity gameBoardActivity, GameMode gameMode, ScoreInputSetter scoreInputSetter, UIConfig uiConfig, boolean resetThrowCounter, int scoreToInput, int combinationNumber, boolean isCombinationActive) {
+    public ScoreInputListener(GameBoardActivity gameBoardActivity, GameMode gameMode, ScoreInputSetter scoreInputSetter, UIConfig uiConfig, GameBoardManager gameBoardManager, boolean resetThrowCounter, int scoreToInput, int combinationNumber, boolean isCombinationActive) {
         this.gameBoardActivity = gameBoardActivity;
         this.gameMode = gameMode;
         this.scoreInputSetter = scoreInputSetter;
@@ -31,6 +32,7 @@ public class ScoreInputListener implements View.OnClickListener {
         this.scoreToInput = scoreToInput;
         this.combinationNumber = combinationNumber;
         this.isCombinationActive = isCombinationActive;
+        this.gameBoardManager = gameBoardManager;
     }
 
     @Override
@@ -38,10 +40,8 @@ public class ScoreInputListener implements View.OnClickListener {
         Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
         if (scoreToInput > 0 && isCombinationActive && !resetThrowCounter) {
             updateBoardValues(scoreToInput, combinationNumber);
-            gameMode.updateGameBoard();
             prepareBoardForNextPlayer();
             if (gameMode instanceof MultiplayerGame) {
-
                 ((MultiplayerGame) gameMode).updateOpponentTurnDatabase();
             }
             if (gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers() && gameMode.checkIfAllCombinationsAreDone()) {
@@ -86,18 +86,21 @@ public class ScoreInputListener implements View.OnClickListener {
         }
         gameMode.setCombinationsPointsValues(scoreToInput, combinationNumber);
         gameMode.setCombinationsSlots(combinationNumber, 1);
-        int totalScore = gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber()) + scoreToInput;
-        gameMode.setTotalScore(totalScore);
+        gameMode.setTotalScore(scoreToInput);
+        int totalScore = gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber()-1);
+        String string = gameBoardActivity.getResources().getString(R.string.points);
+        uiConfig.getTotalScore().setText(totalScore + " " + string);
         gameMode.setIsCombinationActive(false, combinationNumber);
+        if (gameMode instanceof HotSeatGame) {
+            gameBoardManager.updatePlayerBoard();
+        }
 
     }
 
     public void prepareBoardForNextPlayer() {
         uiConfig.clearDicesBorder();
         uiConfig.setDicesVisibility(false);
-        if (gameMode instanceof HotSeatGame) {
-            ((HotSeatGame) gameMode).prepareCombinationsSlots();
-        }
+
 
 
     }

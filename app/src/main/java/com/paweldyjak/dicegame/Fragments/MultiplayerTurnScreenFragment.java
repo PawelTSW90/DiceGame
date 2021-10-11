@@ -18,7 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
+import com.paweldyjak.dicegame.GameBoardManager;
 import com.paweldyjak.dicegame.GameModes.GameMode;
+import com.paweldyjak.dicegame.GameModes.MultiplayerGame;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.UIConfig;
 
@@ -30,14 +32,16 @@ public class MultiplayerTurnScreenFragment extends Fragment {
     private Button nextPlayerButton;
     private final GameBoardActivity gameBoardActivity;
     private final GameMode gameMode;
+    private final GameBoardManager gameBoardManager;
     private final String opponentUid;
     private boolean displayBoardListenerRunning = false;
 
 
-    public MultiplayerTurnScreenFragment(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode, String opponentUid) {
+    public MultiplayerTurnScreenFragment(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode, GameBoardManager gameBoardManager, String opponentUid) {
         this.gameBoardActivity = gameBoardActivity;
         this.uiConfig = uiConfig;
         this.gameMode = gameMode;
+        this.gameBoardManager = gameBoardManager;
         this.opponentUid = opponentUid;
     }
 
@@ -76,7 +80,7 @@ public class MultiplayerTurnScreenFragment extends Fragment {
             }
         });
         nextPlayerButton.setOnClickListener(v -> {
-            gameMode.updateGameBoard();
+            ((MultiplayerGame)gameMode).updateGameBoard();
             updatePlayerTurnStartedValue();
             uiConfig.setRollDicesVisibility(true);
             uiConfig.setDicesVisibility(false);
@@ -111,7 +115,7 @@ public class MultiplayerTurnScreenFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.getValue(Integer.class)==1){
-                    gameMode.updateGameBoard();
+                    ((MultiplayerGame)gameMode).updateGameBoard();
                     gameBoardActivity.getOpponentOnlineUIConfig().displayOpponentScreen();
                     gameBoardActivity.hideFragment();
                 }

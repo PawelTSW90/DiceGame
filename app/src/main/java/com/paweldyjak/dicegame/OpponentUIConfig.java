@@ -1,12 +1,9 @@
 package com.paweldyjak.dicegame;
 
 import android.os.Build;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,7 +12,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
 import com.paweldyjak.dicegame.GameModes.MultiplayerGame;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -28,6 +24,7 @@ public class OpponentUIConfig {
     private final GameBoardActivity gameBoardActivity;
     private final UIConfig uiConfig;
     private final GameMode gameMode;
+    private final GameBoardManager gameBoardManager;
     private List<Integer> opponentDices = new ArrayList<>(5);
     private final String opponentUid;
     private Sounds sounds;
@@ -35,16 +32,17 @@ public class OpponentUIConfig {
     private boolean opponentDicesListenerRunning = false;
     private boolean opponentCombinationSlotListenerRunning = false;
 
-    public OpponentUIConfig(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode, String opponentUid) {
+    public OpponentUIConfig(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode, GameBoardManager gameBoardManager, String opponentUid) {
         this.gameBoardActivity = gameBoardActivity;
         this.uiConfig = uiConfig;
         this.gameMode = gameMode;
         this.opponentUid = opponentUid;
+        this.gameBoardManager = gameBoardManager;
 
     }
 
     public void displayOpponentScreen() {
-        opponentCombinationsSlotsValues = ((MultiplayerGame) gameMode).getCombinationsSlotsValues();
+        opponentCombinationsSlotsValues = gameMode.getCombinationsSlotsValues();
         sounds = new Sounds(gameBoardActivity);
         uiConfig.setRollDicesVisibility(false);
         uiConfig.setDicesVisibility(false);
@@ -80,15 +78,7 @@ public class OpponentUIConfig {
 
     }
 
-    public void updateDatabaseWithDicesValues(int[] dicesValues) {
-        Map<String, Integer> dices = new HashMap<>();
-        for (int x = 0; x < 5; x++) {
-            dices.put(String.valueOf(x + 1), dicesValues[x]);
-        }
 
-        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("dices").setValue(dices);
-
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void displayOpponentDices() {
@@ -253,6 +243,7 @@ public class OpponentUIConfig {
 
     public void displayOpponentTotalScore(int totalScore) {
         gameMode.setTotalScore(totalScore);
+        uiConfig.getTotalScore().setText(gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber()-1));
         checkOpponentIsCombinationActive();
 
     }
@@ -284,7 +275,7 @@ public class OpponentUIConfig {
             tmp = x + 1;
             gameMode.setIsCombinationActive(valuesMap.get(String.valueOf(tmp)), x);
         }
-        gameMode.updateGameBoard();
+        ((MultiplayerGame)gameMode).updateGameBoard();
         updatePlayerTurnDatabase();
         executor.execute(() -> {
             try {
