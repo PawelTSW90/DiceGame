@@ -15,7 +15,6 @@ public class MultiplayerGame implements GameMode {
     private int currentPlayerNumber = 1;
     private final int[][] combinationsPointsValues = new int[6][16];
     private final int[][] combinationsSlotsValues = new int[6][16];
-    private final boolean[][] isCombinationActive = new boolean[6][16];
     private final int[] totalScore = new int[6];
 
     public MultiplayerGame(GameBoardActivity gameBoardActivity, String[] playersNames, String opponentUID) {
@@ -25,8 +24,8 @@ public class MultiplayerGame implements GameMode {
     }
 
     public boolean checkIfAllCombinationsAreDone() {
-        for (int x = 0; x < isCombinationActive.length; x++) {
-            if (isCombinationActive[currentPlayerNumber - 1][x]) {
+        for (int x = 0; x < 16; x++) {
+            if (getCombinationsSlotsValues()[getCurrentPlayerNumber()-1][x]==0) {
                 return false;
             }
         }
@@ -45,10 +44,6 @@ public class MultiplayerGame implements GameMode {
             Arrays.fill(row, 0);
         }
 
-        for (boolean[] row : isCombinationActive) {
-            Arrays.fill(row, true);
-        }
-
         Arrays.fill(totalScore, 0);
 
     }
@@ -61,11 +56,6 @@ public class MultiplayerGame implements GameMode {
 
     }
 
-    public boolean[] getIsCombinationActive() {
-
-        return isCombinationActive[currentPlayerNumber - 1];
-
-    }
     public int getCurrentPlayerNumber() {
         return currentPlayerNumber;
     }
@@ -117,14 +107,7 @@ public class MultiplayerGame implements GameMode {
     }
 
     public void setTotalScore(int score) {
-        totalScore[currentPlayerNumber - 1] = score;
-    }
-
-    public void setIsCombinationActive(boolean isCombinationActiveValue, int combinationNr) {
-
-
-        isCombinationActive[currentPlayerNumber - 1][combinationNr] = isCombinationActiveValue;
-
+        totalScore[currentPlayerNumber - 1] += score;
     }
 
     public void setCombinationsSlots(int combinationsSlotNumber, int slotStatus) {

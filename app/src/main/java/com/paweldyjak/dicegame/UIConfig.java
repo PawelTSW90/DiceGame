@@ -219,10 +219,6 @@ public class UIConfig {
         return combinationsSlots;
     }
 
-    public TextView getTotalScore() {
-        return totalScore;
-    }
-
 
     //method shows dices
     public void showDices(int[] dices) {
@@ -329,6 +325,11 @@ public class UIConfig {
         } else {
             rollDicesButton.setVisibility(View.INVISIBLE);
         }
+    }
+
+    public void setTotalScore(int totalScoreValue){
+        String string = gameBoardActivity.getResources().getString(R.string.points);
+        totalScore.setText(totalScoreValue + string);
     }
 
 }

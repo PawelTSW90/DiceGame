@@ -1,7 +1,6 @@
 package com.paweldyjak.dicegame.Fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +12,13 @@ import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
 
 public class TurnScreenFragment extends Fragment {
-    private final UIConfig uiConfig;
     private TextView playerName;
     private Button nextPlayerButton;
     private final GameBoardActivity gameBoardActivity;
     private final GameMode gameMode;
     private final GameBoardManager gameBoardManager;
 
-    public TurnScreenFragment(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode, GameBoardManager gameBoardManager) {
-        this.uiConfig = uiConfig;
+    public TurnScreenFragment(GameBoardActivity gameBoardActivity,GameMode gameMode, GameBoardManager gameBoardManager) {
         this.gameBoardActivity = gameBoardActivity;
         this.gameMode = gameMode;
         this.gameBoardManager = gameBoardManager;

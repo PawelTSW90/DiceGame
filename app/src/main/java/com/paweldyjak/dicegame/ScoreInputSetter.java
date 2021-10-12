@@ -45,8 +45,8 @@ public class ScoreInputSetter {
 
     public void updatePlayerScore(int scoreToInput, int combinationNumber, GameBoardManager gameBoardManager) {
 
-        uiConfig.getCombinationsText()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, this, uiConfig,gameBoardManager, resetThrowCounter, scoreToInput, combinationNumber, gameMode.getIsCombinationActive()[combinationNumber]));
-        uiConfig.getCombinationsSlots()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, this, uiConfig,gameBoardManager, resetThrowCounter, scoreToInput, combinationNumber, gameMode.getIsCombinationActive()[combinationNumber]));
+        uiConfig.getCombinationsText()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, this, uiConfig,gameBoardManager, resetThrowCounter, scoreToInput, combinationNumber, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][combinationNumber]));
+        uiConfig.getCombinationsSlots()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, this, uiConfig,gameBoardManager, resetThrowCounter, scoreToInput, combinationNumber, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][combinationNumber]));
 
 
     }
@@ -55,14 +55,14 @@ public class ScoreInputSetter {
         //create database variable increased by one
         int databaseCombinationNumber = combinationNumber+1;
         FirebaseDatabase.getInstance().getReference().child("users").child(uiConfig.getOpponentUid()).child("multiplayerRoom").child(uiConfig.getPlayerUid())
-                .child("isCombinationActive").addListenerForSingleValueEvent(new ValueEventListener() {
+                .child("combinationsSlots").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (dataSnapshot.getKey().equals(String.valueOf(databaseCombinationNumber))) {
-                        if (dataSnapshot.getValue(Boolean.class)) {
-                            uiConfig.getCombinationsText()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, ScoreInputSetter.this, uiConfig,gameBoardManager, resetThrowCounter, scoreToInput, combinationNumber, true));
-                            uiConfig.getCombinationsSlots()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, ScoreInputSetter.this, uiConfig,gameBoardManager, resetThrowCounter, scoreToInput, combinationNumber, true));
+                        if (dataSnapshot.getValue(Integer.class)==0) {
+                            uiConfig.getCombinationsText()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, ScoreInputSetter.this, uiConfig,gameBoardManager, resetThrowCounter, scoreToInput, combinationNumber, 0));
+                            uiConfig.getCombinationsSlots()[combinationNumber].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, ScoreInputSetter.this, uiConfig,gameBoardManager, resetThrowCounter, scoreToInput, combinationNumber, 0));
 
                         }
                     }

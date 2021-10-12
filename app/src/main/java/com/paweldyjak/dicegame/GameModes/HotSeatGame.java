@@ -14,7 +14,6 @@ public class HotSeatGame implements GameMode {
     private int currentPlayerNumber = 6;
     private final int[][] combinationsPointsValues = new int[6][16];
     private final int[][] combinationsSlotsValues = new int[6][16];
-    private final boolean[][] isCombinationActive = new boolean[6][16];
     private final int[] totalScore = new int[6];
 
     public HotSeatGame(GameBoardActivity gameBoardActivity, String[] playersNames) {
@@ -27,13 +26,13 @@ public class HotSeatGame implements GameMode {
     }
 
     public void setAllCombinationsAsActive() {
-        for (boolean[] row : isCombinationActive)
-            Arrays.fill(row, true);
+        for (int[] row : combinationsSlotsValues)
+            Arrays.fill(row, 0);
     }
 
     public boolean checkIfAllCombinationsAreDone() {
-        for (int x = 0; x < getIsCombinationActive().length; x++) {
-            if (getIsCombinationActive()[x]) {
+        for (int x = 0; x < 16; x++) {
+            if (getCombinationsSlotsValues()[getCurrentPlayerNumber()-1][x]==0) {
                 return false;
             }
         }
@@ -50,18 +49,6 @@ public class HotSeatGame implements GameMode {
             FinalResultMorePlayersFragment finalResultMorePlayersFragment = new FinalResultMorePlayersFragment(gameBoardActivity, this);
             gameBoardActivity.replaceFragment(R.id.fragment_layout, finalResultMorePlayersFragment);
         }
-    }
-
-    public boolean[] getIsCombinationActive() {
-
-        return isCombinationActive[currentPlayerNumber - 1];
-
-    }
-
-    public void setIsCombinationActive(boolean isCombinationActive, int combinationNr) {
-
-        this.isCombinationActive[currentPlayerNumber - 1][combinationNr] = isCombinationActive;
-
     }
 
     public void setCombinationsPointsValues(int score, int combinationNr) {

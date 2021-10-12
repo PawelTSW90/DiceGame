@@ -6,7 +6,6 @@ import androidx.core.content.ContextCompat;
 
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
-import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 import com.paweldyjak.dicegame.GameModes.MultiplayerGame;
 
 import java.util.concurrent.Executor;
@@ -21,9 +20,9 @@ public class ScoreInputListener implements View.OnClickListener {
     private final boolean resetThrowCounter;
     private final int scoreToInput;
     private final int combinationNumber;
-    private final boolean isCombinationActive;
+    private final int combinationSlotStatus;
 
-    public ScoreInputListener(GameBoardActivity gameBoardActivity, GameMode gameMode, ScoreInputSetter scoreInputSetter, UIConfig uiConfig, GameBoardManager gameBoardManager, boolean resetThrowCounter, int scoreToInput, int combinationNumber, boolean isCombinationActive) {
+    public ScoreInputListener(GameBoardActivity gameBoardActivity, GameMode gameMode, ScoreInputSetter scoreInputSetter, UIConfig uiConfig, GameBoardManager gameBoardManager, boolean resetThrowCounter, int scoreToInput, int combinationNumber, int combinationSlotStatus) {
         this.gameBoardActivity = gameBoardActivity;
         this.gameMode = gameMode;
         this.scoreInputSetter = scoreInputSetter;
@@ -31,14 +30,14 @@ public class ScoreInputListener implements View.OnClickListener {
         this.resetThrowCounter = resetThrowCounter;
         this.scoreToInput = scoreToInput;
         this.combinationNumber = combinationNumber;
-        this.isCombinationActive = isCombinationActive;
+        this.combinationSlotStatus = combinationSlotStatus;
         this.gameBoardManager = gameBoardManager;
     }
 
     @Override
     public void onClick(View v) {
         Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
-        if (scoreToInput > 0 && isCombinationActive && !resetThrowCounter) {
+        if (scoreToInput > 0 && combinationSlotStatus==0 && !resetThrowCounter) {
             updateBoardValues(scoreToInput, combinationNumber);
             prepareBoardForNextPlayer();
             if (gameMode instanceof MultiplayerGame) {
@@ -86,11 +85,9 @@ public class ScoreInputListener implements View.OnClickListener {
         }
         gameMode.setCombinationsPointsValues(scoreToInput, combinationNumber);
         gameMode.setCombinationsSlots(combinationNumber, 1);
-        gameMode.setIsCombinationActive(false, combinationNumber);
         gameMode.setTotalScore(scoreToInput);
         int totalScore = gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber()-1);
-        String string = gameBoardActivity.getResources().getString(R.string.points);
-        uiConfig.getTotalScore().setText(totalScore + " " + string);
+        uiConfig.setTotalScore(totalScore);
         gameBoardManager.updatePlayerBoard();
 
     }
@@ -104,7 +101,7 @@ public class ScoreInputListener implements View.OnClickListener {
     }
 
     public void resetCombinationsListeners() {
-        for (int x = 0; x < 15; x++) {
+        for (int x = 0; x < 16; x++) {
 
             uiConfig.getCombinationsText()[x].setOnClickListener(v -> {
 

@@ -9,10 +9,7 @@ public interface GameMode {
 
     void setAllCombinationsAsActive();
 
-
     void setTotalScore(int score);
-
-    void setIsCombinationActive(boolean isCombinationActive, int combinationNr);
 
     void setCombinationsPointsValues(int score, int combinationNr);
 
@@ -35,8 +32,6 @@ public interface GameMode {
     int getPlayersTotalScore(int playerNumber);
 
     int[] getPlayersScore();
-
-    boolean[] getIsCombinationActive();
 
     int getCurrentPlayerNumber();
 

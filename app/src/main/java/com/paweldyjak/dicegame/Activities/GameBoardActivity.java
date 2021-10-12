@@ -110,7 +110,7 @@ public class GameBoardActivity extends AppCompatActivity {
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame);
         ScoreInputSetter scoreInputSetter = new ScoreInputSetter(this, uiConfig, hotSeatGame);
         GameBoardManager gameBoardManager = new GameBoardManager(this, scoreInputSetter, dicesCombinationsChecker, uiConfig, hotSeatGame, null);
-        turnScreenFragment = new TurnScreenFragment(this, uiConfig, hotSeatGame, gameBoardManager);
+        turnScreenFragment = new TurnScreenFragment(this,hotSeatGame, gameBoardManager);
         //configuring UI
         uiConfig.setComponents();
         uiConfig.getCurrentPlayerName().setText(playersNames[0]);

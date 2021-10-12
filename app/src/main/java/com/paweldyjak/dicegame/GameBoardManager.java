@@ -1,12 +1,13 @@
 package com.paweldyjak.dicegame;
 
 import android.widget.ImageView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
-import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 import com.paweldyjak.dicegame.GameModes.MultiplayerGame;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -63,12 +64,6 @@ public class GameBoardManager {
             if (throwNumber == 3) {
                 setDicesRerolling(throwNumber);
                 blockCombinations();
-                //disable SoS blocking
-                if (gameMode instanceof HotSeatGame) {
-                    scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15, this);
-                } else {
-                    scoreInputSetter.updateDatabasePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15, this);
-                }
             }
 
 
@@ -182,7 +177,7 @@ public class GameBoardManager {
     // method allows to block combinations after last throw
     public void blockCombinations() {
         for (int x = 0; x < 16; x++) {
-            if (dicesCombinationsChecker.combinationChecker(x, dices, isFirstThrow, 0) == 0 && gameMode.getIsCombinationActive()[x]) {
+            if (dicesCombinationsChecker.combinationChecker(x, dices, isFirstThrow, 0) == 0 && gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][x] == 0) {
                 {
                     uiConfig.getCombinationsText()[x].setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, scoreInputSetter, uiConfig, this, sounds, x));
                     uiConfig.getCombinationsSlots()[x].setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, scoreInputSetter, uiConfig, this, sounds, x));
@@ -190,13 +185,17 @@ public class GameBoardManager {
                 }
             }
         }
+        scoreInputSetter.updatePlayerScore(dicesCombinationsChecker.checkSOS(dices, throwNumber), 15, this);
+
+
     }
+
     public void changeCurrentPlayer() {
         int numberOfPlayers = gameMode.getNumberOfPlayers();
-        if(numberOfPlayers>gameMode.getCurrentPlayerNumber()){
-            gameMode.setCurrentPlayerNumber(gameMode.getCurrentPlayerNumber()+1);
-            uiConfig.changeCurrentPlayerName(gameMode.getPlayersNames()[gameMode.getCurrentPlayerNumber()-1]);
-        } else{
+        if (numberOfPlayers > gameMode.getCurrentPlayerNumber()) {
+            gameMode.setCurrentPlayerNumber(gameMode.getCurrentPlayerNumber() + 1);
+            uiConfig.changeCurrentPlayerName(gameMode.getPlayersNames()[gameMode.getCurrentPlayerNumber() - 1]);
+        } else {
             gameMode.setCurrentPlayerNumber(1);
             uiConfig.changeCurrentPlayerName(gameMode.getPlayersNames()[0]);
         }
@@ -209,7 +208,7 @@ public class GameBoardManager {
             uiConfig.getCombinationsPoints()[x].setText(gameMode.getCombinationsPointsValues(gameMode.getCurrentPlayerNumber(), x) + " " + string);
         }
 
-        uiConfig.getTotalScore().setText(gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber() - 1) + " " + string);
+        uiConfig.setTotalScore(gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber() - 1));
 
 
     }

@@ -1,9 +1,11 @@
 package com.paweldyjak.dicegame;
 
 import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -11,7 +13,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
-import com.paweldyjak.dicegame.GameModes.MultiplayerGame;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -47,11 +48,11 @@ public class OpponentUIConfig {
         uiConfig.setRollDicesVisibility(false);
         uiConfig.setDicesVisibility(false);
         resetOpponentDices();
-        if(!opponentDicesListenerRunning) {
+        if (!opponentDicesListenerRunning) {
             checkOpponentDices();
             opponentDicesListenerRunning = true;
         }
-        if(!opponentCombinationSlotListenerRunning) {
+        if (!opponentCombinationSlotListenerRunning) {
             checkOpponentCombinationSlot();
             opponentCombinationSlotListenerRunning = true;
         }
@@ -77,7 +78,6 @@ public class OpponentUIConfig {
         });
 
     }
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -242,40 +242,11 @@ public class OpponentUIConfig {
     }
 
     public void displayOpponentTotalScore(int totalScore) {
-        String string = gameBoardActivity.getResources().getString(R.string.points);
-        gameMode.setTotalScore(totalScore);
-        uiConfig.getTotalScore().setText(gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber()-1)+string);
-        checkOpponentIsCombinationActive();
-
-    }
-
-
-    public void checkOpponentIsCombinationActive() {
-        FirebaseDatabase.getInstance().getReference().child("users").child(playerUid).child("multiplayerRoom")
-                .child(opponentUid).child("isCombinationActive").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Map<String, Boolean> valuesMap = new LinkedHashMap<>();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    valuesMap.put(dataSnapshot.getKey(), dataSnapshot.getValue(Boolean.class));
-                }
-                displayOpponentIsCombinationActive(valuesMap);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    public void displayOpponentIsCombinationActive(Map<String, Boolean> valuesMap) {
         Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
-        int tmp;
-        for (int x = 0; x < 16; x++) {
-            tmp = x + 1;
-            gameMode.setIsCombinationActive(valuesMap.get(String.valueOf(tmp)), x);
-        }
+        int previousScore = gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber() - 1);
+        int newTotalScore = totalScore - previousScore;
+        gameMode.setTotalScore(newTotalScore);
+        uiConfig.setTotalScore(gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber() - 1));
         gameBoardManager.updatePlayerBoard();
         updatePlayerTurnDatabase();
         executor.execute(() -> {
@@ -288,8 +259,8 @@ public class OpponentUIConfig {
             }
 
         });
-    }
 
+    }
 
     public void updatePlayerTurnDatabase() {
         FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("opponentTurn").setValue(1);
