@@ -125,7 +125,7 @@ public class GameBoardActivity extends AppCompatActivity {
     public void startMultiplayerGame(String[] playersNames, String opponentUid) {
         //creating class objects
         UIConfig uiConfig = new UIConfig(this, opponentUid);
-        MultiplayerGame multiplayerGame = new MultiplayerGame(uiConfig, this, playersNames, opponentUid);
+        MultiplayerGame multiplayerGame = new MultiplayerGame(this, playersNames, opponentUid);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame);
         ScoreInputSetter scoreInputSetter = new ScoreInputSetter(this, uiConfig, multiplayerGame);
         GameBoardManager gameBoardManager = new GameBoardManager(this, scoreInputSetter, dicesCombinationsChecker, uiConfig, multiplayerGame, opponentUid);

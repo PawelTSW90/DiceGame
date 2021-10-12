@@ -62,10 +62,10 @@ public class FinalResultTwoPlayersFragment extends Fragment {
 
     public void setPlayersPosition() {
         String winnerPlayer = null;
-        if (gameMode.getPlayersTotalScore(1) > gameMode.getPlayersTotalScore(2)) {
+        if (gameMode.getPlayersTotalScore(0) > gameMode.getPlayersTotalScore(1)) {
             winnerPlayer = gameMode.getPlayersNames()[0];
             playerOneImageView.setVisibility(View.VISIBLE);
-        } else if (gameMode.getPlayersTotalScore(1) < gameMode.getPlayersTotalScore(2)) {
+        } else if (gameMode.getPlayersTotalScore(0) < gameMode.getPlayersTotalScore(1)) {
             winnerPlayer = gameMode.getPlayersNames()[1];
             playerTwoImageView.setVisibility(View.VISIBLE);
         } else{
@@ -73,9 +73,9 @@ public class FinalResultTwoPlayersFragment extends Fragment {
             playerTwoImageView.setVisibility(View.VISIBLE);
         }
         sounds.playFinalResultSound();
-        playerOneTextView.setText(gameMode.getPlayersNames()[0] + "\n" + "\n" + gameMode.getPlayersTotalScore(1) + " " + getContext().getText(R.string.points));
-        playerTwoTextView.setText(gameMode.getPlayersNames()[1] + "\n" + "\n" + gameMode.getPlayersTotalScore(2) + " " + getContext().getText(R.string.points));
-        if(gameMode.getPlayersTotalScore(1)!=gameMode.getPlayersTotalScore(2)) {
+        playerOneTextView.setText(gameMode.getPlayersNames()[0] + "\n" + "\n" + gameMode.getPlayersTotalScore(0) + " " + getContext().getText(R.string.points));
+        playerTwoTextView.setText(gameMode.getPlayersNames()[1] + "\n" + "\n" + gameMode.getPlayersTotalScore(1) + " " + getContext().getText(R.string.points));
+        if(gameMode.getPlayersTotalScore(0)!=gameMode.getPlayersTotalScore(1)) {
             winnerTextView.setText(getActivity().getString(R.string.the_winner_is) + " " + winnerPlayer + "!");
         } else{
             winnerTextView.setText(R.string.draw);

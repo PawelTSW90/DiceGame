@@ -1,15 +1,12 @@
 package com.paweldyjak.dicegame;
 
-import android.util.Log;
 import android.widget.ImageView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
 import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 import com.paweldyjak.dicegame.GameModes.MultiplayerGame;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -194,10 +191,20 @@ public class GameBoardManager {
             }
         }
     }
+    public void changeCurrentPlayer() {
+        int numberOfPlayers = gameMode.getNumberOfPlayers();
+        if(numberOfPlayers>gameMode.getCurrentPlayerNumber()){
+            gameMode.setCurrentPlayerNumber(gameMode.getCurrentPlayerNumber()+1);
+            uiConfig.changeCurrentPlayerName(gameMode.getPlayersNames()[gameMode.getCurrentPlayerNumber()-1]);
+        } else{
+            gameMode.setCurrentPlayerNumber(1);
+            uiConfig.changeCurrentPlayerName(gameMode.getPlayersNames()[0]);
+        }
+    }
 
     public void updatePlayerBoard() {
         String string = gameBoardActivity.getResources().getString(R.string.points);
-        for (int x = 0; x < uiConfig.getCombinationsSlots().length; x++) {
+        for (int x = 0; x < 16; x++) {
             uiConfig.updateCombinationsUI(gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][x], x);
             uiConfig.getCombinationsPoints()[x].setText(gameMode.getCombinationsPointsValues(gameMode.getCurrentPlayerNumber(), x) + " " + string);
         }
@@ -205,16 +212,6 @@ public class GameBoardManager {
         uiConfig.getTotalScore().setText(gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber() - 1) + " " + string);
 
 
-    }
-
-
-    public void displayNextPlayerBoard() {
-        String string = gameBoardActivity.getResources().getString(R.string.points);
-        for (int x = 0; x < 16; x++) {
-            uiConfig.updateCombinationsUI(gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][x], x);
-            uiConfig.getCombinationsPoints()[x].setText(gameMode.getCombinationsPointsValues(gameMode.getCurrentPlayerNumber(), x) + " " + string);
-            uiConfig.getTotalScore().setText(gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber() - 1) + " " + string);
-        }
     }
 
     public void updateDatabaseWithDicesValues(int[] dicesValues) {

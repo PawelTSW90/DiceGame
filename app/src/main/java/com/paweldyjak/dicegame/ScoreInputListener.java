@@ -61,7 +61,7 @@ public class ScoreInputListener implements View.OnClickListener {
                         scoreInputSetter.setResetThrowCounter(true);
                         resetCombinationsListeners();
                         if (gameMode instanceof MultiplayerGame) {
-                            ((MultiplayerGame) gameMode).changeCurrentPlayer();
+                            gameBoardManager.changeCurrentPlayer();
                         }
                         gameBoardActivity.showNextTurnFragment();
                     } catch (InterruptedException e) {
@@ -86,14 +86,12 @@ public class ScoreInputListener implements View.OnClickListener {
         }
         gameMode.setCombinationsPointsValues(scoreToInput, combinationNumber);
         gameMode.setCombinationsSlots(combinationNumber, 1);
+        gameMode.setIsCombinationActive(false, combinationNumber);
         gameMode.setTotalScore(scoreToInput);
         int totalScore = gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber()-1);
         String string = gameBoardActivity.getResources().getString(R.string.points);
         uiConfig.getTotalScore().setText(totalScore + " " + string);
-        gameMode.setIsCombinationActive(false, combinationNumber);
-        if (gameMode instanceof HotSeatGame) {
-            gameBoardManager.updatePlayerBoard();
-        }
+        gameBoardManager.updatePlayerBoard();
 
     }
 

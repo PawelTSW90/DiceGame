@@ -242,8 +242,9 @@ public class OpponentUIConfig {
     }
 
     public void displayOpponentTotalScore(int totalScore) {
+        String string = gameBoardActivity.getResources().getString(R.string.points);
         gameMode.setTotalScore(totalScore);
-        uiConfig.getTotalScore().setText(gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber()-1));
+        uiConfig.getTotalScore().setText(gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber()-1)+string);
         checkOpponentIsCombinationActive();
 
     }
@@ -275,12 +276,12 @@ public class OpponentUIConfig {
             tmp = x + 1;
             gameMode.setIsCombinationActive(valuesMap.get(String.valueOf(tmp)), x);
         }
-        ((MultiplayerGame)gameMode).updateGameBoard();
+        gameBoardManager.updatePlayerBoard();
         updatePlayerTurnDatabase();
         executor.execute(() -> {
             try {
                 Thread.sleep(2000);
-                ((MultiplayerGame) gameMode).changeCurrentPlayer();
+                gameBoardManager.changeCurrentPlayer();
                 gameBoardActivity.showNextTurnFragment();
             } catch (InterruptedException e) {
                 e.printStackTrace();

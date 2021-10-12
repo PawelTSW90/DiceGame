@@ -5,12 +5,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Fragments.FinalResultTwoPlayersFragment;
 import com.paweldyjak.dicegame.R;
-import com.paweldyjak.dicegame.UIConfig;
-
 import java.util.Arrays;
 
 public class MultiplayerGame implements GameMode {
-    private final UIConfig uiConfig;
     private final GameBoardActivity gameBoardActivity;
     private String[] playersNames;
     private final String opponentUid;
@@ -21,8 +18,7 @@ public class MultiplayerGame implements GameMode {
     private final boolean[][] isCombinationActive = new boolean[6][16];
     private final int[] totalScore = new int[6];
 
-    public MultiplayerGame(UIConfig uiConfig, GameBoardActivity gameBoardActivity, String[] playersNames, String opponentUID) {
-        this.uiConfig = uiConfig;
+    public MultiplayerGame(GameBoardActivity gameBoardActivity, String[] playersNames, String opponentUID) {
         this.gameBoardActivity = gameBoardActivity;
         this.playersNames = playersNames;
         this.opponentUid = opponentUID;
@@ -40,7 +36,6 @@ public class MultiplayerGame implements GameMode {
     public void setAllCombinationsAsActive() {
 
     }
-
 
     public void setStartBoardValues() {
         for (int[] row : combinationsPointsValues) {
@@ -81,7 +76,7 @@ public class MultiplayerGame implements GameMode {
 
     @Override
     public int getCombinationsPointsValues(int playerNumber, int combinationNumber) {
-        return combinationsPointsValues[playerNumber][combinationNumber];
+        return combinationsPointsValues[playerNumber-1][combinationNumber];
     }
 
     public String[] getPlayersNames() {
@@ -93,7 +88,7 @@ public class MultiplayerGame implements GameMode {
     }
 
     public int getPlayersTotalScore(int playerNumber) {
-        return totalScore[playerNumber - 1];
+        return totalScore[playerNumber];
 
     }
 
@@ -158,43 +153,9 @@ public class MultiplayerGame implements GameMode {
         FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid)
                 .child("combinationsPoints").child(String.valueOf(combinationNr + 1)).setValue(score);
     }
-
-
-
-
-    public void changeCurrentPlayer() {
-        if (currentPlayerNumber == 1) {
-            currentPlayerNumber = 2;
-        } else {
-            currentPlayerNumber = 1;
-        }
-
-        if (uiConfig.getCurrentPlayerName().getText().equals(playersNames[0])) {
-            uiConfig.changeCurrentPlayerName(playersNames[1]);
-        } else {
-            uiConfig.changeCurrentPlayerName(playersNames[0]);
-        }
-    }
-
     public void updateOpponentTurnDatabase() {
         FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("opponentTurn").setValue(0);
         FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid).child("opponentTurnStarted").setValue(0);
     }
 
-    public void updateGameBoard() {
-
-        for (int x = 0; x < uiConfig.getCombinationsSlots().length; x++) {
-            if (combinationsSlotsValues[currentPlayerNumber - 1][x] == 1) {
-                uiConfig.updateCombinationsUI(1, x);
-            } else if (combinationsSlotsValues[currentPlayerNumber - 1][x] == 2) {
-                uiConfig.updateCombinationsUI(2, x);
-            } else {
-                uiConfig.updateCombinationsUI(0, x);
-            }
-            uiConfig.getCombinationsPoints()[x].setText(combinationsPointsValues[currentPlayerNumber - 1][x] + " " + gameBoardActivity.getString(R.string.points));
-            uiConfig.getTotalScore().setText(totalScore[currentPlayerNumber - 1] + " " + gameBoardActivity.getString(R.string.points));
-
-
-        }
-    }
 }
