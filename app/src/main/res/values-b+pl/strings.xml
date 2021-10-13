@@ -57,6 +57,8 @@
     <string name="play">GRAJ</string>
     <string name="back">COFNIJ</string>
     <string name="the_winner_is">Zwycięzcą jest </string>
+    <string name="winnerRankingPoint">+1 Punkt rankingowy!</string>
+    <string name="loserRankingPoint">-1 Punkt rankingowy!</string>
     <string name="draw">REMIS !</string>
     <string name="exit">WYJŚCIE</string>
     <string name="rematch">REWANŻ</string>

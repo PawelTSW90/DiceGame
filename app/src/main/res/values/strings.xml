@@ -56,6 +56,8 @@
     <string name="play">PLAY</string>
     <string name="back">BACK</string>
     <string name="the_winner_is">The winner is </string>
+    <string name="winnerRankingPoint">+1 Ranking point!</string>
+    <string name="loserRankingPoint">-1 Ranking point!</string>
     <string name="draw">DRAW !</string>
     <string name="exit">EXIT</string>
     <string name="rematch">REMATCH</string>

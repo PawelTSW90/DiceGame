@@ -162,7 +162,7 @@ public class FinalResultMorePlayersFragment extends Fragment {
 
 
         }
-        gameBoardActivity.showNextTurnFragment();
+        gameBoardActivity.showFragment();
 
 
     }
