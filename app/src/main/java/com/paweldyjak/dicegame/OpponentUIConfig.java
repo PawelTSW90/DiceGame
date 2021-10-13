@@ -13,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -173,7 +174,6 @@ public class OpponentUIConfig {
     }
 
     public void displayOpponentCombinationSlot(Map<String, Integer> valuesMap) {
-        sounds.playCompleteCombinationSound();
         int tmp;
         for (int x = 0; x < 16; x++) {
             tmp = x + 1;
@@ -245,6 +245,12 @@ public class OpponentUIConfig {
         Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
         int previousScore = gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber() - 1);
         int newTotalScore = totalScore - previousScore;
+        if (totalScore != previousScore) {
+            sounds.playCompleteCombinationSound();
+        } else {
+            sounds.playEraseCombinationSound();
+        }
+        uiConfig.setDicesVisibility(false);
         gameMode.setTotalScore(newTotalScore);
         uiConfig.setTotalScore(gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber() - 1));
         gameBoardManager.updatePlayerBoard();
@@ -252,8 +258,12 @@ public class OpponentUIConfig {
         executor.execute(() -> {
             try {
                 Thread.sleep(2000);
-                gameBoardManager.changeCurrentPlayer();
-                gameBoardActivity.showNextTurnFragment();
+                if (gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers() && gameMode.checkIfAllCombinationsAreDone()) {
+                    gameMode.setFinalResultScreen();
+                } else {
+                    gameBoardManager.changeCurrentPlayer();
+                    gameBoardActivity.showNextTurnFragment();
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -29,13 +29,13 @@ public class TurnScreenFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_turn_screen, container, false);
         playerName = view.findViewById(R.id.player_turn_textview);
         nextPlayerButton = view.findViewById(R.id.player_turn_button);
+        gameBoardManager.changeCurrentPlayer();
         displayTurnMessage();
         return view;
     }
 
     public void displayTurnMessage() {
         //update next player name
-        gameBoardManager.changeCurrentPlayer();
         playerName.setText(gameMode.getPlayersNames()[gameMode.getCurrentPlayerNumber()-1]);
         nextPlayerButton.setOnClickListener(v -> {
             gameBoardManager.updatePlayerBoard();

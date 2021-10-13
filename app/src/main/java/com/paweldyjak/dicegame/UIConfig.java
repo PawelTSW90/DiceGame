@@ -6,15 +6,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.core.content.res.ResourcesCompat;
-
-import com.google.firebase.auth.FirebaseAuth;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 
 public class UIConfig {
-    private final String playerUid = FirebaseAuth.getInstance().getUid();
-    private final String opponentUid;
     private final GameBoardActivity gameBoardActivity;
     private final ImageView[] dicesSlots = new ImageView[5];
     private ImageView rollDicesButton;
@@ -25,9 +20,8 @@ public class UIConfig {
     private TextView totalScore;
 
 
-    public UIConfig(GameBoardActivity gameBoardActivity, String opponentUid) {
+    public UIConfig(GameBoardActivity gameBoardActivity) {
         this.gameBoardActivity = gameBoardActivity;
-        this.opponentUid = opponentUid;
 
 
     }
@@ -307,14 +301,6 @@ public class UIConfig {
     }
 
 
-    public String getPlayerUid() {
-        return playerUid;
-    }
-
-    public String getOpponentUid() {
-        return opponentUid;
-    }
-
     public ImageView getRollDicesButton() {
         return rollDicesButton;
     }
@@ -329,7 +315,7 @@ public class UIConfig {
 
     public void setTotalScore(int totalScoreValue){
         String string = gameBoardActivity.getResources().getString(R.string.points);
-        totalScore.setText(totalScoreValue + string);
+        totalScore.setText(totalScoreValue + " "+string);
     }
 
 }

@@ -105,11 +105,10 @@ public class GameBoardActivity extends AppCompatActivity {
 
     public void startHotSeatGame(String[] playersNames, int numberOfPlayers) {
         //creating class objects
-        UIConfig uiConfig = new UIConfig(this, null);
+        UIConfig uiConfig = new UIConfig(this);
         HotSeatGame hotSeatGame = new HotSeatGame(this, playersNames);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame);
-        ScoreInputSetter scoreInputSetter = new ScoreInputSetter(this, uiConfig, hotSeatGame);
-        GameBoardManager gameBoardManager = new GameBoardManager(this, scoreInputSetter, dicesCombinationsChecker, uiConfig, hotSeatGame, null);
+        GameBoardManager gameBoardManager = new GameBoardManager(this,dicesCombinationsChecker, uiConfig, hotSeatGame, null);
         turnScreenFragment = new TurnScreenFragment(this,hotSeatGame, gameBoardManager);
         //configuring UI
         uiConfig.setComponents();
@@ -124,11 +123,10 @@ public class GameBoardActivity extends AppCompatActivity {
 
     public void startMultiplayerGame(String[] playersNames, String opponentUid) {
         //creating class objects
-        UIConfig uiConfig = new UIConfig(this, opponentUid);
+        UIConfig uiConfig = new UIConfig(this);
         MultiplayerGame multiplayerGame = new MultiplayerGame(this, playersNames, opponentUid);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame);
-        ScoreInputSetter scoreInputSetter = new ScoreInputSetter(this, uiConfig, multiplayerGame);
-        GameBoardManager gameBoardManager = new GameBoardManager(this, scoreInputSetter, dicesCombinationsChecker, uiConfig, multiplayerGame, opponentUid);
+        GameBoardManager gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, multiplayerGame, opponentUid);
         multiplayerTurnScreenFragment = new MultiplayerTurnScreenFragment(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
         this.opponentUIConfig = new OpponentUIConfig(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
         //configuring UI

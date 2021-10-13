@@ -121,11 +121,6 @@ public class MultiplayerGame implements GameMode {
                 .child(playerUid).child("combinationsSlots").child(String.valueOf(combinationsSlotNumber + 1)).setValue(slotStatus);
     }
 
-    public void setIsCombinationActiveInDatabase(boolean isCombinationActive, int combinationNr) {
-        FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom").child(playerUid)
-                .child("isCombinationActive").child(String.valueOf(combinationNr + 1)).setValue(isCombinationActive);
-    }
-
     public void setTotalScoreInDatabase(int score) {
         score += totalScore[currentPlayerNumber-1];
         FirebaseDatabase.getInstance().getReference().child("users").child(opponentUid).child("multiplayerRoom")
