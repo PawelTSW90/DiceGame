@@ -1,16 +1,13 @@
 package com.paweldyjak.dicegame.Fragments;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
+import com.paweldyjak.dicegame.GameBoardManager;
 import com.paweldyjak.dicegame.GameModes.GameMode;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.UIConfig;
@@ -30,14 +28,16 @@ public class MultiplayerTurnScreenFragment extends Fragment {
     private Button nextPlayerButton;
     private final GameBoardActivity gameBoardActivity;
     private final GameMode gameMode;
+    private final GameBoardManager gameBoardManager;
     private final String opponentUid;
     private boolean displayBoardListenerRunning = false;
 
 
-    public MultiplayerTurnScreenFragment(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode, String opponentUid) {
+    public MultiplayerTurnScreenFragment(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode, GameBoardManager gameBoardManager, String opponentUid) {
         this.gameBoardActivity = gameBoardActivity;
         this.uiConfig = uiConfig;
         this.gameMode = gameMode;
+        this.gameBoardManager = gameBoardManager;
         this.opponentUid = opponentUid;
     }
 
@@ -76,7 +76,7 @@ public class MultiplayerTurnScreenFragment extends Fragment {
             }
         });
         nextPlayerButton.setOnClickListener(v -> {
-            gameMode.updateGameBoard();
+            gameBoardManager.updatePlayerBoard();
             updatePlayerTurnStartedValue();
             uiConfig.setRollDicesVisibility(true);
             uiConfig.setDicesVisibility(false);
@@ -111,7 +111,7 @@ public class MultiplayerTurnScreenFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.getValue(Integer.class)==1){
-                    gameMode.updateGameBoard();
+                    gameBoardManager.updatePlayerBoard();
                     gameBoardActivity.getOpponentOnlineUIConfig().displayOpponentScreen();
                     gameBoardActivity.hideFragment();
                 }

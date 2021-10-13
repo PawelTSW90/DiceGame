@@ -6,15 +6,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.core.content.res.ResourcesCompat;
-
-import com.google.firebase.auth.FirebaseAuth;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 
 public class UIConfig {
-    private final String playerUid = FirebaseAuth.getInstance().getUid();
-    private final String opponentUid;
     private final GameBoardActivity gameBoardActivity;
     private final ImageView[] dicesSlots = new ImageView[5];
     private ImageView rollDicesButton;
@@ -25,9 +20,8 @@ public class UIConfig {
     private TextView totalScore;
 
 
-    public UIConfig(GameBoardActivity gameBoardActivity, String opponentUid) {
+    public UIConfig(GameBoardActivity gameBoardActivity) {
         this.gameBoardActivity = gameBoardActivity;
-        this.opponentUid = opponentUid;
 
 
     }
@@ -219,10 +213,6 @@ public class UIConfig {
         return combinationsSlots;
     }
 
-    public TextView getTotalScore() {
-        return totalScore;
-    }
-
 
     //method shows dices
     public void showDices(int[] dices) {
@@ -274,7 +264,7 @@ public class UIConfig {
 
     }
 
-    public void updateCombinationsSlots(int combinationStatus, int combinationNumber) {
+    public void updateCombinationsUI(int combinationStatus, int combinationNumber) {
         /*combination status:
 
         0 - enabled, empty
@@ -285,6 +275,7 @@ public class UIConfig {
             combinationsSlots[combinationNumber].setText("");
             combinationsPoints[combinationNumber].setEnabled(true);
             combinationsText[combinationNumber].setEnabled(true);
+            combinationsSlots[combinationNumber].setEnabled(true);
         } else if (combinationStatus == 1) {
             combinationsSlots[combinationNumber].setText("\u2713");
             combinationsSlots[combinationNumber].setGravity(Gravity.CENTER);
@@ -292,6 +283,7 @@ public class UIConfig {
             combinationsSlots[combinationNumber].setTextColor(Color.rgb(27, 182, 33));
             combinationsPoints[combinationNumber].setEnabled(true);
             combinationsText[combinationNumber].setEnabled(false);
+            combinationsSlots[combinationNumber].setEnabled(false);
 
         } else {
             combinationsSlots[combinationNumber].setText("X");
@@ -300,6 +292,7 @@ public class UIConfig {
             combinationsSlots[combinationNumber].setTextColor(Color.rgb(140, 17, 16));
             combinationsPoints[combinationNumber].setEnabled(false);
             combinationsText[combinationNumber].setEnabled(false);
+            combinationsSlots[combinationNumber].setEnabled(false);
         }
     }
 
@@ -307,14 +300,6 @@ public class UIConfig {
         currentPlayerName.setText(playerName);
     }
 
-
-    public String getPlayerUid() {
-        return playerUid;
-    }
-
-    public String getOpponentUid() {
-        return opponentUid;
-    }
 
     public ImageView getRollDicesButton() {
         return rollDicesButton;
@@ -327,4 +312,10 @@ public class UIConfig {
             rollDicesButton.setVisibility(View.INVISIBLE);
         }
     }
+
+    public void setTotalScore(int totalScoreValue){
+        String string = gameBoardActivity.getResources().getString(R.string.points);
+        totalScore.setText(totalScoreValue + " "+string);
+    }
+
 }

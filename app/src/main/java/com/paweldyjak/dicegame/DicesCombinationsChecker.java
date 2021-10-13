@@ -15,7 +15,7 @@ public class DicesCombinationsChecker {
     }
 
     public int checkOne(int[] dices, boolean firstThrow) {
-        if (!gameMode.getIsCombinationActive()[0]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][0]!=0) {
             return 0;
         }
         int nrOfOne = 0;
@@ -39,7 +39,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkTwo(int[] dices, boolean firstThrow) {
-        if (!gameMode.getIsCombinationActive()[1]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][1]!=0) {
             return 0;
         }
         int nrOfTwo = 0;
@@ -62,7 +62,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkThree(int[] dices, boolean firstThrow) {
-        if (!gameMode.getIsCombinationActive()[2]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][2]!=0) {
             return 0;
         }
         int nrOfThree = 0;
@@ -85,7 +85,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkFour(int[] dices, boolean firstThrow) {
-        if (!gameMode.getIsCombinationActive()[3]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][3]!=0) {
             return 0;
         }
         int nrOfFour = 0;
@@ -108,7 +108,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkFive(int[] dices, boolean firstThrow) {
-        if (!gameMode.getIsCombinationActive()[4]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][4]!=0) {
             return 0;
         }
         int nrOfFive = 0;
@@ -131,7 +131,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkSix(int[] dices, boolean firstThrow) {
-        if (!gameMode.getIsCombinationActive()[5]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][5]!=0) {
             return 0;
         }
         int nrOfSix = 0;
@@ -157,7 +157,7 @@ public class DicesCombinationsChecker {
         int firstThrowValue = 4;
         int notFirstThrowValue = 2;
         int highestPairScore = 0;
-        if (!gameMode.getIsCombinationActive()[6]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][6]!=0) {
             return 0;
         }
         List<Integer> valuesList = new ArrayList<>();
@@ -206,7 +206,7 @@ public class DicesCombinationsChecker {
     }
 
     public int checkTwoPairs(int[] dices, boolean firstThrow) {
-        if (!gameMode.getIsCombinationActive()[7]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][7]!=0) {
             return 0;
         }
         int one = 0, two = 0, three = 0, four = 0, five = 0, six = 0;
@@ -349,7 +349,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkEvens(int[] dices, boolean firstThrow) {
-        if (!gameMode.getIsCombinationActive()[8]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][8]!=0) {
             return 0;
         }
 
@@ -379,7 +379,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkOdds(int[] dices, boolean firstThrow) {
-        if (!gameMode.getIsCombinationActive()[9]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][9]!=0) {
             return 0;
         }
 
@@ -409,7 +409,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkSmallStraight(int[] dices, boolean firstThrow) {
-        if (!gameMode.getIsCombinationActive()[10]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][10]!=0) {
             return 0;
         }
         List<Integer> smallStraight = new ArrayList<>();
@@ -439,7 +439,7 @@ public class DicesCombinationsChecker {
     }
 
     public int checkLargeStraight(int[] dices, boolean firstThrow) {
-        if (!gameMode.getIsCombinationActive()[11]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][11]!=0) {
             return 0;
         }
         List<Integer> largeStraight = new ArrayList<>();
@@ -470,7 +470,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkFullHouse(int[] dices, boolean firstThrow) {
-        if (!gameMode.getIsCombinationActive()[12]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][12]!=0) {
             return 0;
         }
         List<Integer> valuesList = new ArrayList<>();
@@ -537,7 +537,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkFourOfAKind(int[] dices, boolean firstThrow) {
-        if (!gameMode.getIsCombinationActive()[13]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][13]!=0) {
             return 0;
         }
         int[] values = new int[6];
@@ -589,7 +589,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkFiveOfAKind(int[] dices, boolean firstThrow) {
-        if (!gameMode.getIsCombinationActive()[14]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][14]!=0) {
             return 0;
         }
         int[] values = new int[6];
@@ -641,7 +641,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkSOS(int[] dices, int throwNumber) {
-        if (!gameMode.getIsCombinationActive()[15]) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][15]!=0) {
             return 0;
         }
         int sosSum = 0;

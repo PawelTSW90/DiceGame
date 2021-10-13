@@ -5,15 +5,11 @@ public interface GameMode {
 
     boolean checkIfAllCombinationsAreDone();
 
-    void updateGameBoard();
-
     void setFinalResultScreen();
 
     void setAllCombinationsAsActive();
 
     void setTotalScore(int score);
-
-    void setIsCombinationActive(boolean isCombinationActive, int combinationNr);
 
     void setCombinationsPointsValues(int score, int combinationNr);
 
@@ -25,6 +21,10 @@ public interface GameMode {
 
     void setCurrentPlayerNumber(int currentPlayerNumber);
 
+    int getCombinationsPointsValues(int playerNumber, int combinationNumber);
+
+    int[][] getCombinationsSlotsValues();
+
     String[] getPlayersNames();
 
     int getNumberOfPlayers();
@@ -32,8 +32,6 @@ public interface GameMode {
     int getPlayersTotalScore(int playerNumber);
 
     int[] getPlayersScore();
-
-    boolean[] getIsCombinationActive();
 
     int getCurrentPlayerNumber();
 

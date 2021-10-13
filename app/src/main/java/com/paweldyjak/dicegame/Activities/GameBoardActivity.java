@@ -4,15 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.FirebaseApp;
 import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Fragments.*;
 import com.paweldyjak.dicegame.GameModes.*;
+
 import java.util.Objects;
 
 
@@ -102,12 +105,11 @@ public class GameBoardActivity extends AppCompatActivity {
 
     public void startHotSeatGame(String[] playersNames, int numberOfPlayers) {
         //creating class objects
-        UIConfig uiConfig = new UIConfig(this, null);
-        HotSeatGame hotSeatGame = new HotSeatGame(uiConfig, this, playersNames);
-        turnScreenFragment = new TurnScreenFragment(this, uiConfig, hotSeatGame);
+        UIConfig uiConfig = new UIConfig(this);
+        HotSeatGame hotSeatGame = new HotSeatGame(this, playersNames);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame);
-        ScoreInputSetter scoreInputSetter = new ScoreInputSetter(this, uiConfig, hotSeatGame);
-        GameBoardManager gameBoardManager = new GameBoardManager(this, scoreInputSetter, dicesCombinationsChecker, uiConfig, null,hotSeatGame);
+        GameBoardManager gameBoardManager = new GameBoardManager(this,dicesCombinationsChecker, uiConfig, hotSeatGame, null);
+        turnScreenFragment = new TurnScreenFragment(this,hotSeatGame, gameBoardManager);
         //configuring UI
         uiConfig.setComponents();
         uiConfig.getCurrentPlayerName().setText(playersNames[0]);
@@ -121,14 +123,12 @@ public class GameBoardActivity extends AppCompatActivity {
 
     public void startMultiplayerGame(String[] playersNames, String opponentUid) {
         //creating class objects
-        UIConfig uiConfig = new UIConfig(this, opponentUid);
-        MultiplayerGame multiplayerGame = new MultiplayerGame(uiConfig, this, playersNames, opponentUid);
-        OpponentUIConfig opponentUIConfig = new OpponentUIConfig(this, uiConfig, multiplayerGame, opponentUid);
-        this.opponentUIConfig = opponentUIConfig;
-        multiplayerTurnScreenFragment = new MultiplayerTurnScreenFragment(this, uiConfig, multiplayerGame, opponentUid);
+        UIConfig uiConfig = new UIConfig(this);
+        MultiplayerGame multiplayerGame = new MultiplayerGame(this, playersNames, opponentUid);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame);
-        ScoreInputSetter scoreInputSetter = new ScoreInputSetter(this, uiConfig, multiplayerGame);
-        GameBoardManager gameBoardManager = new GameBoardManager(this, scoreInputSetter, dicesCombinationsChecker, uiConfig, opponentUIConfig,multiplayerGame);
+        GameBoardManager gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, multiplayerGame, opponentUid);
+        multiplayerTurnScreenFragment = new MultiplayerTurnScreenFragment(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
+        this.opponentUIConfig = new OpponentUIConfig(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
         //configuring UI
         uiConfig.setComponents();
         uiConfig.setCurrentPlayerName(playersNames[0]);
