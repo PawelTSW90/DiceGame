@@ -3,6 +3,8 @@
     <string name="title">Dice Game</string>
     <string name="logout">LOGOUT</string>
     <string name="logged_out">Logged out</string>
+    <string name="register">REGISTER</string>
+    <string name="login">LOG IN</string>
     <string name="hello">Hello</string>
     <string name="settings">SETTINGS</string>
     <string name="password">password:</string>
@@ -55,6 +57,8 @@
     <string name="multiplayer">MULTIPLAYER</string>
     <string name="play">PLAY</string>
     <string name="back">BACK</string>
+    <string name="you_won">YOU WON!</string>
+    <string name="you_lost">YOU LOST!</string>
     <string name="the_winner_is">The winner is </string>
     <string name="winnerRankingPoint">+1 Ranking point!</string>
     <string name="loserRankingPoint">-1 Ranking point!</string>

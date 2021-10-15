@@ -1,14 +1,17 @@
 package com.paweldyjak.dicegame.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.paweldyjak.dicegame.*;
 
 import java.util.Objects;
 
 public class MainMenuSettingsActivity extends AppCompatActivity {
+    Button backButton;
 
 
     @Override
@@ -19,10 +22,11 @@ public class MainMenuSettingsActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
+        setButton();
     }
 
-    @Override
-    public void onBackPressed(){
+    public void setButton() {
 
     }
+
 }

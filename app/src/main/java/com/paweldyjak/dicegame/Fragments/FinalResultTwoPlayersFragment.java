@@ -2,6 +2,7 @@ package com.paweldyjak.dicegame.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Activities.MainMenuActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
+import com.paweldyjak.dicegame.GameModes.HotSeatGame;
 import com.paweldyjak.dicegame.GameModes.MultiplayerGame;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.Sounds;
@@ -39,7 +41,14 @@ public class FinalResultTwoPlayersFragment extends Fragment {
     private Button exitButton;
     private int playerRanking;
     private String playerName;
+    private String winnerPlayer;
     private String playerUid;
+    private DatabaseReference userReference;
+    private int totalGames;
+    private int wins;
+    private int draw;
+    private int lost;
+    private boolean drawResult;
 
     public FinalResultTwoPlayersFragment(GameBoardActivity gameBoardActivity, GameMode gameMode) {
         this.gameBoardActivity = gameBoardActivity;
@@ -58,9 +67,15 @@ public class FinalResultTwoPlayersFragment extends Fragment {
         playerTwoImageView = view.findViewById(R.id.secondPlayerGoldMedal);
         rematchButton = view.findViewById(R.id.rematch_button_twoPlayers);
         exitButton = view.findViewById(R.id.exit_button_twoPlayers);
-        getPlayerName();
-        setButtons();
-        setPlayersPosition();
+        if (gameMode instanceof HotSeatGame) {
+            setButtons();
+            displayFinalScreen();
+        } else {
+            playerUid = FirebaseAuth.getInstance().getUid();
+            userReference = FirebaseDatabase.getInstance().getReference().child("users").child(playerUid);
+            getPlayerName();
+        }
+
 
         return view;
     }
@@ -76,8 +91,8 @@ public class FinalResultTwoPlayersFragment extends Fragment {
         rematchButton.setOnClickListener(v -> gameBoardActivity.startHotSeatGame(gameMode.getPlayersNames(), gameMode.getNumberOfPlayers()));
     }
 
-    public void setPlayersPosition() {
-        String winnerPlayer = null;
+    public void displayFinalScreen() {
+
         if (gameMode.getPlayersTotalScore(0) > gameMode.getPlayersTotalScore(1)) {
             winnerPlayer = gameMode.getPlayersNames()[0];
             playerOneImageView.setVisibility(View.VISIBLE);
@@ -92,42 +107,123 @@ public class FinalResultTwoPlayersFragment extends Fragment {
         playerOneTextView.setText(gameMode.getPlayersNames()[0] + "\n" + "\n" + gameMode.getPlayersTotalScore(0) + " " + getContext().getText(R.string.points));
         playerTwoTextView.setText(gameMode.getPlayersNames()[1] + "\n" + "\n" + gameMode.getPlayersTotalScore(1) + " " + getContext().getText(R.string.points));
         if (gameMode.getPlayersTotalScore(0) != gameMode.getPlayersTotalScore(1)) {
-            winnerTextView.setText(getActivity().getString(R.string.the_winner_is) + " " + winnerPlayer + "!");
+            if (gameMode instanceof MultiplayerGame) {
+                if (winnerPlayer.equals(playerName)) {
+                    getActivity().getString(R.string.you_won);
+                } else {
+                    getActivity().getString(R.string.you_lost);
+                }
+            } else {
+                winnerTextView.setText(getActivity().getString(R.string.the_winner_is) + " " + winnerPlayer + "!");
+            }
         } else {
             winnerTextView.setText(R.string.draw);
         }
         if (gameMode instanceof MultiplayerGame) {
-            if (winnerPlayer.equals(playerName)) {
-                changeRankingPoints(true);
-                rankingPointsTextView.setText((getContext().getText(R.string.winnerRankingPoint))+" "+playerRanking+" "+getContext().getText(R.string.points));
-            } else {
-                changeRankingPoints(false);
-                rankingPointsTextView.setText((getContext().getText(R.string.loserRankingPoint))+" "+playerRanking+" "+getContext().getText(R.string.points));
-            }
+            updateDatabaseStatistics(winnerPlayer.equals(playerName));
+        } else {
+            gameBoardActivity.showFragment();
         }
-        gameBoardActivity.showFragment();
 
 
     }
 
-    public void changeRankingPoints(boolean isWinner) {
-        String playerUid = FirebaseAuth.getInstance().getUid();
+    public void updateDatabaseStatistics(boolean isWinner) {
+
+
         DatabaseReference rankingReference = FirebaseDatabase.getInstance().getReference().child("users").child(playerUid).
-                child("ranking");
+                child("rankingPoints");
         rankingReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 playerRanking = snapshot.getValue(Integer.class);
-                if (isWinner) {
+                if (isWinner && !drawResult) {
                     playerRanking += 1;
-
-                } else {
+                    updateWinsDatabase();
+                    rankingReference.setValue(playerRanking);
+                    rankingPointsTextView.setText((getContext().getText(R.string.winnerRankingPoint)) + " " + playerRanking + " " + getContext().getText(R.string.points));
+                } else if (!isWinner && !drawResult) {
                     playerRanking -= 1;
-                    if(playerRanking<0){
+                    if (playerRanking < 0) {
                         playerRanking = 0;
                     }
+                    updateLostDatabase();
+                    rankingReference.setValue(playerRanking);
+                    rankingPointsTextView.setText((getContext().getText(R.string.loserRankingPoint)) + " " + playerRanking + " " + getContext().getText(R.string.points));
+                } else {
+                    updateDrawDatabase();
                 }
-                rankingReference.setValue(playerRanking);
+                updateTotalGamesDatabase();
+                gameBoardActivity.showFragment();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void updateDrawDatabase() {
+        DatabaseReference drawGamesReference = userReference.child("draw");
+        drawGamesReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                draw = snapshot.getValue(Integer.class);
+                draw += 1;
+                drawGamesReference.setValue(draw);
+                drawResult = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void updateTotalGamesDatabase() {
+        DatabaseReference totalGamesReference = userReference.child("gamesTotal");
+        totalGamesReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                totalGames = snapshot.getValue(Integer.class);
+                totalGames += 1;
+                totalGamesReference.setValue(totalGames);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void updateWinsDatabase() {
+        DatabaseReference winGamesReference = userReference.child("win");
+        winGamesReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                wins = snapshot.getValue(Integer.class);
+                wins += 1;
+                winGamesReference.setValue(wins);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void updateLostDatabase() {
+        DatabaseReference lostGamesReference = userReference.child("lost");
+        lostGamesReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                lost = snapshot.getValue(Integer.class);
+                lost += 1;
+                lostGamesReference.setValue(lost);
             }
 
             @Override
@@ -138,13 +234,13 @@ public class FinalResultTwoPlayersFragment extends Fragment {
     }
 
     public void getPlayerName() {
-        String playerUid = FirebaseAuth.getInstance().getUid();
-        DatabaseReference playerNameReference = FirebaseDatabase.getInstance().getReference().child("users").child(playerUid).
-                child("name");
+        DatabaseReference playerNameReference = userReference.child("name");
         playerNameReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 playerName = snapshot.getValue(String.class);
+                setButtons();
+                displayFinalScreen();
             }
 
             @Override

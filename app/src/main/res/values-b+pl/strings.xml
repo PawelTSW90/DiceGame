@@ -4,6 +4,8 @@
     <string name="title">KOŚCI</string>
     <string name="logout">WYLOGUJ</string>
     <string name="logged_out">Wylogowano</string>
+    <string name="register">REJESTRACJA</string>
+    <string name="login">LOGOWANIE</string>
     <string name="hello">Witaj</string>
     <string name="settings">USTAWIENIA</string>
     <string name="password">hasło:</string>
@@ -56,6 +58,8 @@
     <string name="multiplayer">MULTIPLAYER</string>
     <string name="play">GRAJ</string>
     <string name="back">COFNIJ</string>
+    <string name="you_won">WYGRAŁEŚ!</string>
+    <string name="you_lost">PRZEGRAŁEŚ!</string>
     <string name="the_winner_is">Zwycięzcą jest </string>
     <string name="winnerRankingPoint">+1 Punkt rankingowy!</string>
     <string name="loserRankingPoint">-1 Punkt rankingowy!</string>
