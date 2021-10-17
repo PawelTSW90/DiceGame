@@ -28,12 +28,19 @@ public class GameBoardActivity extends AppCompatActivity {
     private View mainBoardLayout;
     private boolean multiplayerMode;
     private OpponentUIConfig opponentUIConfig;
+    private boolean isSoundOn;
+    private boolean isCombinationsHighlightOn;
+    private boolean isBlockConfirmationOn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int numberOfPlayers = getIntent().getIntExtra("numberOfPlayers", 0);
         multiplayerMode = getIntent().getBooleanExtra("MultiplayerMode", false);
+        isSoundOn = getIntent().getBooleanExtra("isSoundOn", true);
+        isCombinationsHighlightOn = getIntent().getBooleanExtra("isCombinationsHighlightOn", true);
+        isBlockConfirmationOn = getIntent().getBooleanExtra("isBlockingConfirmationOn", false);
         String[] playersNames = getIntent().getStringArrayExtra("playersNames");
         String opponentUid = getIntent().getStringExtra("opponentUid");
         FirebaseApp.initializeApp(this);
@@ -108,7 +115,7 @@ public class GameBoardActivity extends AppCompatActivity {
         UIConfig uiConfig = new UIConfig(this);
         HotSeatGame hotSeatGame = new HotSeatGame(this, playersNames);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame);
-        GameBoardManager gameBoardManager = new GameBoardManager(this,dicesCombinationsChecker, uiConfig, hotSeatGame, null);
+        GameBoardManager gameBoardManager = new GameBoardManager(this,dicesCombinationsChecker, uiConfig, hotSeatGame, null, isSoundOn, isCombinationsHighlightOn, isBlockConfirmationOn);
         turnScreenFragment = new TurnScreenFragment(this,hotSeatGame, gameBoardManager);
         //configuring UI
         uiConfig.setComponents();
@@ -126,7 +133,7 @@ public class GameBoardActivity extends AppCompatActivity {
         UIConfig uiConfig = new UIConfig(this);
         MultiplayerGame multiplayerGame = new MultiplayerGame(this, playersNames, opponentUid);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame);
-        GameBoardManager gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, multiplayerGame, opponentUid);
+        GameBoardManager gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, multiplayerGame, opponentUid, isSoundOn, isCombinationsHighlightOn, isBlockConfirmationOn);
         multiplayerTurnScreenFragment = new MultiplayerTurnScreenFragment(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
         this.opponentUIConfig = new OpponentUIConfig(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
         //configuring UI

@@ -1,10 +1,13 @@
 package com.paweldyjak.dicegame;
 
 import android.view.View;
+
 import androidx.core.content.ContextCompat;
+
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
 import com.paweldyjak.dicegame.GameModes.MultiplayerGame;
+
 import java.util.concurrent.Executor;
 
 public class BlockCombinationListener implements View.OnClickListener {
@@ -24,6 +27,7 @@ public class BlockCombinationListener implements View.OnClickListener {
         this.combinationNr = combinationNr;
 
     }
+
     @Override
     public void onClick(View v) {
         Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
@@ -35,20 +39,21 @@ public class BlockCombinationListener implements View.OnClickListener {
         }
         gameBoardManager.updatePlayerBoard();
         uiConfig.setDicesVisibility(false);
-            executor.execute(() -> {
-                try {
-                    sounds.playEraseCombinationSound();
-                    Thread.sleep(2000);
-                    if (gameMode.checkIfAllCombinationsAreDone() && gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers()) {
-                        gameMode.setFinalResultScreen();
-                    } else{
-                        gameBoardManager.changeCurrentPlayer();
-                        gameBoardActivity.showNextTurnFragment();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        executor.execute(() -> {
+            try {
+                sounds.playEraseCombinationSound();
+
+                Thread.sleep(2000);
+                if (gameMode.checkIfAllCombinationsAreDone() && gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers()) {
+                    gameMode.setFinalResultScreen();
+                } else {
+                    gameBoardManager.changeCurrentPlayer();
+                    gameBoardActivity.showNextTurnFragment();
                 }
-            });
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 }

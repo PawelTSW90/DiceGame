@@ -25,14 +25,20 @@ public class GameBoardManager {
     private final Random randomValue = new Random();
     private final String opponentUid;
     private boolean resetThrowCounter = false;
+    private boolean isSoundOn;
+    private boolean isCombinationsHighlightOn;
+    private boolean isBlockConfirmationOn;
 
 
-    public GameBoardManager(GameBoardActivity gameBoardActivity,DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, GameMode gameMode, String opponentUid) {
+    public GameBoardManager(GameBoardActivity gameBoardActivity,DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig, GameMode gameMode, String opponentUid, boolean isSoundOn, boolean isCombinationsHighlightOn, boolean isBlockConfirmationOn) {
         this.gameBoardActivity = gameBoardActivity;
         this.dicesCombinationsChecker = dicesCombinationsChecker;
         this.uiConfig = uiConfig;
         this.gameMode = gameMode;
         this.opponentUid = opponentUid;
+        this.isSoundOn = isSoundOn;
+        this.isCombinationsHighlightOn = isCombinationsHighlightOn;
+        this.isBlockConfirmationOn = isBlockConfirmationOn;
         sounds = new Sounds(gameBoardActivity);
 
     }
@@ -73,7 +79,9 @@ public class GameBoardManager {
 
     //method generates dices for display
     public void rollDices() {
-        sounds.playRollDiceSound();
+        if(isSoundOn) {
+            sounds.playRollDiceSound();
+        }
         boolean rerollAllDices = true;
 
         for (int x = 0; x < 5; x++) {

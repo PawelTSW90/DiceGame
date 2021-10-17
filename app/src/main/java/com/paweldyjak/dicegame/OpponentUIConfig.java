@@ -246,9 +246,13 @@ public class OpponentUIConfig {
         int previousScore = gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber() - 1);
         int newTotalScore = totalScore - previousScore;
         if (totalScore != previousScore) {
+
             sounds.playCompleteCombinationSound();
+
         } else {
+
             sounds.playEraseCombinationSound();
+
         }
         uiConfig.setDicesVisibility(false);
         gameMode.setTotalScore(newTotalScore);

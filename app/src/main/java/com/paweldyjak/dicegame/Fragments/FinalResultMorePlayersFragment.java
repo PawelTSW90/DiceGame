@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Activities.MainMenuActivity;
+import com.paweldyjak.dicegame.GameBoardManager;
 import com.paweldyjak.dicegame.GameModes.GameMode;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.Sounds;

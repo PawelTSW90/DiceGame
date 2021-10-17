@@ -78,29 +78,39 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView14"
+            <CheckBox
+                android:id="@+id/sounds_checkBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#673AB7"
                 android:text="Sounds"
-                android:textSize="30sp" />
+                android:textColor="#E1D6D7"
+                android:textSize="30sp"
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"/>
 
-            <TextView
-                android:id="@+id/textView13"
+            <CheckBox
+                android:id="@+id/highlight_checkBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#673AB7"
-                android:text="Highlits"
-                android:textSize="30sp" />
+                android:text="Highlights"
+                android:textColor="#E1D6D7"
+                android:textColorLink="#FF03DAC5"
+                android:textSize="30sp"
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"/>
 
-            <TextView
-                android:id="@+id/textView18"
+            <CheckBox
+                android:id="@+id/blockConfirm_checkBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#673AB7"
-                android:text="Block Confirmation"
-                android:textSize="30sp" />
+                android:text="Block Confirm"
+                android:textColor="#E1D6D7"
+                android:textSize="30sp"
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"/>
 
             <TextView
                 android:id="@+id/textView19"

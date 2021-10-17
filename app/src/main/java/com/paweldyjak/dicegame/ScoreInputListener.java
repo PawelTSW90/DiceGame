@@ -62,7 +62,8 @@ public class ScoreInputListener implements View.OnClickListener {
 
     public void updateBoardValues(int scoreToInput, int combinationNumber) {
         Sounds sounds = new Sounds(gameBoardActivity);
-        sounds.playCompleteCombinationSound();
+            sounds.playCompleteCombinationSound();
+
         if (gameMode instanceof MultiplayerGame) {
             ((MultiplayerGame) gameMode).setCombinationsSlotsInDatabase(combinationNumber, 1);
             ((MultiplayerGame) gameMode).setCombinationsPointsInDatabase(scoreToInput, combinationNumber);
