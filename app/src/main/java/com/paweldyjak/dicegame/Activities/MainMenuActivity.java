@@ -1,9 +1,8 @@
 package com.paweldyjak.dicegame.Activities;
 
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,14 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,14 +22,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
 
 public class MainMenuActivity extends AppCompatActivity {
     private GameBoardActivity gameBoardActivity;
@@ -57,9 +50,13 @@ public class MainMenuActivity extends AppCompatActivity {
     private String userName;
     private MainMenuSettingsActivity mainMenuSettings;
     private boolean isSoundOn = true;
-    private boolean isCombinationHighlightOn = true;
+    private boolean isCombinationsHighlightOn = true;
     private boolean isBlockConfirmationOn = false;
     private ActivityResultLauncher<Intent> activityResultLauncher;
+    public final String mainMenuUserSettingsPref = "userSettingsPref";
+    public final String soundPref = "soundPref";
+    public final String highlightPref = "highlightPref";
+    public final String blockConfirmPref = "blockConfirmPref";
 
 
     @Override
@@ -70,17 +67,17 @@ public class MainMenuActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == RESULT_OK){
-                    Intent data = result.getData();
-                    boolean isSoundOn = data.getBooleanExtra("soundPref", true);
-                    Toast.makeText(MainMenuActivity.this, isSoundOn+"", Toast.LENGTH_SHORT).show();
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK) {
+                Intent data = result.getData();
+                isSoundOn = data.getBooleanExtra("soundPref", true);
+                isCombinationsHighlightOn = data.getBooleanExtra("highlightPref", true);
+                isBlockConfirmationOn = data.getBooleanExtra("blockConfirmPref", false);
+                saveSettings();
 
-                }
             }
         });
+        loadSettings();
         gameBoardActivity = new GameBoardActivity();
         sounds = new Sounds(this);
         playButton = findViewById(R.id.play_button);
@@ -98,7 +95,7 @@ public class MainMenuActivity extends AppCompatActivity {
         playersNumberLayout = findViewById(R.id.players_number_layout);
         nameEditText = findViewById(R.id.setting_name_editText);
         settingsButton = findViewById(R.id.settings_imageview);
-        mainMenuSettings = new MainMenuSettingsActivity(this);
+        mainMenuSettings = new MainMenuSettingsActivity();
         setButtons();
         try {
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -125,7 +122,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 intent.putExtra("numberOfPlayers", numberOfPlayers);
                 intent.putExtra("MultiplayerMode", false);
                 intent.putExtra("isSoundOn", isSoundOn);
-                intent.putExtra("isCombinationsHighlightOn", isCombinationHighlightOn);
+                intent.putExtra("isCombinationsHighlightOn", isCombinationsHighlightOn);
                 intent.putExtra("isBlockingConfirmationOn", isBlockConfirmationOn);
                 startActivity(intent);
                 this.finish();
@@ -298,12 +295,12 @@ public class MainMenuActivity extends AppCompatActivity {
         this.isSoundOn = isSoundOn;
     }
 
-    public boolean isCombinationHighlightOn() {
-        return isCombinationHighlightOn;
+    public boolean isCombinationsHighlightOn() {
+        return isCombinationsHighlightOn;
     }
 
-    public void setCombinationHighlightOn(boolean combinationHighlightOn) {
-        isCombinationHighlightOn = combinationHighlightOn;
+    public void setCombinationsHighlightOn(boolean combinationsHighlightOn) {
+        isCombinationsHighlightOn = combinationsHighlightOn;
     }
 
     public boolean isBlockConfirmationOn() {
@@ -313,4 +310,28 @@ public class MainMenuActivity extends AppCompatActivity {
     public void setBlockConfirmationOn(boolean blockConfirmationOn) {
         isBlockConfirmationOn = blockConfirmationOn;
     }
+
+    public void saveSettings() {
+        SharedPreferences sharedPreferences = getSharedPreferences(mainMenuUserSettingsPref, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(soundPref, isSoundOn);
+        editor.putBoolean(highlightPref, isCombinationsHighlightOn);
+        editor.putBoolean(blockConfirmPref, isBlockConfirmationOn);
+        editor.apply();
+
+    }
+
+    public void loadSettings() {
+        SharedPreferences sharedPreferences = getSharedPreferences(mainMenuUserSettingsPref, MODE_PRIVATE);
+        isSoundOn = sharedPreferences.getBoolean(soundPref, true);
+        isCombinationsHighlightOn = sharedPreferences.getBoolean(highlightPref, true);
+        isBlockConfirmationOn = sharedPreferences.getBoolean(blockConfirmPref, false);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        sounds = new Sounds(this);
+    }
+
 }

@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -115,7 +116,7 @@ public class GameBoardActivity extends AppCompatActivity {
         UIConfig uiConfig = new UIConfig(this);
         HotSeatGame hotSeatGame = new HotSeatGame(this, playersNames);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame);
-        GameBoardManager gameBoardManager = new GameBoardManager(this,dicesCombinationsChecker, uiConfig, hotSeatGame, null, isSoundOn, isCombinationsHighlightOn, isBlockConfirmationOn);
+        GameBoardManager gameBoardManager = new GameBoardManager(this,dicesCombinationsChecker, uiConfig, hotSeatGame, null);
         turnScreenFragment = new TurnScreenFragment(this,hotSeatGame, gameBoardManager);
         //configuring UI
         uiConfig.setComponents();
@@ -133,7 +134,7 @@ public class GameBoardActivity extends AppCompatActivity {
         UIConfig uiConfig = new UIConfig(this);
         MultiplayerGame multiplayerGame = new MultiplayerGame(this, playersNames, opponentUid);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame);
-        GameBoardManager gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, multiplayerGame, opponentUid, isSoundOn, isCombinationsHighlightOn, isBlockConfirmationOn);
+        GameBoardManager gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, multiplayerGame, opponentUid);
         multiplayerTurnScreenFragment = new MultiplayerTurnScreenFragment(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
         this.opponentUIConfig = new OpponentUIConfig(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
         //configuring UI
@@ -151,4 +152,15 @@ public class GameBoardActivity extends AppCompatActivity {
         return opponentUIConfig;
     }
 
+    public boolean getIsSoundOn() {
+        return isSoundOn;
+    }
+
+    public boolean GetIsCombinationsHighlightOn() {
+        return isCombinationsHighlightOn;
+    }
+
+    public boolean getIsBlockConfirmationOn() {
+        return isBlockConfirmationOn;
+    }
 }

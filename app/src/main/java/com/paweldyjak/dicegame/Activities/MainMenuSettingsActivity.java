@@ -7,13 +7,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.CheckBox;
-
 import com.paweldyjak.dicegame.*;
-
 import java.util.Objects;
 
 public class MainMenuSettingsActivity extends AppCompatActivity {
-    private MainMenuActivity mainMenuActivity;
     private CheckBox soundsCheckBox;
     private CheckBox combinationsHighlightCheckBox;
     private CheckBox blockConfirmationCheckBox;
@@ -24,16 +21,6 @@ public class MainMenuSettingsActivity extends AppCompatActivity {
     private boolean isSoundOn = true;
     private boolean isCombinationsHighlightOn = true;
     private boolean isBlockConfirmationOn = false;
-
-
-    public MainMenuSettingsActivity() {
-
-    }
-
-    public MainMenuSettingsActivity(MainMenuActivity mainMenuActivity) {
-        this.mainMenuActivity = mainMenuActivity;
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
