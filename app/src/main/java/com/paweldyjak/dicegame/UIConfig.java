@@ -1,5 +1,8 @@
 package com.paweldyjak.dicegame;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
@@ -18,6 +21,7 @@ public class UIConfig {
     private final TextView[] combinationsSlots = new TextView[16];
     private TextView currentPlayerName;
     private TextView totalScore;
+    private ValueAnimator valueAnimator;
 
 
     public UIConfig(GameBoardActivity gameBoardActivity) {
@@ -316,6 +320,17 @@ public class UIConfig {
     public void setTotalScore(int totalScoreValue){
         String string = gameBoardActivity.getResources().getString(R.string.points);
         totalScore.setText(totalScoreValue + " "+string);
+    }
+
+    public void animateTextView(){
+          final int RED = 0xffFF8080;
+         final int BLUE = 0xff8080FF;
+        valueAnimator = ObjectAnimator.ofInt(combinationsText[0], "backgroundColor", RED, BLUE);
+        valueAnimator.setDuration(3000);
+        valueAnimator.setEvaluator(new ArgbEvaluator());
+        valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        valueAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        valueAnimator.start();
     }
 
 }

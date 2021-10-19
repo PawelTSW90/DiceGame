@@ -64,7 +64,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border"
+                        android:background="@drawable/combination_slot_border"
                         android:gravity="center" />
 
                     <TextView
@@ -92,7 +92,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border" />
+                        android:background="@drawable/combination_slot_border" />
 
                 </TableRow>
 
@@ -126,7 +126,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border"
+                        android:background="@drawable/combination_slot_border"
                         android:gravity="center" />
 
                     <TextView
@@ -154,7 +154,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border" />
+                        android:background="@drawable/combination_slot_border" />
                 </TableRow>
 
                 <TableRow
@@ -187,7 +187,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border" />
+                        android:background="@drawable/combination_slot_border" />
 
                     <TextView
                         android:id="@+id/textView_smallStraight"
@@ -214,7 +214,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border" />
+                        android:background="@drawable/combination_slot_border" />
                 </TableRow>
 
                 <TableRow
@@ -247,7 +247,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border" />
+                        android:background="@drawable/combination_slot_border" />
 
                     <TextView
                         android:id="@+id/textView_largeStraight"
@@ -274,7 +274,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border" />
+                        android:background="@drawable/combination_slot_border" />
                 </TableRow>
 
                 <TableRow
@@ -307,7 +307,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border" />
+                        android:background="@drawable/combination_slot_border" />
 
                     <TextView
                         android:id="@+id/textView_fullHouse"
@@ -334,7 +334,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border" />
+                        android:background="@drawable/combination_slot_border" />
                 </TableRow>
 
                 <TableRow
@@ -367,7 +367,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border" />
+                        android:background="@drawable/combination_slot_border" />
 
                     <TextView
                         android:id="@+id/textView_4ofAKind"
@@ -394,7 +394,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border" />
+                        android:background="@drawable/combination_slot_border" />
 
 
                 </TableRow>
@@ -429,7 +429,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border" />
+                        android:background="@drawable/combination_slot_border" />
 
                     <TextView
                         android:id="@+id/textView_5ofAKind"
@@ -457,7 +457,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border" />
+                        android:background="@drawable/combination_slot_border" />
                 </TableRow>
 
                 <TableRow
@@ -491,7 +491,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border" />
+                        android:background="@drawable/combination_slot_border" />
 
                     <TextView
                         android:id="@+id/textView_sos"
@@ -518,7 +518,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/combination_tick_border" />
+                        android:background="@drawable/combination_slot_border" />
                 </TableRow>
 
                 <TableRow

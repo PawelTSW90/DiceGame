@@ -115,7 +115,7 @@ public class GameBoardActivity extends AppCompatActivity {
         //creating class objects
         UIConfig uiConfig = new UIConfig(this);
         HotSeatGame hotSeatGame = new HotSeatGame(this, playersNames);
-        DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame);
+        DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame, uiConfig);
         GameBoardManager gameBoardManager = new GameBoardManager(this,dicesCombinationsChecker, uiConfig, hotSeatGame, null);
         turnScreenFragment = new TurnScreenFragment(this,hotSeatGame, gameBoardManager);
         //configuring UI
@@ -133,7 +133,7 @@ public class GameBoardActivity extends AppCompatActivity {
         //creating class objects
         UIConfig uiConfig = new UIConfig(this);
         MultiplayerGame multiplayerGame = new MultiplayerGame(this, playersNames, opponentUid);
-        DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame);
+        DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame, uiConfig);
         GameBoardManager gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, multiplayerGame, opponentUid);
         multiplayerTurnScreenFragment = new MultiplayerTurnScreenFragment(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
         this.opponentUIConfig = new OpponentUIConfig(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
