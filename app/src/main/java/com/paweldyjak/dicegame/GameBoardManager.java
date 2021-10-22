@@ -41,12 +41,13 @@ public class GameBoardManager {
     public void setRollDicesButton() {
         gameBoardActivity.hideFragment();
         uiConfig.getRollDicesButton().setOnClickListener(v -> {
-
+            if (throwNumber < 4) {
+                uiConfig.combinationHighlighter(0, true);
+            }
             if (getResetThrowCounter()) {
                 throwNumber = 0;
                 isFirstThrow = true;
                 setResetThrowCounter(false);
-
             }
             if (throwNumber < 3) {
                 if (throwNumber > 0) {
@@ -57,12 +58,12 @@ public class GameBoardManager {
                 setCombinationsListeners();
                 throwNumber++;
                 setDicesRerolling(throwNumber);
-
             }
 
             if (throwNumber == 3) {
                 setDicesRerolling(throwNumber);
                 blockCombinations();
+                throwNumber++;
             }
 
 
@@ -106,7 +107,7 @@ public class GameBoardManager {
         for (int x = 0; x < 5; x++) {
             uiConfig.clearDicesBorder();
             uiConfig.getDicesSlots()[x].setOnClickListener(v -> {
-                if (throwNumber != 3) {
+                if (throwNumber < 3) {
                     if (v.getBackground() != null) {
                         v.setBackground(null);
                     } else {
@@ -135,38 +136,22 @@ public class GameBoardManager {
 
     // method checks which combinations are available
     public void setCombinationsListeners() {
-        uiConfig.getCombinationsText()[0].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][0]));
-        uiConfig.getCombinationsSlots()[0].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][0]));
-        uiConfig.getCombinationsText()[1].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][1]));
-        uiConfig.getCombinationsSlots()[1].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][1]));
-        uiConfig.getCombinationsText()[2].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][2]));
-        uiConfig.getCombinationsSlots()[2].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][2]));
-        uiConfig.getCombinationsText()[3].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkFour(dices, isFirstThrow), 3, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][3]));
-        uiConfig.getCombinationsSlots()[3].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkFour(dices, isFirstThrow), 3, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][3]));
-        uiConfig.getCombinationsText()[4].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkFive(dices, isFirstThrow), 4, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][4]));
-        uiConfig.getCombinationsSlots()[4].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkFive(dices, isFirstThrow), 4, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][4]));
-        uiConfig.getCombinationsText()[5].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkSix(dices, isFirstThrow), 5, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][5]));
-        uiConfig.getCombinationsSlots()[5].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkSix(dices, isFirstThrow), 5, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][5]));
-        uiConfig.getCombinationsText()[6].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkPair(dices, isFirstThrow), 6, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][6]));
-        uiConfig.getCombinationsSlots()[6].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkPair(dices, isFirstThrow), 6, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][6]));
-        uiConfig.getCombinationsText()[7].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkTwoPairs(dices, isFirstThrow), 7, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][7]));
-        uiConfig.getCombinationsSlots()[7].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkTwoPairs(dices, isFirstThrow), 7, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][7]));
-        uiConfig.getCombinationsText()[8].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkEvens(dices, isFirstThrow), 8, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][8]));
-        uiConfig.getCombinationsSlots()[8].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkEvens(dices, isFirstThrow), 8, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][8]));
-        uiConfig.getCombinationsText()[9].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkOdds(dices, isFirstThrow), 9, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][9]));
-        uiConfig.getCombinationsSlots()[9].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkOdds(dices, isFirstThrow), 9, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][9]));
-        uiConfig.getCombinationsText()[10].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkSmallStraight(dices, isFirstThrow), 10, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][10]));
-        uiConfig.getCombinationsSlots()[10].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkSmallStraight(dices, isFirstThrow), 10, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][10]));
-        uiConfig.getCombinationsText()[11].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkLargeStraight(dices, isFirstThrow), 11, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][11]));
-        uiConfig.getCombinationsSlots()[11].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkLargeStraight(dices, isFirstThrow), 11, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][11]));
-        uiConfig.getCombinationsText()[12].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkFullHouse(dices, isFirstThrow), 12, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][12]));
-        uiConfig.getCombinationsSlots()[12].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkFullHouse(dices, isFirstThrow), 12, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][12]));
-        uiConfig.getCombinationsText()[13].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkFourOfAKind(dices, isFirstThrow), 13, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][13]));
-        uiConfig.getCombinationsSlots()[13].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkFourOfAKind(dices, isFirstThrow), 13, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][13]));
-        uiConfig.getCombinationsText()[14].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkFiveOfAKind(dices, isFirstThrow), 14, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][14]));
-        uiConfig.getCombinationsSlots()[14].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkFiveOfAKind(dices, isFirstThrow), 14, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][14]));
-        uiConfig.getCombinationsText()[15].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkSOS(dices, throwNumber), 15, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][15]));
-        uiConfig.getCombinationsSlots()[15].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkSOS(dices, throwNumber), 15, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][15]));
+        uiConfig.getCombinationsLayouts()[0].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkOne(dices, isFirstThrow), 0, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][0]));
+        uiConfig.getCombinationsLayouts()[1].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkTwo(dices, isFirstThrow), 1, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][1]));
+        uiConfig.getCombinationsLayouts()[2].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkThree(dices, isFirstThrow), 2, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][2]));
+        uiConfig.getCombinationsLayouts()[3].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkFour(dices, isFirstThrow), 3, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][3]));
+        uiConfig.getCombinationsLayouts()[4].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkFive(dices, isFirstThrow), 4, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][4]));
+        uiConfig.getCombinationsLayouts()[5].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkSix(dices, isFirstThrow), 5, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][5]));
+        uiConfig.getCombinationsLayouts()[6].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkPair(dices, isFirstThrow), 6, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][6]));
+        uiConfig.getCombinationsLayouts()[7].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkTwoPairs(dices, isFirstThrow), 7, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][7]));
+        uiConfig.getCombinationsLayouts()[8].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkEvens(dices, isFirstThrow), 8, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][8]));
+        uiConfig.getCombinationsLayouts()[9].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkOdds(dices, isFirstThrow), 9, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][9]));
+        uiConfig.getCombinationsLayouts()[10].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkSmallStraight(dices, isFirstThrow), 10, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][10]));
+        uiConfig.getCombinationsLayouts()[11].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkLargeStraight(dices, isFirstThrow), 11, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][11]));
+        uiConfig.getCombinationsLayouts()[12].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkFullHouse(dices, isFirstThrow), 12, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][12]));
+        uiConfig.getCombinationsLayouts()[13].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkFourOfAKind(dices, isFirstThrow), 13, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][13]));
+        uiConfig.getCombinationsLayouts()[14].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkFiveOfAKind(dices, isFirstThrow), 14, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][14]));
+        uiConfig.getCombinationsLayouts()[15].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkSOS(dices, throwNumber), 15, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][15]));
 
     }
 
@@ -175,14 +160,14 @@ public class GameBoardManager {
         for (int x = 0; x < 16; x++) {
             if (dicesCombinationsChecker.combinationChecker(x, dices, isFirstThrow, 0) == 0 && gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][x] == 0) {
                 {
-                    uiConfig.getCombinationsText()[x].setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, uiConfig, this, sounds, x));
-                    uiConfig.getCombinationsSlots()[x].setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, uiConfig, this, sounds, x));
+                    uiConfig.getCombinationsLayouts()[x].setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, uiConfig, this, sounds, x));
+                    uiConfig.getCombinationsLayouts()[x].setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, uiConfig, this, sounds, x));
 
                 }
             }
         }
-        uiConfig.getCombinationsText()[15].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkSOS(dices, throwNumber), 15, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][15]));
-        uiConfig.getCombinationsSlots()[15].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkSOS(dices, throwNumber), 15, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][15]));
+        uiConfig.getCombinationsLayouts()[15].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkSOS(dices, throwNumber), 15, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][15]));
+        uiConfig.getCombinationsLayouts()[15].setOnClickListener(new ScoreInputListener(gameBoardActivity, gameMode, uiConfig, this, resetThrowCounter, dicesCombinationsChecker.checkSOS(dices, throwNumber), 15, gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][15]));
 
 
     }

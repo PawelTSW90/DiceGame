@@ -32,7 +32,6 @@ public class PlayerNamesInputScreenFragment extends Fragment {
         playerName = view.findViewById(R.id.player_title);
         playerName.setText(R.string.player_one);
         playerInputScreen(context);
-
         return view;
 
     }

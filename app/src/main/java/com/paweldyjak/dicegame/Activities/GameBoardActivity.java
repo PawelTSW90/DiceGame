@@ -163,4 +163,8 @@ public class GameBoardActivity extends AppCompatActivity {
     public boolean getIsBlockConfirmationOn() {
         return isBlockConfirmationOn;
     }
+
+    public boolean isCombinationsHighlightOn() {
+        return isCombinationsHighlightOn;
+    }
 }

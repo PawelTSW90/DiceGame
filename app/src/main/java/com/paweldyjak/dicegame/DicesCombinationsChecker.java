@@ -1,7 +1,5 @@
 package com.paweldyjak.dicegame;
 
-import android.animation.ObjectAnimator;
-
 import com.paweldyjak.dicegame.GameModes.GameMode;
 
 import java.util.ArrayList;
@@ -30,11 +28,13 @@ public class DicesCombinationsChecker {
         }
 
         if (nrOfOne >= 3) {
+            uiConfig.combinationHighlighter(1, false);
             if (firstThrow) {
                 return 6;
             } else {
                 return 3;
             }
+
 
         } else {
             return 0;
@@ -55,6 +55,7 @@ public class DicesCombinationsChecker {
         }
 
         if (nrOfTwo >= 3) {
+            uiConfig.combinationHighlighter(2, false);
             if (firstThrow) {
                 return 12;
             } else {
@@ -78,6 +79,7 @@ public class DicesCombinationsChecker {
         }
 
         if (nrOfThree >= 3) {
+            uiConfig.combinationHighlighter(3, false);
             if (firstThrow) {
                 return 18;
             } else {
@@ -101,6 +103,7 @@ public class DicesCombinationsChecker {
         }
 
         if (nrOfFour >= 3) {
+            uiConfig.combinationHighlighter(4, false);
             if (firstThrow) {
                 return 24;
             } else {
@@ -124,6 +127,7 @@ public class DicesCombinationsChecker {
         }
 
         if (nrOfFive >= 3) {
+            uiConfig.combinationHighlighter(5, false);
             if (firstThrow) {
                 return 30;
             } else {
@@ -147,6 +151,7 @@ public class DicesCombinationsChecker {
         }
 
         if (nrOfSix >= 3) {
+            uiConfig.combinationHighlighter(6, false);
             if (firstThrow) {
                 return 36;
             } else {
@@ -206,7 +211,10 @@ public class DicesCombinationsChecker {
             firstThrowValue += 4;
             notFirstThrowValue += 2;
         }
-        uiConfig.animateTextView();
+        if (highestPairScore > 0) {
+            uiConfig.combinationHighlighter(7, false);
+
+        }
         return highestPairScore;
     }
 
@@ -344,11 +352,11 @@ public class DicesCombinationsChecker {
         if (pairs.size() < 2) {
             return 0;
         } else if (pairs.size() == 2) {
+            uiConfig.combinationHighlighter(8, false);
             return pairs.get(0) + pairs.get(1);
-        } else if (pairs.size() == 4) {
-            return pairs.get(1) + pairs.get(2);
         } else {
-            return 0;
+            uiConfig.combinationHighlighter(8, false);
+            return pairs.get(1) + pairs.get(2);
         }
     }
 
@@ -373,6 +381,8 @@ public class DicesCombinationsChecker {
             }
         }
         if (evenNumbers.size() == 5) {
+            uiConfig.combinationHighlighter(9, false);
+
             for (Integer values : evenNumbers) {
                 sum += values;
 
@@ -403,6 +413,8 @@ public class DicesCombinationsChecker {
             }
         }
         if (oddNumbers.size() == 5) {
+            uiConfig.combinationHighlighter(10, false);
+
             for (Integer values : oddNumbers) {
                 sum += values;
 
@@ -430,6 +442,8 @@ public class DicesCombinationsChecker {
         }
         Collections.sort(smallStraight);
         if (smallStraight.equals(smallStraightTemplate)) {
+            uiConfig.combinationHighlighter(11, false);
+
             for (Integer values : smallStraight) {
                 sum += values;
             }
@@ -460,6 +474,8 @@ public class DicesCombinationsChecker {
         }
         Collections.sort(largeStraight);
         if (largeStraight.equals(largeStraightTemplate)) {
+            uiConfig.combinationHighlighter(12, false);
+
             for (Integer values : largeStraight) {
                 sum += values;
             }
@@ -528,6 +544,8 @@ public class DicesCombinationsChecker {
             }
         }
         if (nrOfDifferentValues == 2 && !isMoreThanThreeSameDices) {
+            uiConfig.combinationHighlighter(13, false);
+
             if (firstThrow) {
                 return fullHouseSum * 2;
             } else {
@@ -582,6 +600,8 @@ public class DicesCombinationsChecker {
         }
 
         if (checkCombination) {
+            uiConfig.combinationHighlighter(14, false);
+
             if (firstThrow) {
                 return score * 2;
             } else {
@@ -631,6 +651,8 @@ public class DicesCombinationsChecker {
         }
 
         if (checkCombination) {
+            uiConfig.combinationHighlighter(15, false);
+
             if (firstThrow) {
                 return score * 2;
             } else {
@@ -651,6 +673,8 @@ public class DicesCombinationsChecker {
         }
         int sosSum = 0;
         if (throwNumber == 3) {
+            uiConfig.combinationHighlighter(16, false);
+
             for (int sum : dices) {
                 sosSum += sum;
             }
