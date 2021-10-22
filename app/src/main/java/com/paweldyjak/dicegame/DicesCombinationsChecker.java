@@ -9,13 +9,15 @@ import java.util.List;
 // class methods calculates user score and send it to ScoreInput class
 public class DicesCombinationsChecker {
     private final GameMode gameMode;
+    private final UIConfig uiConfig;
 
-    public DicesCombinationsChecker(GameMode gameMode) {
+    public DicesCombinationsChecker(GameMode gameMode, UIConfig uiConfig) {
         this.gameMode = gameMode;
+        this.uiConfig = uiConfig;
     }
 
     public int checkOne(int[] dices, boolean firstThrow) {
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][0]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][0] != 0) {
             return 0;
         }
         int nrOfOne = 0;
@@ -26,11 +28,14 @@ public class DicesCombinationsChecker {
         }
 
         if (nrOfOne >= 3) {
+            uiConfig.combinationHighlighter(1, false);
             if (firstThrow) {
                 return 6;
             } else {
                 return 3;
             }
+
+
         } else {
             return 0;
         }
@@ -39,7 +44,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkTwo(int[] dices, boolean firstThrow) {
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][1]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][1] != 0) {
             return 0;
         }
         int nrOfTwo = 0;
@@ -50,6 +55,7 @@ public class DicesCombinationsChecker {
         }
 
         if (nrOfTwo >= 3) {
+            uiConfig.combinationHighlighter(2, false);
             if (firstThrow) {
                 return 12;
             } else {
@@ -62,7 +68,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkThree(int[] dices, boolean firstThrow) {
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][2]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][2] != 0) {
             return 0;
         }
         int nrOfThree = 0;
@@ -73,6 +79,7 @@ public class DicesCombinationsChecker {
         }
 
         if (nrOfThree >= 3) {
+            uiConfig.combinationHighlighter(3, false);
             if (firstThrow) {
                 return 18;
             } else {
@@ -85,7 +92,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkFour(int[] dices, boolean firstThrow) {
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][3]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][3] != 0) {
             return 0;
         }
         int nrOfFour = 0;
@@ -96,6 +103,7 @@ public class DicesCombinationsChecker {
         }
 
         if (nrOfFour >= 3) {
+            uiConfig.combinationHighlighter(4, false);
             if (firstThrow) {
                 return 24;
             } else {
@@ -108,7 +116,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkFive(int[] dices, boolean firstThrow) {
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][4]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][4] != 0) {
             return 0;
         }
         int nrOfFive = 0;
@@ -119,6 +127,7 @@ public class DicesCombinationsChecker {
         }
 
         if (nrOfFive >= 3) {
+            uiConfig.combinationHighlighter(5, false);
             if (firstThrow) {
                 return 30;
             } else {
@@ -131,7 +140,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkSix(int[] dices, boolean firstThrow) {
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][5]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][5] != 0) {
             return 0;
         }
         int nrOfSix = 0;
@@ -142,6 +151,7 @@ public class DicesCombinationsChecker {
         }
 
         if (nrOfSix >= 3) {
+            uiConfig.combinationHighlighter(6, false);
             if (firstThrow) {
                 return 36;
             } else {
@@ -157,7 +167,7 @@ public class DicesCombinationsChecker {
         int firstThrowValue = 4;
         int notFirstThrowValue = 2;
         int highestPairScore = 0;
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][6]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][6] != 0) {
             return 0;
         }
         List<Integer> valuesList = new ArrayList<>();
@@ -201,12 +211,15 @@ public class DicesCombinationsChecker {
             firstThrowValue += 4;
             notFirstThrowValue += 2;
         }
+        if (highestPairScore > 0) {
+            uiConfig.combinationHighlighter(7, false);
 
+        }
         return highestPairScore;
     }
 
     public int checkTwoPairs(int[] dices, boolean firstThrow) {
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][7]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][7] != 0) {
             return 0;
         }
         int one = 0, two = 0, three = 0, four = 0, five = 0, six = 0;
@@ -339,17 +352,17 @@ public class DicesCombinationsChecker {
         if (pairs.size() < 2) {
             return 0;
         } else if (pairs.size() == 2) {
+            uiConfig.combinationHighlighter(8, false);
             return pairs.get(0) + pairs.get(1);
-        } else if (pairs.size() == 4) {
-            return pairs.get(1) + pairs.get(2);
         } else {
-            return 0;
+            uiConfig.combinationHighlighter(8, false);
+            return pairs.get(1) + pairs.get(2);
         }
     }
 
 
     public int checkEvens(int[] dices, boolean firstThrow) {
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][8]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][8] != 0) {
             return 0;
         }
 
@@ -368,6 +381,8 @@ public class DicesCombinationsChecker {
             }
         }
         if (evenNumbers.size() == 5) {
+            uiConfig.combinationHighlighter(9, false);
+
             for (Integer values : evenNumbers) {
                 sum += values;
 
@@ -379,7 +394,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkOdds(int[] dices, boolean firstThrow) {
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][9]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][9] != 0) {
             return 0;
         }
 
@@ -398,6 +413,8 @@ public class DicesCombinationsChecker {
             }
         }
         if (oddNumbers.size() == 5) {
+            uiConfig.combinationHighlighter(10, false);
+
             for (Integer values : oddNumbers) {
                 sum += values;
 
@@ -409,7 +426,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkSmallStraight(int[] dices, boolean firstThrow) {
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][10]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][10] != 0) {
             return 0;
         }
         List<Integer> smallStraight = new ArrayList<>();
@@ -425,6 +442,8 @@ public class DicesCombinationsChecker {
         }
         Collections.sort(smallStraight);
         if (smallStraight.equals(smallStraightTemplate)) {
+            uiConfig.combinationHighlighter(11, false);
+
             for (Integer values : smallStraight) {
                 sum += values;
             }
@@ -439,7 +458,7 @@ public class DicesCombinationsChecker {
     }
 
     public int checkLargeStraight(int[] dices, boolean firstThrow) {
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][11]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][11] != 0) {
             return 0;
         }
         List<Integer> largeStraight = new ArrayList<>();
@@ -455,6 +474,8 @@ public class DicesCombinationsChecker {
         }
         Collections.sort(largeStraight);
         if (largeStraight.equals(largeStraightTemplate)) {
+            uiConfig.combinationHighlighter(12, false);
+
             for (Integer values : largeStraight) {
                 sum += values;
             }
@@ -470,7 +491,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkFullHouse(int[] dices, boolean firstThrow) {
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][12]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][12] != 0) {
             return 0;
         }
         List<Integer> valuesList = new ArrayList<>();
@@ -523,6 +544,8 @@ public class DicesCombinationsChecker {
             }
         }
         if (nrOfDifferentValues == 2 && !isMoreThanThreeSameDices) {
+            uiConfig.combinationHighlighter(13, false);
+
             if (firstThrow) {
                 return fullHouseSum * 2;
             } else {
@@ -537,7 +560,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkFourOfAKind(int[] dices, boolean firstThrow) {
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][13]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][13] != 0) {
             return 0;
         }
         int[] values = new int[6];
@@ -570,13 +593,15 @@ public class DicesCombinationsChecker {
             if (values[x] >= 4) {
                 checkCombination = true;
                 score = values[x] * (x + 1);
-                if(values[x]==5){
-                    score-=values[x];
+                if (values[x] == 5) {
+                    score -= values[x];
                 }
             }
         }
 
         if (checkCombination) {
+            uiConfig.combinationHighlighter(14, false);
+
             if (firstThrow) {
                 return score * 2;
             } else {
@@ -589,7 +614,7 @@ public class DicesCombinationsChecker {
 
 
     public int checkFiveOfAKind(int[] dices, boolean firstThrow) {
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][14]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][14] != 0) {
             return 0;
         }
         int[] values = new int[6];
@@ -626,6 +651,8 @@ public class DicesCombinationsChecker {
         }
 
         if (checkCombination) {
+            uiConfig.combinationHighlighter(15, false);
+
             if (firstThrow) {
                 return score * 2;
             } else {
@@ -641,11 +668,13 @@ public class DicesCombinationsChecker {
 
 
     public int checkSOS(int[] dices, int throwNumber) {
-        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber()-1][15]!=0) {
+        if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][15] != 0) {
             return 0;
         }
         int sosSum = 0;
         if (throwNumber == 3) {
+            uiConfig.combinationHighlighter(16, false);
+
             for (int sum : dices) {
                 sosSum += sum;
             }

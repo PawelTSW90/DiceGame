@@ -38,6 +38,7 @@ public class ScoreInputListener implements View.OnClickListener {
         if (scoreToInput > 0 && combinationSlotStatus == 0 && !resetThrowCounter) {
             updateBoardValues(scoreToInput, combinationNumber);
             uiConfig.setDicesVisibility(false);
+            uiConfig.combinationHighlighter(0, true);
             if (gameMode instanceof MultiplayerGame) {
                 ((MultiplayerGame) gameMode).updateOpponentTurnDatabase();
             }
@@ -47,6 +48,7 @@ public class ScoreInputListener implements View.OnClickListener {
                         if (gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers() && gameMode.checkIfAllCombinationsAreDone()) {
                         gameMode.setFinalResultScreen();
                         } else{
+                            resetCombinationsListeners();
                             gameBoardManager.setResetThrowCounter(true);
                             gameBoardManager.changeCurrentPlayer();
                             gameBoardActivity.showNextTurnFragment();
@@ -60,9 +62,11 @@ public class ScoreInputListener implements View.OnClickListener {
 
         }
 
+
     public void updateBoardValues(int scoreToInput, int combinationNumber) {
         Sounds sounds = new Sounds(gameBoardActivity);
-        sounds.playCompleteCombinationSound();
+            sounds.playCompleteCombinationSound();
+
         if (gameMode instanceof MultiplayerGame) {
             ((MultiplayerGame) gameMode).setCombinationsSlotsInDatabase(combinationNumber, 1);
             ((MultiplayerGame) gameMode).setCombinationsPointsInDatabase(scoreToInput, combinationNumber);
@@ -76,6 +80,14 @@ public class ScoreInputListener implements View.OnClickListener {
         uiConfig.setTotalScore(totalScore);
         gameBoardManager.updatePlayerBoard();
 
+    }
+
+    public void resetCombinationsListeners(){
+for(int x = 0; x<16; x++){
+    uiConfig.getCombinationsLayouts()[x].setOnClickListener(v -> {
+
+    });
+}
     }
 
 

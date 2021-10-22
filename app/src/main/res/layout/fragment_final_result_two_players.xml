@@ -40,23 +40,42 @@
             app:layout_constraintVertical_bias="0.79" />
 
         <LinearLayout
-            android:id="@+id/winnerLayout"
-            android:layout_width="785dp"
-            android:layout_height="70dp"
+            android:id="@+id/ranking_points_layout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/playersResultsLayout"
+            app:layout_constraintTop_toBottomOf="@+id/winnerLayout"
             app:layout_constraintVertical_bias="0.0">
 
             <TextView
-                android:id="@+id/winner_name_two_players"
+                android:id="@+id/ranking_points_text"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|top"
+                android:textSize="25sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/winnerLayout"
+            android:layout_width="785dp"
+            android:layout_height="60dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/playersResultsLayout">
+
+            <TextView
+                android:id="@+id/winner_name_two_players_mode"
                 style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|center_horizontal"
                 android:textSize="30sp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -90,7 +109,7 @@
         <LinearLayout
             android:id="@+id/playersResultsLayout"
             android:layout_width="782dp"
-            android:layout_height="119dp"
+            android:layout_height="65dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -99,7 +118,7 @@
             app:layout_constraintVertical_bias="0.0">
 
             <TextView
-                android:id="@+id/first_player_two_players"
+                android:id="@+id/first_player_two_players_mode"
                 style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -109,7 +128,7 @@
                 android:textSize="23sp" />
 
             <TextView
-                android:id="@+id/second_player_two_players"
+                android:id="@+id/second_player_two_players_mode"
                 style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

@@ -4,6 +4,8 @@
     <string name="title">KOŚCI</string>
     <string name="logout">WYLOGUJ</string>
     <string name="logged_out">Wylogowano</string>
+    <string name="register">REJESTRACJA</string>
+    <string name="login">LOGOWANIE</string>
     <string name="hello">Witaj</string>
     <string name="settings">USTAWIENIA</string>
     <string name="password">hasło:</string>
@@ -27,12 +29,12 @@
     <string name="player_six">GRACZ 6</string>
     <string name="name">Imię:</string>
     <string name="start">START</string>
-    <string name="_1">1</string>
-    <string name="_2">2</string>
-    <string name="_3">3</string>
-    <string name="_4">4</string>
-    <string name="_5">5</string>
-    <string name="_6">6</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
     <string name="pair">Para</string>
     <string name="two_pairs">2 Pary</string>
     <string name="evens">Parzyste</string>
@@ -56,11 +58,14 @@
     <string name="multiplayer">MULTIPLAYER</string>
     <string name="play">GRAJ</string>
     <string name="back">COFNIJ</string>
+    <string name="you_won">WYGRAŁEŚ!</string>
+    <string name="you_lost">PRZEGRAŁEŚ!</string>
     <string name="the_winner_is">Zwycięzcą jest </string>
+    <string name="winnerRankingPoint">+1 Punkt rankingowy!</string>
+    <string name="loserRankingPoint">-1 Punkt rankingowy!</string>
     <string name="draw">REMIS !</string>
     <string name="exit">WYJŚCIE</string>
     <string name="rematch">REWANŻ</string>
     <string name="offline_mode">TRYB OFFLINE</string>
-    <string name="go_online">URUCHOM TRYB ONLINE</string>
     <string name="opponent_search">Szukanie przeciwnika…</string>
 </resources>

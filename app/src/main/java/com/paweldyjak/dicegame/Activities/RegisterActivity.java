@@ -92,7 +92,12 @@ public class RegisterActivity extends AppCompatActivity {
         usersDatabaseReference.child(userUID).child("name").setValue("null");
         usersDatabaseReference.child(userUID).child("email").setValue(email);
         usersDatabaseReference.child(userUID).child("password").setValue(password);
-        usersDatabaseReference.child(userUID).child("ranking").setValue(0);
+        usersDatabaseReference.child(userUID).child("rankingPoints").setValue(0);
+        usersDatabaseReference.child(userUID).child("rankingPosition").setValue(0);
+        usersDatabaseReference.child(userUID).child("gamesTotal").setValue(0);
+        usersDatabaseReference.child(userUID).child("win").setValue(0);
+        usersDatabaseReference.child(userUID).child("draw").setValue(0);
+        usersDatabaseReference.child(userUID).child("lost").setValue(0);
     }
 
     private boolean isConnectedToNetwork() {

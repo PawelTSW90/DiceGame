@@ -3,6 +3,8 @@
     <string name="title">Dice Game</string>
     <string name="logout">LOGOUT</string>
     <string name="logged_out">Logged out</string>
+    <string name="register">REGISTER</string>
+    <string name="login">LOG IN</string>
     <string name="hello">Hello</string>
     <string name="settings">SETTINGS</string>
     <string name="password">password:</string>
@@ -26,12 +28,12 @@
     <string name="player_six">PLAYER 6</string>
     <string name="name">Name:</string>
     <string name="start">START</string>
-    <string name="_1">1</string>
-    <string name="_2">2</string>
-    <string name="_3">3</string>
-    <string name="_4">4</string>
-    <string name="_5">5</string>
-    <string name="_6">6</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
     <string name="pair">Pair</string>
     <string name="two_pairs">2 Pairs</string>
     <string name="evens">Evens</string>
@@ -55,12 +57,15 @@
     <string name="multiplayer">MULTIPLAYER</string>
     <string name="play">PLAY</string>
     <string name="back">BACK</string>
+    <string name="you_won">YOU WON!</string>
+    <string name="you_lost">YOU LOST!</string>
     <string name="the_winner_is">The winner is </string>
+    <string name="winnerRankingPoint">+1 Ranking point!</string>
+    <string name="loserRankingPoint">-1 Ranking point!</string>
     <string name="draw">DRAW !</string>
     <string name="exit">EXIT</string>
     <string name="rematch">REMATCH</string>
     <string name="offline_mode">OFFLINE MODE</string>
-    <string name="go_online">START ONLINE MODE</string>
     <string name="opponent_search">Searching for opponent…</string>
 
 </resources>

@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -28,12 +29,19 @@ public class GameBoardActivity extends AppCompatActivity {
     private View mainBoardLayout;
     private boolean multiplayerMode;
     private OpponentUIConfig opponentUIConfig;
+    private boolean isSoundOn;
+    private boolean isCombinationsHighlightOn;
+    private boolean isBlockConfirmationOn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int numberOfPlayers = getIntent().getIntExtra("numberOfPlayers", 0);
         multiplayerMode = getIntent().getBooleanExtra("MultiplayerMode", false);
+        isSoundOn = getIntent().getBooleanExtra("isSoundOn", true);
+        isCombinationsHighlightOn = getIntent().getBooleanExtra("isCombinationsHighlightOn", true);
+        isBlockConfirmationOn = getIntent().getBooleanExtra("isBlockingConfirmationOn", false);
         String[] playersNames = getIntent().getStringArrayExtra("playersNames");
         String opponentUid = getIntent().getStringExtra("opponentUid");
         FirebaseApp.initializeApp(this);
@@ -107,7 +115,7 @@ public class GameBoardActivity extends AppCompatActivity {
         //creating class objects
         UIConfig uiConfig = new UIConfig(this);
         HotSeatGame hotSeatGame = new HotSeatGame(this, playersNames);
-        DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame);
+        DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame, uiConfig);
         GameBoardManager gameBoardManager = new GameBoardManager(this,dicesCombinationsChecker, uiConfig, hotSeatGame, null);
         turnScreenFragment = new TurnScreenFragment(this,hotSeatGame, gameBoardManager);
         //configuring UI
@@ -125,7 +133,7 @@ public class GameBoardActivity extends AppCompatActivity {
         //creating class objects
         UIConfig uiConfig = new UIConfig(this);
         MultiplayerGame multiplayerGame = new MultiplayerGame(this, playersNames, opponentUid);
-        DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame);
+        DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame, uiConfig);
         GameBoardManager gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, multiplayerGame, opponentUid);
         multiplayerTurnScreenFragment = new MultiplayerTurnScreenFragment(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
         this.opponentUIConfig = new OpponentUIConfig(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
@@ -144,4 +152,19 @@ public class GameBoardActivity extends AppCompatActivity {
         return opponentUIConfig;
     }
 
+    public boolean getIsSoundOn() {
+        return isSoundOn;
+    }
+
+    public boolean GetIsCombinationsHighlightOn() {
+        return isCombinationsHighlightOn;
+    }
+
+    public boolean getIsBlockConfirmationOn() {
+        return isBlockConfirmationOn;
+    }
+
+    public boolean isCombinationsHighlightOn() {
+        return isCombinationsHighlightOn;
+    }
 }

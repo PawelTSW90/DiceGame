@@ -1,8 +1,8 @@
 package com.paweldyjak.dicegame.Activities;
 
-
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,7 +28,6 @@ import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
 
 public class MainMenuActivity extends AppCompatActivity {
     private GameBoardActivity gameBoardActivity;
@@ -45,8 +46,17 @@ public class MainMenuActivity extends AppCompatActivity {
     private EditText nameEditText;
     private View playersNumberLayout;
     private View userNameCreatorLayout;
-    private ImageView settings;
+    private ImageView settingsButton;
     private String userName;
+    private MainMenuSettingsActivity mainMenuSettings;
+    private boolean isSoundOn = true;
+    private boolean isCombinationsHighlightOn = true;
+    private boolean isBlockConfirmationOn = false;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
+    public final String mainMenuUserSettingsPref = "userSettingsPref";
+    public final String soundPref = "soundPref";
+    public final String highlightPref = "highlightPref";
+    public final String blockConfirmPref = "blockConfirmPref";
 
 
     @Override
@@ -57,11 +67,20 @@ public class MainMenuActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK) {
+                Intent data = result.getData();
+                isSoundOn = data.getBooleanExtra("soundPref", true);
+                isCombinationsHighlightOn = data.getBooleanExtra("highlightPref", true);
+                isBlockConfirmationOn = data.getBooleanExtra("blockConfirmPref", false);
+                saveSettings();
 
+            }
+        });
+        loadSettings();
         gameBoardActivity = new GameBoardActivity();
         sounds = new Sounds(this);
         playButton = findViewById(R.id.play_button);
-        Button connectionStatusButton = findViewById(R.id.connection_status_button);
         hotSeatButton = findViewById(R.id.hotseat_mode_button);
         backButton = findViewById(R.id.back_button);
         logoutButton = findViewById(R.id.logout_button_titleScreen);
@@ -75,48 +94,44 @@ public class MainMenuActivity extends AppCompatActivity {
         playersNumberButtons[4] = findViewById(R.id.six_playersButton);
         playersNumberLayout = findViewById(R.id.players_number_layout);
         nameEditText = findViewById(R.id.setting_name_editText);
-        settings = findViewById(R.id.settings_imageview);
+        settingsButton = findViewById(R.id.settings_imageview);
+        mainMenuSettings = new MainMenuSettingsActivity();
         setButtons();
-            try {
-                //online mode
-                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                String userUID = firebaseAuth.getUid();
-                userNameReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUID).child("name");
-                namesInUseReference = FirebaseDatabase.getInstance().getReference().child("namesInUse");
-                connectionCheckerThread = new ConnectionCheckerThread(this, this);
-                internetConnectionChecker();
-                checkIfUserCreatedName();
-            } catch (NullPointerException e){
-                //offline mode
-                connectionStatusButton.setText(R.string.go_online);
-                connectionStatusButton.setVisibility(View.VISIBLE);
-                connectionStatusButton.setOnClickListener(v ->{
-                    startActivity(new Intent(this, StartActivity.class));
-                    this.finish();
-                });
+        try {
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            String userUID = firebaseAuth.getUid();
+            userNameReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUID).child("name");
+            namesInUseReference = FirebaseDatabase.getInstance().getReference().child("namesInUse");
+            connectionCheckerThread = new ConnectionCheckerThread(this, this);
+            internetConnectionChecker();
+            checkIfUserCreatedName();
+        } catch (NullPointerException ignored) {
 
-            }
+        }
 
     }
 
     public void setButtons() {
 
         for (int x = 0; x < 5; x++) {
-            int numberOfPlayers = x+2;
+            int numberOfPlayers = x + 2;
             playersNumberButtons[x].setOnClickListener(v -> {
                 connectionChecker.shutdown();
                 sounds.playTickSound();
                 Intent intent = new Intent(this, GameBoardActivity.class);
                 intent.putExtra("numberOfPlayers", numberOfPlayers);
                 intent.putExtra("MultiplayerMode", false);
+                intent.putExtra("isSoundOn", isSoundOn);
+                intent.putExtra("isCombinationsHighlightOn", isCombinationsHighlightOn);
+                intent.putExtra("isBlockingConfirmationOn", isBlockConfirmationOn);
                 startActivity(intent);
                 this.finish();
             });
         }
 
-        settings.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainMenuSettingsActivity.class);
-            startActivity(intent);
+        settingsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, mainMenuSettings.getClass());
+            activityResultLauncher.launch(intent);
         });
 
         logoutButton.setOnClickListener(v -> {
@@ -270,6 +285,53 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+    }
+
+    public boolean getIsSoundOn() {
+        return isSoundOn;
+    }
+
+    public void setIsSoundOn(boolean isSoundOn) {
+        this.isSoundOn = isSoundOn;
+    }
+
+    public boolean isCombinationsHighlightOn() {
+        return isCombinationsHighlightOn;
+    }
+
+    public void setCombinationsHighlightOn(boolean combinationsHighlightOn) {
+        isCombinationsHighlightOn = combinationsHighlightOn;
+    }
+
+    public boolean isBlockConfirmationOn() {
+        return isBlockConfirmationOn;
+    }
+
+    public void setBlockConfirmationOn(boolean blockConfirmationOn) {
+        isBlockConfirmationOn = blockConfirmationOn;
+    }
+
+    public void saveSettings() {
+        SharedPreferences sharedPreferences = getSharedPreferences(mainMenuUserSettingsPref, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(soundPref, isSoundOn);
+        editor.putBoolean(highlightPref, isCombinationsHighlightOn);
+        editor.putBoolean(blockConfirmPref, isBlockConfirmationOn);
+        editor.apply();
+
+    }
+
+    public void loadSettings() {
+        SharedPreferences sharedPreferences = getSharedPreferences(mainMenuUserSettingsPref, MODE_PRIVATE);
+        isSoundOn = sharedPreferences.getBoolean(soundPref, true);
+        isCombinationsHighlightOn = sharedPreferences.getBoolean(highlightPref, true);
+        isBlockConfirmationOn = sharedPreferences.getBoolean(blockConfirmPref, false);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        sounds = new Sounds(this);
     }
 
 }

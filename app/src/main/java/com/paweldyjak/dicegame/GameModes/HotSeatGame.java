@@ -3,12 +3,13 @@ package com.paweldyjak.dicegame.GameModes;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Fragments.FinalResultMorePlayersFragment;
 import com.paweldyjak.dicegame.Fragments.FinalResultTwoPlayersFragment;
+import com.paweldyjak.dicegame.GameBoardManager;
 import com.paweldyjak.dicegame.R;
 
 import java.util.Arrays;
 
 public class HotSeatGame implements GameMode {
-    GameBoardActivity gameBoardActivity;
+    private final GameBoardActivity gameBoardActivity;
     private String[] playersNames;
     private int numberOfPlayers;
     private int currentPlayerNumber = 6;
@@ -16,7 +17,7 @@ public class HotSeatGame implements GameMode {
     private final int[][] combinationsSlotsValues = new int[6][16];
     private final int[] totalScore = new int[6];
 
-    public HotSeatGame(GameBoardActivity gameBoardActivity, String[] playersNames) {
+    public HotSeatGame(GameBoardActivity gameBoardActivity,String[] playersNames) {
         this.gameBoardActivity = gameBoardActivity;
         this.playersNames = playersNames;
     }
@@ -28,11 +29,12 @@ public class HotSeatGame implements GameMode {
     public void setAllCombinationsAsActive() {
         for (int[] row : combinationsSlotsValues)
             Arrays.fill(row, 0);
+
     }
 
     public boolean checkIfAllCombinationsAreDone() {
         for (int x = 0; x < 16; x++) {
-            if (getCombinationsSlotsValues()[getCurrentPlayerNumber()-1][x]==0) {
+            if (getCombinationsSlotsValues()[getCurrentPlayerNumber() - 1][x] == 0) {
                 return false;
             }
         }
@@ -95,7 +97,7 @@ public class HotSeatGame implements GameMode {
     }
 
     public int getCombinationsPointsValues(int playerNumber, int combinationNumber) {
-        return combinationsPointsValues[playerNumber-1][combinationNumber];
+        return combinationsPointsValues[playerNumber - 1][combinationNumber];
     }
 
     @Override
