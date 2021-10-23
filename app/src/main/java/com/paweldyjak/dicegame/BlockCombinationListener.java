@@ -33,6 +33,7 @@ public class BlockCombinationListener implements View.OnClickListener {
         Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
         gameBoardManager.setResetThrowCounter(true);
         gameMode.setCombinationsSlots(combinationNr, 2);
+        uiConfig.combinationHighlighter(0, true);
         if (gameMode instanceof MultiplayerGame) {
             ((MultiplayerGame) gameMode).setCombinationsSlotsInDatabase(combinationNr, 2);
             ((MultiplayerGame) gameMode).updateOpponentTurnDatabase();

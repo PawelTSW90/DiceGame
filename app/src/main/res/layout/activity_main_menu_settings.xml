@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.MainMenuSettingsActivity">
@@ -10,131 +9,136 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#901F8824"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView10"
-                android:layout_width="match_parent"
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#673AB7"
-                android:text="Player name: pawelcostam"
-                android:textSize="30sp" />
+                android:layout_gravity="center"
+                android:text="Ustawienia"
+                android:textSize="40sp" />
 
-            <TextView
-                android:id="@+id/textView9"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#673AB7"
-                android:text="Games: 300"
-                android:textSize="30sp" />
+                android:layout_height="match_parent"
+                android:background="#901F8824"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#673AB7"
-                android:text="Win: 50"
-                android:textSize="30sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#673AB7"
-                android:text="Draw: 50"
-                android:textSize="30sp" />
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Player name: pawelcostam"
+                        android:textSize="30sp" />
 
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#673AB7"
-                android:text="Lost:200"
-                android:textSize="30sp" />
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Games: 300"
+                        android:textSize="30sp" />
 
-            <TextView
-                android:id="@+id/textView21"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#673AB7"
-                android:text="Ranking position: 1524"
-                android:textSize="30sp" />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Win: 50"
+                        android:textSize="30sp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Draw: 50"
+                        android:textSize="30sp" />
 
-            <CheckBox
-                android:id="@+id/sounds_checkBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#673AB7"
-                android:text="Sounds"
-                android:textColor="#E1D6D7"
-                android:textSize="30sp"
-                android:button="@null"
-                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"/>
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Lost:200"
+                        android:textSize="30sp" />
 
-            <CheckBox
-                android:id="@+id/highlight_checkBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#673AB7"
-                android:text="Highlights"
-                android:textColor="#E1D6D7"
-                android:textColorLink="#FF03DAC5"
-                android:textSize="30sp"
-                android:button="@null"
-                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"/>
+                    <TextView
+                        android:id="@+id/textView21"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ranking position: 1524"
+                        android:textSize="30sp" />
+                </LinearLayout>
 
-            <CheckBox
-                android:id="@+id/blockConfirm_checkBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#673AB7"
-                android:text="Block Confirm"
-                android:textColor="#E1D6D7"
-                android:textSize="30sp"
-                android:button="@null"
-                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#673AB7"
-                android:text="Delete Account"
-                android:textSize="30sp" />
+                    <CheckBox
+                        android:id="@+id/sounds_checkBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="Sounds"
+                        android:textColor="#E1D6D7"
+                        android:textSize="30sp" />
 
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#673AB7"
-                android:text="Rate game!"
-                android:textSize="30sp" />
+                    <CheckBox
+                        android:id="@+id/highlight_checkBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="Highlights"
+                        android:textColor="#E1D6D7"
+                        android:textColorLink="#FF03DAC5"
+                        android:textSize="30sp" />
 
-            <TextView
-                android:id="@+id/textView20"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#673AB7"
-                android:text="Contact Me"
-                android:textSize="30sp" />
+                    <CheckBox
+                        android:id="@+id/blockConfirm_checkBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="Block Confirm"
+                        android:textColor="#E1D6D7"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/textView19"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Delete Account"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/textView22"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Rate game!"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/textView20"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Contact Me"
+                        android:textSize="30sp" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

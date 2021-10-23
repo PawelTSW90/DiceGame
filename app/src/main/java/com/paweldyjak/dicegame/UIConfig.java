@@ -10,7 +10,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.core.content.res.ResourcesCompat;
+
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 
 public class UIConfig {
@@ -43,7 +45,7 @@ public class UIConfig {
             switch (x) {
                 case 0:
                     combinationsText[0] = (gameBoardActivity.findViewById(R.id.textView_1));
-                    combinationsText[0].setText(R.string.one);
+                    combinationsText[0].setText(R.string.ones);
                     combinationsPoints[0] = (gameBoardActivity.findViewById(R.id.textView_1_pts));
                     combinationsSlots[0] = (gameBoardActivity.findViewById(R.id.textView_1_slot));
                     LinearLayout linearLayout;
@@ -53,7 +55,7 @@ public class UIConfig {
 
                 case 1:
                     combinationsText[1] = (gameBoardActivity.findViewById(R.id.textView_2));
-                    combinationsText[1].setText(R.string.two);
+                    combinationsText[1].setText(R.string.twos);
                     combinationsPoints[1] = (gameBoardActivity.findViewById(R.id.textView_2_pts));
                     combinationsSlots[1] = (gameBoardActivity.findViewById(R.id.textView_2_slot));
                     LinearLayout linearLayout2;
@@ -63,7 +65,7 @@ public class UIConfig {
 
                 case 2:
                     combinationsText[2] = (gameBoardActivity.findViewById(R.id.textView_3));
-                    combinationsText[2].setText(R.string.three);
+                    combinationsText[2].setText(R.string.threes);
                     combinationsPoints[2] = (gameBoardActivity.findViewById(R.id.textView_3_pts));
                     combinationsSlots[2] = (gameBoardActivity.findViewById(R.id.textView_3_slot));
                     LinearLayout linearLayout3;
@@ -73,7 +75,7 @@ public class UIConfig {
 
                 case 3:
                     combinationsText[3] = (gameBoardActivity.findViewById(R.id.textView_4));
-                    combinationsText[3].setText(R.string.four);
+                    combinationsText[3].setText(R.string.fours);
                     combinationsPoints[3] = (gameBoardActivity.findViewById(R.id.textView_4_pts));
                     combinationsSlots[3] = (gameBoardActivity.findViewById(R.id.textView_4_slot));
                     LinearLayout linearLayout4;
@@ -83,7 +85,7 @@ public class UIConfig {
 
                 case 4:
                     combinationsText[4] = (gameBoardActivity.findViewById(R.id.textView_5));
-                    combinationsText[4].setText(R.string.five);
+                    combinationsText[4].setText(R.string.fives);
                     combinationsPoints[4] = (gameBoardActivity.findViewById(R.id.textView_5_pts));
                     combinationsSlots[4] = (gameBoardActivity.findViewById(R.id.textView_5_slot));
                     LinearLayout linearLayout5;
@@ -93,7 +95,7 @@ public class UIConfig {
 
                 case 5:
                     combinationsText[5] = (gameBoardActivity.findViewById(R.id.textView_6));
-                    combinationsText[5].setText(R.string.six);
+                    combinationsText[5].setText(R.string.sixes);
                     combinationsPoints[5] = (gameBoardActivity.findViewById(R.id.textView_6_pts));
                     combinationsSlots[5] = (gameBoardActivity.findViewById(R.id.textView_6_slot));
                     LinearLayout linearLayout6;
@@ -364,23 +366,26 @@ public class UIConfig {
     }
 
     public void combinationHighlighter(int combinationNr, boolean turnHighlightsOff) {
+        Drawable combinationSlotBorder = ResourcesCompat.getDrawable(gameBoardActivity.getResources(), R.drawable.combination_slot_border, null);
+
         if (gameBoardActivity.isCombinationsHighlightOn()) {
-            final int red = 0xff040c03;
-            final int blue = 0xff3fca30;
+            final int green = Color.rgb(34, 112, 26);
+            final int purple = Color.rgb(91, 47, 170);
 
 
             if (turnHighlightsOff) {
                 for (int x = 0; x < 16; x++) {
                     if (valueAnimators[x] != null) {
                         valueAnimators[x].pause();
-                        combinationsLayouts[x].setBackground(null);
+                        combinationsSlots[x].setBackground(combinationSlotBorder);
+
                     }
 
                 }
             } else {
                 if (valueAnimators[combinationNr - 1] == null) {
-                    valueAnimators[combinationNr - 1] = ObjectAnimator.ofInt(combinationsLayouts[combinationNr - 1], "backgroundColor", red, blue);
-                    valueAnimators[combinationNr - 1].setDuration(3000);
+                    valueAnimators[combinationNr - 1] = ObjectAnimator.ofInt(combinationsSlots[combinationNr - 1], "backgroundColor", green, purple);
+                    valueAnimators[combinationNr - 1].setDuration(2000);
                     valueAnimators[combinationNr - 1].setEvaluator(new ArgbEvaluator());
                     valueAnimators[combinationNr - 1].setRepeatCount(ValueAnimator.INFINITE);
                     valueAnimators[combinationNr - 1].setRepeatMode(ValueAnimator.REVERSE);
