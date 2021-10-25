@@ -1,16 +1,22 @@
 package com.paweldyjak.dicegame;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
@@ -366,11 +372,15 @@ public class UIConfig {
     }
 
     public void combinationHighlighter(int combinationNr, boolean turnHighlightsOff) {
+        Animation in = new AlphaAnimation(0.0f, 1.0f);
+        in.setDuration(3000);
+        Animation out = new AlphaAnimation(1.0f, 0.0f);
+        out.setDuration(3000);
         Drawable combinationSlotBorder = ResourcesCompat.getDrawable(gameBoardActivity.getResources(), R.drawable.combination_slot_border, null);
 
         if (gameBoardActivity.isCombinationsHighlightOn()) {
-            final int green = Color.rgb(34, 112, 26);
-            final int purple = Color.rgb(91, 47, 170);
+            final int green = Color.rgb(246, 93, 44);
+            final int white = Color.rgb(255, 255, 255);
 
 
             if (turnHighlightsOff) {
@@ -378,20 +388,28 @@ public class UIConfig {
                     if (valueAnimators[x] != null) {
                         valueAnimators[x].pause();
                         combinationsSlots[x].setBackground(combinationSlotBorder);
+                        if(combinationsSlots[x].getText().equals("?")) {
+                            combinationsSlots[x].setText(null);
+                        }
 
                     }
 
                 }
             } else {
                 if (valueAnimators[combinationNr - 1] == null) {
-                    valueAnimators[combinationNr - 1] = ObjectAnimator.ofInt(combinationsSlots[combinationNr - 1], "backgroundColor", green, purple);
-                    valueAnimators[combinationNr - 1].setDuration(2000);
+                    valueAnimators[combinationNr - 1] = ObjectAnimator.ofInt(combinationsSlots[combinationNr - 1], "backgroundColor", green, white);
+                    valueAnimators[combinationNr - 1].setDuration(1500);
                     valueAnimators[combinationNr - 1].setEvaluator(new ArgbEvaluator());
                     valueAnimators[combinationNr - 1].setRepeatCount(ValueAnimator.INFINITE);
                     valueAnimators[combinationNr - 1].setRepeatMode(ValueAnimator.REVERSE);
-                }
-                valueAnimators[combinationNr - 1].start();
 
+
+                }
+                combinationsSlots[combinationNr-1].setText("?");
+                combinationsSlots[combinationNr-1].setGravity(Gravity.CENTER);
+                combinationsSlots[combinationNr-1].setTextSize(16);
+                combinationsSlots[combinationNr-1].setTextColor(Color.rgb(69, 48, 106));
+                valueAnimators[combinationNr - 1].start();
             }
 
 

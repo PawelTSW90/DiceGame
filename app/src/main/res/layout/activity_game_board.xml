@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_game_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background"
     android:backgroundTintMode="src_over"
-    android:id="@+id/main_game_layout"
     tools:context=".Activities.GameBoardActivity">
 
 
@@ -15,8 +13,8 @@
         android:id="@+id/game_board_screen_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
         android:backgroundTintMode="src_over"
-        android:background="#901F8824"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +34,7 @@
                 android:id="@+id/table_layout"
                 android:layout_width="425dp"
                 android:layout_height="339dp"
-                android:background="#8BECE7E7"
+                android:background="#FFFFFF"
                 android:visibility="visible">
 
                 <TableRow
@@ -50,6 +48,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -87,6 +86,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -132,6 +132,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -169,6 +170,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -213,6 +215,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -250,6 +253,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -295,6 +299,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -331,6 +336,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -374,6 +380,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -410,6 +417,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -453,6 +461,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -489,6 +498,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -534,6 +544,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -571,6 +582,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -615,6 +627,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -651,6 +664,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/layout_border_down"
                         android:orientation="horizontal">
 
                         <TextView
@@ -710,7 +724,7 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="70dp"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="13dp"
                             android:layout_marginTop="8dp"
                             android:text="@string/zero_points" />
                     </LinearLayout>
@@ -724,7 +738,7 @@
                 style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="match_parent"
                 android:layout_height="43dp"
-                android:background="#5B2FAA"
+                android:background="#F65D2C"
                 android:gravity="center"
                 android:textSize="17sp" />
         </LinearLayout>
