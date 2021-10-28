@@ -4,19 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.FirebaseApp;
 import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Fragments.*;
 import com.paweldyjak.dicegame.GameModes.*;
-
 import java.util.Objects;
 
 

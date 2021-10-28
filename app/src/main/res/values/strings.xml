@@ -45,8 +45,7 @@
     <string name="five_of_a_kind">Five of a Kind</string>
     <string name="SOS">SOS</string>
     <string name="score">Score</string>
-    <string name="zero_points">0 pts</string>
-    <string name="points">pts</string>
+    <string name="points_value">"%1$d pkt"</string>
     <string name="content_description">android:contentDescription="@null"</string>
     <string name="two_players">2 players</string>
     <string name="three_players">3 players</string>
@@ -59,13 +58,21 @@
     <string name="back">BACK</string>
     <string name="you_won">YOU WON!</string>
     <string name="you_lost">YOU LOST!</string>
-    <string name="the_winner_is">The winner is </string>
-    <string name="winnerRankingPoint">+1 Ranking point!</string>
-    <string name="loserRankingPoint">-1 Ranking point!</string>
+    <string name="the_winner_is">"The winner is +%1$s !"</string>
+    <string name="winnerRankingPoint">"+1 Ranking point! \n Your ranking: %1$d points!"</string>
+    <string name="loserRankingPoint">"-1 Ranking point! \n Your ranking: %1$d points!"</string>
+    <string name="playerResult">"%1$s \n \n %2$s </string>
     <string name="draw">DRAW !</string>
     <string name="exit">EXIT</string>
     <string name="rematch">REMATCH</string>
     <string name="offline_mode">OFFLINE MODE</string>
+    <string name="playerName_mainMenu">Player name:</string>
+    <string name="totalGames_mainMenu">Games:</string>
+    <string name="winGames_mainMenu">Win:</string>
+    <string name="drawGames_mainMenu">Draw:</string>
+    <string name="lostGames_mainMenu">Lost:</string>
+    <string name="rankingPoints_mainMenu">Ranking points:</string>
+    <string name="rankingPosition_mainMenu">Ranking position:</string>
     <string name="opponent_search">Searching for opponent…</string>
 
 </resources>

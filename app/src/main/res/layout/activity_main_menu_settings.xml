@@ -37,46 +37,54 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView10"
+                        android:id="@+id/playerName_mainMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Player name: pawelcostam"
+                        android:text="@string/playerName_mainMenu"
                         android:textSize="30sp" />
 
                     <TextView
-                        android:id="@+id/textView9"
+                        android:id="@+id/totalGames_mainMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Games: 300"
+                        android:text="@string/totalGames_mainMenu"
                         android:textSize="30sp" />
 
                     <TextView
-                        android:id="@+id/textView15"
+                        android:id="@+id/winGames_mainMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Win: 50"
+                        android:text="@string/winGames_mainMenu"
                         android:textSize="30sp" />
 
                     <TextView
-                        android:id="@+id/textView16"
+                        android:id="@+id/drawGames_mainMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Draw: 50"
+                        android:text="@string/drawGames_mainMenu"
                         android:textSize="30sp" />
 
                     <TextView
-                        android:id="@+id/textView17"
+                        android:id="@+id/lostGames_mainMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Lost:200"
+                        android:text="@string/lostGames_mainMenu"
                         android:textSize="30sp" />
 
                     <TextView
-                        android:id="@+id/textView21"
+                        android:id="@+id/rankingPoints_mainMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Ranking position: 1524"
+                        android:text="@string/rankingPoints_mainMenu"
                         android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/rankingPosition_mainMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rankingPosition_mainMenu"
+                        android:textSize="30sp" />
+
                 </LinearLayout>
 
                 <LinearLayout

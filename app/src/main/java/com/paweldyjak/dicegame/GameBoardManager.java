@@ -184,10 +184,9 @@ public class GameBoardManager {
     }
 
     public void updatePlayerBoard() {
-        String string = gameBoardActivity.getResources().getString(R.string.points);
         for (int x = 0; x < 16; x++) {
             uiConfig.updateCombinationsUI(gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][x], x);
-            uiConfig.getCombinationsPoints()[x].setText(gameMode.getCombinationsPointsValues(gameMode.getCurrentPlayerNumber(), x) + " " + string);
+            uiConfig.getCombinationsPoints()[x].setText(gameBoardActivity.getResources().getString(R.string.points_value, gameMode.getCombinationsPointsValues(gameMode.getCurrentPlayerNumber(), x)));
         }
 
         uiConfig.setTotalScore(gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber() - 1));

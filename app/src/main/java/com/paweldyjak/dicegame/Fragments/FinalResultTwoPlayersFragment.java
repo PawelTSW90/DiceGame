@@ -2,17 +2,14 @@ package com.paweldyjak.dicegame.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,7 +37,6 @@ public class FinalResultTwoPlayersFragment extends Fragment {
     private Button rematchButton;
     private Button exitButton;
     private int playerRanking;
-    private String playerName;
     private String winnerPlayer;
     private String playerUid;
     private DatabaseReference userReference;
@@ -69,7 +65,7 @@ public class FinalResultTwoPlayersFragment extends Fragment {
         exitButton = view.findViewById(R.id.exit_button_twoPlayers);
         if (gameMode instanceof HotSeatGame) {
             setButtons();
-            displayFinalScreen();
+            displayFinalScreen(null);
         } else {
             playerUid = FirebaseAuth.getInstance().getUid();
             userReference = FirebaseDatabase.getInstance().getReference().child("users").child(playerUid);
@@ -91,7 +87,7 @@ public class FinalResultTwoPlayersFragment extends Fragment {
         rematchButton.setOnClickListener(v -> gameBoardActivity.startHotSeatGame(gameMode.getPlayersNames(), gameMode.getNumberOfPlayers()));
     }
 
-    public void displayFinalScreen() {
+    public void displayFinalScreen(String playerName) {
 
         if (gameMode.getPlayersTotalScore(0) > gameMode.getPlayersTotalScore(1)) {
             winnerPlayer = gameMode.getPlayersNames()[0];
@@ -104,17 +100,17 @@ public class FinalResultTwoPlayersFragment extends Fragment {
             playerTwoImageView.setVisibility(View.VISIBLE);
         }
         sounds.playFinalResultSound();
-        playerOneTextView.setText(gameMode.getPlayersNames()[0] + "\n" + "\n" + gameMode.getPlayersTotalScore(0) + " " + getContext().getText(R.string.points));
-        playerTwoTextView.setText(gameMode.getPlayersNames()[1] + "\n" + "\n" + gameMode.getPlayersTotalScore(1) + " " + getContext().getText(R.string.points));
+        playerOneTextView.setText(gameBoardActivity.getResources().getString(R.string.playerResult, gameMode.getPlayersNames()[0],gameBoardActivity.getResources().getString(R.string.points_value, gameMode.getPlayersTotalScore(0))));
+        playerTwoTextView.setText(gameBoardActivity.getResources().getString(R.string.playerResult, gameMode.getPlayersNames()[1],gameBoardActivity.getResources().getString(R.string.points_value, gameMode.getPlayersTotalScore(1))));
         if (gameMode.getPlayersTotalScore(0) != gameMode.getPlayersTotalScore(1)) {
             if (gameMode instanceof MultiplayerGame) {
                 if (winnerPlayer.equals(playerName)) {
-                    getActivity().getString(R.string.you_won);
+                    winnerTextView.setText(getActivity().getString(R.string.you_won));
                 } else {
-                    getActivity().getString(R.string.you_lost);
+                    winnerTextView.setText(getActivity().getString(R.string.you_lost));
                 }
             } else {
-                winnerTextView.setText(getActivity().getString(R.string.the_winner_is) + " " + winnerPlayer + "!");
+                winnerTextView.setText(getActivity().getResources().getString(R.string.the_winner_is, winnerPlayer));
             }
         } else {
             winnerTextView.setText(R.string.draw);
@@ -141,7 +137,7 @@ public class FinalResultTwoPlayersFragment extends Fragment {
                     playerRanking += 1;
                     updateWinsDatabase();
                     rankingReference.setValue(playerRanking);
-                    rankingPointsTextView.setText((getContext().getText(R.string.winnerRankingPoint)) + " " + playerRanking + " " + getContext().getText(R.string.points));
+                    rankingPointsTextView.setText(gameBoardActivity.getResources().getString(R.string.winnerRankingPoint,playerRanking));
                 } else if (!isWinner && !drawResult) {
                     playerRanking -= 1;
                     if (playerRanking < 0) {
@@ -149,7 +145,7 @@ public class FinalResultTwoPlayersFragment extends Fragment {
                     }
                     updateLostDatabase();
                     rankingReference.setValue(playerRanking);
-                    rankingPointsTextView.setText((getContext().getText(R.string.loserRankingPoint)) + " " + playerRanking + " " + getContext().getText(R.string.points));
+                    rankingPointsTextView.setText(gameBoardActivity.getResources().getString(R.string.loserRankingPoint,playerRanking));
                 } else {
                     updateDrawDatabase();
                 }
@@ -238,9 +234,9 @@ public class FinalResultTwoPlayersFragment extends Fragment {
         playerNameReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                playerName = snapshot.getValue(String.class);
+                String playerName = snapshot.getValue(String.class);
                 setButtons();
-                displayFinalScreen();
+                displayFinalScreen(playerName);
             }
 
             @Override

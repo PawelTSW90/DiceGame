@@ -46,8 +46,7 @@
     <string name="five_of_a_kind">Generał</string>
     <string name="SOS">SOS</string>
     <string name="score">Razem</string>
-    <string name="zero_points">0 pkt</string>
-    <string name="points"> pkt</string>
+    <string name="points_value">"%1$d pkt"</string>
     <string name="content_description">android:contentDescription="@null"</string>
     <string name="two_players">2 graczy</string>
     <string name="three_players">3 graczy</string>
@@ -60,12 +59,20 @@
     <string name="back">COFNIJ</string>
     <string name="you_won">WYGRAŁEŚ!</string>
     <string name="you_lost">PRZEGRAŁEŚ!</string>
-    <string name="the_winner_is">Zwycięzcą jest </string>
-    <string name="winnerRankingPoint">+1 Punkt rankingowy!</string>
-    <string name="loserRankingPoint">-1 Punkt rankingowy!</string>
+    <string name="the_winner_is">"Zwycięzcą jest +%1$s !"</string>
+    <string name="winnerRankingPoint">"+1 Punkt rankingowy! \n Twój ranking: %1$d"</string>
+    <string name="loserRankingPoint">"-1 Punkt rankingowy! \n Twój ranking: %1$d"</string>
+    <string name="playerResult">"%1$s \n \n %2$s </string>
     <string name="draw">REMIS !</string>
     <string name="exit">WYJŚCIE</string>
     <string name="rematch">REWANŻ</string>
     <string name="offline_mode">TRYB OFFLINE</string>
+    <string name="playerName_mainMenu">Player name:</string>
+    <string name="totalGames_mainMenu">Liczba gier:</string>
+    <string name="winGames_mainMenu">Wygrane:</string>
+    <string name="drawGames_mainMenu">Zremisowane:</string>
+    <string name="lostGames_mainMenu">Przegrane:</string>
+    <string name="rankingPoints_mainMenu">Punkty rankingowe:</string>
+    <string name="rankingPosition_mainMenu">Miejsce rankingowe:</string>
     <string name="opponent_search">Szukanie przeciwnika…</string>
 </resources>

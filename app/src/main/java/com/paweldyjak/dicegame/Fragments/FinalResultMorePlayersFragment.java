@@ -13,7 +13,6 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Activities.MainMenuActivity;
-import com.paweldyjak.dicegame.GameBoardManager;
 import com.paweldyjak.dicegame.GameModes.GameMode;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.Sounds;
@@ -82,12 +81,12 @@ public class FinalResultMorePlayersFragment extends Fragment {
             switch (playerNr) {
                 case 0:
                     winnerPlayer.setText(gameBoardActivity.getString(R.string.the_winner_is) + " " + name + " !!!");
-                    playersTextViews[playerNr].setText(name + "\n" + score + " " + gameBoardActivity.getString(R.string.points));
+                    playersTextViews[playerNr].setText(name + "\n" + gameBoardActivity.getResources().getString(R.string.points_value, score));
                     sortedResults[0] = score;
                     playerNr++;
                     break;
                 case 1:
-                    playersTextViews[playerNr].setText(name + "\n" + score + " " + gameBoardActivity.getString(R.string.points));
+                    playersTextViews[playerNr].setText(name + "\n" + gameBoardActivity.getResources().getString(R.string.points_value, score));
                     sortedResults[1] = score;
                     if (sortedResults[0] == sortedResults[1]) {
                         winnerPlayer.setText(R.string.draw);
@@ -96,7 +95,7 @@ public class FinalResultMorePlayersFragment extends Fragment {
                     playerNr++;
                     break;
                 case 2:
-                    playersTextViews[playerNr].setText(name + "\n" + score + " " + gameBoardActivity.getString(R.string.points));
+                    playersTextViews[playerNr].setText(name + "\n" + gameBoardActivity.getResources().getString(R.string.points_value, score));
                     sortedResults[2] = score;
                     if (sortedResults[1] == score && sortedResults[1] != sortedResults[0]) {
                         bronzeMedalImageView.setImageResource(R.drawable.silver_medal);
@@ -108,15 +107,15 @@ public class FinalResultMorePlayersFragment extends Fragment {
                 case 3:
                     sortedResults[3] = score;
                     if (sortedResults[3] != sortedResults[2]) {
-                        playersTextViews[playerNr].setText("4." + name + " - " + score + " " + gameBoardActivity.getString(R.string.points));
+                        playersTextViews[playerNr].setText("4." + name + " - " + gameBoardActivity.getResources().getString(R.string.points_value, score));
                     } else {
 
                         if (sortedResults[3] == sortedResults[0]) {
-                            playersTextViews[playerNr].setText("1. " + name + " - " + score + " " + gameBoardActivity.getString(R.string.points));
+                            playersTextViews[playerNr].setText("1. " + name + " - " + gameBoardActivity.getResources().getString(R.string.points_value, score));
                         } else if(sortedResults[3]==sortedResults[1]){
-                            playersTextViews[playerNr].setText("2. " + name + " - " + score + " " + gameBoardActivity.getString(R.string.points));
+                            playersTextViews[playerNr].setText("2. " + name + " - " + gameBoardActivity.getResources().getString(R.string.points_value, score));
                         } else if(sortedResults[3]==sortedResults[2]){
-                            playersTextViews[playerNr].setText("3. " + name + " - " + score + " " + gameBoardActivity.getString(R.string.points));
+                            playersTextViews[playerNr].setText("3. " + name + " - " + gameBoardActivity.getResources().getString(R.string.points_value, score));
                         }
                     }
                     playerNr++;
@@ -124,17 +123,17 @@ public class FinalResultMorePlayersFragment extends Fragment {
                 case 4:
                     sortedResults[4] = score;
                     if (sortedResults[4] != sortedResults[3]) {
-                        playersTextViews[playerNr].setText("5." + name + " - " + score + " " + gameBoardActivity.getString(R.string.points));
+                        playersTextViews[playerNr].setText("5." + name + " - " + gameBoardActivity.getResources().getString(R.string.points_value, score));
                     } else {
 
                         if (sortedResults[4] == sortedResults[0]) {
-                            playersTextViews[playerNr].setText("1. " + name + " - " + score + " " + gameBoardActivity.getString(R.string.points));
+                            playersTextViews[playerNr].setText("1. " + name + " - " + gameBoardActivity.getResources().getString(R.string.points_value, score));
                         } else if(sortedResults[3]==sortedResults[1]){
-                            playersTextViews[playerNr].setText("2. " + name + " - " + score + " " + gameBoardActivity.getString(R.string.points));
+                            playersTextViews[playerNr].setText("2. " + name + " - " + gameBoardActivity.getResources().getString(R.string.points_value, score));
                         } else if(sortedResults[3]==sortedResults[2]){
-                            playersTextViews[playerNr].setText("3. " + name + " - " + score + " " + gameBoardActivity.getString(R.string.points));
+                            playersTextViews[playerNr].setText("3. " + name + " - " + gameBoardActivity.getResources().getString(R.string.points_value, score));
                         } else if(sortedResults[3]==sortedResults[3]){
-                            playersTextViews[playerNr].setText("4. " + name + " - " + score + " " + gameBoardActivity.getString(R.string.points));
+                            playersTextViews[playerNr].setText("4. " + name + " - " + gameBoardActivity.getResources().getString(R.string.points_value, score));
                         }
                     }
                     playerNr++;
@@ -142,19 +141,19 @@ public class FinalResultMorePlayersFragment extends Fragment {
                 case 5:
                     sortedResults[5] = score;
                     if (sortedResults[5] != sortedResults[4]) {
-                        playersTextViews[playerNr].setText("6." + name + " - " + score + " " + gameBoardActivity.getString(R.string.points));
+                        playersTextViews[playerNr].setText("6." + name + " - " + gameBoardActivity.getResources().getString(R.string.points_value, score));
                     } else {
 
                         if (sortedResults[5] == sortedResults[0]) {
-                            playersTextViews[playerNr].setText("1. " + name + " - " + score + " " + gameBoardActivity.getString(R.string.points));
+                            playersTextViews[playerNr].setText("1. " + name + " - " + gameBoardActivity.getResources().getString(R.string.points_value, score));
                         } else if(sortedResults[5]==sortedResults[1]){
-                            playersTextViews[playerNr].setText("2. " + name + " - " + score + " " + gameBoardActivity.getString(R.string.points));
+                            playersTextViews[playerNr].setText("2. " + name + " - " + gameBoardActivity.getResources().getString(R.string.points_value, score));
                         } else if(sortedResults[5]==sortedResults[2]){
-                            playersTextViews[playerNr].setText("3. " + name + " - " + score + " " + gameBoardActivity.getString(R.string.points));
+                            playersTextViews[playerNr].setText("3. " + name + " - " + gameBoardActivity.getResources().getString(R.string.points_value, score));
                         } else if(sortedResults[5]==sortedResults[3]){
-                            playersTextViews[playerNr].setText("4. " + name + " - " + score + " " + gameBoardActivity.getString(R.string.points));
+                            playersTextViews[playerNr].setText("4. " + name + " - " + gameBoardActivity.getResources().getString(R.string.points_value, score));
                         } else if(sortedResults[5]==sortedResults[4]){
-                            playersTextViews[playerNr].setText("5. " + name + " - " + score + " " + gameBoardActivity.getString(R.string.points));
+                            playersTextViews[playerNr].setText("5. " + name + " - " + gameBoardActivity.getResources().getString(R.string.points_value, score));
                         }
                     }
                     playerNr++;

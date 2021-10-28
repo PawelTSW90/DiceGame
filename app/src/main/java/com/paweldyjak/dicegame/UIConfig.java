@@ -1,13 +1,10 @@
 package com.paweldyjak.dicegame;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -15,10 +12,7 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
-
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 
 public class UIConfig {
@@ -207,7 +201,7 @@ public class UIConfig {
         }
 
         for (int x = 0; x < combinationsText.length; x++) {
-            combinationsPoints[x].setText(R.string.zero_points);
+            combinationsPoints[x].setText(gameBoardActivity.getResources().getString(R.string.points_value,0));
         }
 
         for (TextView textView : combinationsText) {
@@ -217,7 +211,7 @@ public class UIConfig {
         totalScore = new TextView(gameBoardActivity);
         totalScore = (gameBoardActivity.findViewById(R.id.textView_score_pts));
         currentPlayerName = (gameBoardActivity.findViewById(R.id.player_name_textView));
-        totalScore.setText(R.string.zero_points);
+        totalScore.setText(gameBoardActivity.getResources().getString(R.string.points_value,0));
 
     }
 
@@ -366,9 +360,7 @@ public class UIConfig {
     }
 
     public void setTotalScore(int totalScoreValue) {
-
-        String string = gameBoardActivity.getResources().getString(R.string.points);
-        totalScore.setText(totalScoreValue + " " + string);
+        totalScore.setText(gameBoardActivity.getResources().getString(R.string.points_value, totalScoreValue));
     }
 
     public void combinationHighlighter(int combinationNr, boolean turnHighlightsOff) {
