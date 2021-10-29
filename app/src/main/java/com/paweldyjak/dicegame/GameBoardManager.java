@@ -1,13 +1,11 @@
 package com.paweldyjak.dicegame;
 
 import android.widget.ImageView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.GameModes.GameMode;
 import com.paweldyjak.dicegame.GameModes.MultiplayerGame;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -160,9 +158,12 @@ public class GameBoardManager {
         for (int x = 0; x < 16; x++) {
             if (dicesCombinationsChecker.combinationChecker(x, dices, isFirstThrow, 0) == 0 && gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][x] == 0) {
                 {
-                    uiConfig.getCombinationsLayouts()[x].setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, uiConfig, this, sounds, x));
-                    uiConfig.getCombinationsLayouts()[x].setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, uiConfig, this, sounds, x));
-
+                    if(gameBoardActivity.isBlockConfirmationOn()){
+                        int finalX = x;
+                        uiConfig.getCombinationsLayouts()[x].setOnClickListener(v -> setBlockCombinationConfirmation(finalX));
+                    } else {
+                        uiConfig.getCombinationsLayouts()[x].setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, uiConfig, this, sounds, x));
+                    }
                 }
             }
         }
@@ -210,6 +211,65 @@ public class GameBoardManager {
 
     public void setResetThrowCounter(boolean resetThrowCounter) {
         this.resetThrowCounter = resetThrowCounter;
+    }
+
+    public void setBlockCombinationConfirmation(int combinationNumber) {
+        switch (combinationNumber) {
+            case 0:
+                uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.block_combination_question, gameBoardActivity.getResources().getString(R.string.ones)));
+                break;
+            case 1:
+                uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.block_combination_question, gameBoardActivity.getResources().getString(R.string.twos)));
+                break;
+            case 2:
+                uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.block_combination_question, gameBoardActivity.getResources().getString(R.string.threes)));
+                break;
+            case 3:
+                uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.block_combination_question, gameBoardActivity.getResources().getString(R.string.fours)));
+                break;
+            case 4:
+                uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.block_combination_question, gameBoardActivity.getResources().getString(R.string.fives)));
+                break;
+            case 5:
+                uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.block_combination_question, gameBoardActivity.getResources().getString(R.string.sixes)));
+                break;
+            case 6:
+                uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.block_combination_question, gameBoardActivity.getResources().getString(R.string.pair)));
+                break;
+            case 7:
+                uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.block_combination_question, gameBoardActivity.getResources().getString(R.string.two_pairs)));
+                break;
+            case 8:
+                uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.block_combination_question, gameBoardActivity.getResources().getString(R.string.evens)));
+                break;
+            case 9:
+                uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.block_combination_question, gameBoardActivity.getResources().getString(R.string.odds)));
+                break;
+            case 10:
+                uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.block_combination_question, gameBoardActivity.getResources().getString(R.string.small_straight)));
+                break;
+            case 11:
+                uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.block_combination_question, gameBoardActivity.getResources().getString(R.string.large_straight)));
+                break;
+            case 12:
+                uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.block_combination_question, gameBoardActivity.getResources().getString(R.string.full_house)));
+                break;
+            case 13:
+                uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.block_combination_question, gameBoardActivity.getResources().getString(R.string.four_of_a_kind)));
+                break;
+            case 14:
+                uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.block_combination_question, gameBoardActivity.getResources().getString(R.string.five_of_a_kind)));
+                break;
+
+        }
+        uiConfig.showBlockCombinationQuestion(true);
+        uiConfig.getBlockCombinationNoButton().setOnClickListener(v -> {
+            uiConfig.gameBoardEnableController(true, uiConfig.getGameBoardLayout());
+            uiConfig.showBlockCombinationQuestion(false);
+        });
+        uiConfig.getBlockCombinationYesButton().setOnClickListener(new BlockCombinationListener(gameBoardActivity, gameMode, uiConfig, this, sounds, combinationNumber));
+
+
     }
 
 }

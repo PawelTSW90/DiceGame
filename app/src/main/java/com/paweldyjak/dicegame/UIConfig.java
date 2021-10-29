@@ -7,13 +7,17 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
+
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 
 public class UIConfig {
@@ -28,6 +32,7 @@ public class UIConfig {
     private TextView currentPlayerName;
     private TextView totalScore;
     private LinearLayout blockCombinationQuestionLayout;
+    private ConstraintLayout gameBoardLayout;
     private TextView blockCombinationTextView;
     private Button blockCombinationYesButton;
     private Button blockCombinationNoButton;
@@ -44,6 +49,7 @@ public class UIConfig {
         blockCombinationTextView = gameBoardActivity.findViewById(R.id.block_combination_question_textView);
         blockCombinationYesButton = gameBoardActivity.findViewById(R.id.block_combination_question_yes_button);
         blockCombinationNoButton = gameBoardActivity.findViewById(R.id.block_combination_question_no_button);
+        gameBoardLayout = gameBoardActivity.findViewById(R.id.game_board_screen_layout);
         rollDicesButton = gameBoardActivity.findViewById(R.id.roll_dices);
         dicesSlots[0] = gameBoardActivity.findViewById(R.id.diceSlot1);
         dicesSlots[1] = gameBoardActivity.findViewById(R.id.diceSlot2);
@@ -210,7 +216,7 @@ public class UIConfig {
         }
 
         for (int x = 0; x < combinationsText.length; x++) {
-            combinationsPoints[x].setText(gameBoardActivity.getResources().getString(R.string.points_value,0));
+            combinationsPoints[x].setText(gameBoardActivity.getResources().getString(R.string.points_value, 0));
         }
 
         for (TextView textView : combinationsText) {
@@ -220,7 +226,7 @@ public class UIConfig {
         totalScore = new TextView(gameBoardActivity);
         totalScore = gameBoardActivity.findViewById(R.id.textView_score_pts);
         currentPlayerName = gameBoardActivity.findViewById(R.id.player_name_textView);
-        totalScore.setText(gameBoardActivity.getResources().getString(R.string.points_value,0));
+        totalScore.setText(gameBoardActivity.getResources().getString(R.string.points_value, 0));
 
     }
 
@@ -389,7 +395,7 @@ public class UIConfig {
                     if (valueAnimators[x] != null) {
                         valueAnimators[x].pause();
                         combinationsSlots[x].setBackground(combinationSlotBorder);
-                        if(combinationsSlots[x].getText().equals("?")) {
+                        if (combinationsSlots[x].getText().equals("?")) {
                             combinationsSlots[x].setText(null);
                         }
 
@@ -406,10 +412,10 @@ public class UIConfig {
 
 
                 }
-                combinationsSlots[combinationNr-1].setText("?");
-                combinationsSlots[combinationNr-1].setGravity(Gravity.CENTER);
-                combinationsSlots[combinationNr-1].setTextSize(16);
-                combinationsSlots[combinationNr-1].setTextColor(Color.rgb(69, 48, 106));
+                combinationsSlots[combinationNr - 1].setText("?");
+                combinationsSlots[combinationNr - 1].setGravity(Gravity.CENTER);
+                combinationsSlots[combinationNr - 1].setTextSize(16);
+                combinationsSlots[combinationNr - 1].setTextColor(Color.rgb(69, 48, 106));
                 valueAnimators[combinationNr - 1].start();
             }
 
@@ -421,9 +427,27 @@ public class UIConfig {
         return combinationsLayouts;
     }
 
-    public void showBlockCombinationQuestion(){
-        blockCombinationQuestionLayout.setVisibility(View.VISIBLE);
+    public void showBlockCombinationQuestion(boolean showQuestion) {
 
+        gameBoardEnableController(!showQuestion, gameBoardLayout);
+        if (showQuestion) {
+            blockCombinationQuestionLayout.setVisibility(View.VISIBLE);
+        } else {
+            blockCombinationQuestionLayout.setVisibility(View.INVISIBLE);
+        }
+
+
+    }
+
+    public void gameBoardEnableController(boolean enable, ViewGroup vg) {
+
+        for (int i = 0; i < vg.getChildCount(); i++) {
+            View child = vg.getChildAt(i);
+            child.setEnabled(enable);
+            if (child instanceof ViewGroup) {
+                gameBoardEnableController(enable, (ViewGroup) child);
+            }
+        }
     }
 
     public Button getBlockCombinationYesButton() {
@@ -436,5 +460,9 @@ public class UIConfig {
 
     public TextView getBlockCombinationTextView() {
         return blockCombinationTextView;
+    }
+
+    public ConstraintLayout getGameBoardLayout() {
+        return gameBoardLayout;
     }
 }

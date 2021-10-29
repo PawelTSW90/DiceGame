@@ -836,8 +836,8 @@
 
     <LinearLayout
         android:id="@+id/block_combination_question_layout"
-        android:layout_width="441dp"
-        android:layout_height="169dp"
+        android:layout_width="459dp"
+        android:layout_height="133dp"
         android:background="#F65D2C"
         android:orientation="horizontal"
         android:visibility="invisible"

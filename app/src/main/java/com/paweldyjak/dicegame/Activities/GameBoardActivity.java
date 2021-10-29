@@ -152,11 +152,8 @@ public class GameBoardActivity extends AppCompatActivity {
         return isSoundOn;
     }
 
-    public boolean GetIsCombinationsHighlightOn() {
-        return isCombinationsHighlightOn;
-    }
 
-    public boolean getIsBlockConfirmationOn() {
+    public boolean isBlockConfirmationOn() {
         return isBlockConfirmationOn;
     }
 
