@@ -30,9 +30,11 @@ public class BlockCombinationListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        uiConfig.showBlockCombinationQuestion(false);
         Executor executor = ContextCompat.getMainExecutor(gameBoardActivity);
         gameBoardManager.setResetThrowCounter(true);
         gameMode.setCombinationsSlots(combinationNr, 2);
+        uiConfig.combinationHighlighter(0, true);
         if (gameMode instanceof MultiplayerGame) {
             ((MultiplayerGame) gameMode).setCombinationsSlotsInDatabase(combinationNr, 2);
             ((MultiplayerGame) gameMode).updateOpponentTurnDatabase();
@@ -41,6 +43,7 @@ public class BlockCombinationListener implements View.OnClickListener {
         uiConfig.setDicesVisibility(false);
         executor.execute(() -> {
             try {
+
                 sounds.playEraseCombinationSound();
 
                 Thread.sleep(2000);

@@ -3,9 +3,7 @@ package com.paweldyjak.dicegame.GameModes;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Fragments.FinalResultMorePlayersFragment;
 import com.paweldyjak.dicegame.Fragments.FinalResultTwoPlayersFragment;
-import com.paweldyjak.dicegame.GameBoardManager;
 import com.paweldyjak.dicegame.R;
-
 import java.util.Arrays;
 
 public class HotSeatGame implements GameMode {

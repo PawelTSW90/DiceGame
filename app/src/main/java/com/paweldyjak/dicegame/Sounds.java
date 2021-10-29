@@ -2,8 +2,6 @@ package com.paweldyjak.dicegame;
 
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.util.Log;
-
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Activities.MainMenuActivity;
 

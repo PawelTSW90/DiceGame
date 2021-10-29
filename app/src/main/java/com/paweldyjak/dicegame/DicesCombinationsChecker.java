@@ -592,10 +592,11 @@ public class DicesCombinationsChecker {
         for (int x = 0; x < values.length; x++) {
             if (values[x] >= 4) {
                 checkCombination = true;
-                score = values[x] * (x + 1);
                 if (values[x] == 5) {
-                    score -= values[x];
+                    values[x] = values[x]-1;
                 }
+                score = values[x] * (x + 1);
+
             }
         }
 
