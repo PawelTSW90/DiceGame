@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,6 +27,10 @@ public class UIConfig {
     private final ValueAnimator[] valueAnimators = new ValueAnimator[16];
     private TextView currentPlayerName;
     private TextView totalScore;
+    private LinearLayout blockCombinationQuestionLayout;
+    private TextView blockCombinationTextView;
+    private Button blockCombinationYesButton;
+    private Button blockCombinationNoButton;
 
 
     public UIConfig(GameBoardActivity gameBoardActivity) {
@@ -35,163 +40,167 @@ public class UIConfig {
     }
 
     public void setComponents() {
-        rollDicesButton = (gameBoardActivity.findViewById(R.id.roll_dices));
-        dicesSlots[0] = (gameBoardActivity.findViewById(R.id.diceSlot1));
-        dicesSlots[1] = (gameBoardActivity.findViewById(R.id.diceSlot2));
-        dicesSlots[2] = (gameBoardActivity.findViewById(R.id.diceSlot3));
-        dicesSlots[3] = (gameBoardActivity.findViewById(R.id.diceSlot4));
-        dicesSlots[4] = (gameBoardActivity.findViewById(R.id.diceSlot5));
+        blockCombinationQuestionLayout = gameBoardActivity.findViewById(R.id.block_combination_question_layout);
+        blockCombinationTextView = gameBoardActivity.findViewById(R.id.block_combination_question_textView);
+        blockCombinationYesButton = gameBoardActivity.findViewById(R.id.block_combination_question_yes_button);
+        blockCombinationNoButton = gameBoardActivity.findViewById(R.id.block_combination_question_no_button);
+        rollDicesButton = gameBoardActivity.findViewById(R.id.roll_dices);
+        dicesSlots[0] = gameBoardActivity.findViewById(R.id.diceSlot1);
+        dicesSlots[1] = gameBoardActivity.findViewById(R.id.diceSlot2);
+        dicesSlots[2] = gameBoardActivity.findViewById(R.id.diceSlot3);
+        dicesSlots[3] = gameBoardActivity.findViewById(R.id.diceSlot4);
+        dicesSlots[4] = gameBoardActivity.findViewById(R.id.diceSlot5);
         for (int x = 0; x < 16; x++) {
             switch (x) {
                 case 0:
-                    combinationsText[0] = (gameBoardActivity.findViewById(R.id.textView_1));
+                    combinationsText[0] = gameBoardActivity.findViewById(R.id.textView_1);
                     combinationsText[0].setText(R.string.ones);
-                    combinationsPoints[0] = (gameBoardActivity.findViewById(R.id.textView_1_pts));
-                    combinationsSlots[0] = (gameBoardActivity.findViewById(R.id.textView_1_slot));
+                    combinationsPoints[0] = gameBoardActivity.findViewById(R.id.textView_1_pts);
+                    combinationsSlots[0] = gameBoardActivity.findViewById(R.id.textView_1_slot);
                     LinearLayout linearLayout;
                     linearLayout = gameBoardActivity.findViewById(R.id.one_layout);
                     combinationsLayouts[x] = linearLayout;
                     break;
 
                 case 1:
-                    combinationsText[1] = (gameBoardActivity.findViewById(R.id.textView_2));
+                    combinationsText[1] = gameBoardActivity.findViewById(R.id.textView_2);
                     combinationsText[1].setText(R.string.twos);
-                    combinationsPoints[1] = (gameBoardActivity.findViewById(R.id.textView_2_pts));
-                    combinationsSlots[1] = (gameBoardActivity.findViewById(R.id.textView_2_slot));
+                    combinationsPoints[1] = gameBoardActivity.findViewById(R.id.textView_2_pts);
+                    combinationsSlots[1] = gameBoardActivity.findViewById(R.id.textView_2_slot);
                     LinearLayout linearLayout2;
                     linearLayout2 = gameBoardActivity.findViewById(R.id.two_layout);
                     combinationsLayouts[x] = linearLayout2;
                     break;
 
                 case 2:
-                    combinationsText[2] = (gameBoardActivity.findViewById(R.id.textView_3));
+                    combinationsText[2] = gameBoardActivity.findViewById(R.id.textView_3);
                     combinationsText[2].setText(R.string.threes);
-                    combinationsPoints[2] = (gameBoardActivity.findViewById(R.id.textView_3_pts));
-                    combinationsSlots[2] = (gameBoardActivity.findViewById(R.id.textView_3_slot));
+                    combinationsPoints[2] = gameBoardActivity.findViewById(R.id.textView_3_pts);
+                    combinationsSlots[2] = gameBoardActivity.findViewById(R.id.textView_3_slot);
                     LinearLayout linearLayout3;
                     linearLayout3 = gameBoardActivity.findViewById(R.id.three_layout);
                     combinationsLayouts[x] = linearLayout3;
                     break;
 
                 case 3:
-                    combinationsText[3] = (gameBoardActivity.findViewById(R.id.textView_4));
+                    combinationsText[3] = gameBoardActivity.findViewById(R.id.textView_4);
                     combinationsText[3].setText(R.string.fours);
-                    combinationsPoints[3] = (gameBoardActivity.findViewById(R.id.textView_4_pts));
-                    combinationsSlots[3] = (gameBoardActivity.findViewById(R.id.textView_4_slot));
+                    combinationsPoints[3] = gameBoardActivity.findViewById(R.id.textView_4_pts);
+                    combinationsSlots[3] = gameBoardActivity.findViewById(R.id.textView_4_slot);
                     LinearLayout linearLayout4;
                     linearLayout4 = gameBoardActivity.findViewById(R.id.four_layout);
                     combinationsLayouts[x] = linearLayout4;
                     break;
 
                 case 4:
-                    combinationsText[4] = (gameBoardActivity.findViewById(R.id.textView_5));
+                    combinationsText[4] = gameBoardActivity.findViewById(R.id.textView_5);
                     combinationsText[4].setText(R.string.fives);
-                    combinationsPoints[4] = (gameBoardActivity.findViewById(R.id.textView_5_pts));
-                    combinationsSlots[4] = (gameBoardActivity.findViewById(R.id.textView_5_slot));
+                    combinationsPoints[4] = gameBoardActivity.findViewById(R.id.textView_5_pts);
+                    combinationsSlots[4] = gameBoardActivity.findViewById(R.id.textView_5_slot);
                     LinearLayout linearLayout5;
                     linearLayout5 = gameBoardActivity.findViewById(R.id.five_layout);
                     combinationsLayouts[x] = linearLayout5;
                     break;
 
                 case 5:
-                    combinationsText[5] = (gameBoardActivity.findViewById(R.id.textView_6));
+                    combinationsText[5] = gameBoardActivity.findViewById(R.id.textView_6);
                     combinationsText[5].setText(R.string.sixes);
-                    combinationsPoints[5] = (gameBoardActivity.findViewById(R.id.textView_6_pts));
-                    combinationsSlots[5] = (gameBoardActivity.findViewById(R.id.textView_6_slot));
+                    combinationsPoints[5] = gameBoardActivity.findViewById(R.id.textView_6_pts);
+                    combinationsSlots[5] = gameBoardActivity.findViewById(R.id.textView_6_slot);
                     LinearLayout linearLayout6;
                     linearLayout6 = gameBoardActivity.findViewById(R.id.six_layout);
                     combinationsLayouts[x] = linearLayout6;
                     break;
 
                 case 6:
-                    combinationsText[6] = (gameBoardActivity.findViewById(R.id.textView_pair));
+                    combinationsText[6] = gameBoardActivity.findViewById(R.id.textView_pair);
                     combinationsText[6].setText(R.string.pair);
-                    combinationsPoints[6] = (gameBoardActivity.findViewById(R.id.textView_pair_pts));
-                    combinationsSlots[6] = (gameBoardActivity.findViewById(R.id.textView_pair_slot));
+                    combinationsPoints[6] = gameBoardActivity.findViewById(R.id.textView_pair_pts);
+                    combinationsSlots[6] = gameBoardActivity.findViewById(R.id.textView_pair_slot);
                     LinearLayout linearLayout7;
                     linearLayout7 = gameBoardActivity.findViewById(R.id.pair_layout);
                     combinationsLayouts[x] = linearLayout7;
                     break;
 
                 case 7:
-                    combinationsText[7] = (gameBoardActivity.findViewById(R.id.textView_2pairs));
+                    combinationsText[7] = gameBoardActivity.findViewById(R.id.textView_2pairs);
                     combinationsText[7].setText(R.string.two_pairs);
-                    combinationsPoints[7] = (gameBoardActivity.findViewById(R.id.textView_2pairs_pts));
-                    combinationsSlots[7] = (gameBoardActivity.findViewById(R.id.textView_2pairs_slot));
+                    combinationsPoints[7] = gameBoardActivity.findViewById(R.id.textView_2pairs_pts);
+                    combinationsSlots[7] = gameBoardActivity.findViewById(R.id.textView_2pairs_slot);
                     LinearLayout linearLayout8;
                     linearLayout8 = gameBoardActivity.findViewById(R.id.twoPairs_layout);
                     combinationsLayouts[x] = linearLayout8;
                     break;
 
                 case 8:
-                    combinationsText[8] = (gameBoardActivity.findViewById(R.id.textView_evens));
+                    combinationsText[8] = gameBoardActivity.findViewById(R.id.textView_evens);
                     combinationsText[8].setText(R.string.evens);
-                    combinationsPoints[8] = (gameBoardActivity.findViewById(R.id.textView_evens_pts));
-                    combinationsSlots[8] = (gameBoardActivity.findViewById(R.id.textView_evens_slot));
+                    combinationsPoints[8] = gameBoardActivity.findViewById(R.id.textView_evens_pts);
+                    combinationsSlots[8] = gameBoardActivity.findViewById(R.id.textView_evens_slot);
                     LinearLayout linearLayout9;
                     linearLayout9 = gameBoardActivity.findViewById(R.id.evens_layout);
                     combinationsLayouts[x] = linearLayout9;
                     break;
 
                 case 9:
-                    combinationsText[9] = (gameBoardActivity.findViewById(R.id.textView_odds));
+                    combinationsText[9] = gameBoardActivity.findViewById(R.id.textView_odds);
                     combinationsText[9].setText(R.string.odds);
-                    combinationsPoints[9] = (gameBoardActivity.findViewById(R.id.textView_odds_pts));
-                    combinationsSlots[9] = (gameBoardActivity.findViewById(R.id.textView_odds_slot));
+                    combinationsPoints[9] = gameBoardActivity.findViewById(R.id.textView_odds_pts);
+                    combinationsSlots[9] = gameBoardActivity.findViewById(R.id.textView_odds_slot);
                     LinearLayout linearLayout10;
                     linearLayout10 = gameBoardActivity.findViewById(R.id.odds_layout);
                     combinationsLayouts[x] = linearLayout10;
                     break;
                 case 10:
-                    combinationsText[10] = (gameBoardActivity.findViewById(R.id.textView_smallStraight));
+                    combinationsText[10] = gameBoardActivity.findViewById(R.id.textView_smallStraight);
                     combinationsText[10].setText(R.string.small_straight);
-                    combinationsPoints[10] = (gameBoardActivity.findViewById(R.id.textView_smallStraight_pts));
-                    combinationsSlots[10] = (gameBoardActivity.findViewById(R.id.textView_smallStraight_slot));
+                    combinationsPoints[10] = gameBoardActivity.findViewById(R.id.textView_smallStraight_pts);
+                    combinationsSlots[10] = gameBoardActivity.findViewById(R.id.textView_smallStraight_slot);
                     LinearLayout linearLayout11;
                     linearLayout11 = gameBoardActivity.findViewById(R.id.smallStraight_layout);
                     combinationsLayouts[x] = linearLayout11;
                     break;
                 case 11:
-                    combinationsText[11] = (gameBoardActivity.findViewById(R.id.textView_largeStraight));
+                    combinationsText[11] = gameBoardActivity.findViewById(R.id.textView_largeStraight);
                     combinationsText[11].setText(R.string.large_straight);
-                    combinationsPoints[11] = (gameBoardActivity.findViewById(R.id.textView_largeStraight_pts));
-                    combinationsSlots[11] = (gameBoardActivity.findViewById(R.id.textView_largeStraight_slot));
+                    combinationsPoints[11] = gameBoardActivity.findViewById(R.id.textView_largeStraight_pts);
+                    combinationsSlots[11] = gameBoardActivity.findViewById(R.id.textView_largeStraight_slot);
                     LinearLayout linearLayout12;
                     linearLayout12 = gameBoardActivity.findViewById(R.id.largeStraight_layout);
                     combinationsLayouts[x] = linearLayout12;
                     break;
                 case 12:
-                    combinationsText[12] = (gameBoardActivity.findViewById(R.id.textView_fullHouse));
+                    combinationsText[12] = gameBoardActivity.findViewById(R.id.textView_fullHouse);
                     combinationsText[12].setText(R.string.full_house);
-                    combinationsPoints[12] = (gameBoardActivity.findViewById(R.id.textView_fullHouse_pts));
-                    combinationsSlots[12] = (gameBoardActivity.findViewById(R.id.textView_fullHouse_slot));
+                    combinationsPoints[12] = gameBoardActivity.findViewById(R.id.textView_fullHouse_pts);
+                    combinationsSlots[12] = gameBoardActivity.findViewById(R.id.textView_fullHouse_slot);
                     LinearLayout linearLayout13;
                     linearLayout13 = gameBoardActivity.findViewById(R.id.fullHouse_layout);
                     combinationsLayouts[x] = linearLayout13;
                     break;
                 case 13:
-                    combinationsText[13] = (gameBoardActivity.findViewById(R.id.textView_4ofAKind));
+                    combinationsText[13] = gameBoardActivity.findViewById(R.id.textView_4ofAKind);
                     combinationsText[13].setText(R.string.four_of_a_kind);
-                    combinationsPoints[13] = (gameBoardActivity.findViewById(R.id.textView_4ofAKind_pts));
-                    combinationsSlots[13] = (gameBoardActivity.findViewById(R.id.textView_4ofAKind_slot));
+                    combinationsPoints[13] = gameBoardActivity.findViewById(R.id.textView_4ofAKind_pts);
+                    combinationsSlots[13] = gameBoardActivity.findViewById(R.id.textView_4ofAKind_slot);
                     LinearLayout linearLayout14;
                     linearLayout14 = gameBoardActivity.findViewById(R.id.fourOfAkind_layout);
                     combinationsLayouts[x] = linearLayout14;
                     break;
                 case 14:
-                    combinationsText[14] = (gameBoardActivity.findViewById(R.id.textView_5ofAKind));
+                    combinationsText[14] = gameBoardActivity.findViewById(R.id.textView_5ofAKind);
                     combinationsText[14].setText(R.string.five_of_a_kind);
-                    combinationsPoints[14] = (gameBoardActivity.findViewById(R.id.textView_5ofAKind_pts));
-                    combinationsSlots[14] = (gameBoardActivity.findViewById(R.id.textView_5ofAKind_slot));
+                    combinationsPoints[14] = gameBoardActivity.findViewById(R.id.textView_5ofAKind_pts);
+                    combinationsSlots[14] = gameBoardActivity.findViewById(R.id.textView_5ofAKind_slot);
                     LinearLayout linearLayout15;
                     linearLayout15 = gameBoardActivity.findViewById(R.id.fiveOfAkind_layout);
                     combinationsLayouts[x] = linearLayout15;
                     break;
                 case 15:
-                    combinationsText[15] = (gameBoardActivity.findViewById(R.id.textView_sos));
+                    combinationsText[15] = gameBoardActivity.findViewById(R.id.textView_sos);
                     combinationsText[15].setText(R.string.SOS);
-                    combinationsPoints[15] = (gameBoardActivity.findViewById(R.id.textView_sos_pts));
-                    combinationsSlots[15] = (gameBoardActivity.findViewById(R.id.textView_sos_slot));
+                    combinationsPoints[15] = gameBoardActivity.findViewById(R.id.textView_sos_pts);
+                    combinationsSlots[15] = gameBoardActivity.findViewById(R.id.textView_sos_slot);
                     LinearLayout linearLayout16;
                     linearLayout16 = gameBoardActivity.findViewById(R.id.sos_layout);
                     combinationsLayouts[x] = linearLayout16;
@@ -209,8 +218,8 @@ public class UIConfig {
         }
 
         totalScore = new TextView(gameBoardActivity);
-        totalScore = (gameBoardActivity.findViewById(R.id.textView_score_pts));
-        currentPlayerName = (gameBoardActivity.findViewById(R.id.player_name_textView));
+        totalScore = gameBoardActivity.findViewById(R.id.textView_score_pts);
+        currentPlayerName = gameBoardActivity.findViewById(R.id.player_name_textView);
         totalScore.setText(gameBoardActivity.getResources().getString(R.string.points_value,0));
 
     }
@@ -410,5 +419,22 @@ public class UIConfig {
 
     public LinearLayout[] getCombinationsLayouts() {
         return combinationsLayouts;
+    }
+
+    public void showBlockCombinationQuestion(){
+        blockCombinationQuestionLayout.setVisibility(View.VISIBLE);
+
+    }
+
+    public Button getBlockCombinationYesButton() {
+        return blockCombinationYesButton;
+    }
+
+    public Button getBlockCombinationNoButton() {
+        return blockCombinationNoButton;
+    }
+
+    public TextView getBlockCombinationTextView() {
+        return blockCombinationTextView;
     }
 }

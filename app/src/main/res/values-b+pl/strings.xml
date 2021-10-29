@@ -75,4 +75,7 @@
     <string name="rankingPoints_mainMenu">Punkty rankingowe:</string>
     <string name="rankingPosition_mainMenu">Miejsce rankingowe:</string>
     <string name="opponent_search">Szukanie przeciwnika…</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+    <string name="block_combination_question">"Czy na pewno chcesz zablokować\n%1$s ?"</string>
 </resources>

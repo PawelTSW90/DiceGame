@@ -9,26 +9,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Ustawienia"
-                android:textSize="40sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Ustawienia"
+                    android:textSize="40sp" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="0.2"
                 android:background="#901F8824"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -98,7 +112,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:button="@null"
-                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                         android:text="Sounds"
                         android:textColor="#E1D6D7"
                         android:textSize="30sp" />
@@ -108,7 +122,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:button="@null"
-                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                         android:text="Highlights"
                         android:textColor="#E1D6D7"
                         android:textColorLink="#FF03DAC5"
@@ -119,7 +133,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:button="@null"
-                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                         android:text="Block Confirm"
                         android:textColor="#E1D6D7"
                         android:textSize="30sp" />
@@ -145,6 +159,7 @@
                         android:text="Contact Me"
                         android:textSize="30sp" />
                 </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

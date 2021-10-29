@@ -58,7 +58,7 @@
     <string name="back">BACK</string>
     <string name="you_won">YOU WON!</string>
     <string name="you_lost">YOU LOST!</string>
-    <string name="the_winner_is">"The winner is +%1$s !"</string>
+    <string name="the_winner_is">"The winner is %1$s !"</string>
     <string name="winnerRankingPoint">"+1 Ranking point! \n Your ranking: %1$d points!"</string>
     <string name="loserRankingPoint">"-1 Ranking point! \n Your ranking: %1$d points!"</string>
     <string name="playerResult">"%1$s \n \n %2$s </string>
@@ -74,5 +74,8 @@
     <string name="rankingPoints_mainMenu">Ranking points:</string>
     <string name="rankingPosition_mainMenu">Ranking position:</string>
     <string name="opponent_search">Searching for opponent…</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="block_combination_question">"Are you sure yo want to block\n%1$s ?"</string>
 
 </resources>
