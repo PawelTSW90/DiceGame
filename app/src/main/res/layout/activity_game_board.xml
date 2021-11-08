@@ -22,6 +22,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -716,14 +717,71 @@
 
             </TableLayout>
 
-            <TextView
-                android:id="@+id/player_name_textView"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="43dp"
-                android:background="#F65D2C"
-                android:gravity="center"
-                android:textSize="17sp" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/player_name_textView"
+                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:background="#F65D2C"
+                    android:gravity="center"
+                    android:textSize="17sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/training_textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:textColor="#ECE4E4"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/settings_imageview2"
+                        android:layout_width="32dp"
+                        android:layout_height="29dp"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/settings_icon" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/next_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="15dp"
+                        android:backgroundTint="#F65D2C"
+                        android:gravity="center"
+                        android:text="@string/next" />
+
+                    <ImageView
+                        android:id="@+id/roll_dices"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal|end"
+                        android:layout_marginEnd="10dp"
+                        app:srcCompat="@drawable/dices_image"
+                        tools:ignore="ContentDescription" />
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
 
 
@@ -797,17 +855,6 @@
             app:layout_constraintTop_toBottomOf="@+id/diceSlot3"
             tools:ignore="ContentDescription" />
 
-        <ImageView
-            android:id="@+id/roll_dices"
-            android:layout_width="89dp"
-            android:layout_height="74dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/dices_image"
-            tools:ignore="ContentDescription" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.fragment.app.FragmentContainerView
@@ -818,21 +865,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.669"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/block_combination_question_layout"

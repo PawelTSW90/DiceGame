@@ -57,6 +57,7 @@
     <string name="training">TRAINING</string>
     <string name="play">PLAY</string>
     <string name="back">BACK</string>
+    <string name="next">NEXT</string>
     <string name="you_won">YOU WON!</string>
     <string name="you_lost">YOU LOST!</string>
     <string name="the_winner_is">"The winner is %1$s !"</string>
@@ -78,5 +79,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="block_combination_question">"Are you sure yo want to block\n%1$s ?"</string>
+    <string name="training_text_1">""</string>
+    <string name="training_text_2">""</string>
+    <string name="training_text_3">""</string>
 
 </resources>

@@ -211,6 +211,11 @@ public class MainMenuActivity extends AppCompatActivity {
             hotSeatButton.setEnabled(false);
             trainingButton.setEnabled(false);
             Intent intent = new Intent(this, GameBoardActivity.class);
+            intent.putExtra("numberOfPlayers", 1);
+            intent.putExtra("MultiplayerMode", false);
+            intent.putExtra("isSoundOn", isSoundOn);
+            intent.putExtra("isCombinationsHighlightOn", isCombinationsHighlightOn);
+            intent.putExtra("isBlockingConfirmationOn", isBlockConfirmationOn);
             startActivity(intent);
             this.finish();
 

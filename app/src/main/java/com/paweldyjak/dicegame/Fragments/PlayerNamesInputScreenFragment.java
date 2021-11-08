@@ -19,7 +19,7 @@ public class PlayerNamesInputScreenFragment extends Fragment {
     private final GameBoardActivity gameBoardActivity;
     private Button start;
     private EditText playerNameEditText;
-    private TextView playerName;
+    private TextView playerNameTextView;
     private final int numberOfPlayers;
     private final String[] playersNames = new String[6];
 
@@ -29,8 +29,8 @@ public class PlayerNamesInputScreenFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_player_names_input_screen, container, false);
         start = view.findViewById(R.id.player_input_start_button);
         playerNameEditText = view.findViewById(R.id.edit_text_name);
-        playerName = view.findViewById(R.id.player_title);
-        playerName.setText(R.string.player_one);
+        playerNameTextView = view.findViewById(R.id.player_title);
+        playerNameTextView.setText(R.string.player_one);
         playerInputScreen();
         return view;
 
@@ -69,24 +69,26 @@ public class PlayerNamesInputScreenFragment extends Fragment {
                     playersNames[currentPlayerNameInput] = playerNameEditText.getText().toString();
                     playerNameEditText.setText(null);
                     currentPlayerNameInput++;
-                    if(currentPlayerNameInput==numberOfPlayers){
+                    if(currentPlayerNameInput==numberOfPlayers && numberOfPlayers ==1){
+                        gameBoardActivity.startTrainingGame(playersNames[0]);
+                    }else if(currentPlayerNameInput==numberOfPlayers){
                         gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
                     } else{
                         switch (currentPlayerNameInput){
                             case 1:
-                                playerName.setText(R.string.player_two);
+                                playerNameTextView.setText(R.string.player_two);
                                 break;
                             case 2:
-                                playerName.setText(R.string.player_three);
+                                playerNameTextView.setText(R.string.player_three);
                                 break;
                             case 3:
-                                playerName.setText(R.string.player_four);
+                                playerNameTextView.setText(R.string.player_four);
                                 break;
                             case 4:
-                                playerName.setText(R.string.player_five);
+                                playerNameTextView.setText(R.string.player_five);
                                 break;
                             case 5:
-                                playerName.setText(R.string.player_six);
+                                playerNameTextView.setText(R.string.player_six);
                                 break;
                         }
                         start.setVisibility(View.INVISIBLE);

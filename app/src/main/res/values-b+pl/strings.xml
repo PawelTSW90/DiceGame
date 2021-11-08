@@ -58,6 +58,7 @@
     <string name="training">TRENING</string>
     <string name="play">GRAJ</string>
     <string name="back">COFNIJ</string>
+    <string name="next">DALEJ</string>
     <string name="you_won">WYGRAŁEŚ!</string>
     <string name="you_lost">PRZEGRAŁEŚ!</string>
     <string name="the_winner_is">"Zwycięzcą jest %1$s !"</string>
@@ -79,4 +80,8 @@
     <string name="yes">Tak</string>
     <string name="no">Nie</string>
     <string name="block_combination_question">"Czy na pewno chcesz zablokować\n%1$s ?"</string>
+    <string name="training_text_1">"Witaj w grze Kości!\nTen samouczek zaznajomi Cię z zasadami gry, a także pokaże cenne wskazówki\nktóre zwiększą Twoją szansę na wygraną!"</string>
+    <string name="training_text_2">"Celem gry jest zdobycie większej ilości punktów od przeciwnika. Punkty zdobywamy zaliczając kombinacje widoczne po lewej stronie ekranu."</string>
+    <string name="training_text_3">"Kombinacja może zostać użyta tylko raz. Po zaliczeniu nie będzie można zmienić jej wyniku, dlatego należy przemyśleć każdy ruch gdyż jedno nieprzemyślane zagranie może zadecydować o końcowym rezultacie!"</string>
+
 </resources>
