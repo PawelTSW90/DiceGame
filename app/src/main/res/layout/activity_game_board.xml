@@ -13,7 +13,7 @@
         android:id="@+id/game_board_screen_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient_background"
+        android:background="@drawable/background_gradient"
         android:backgroundTintMode="src_over"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -76,7 +76,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border"
+                            android:background="@drawable/background_combination_slot"
                             android:gravity="center" />
                     </LinearLayout>
 
@@ -85,7 +85,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -113,7 +113,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border"
+                            android:background="@drawable/background_combination_slot"
                             android:gravity="center" />
                     </LinearLayout>
 
@@ -130,7 +130,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -158,7 +158,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border"
+                            android:background="@drawable/background_combination_slot"
                             android:gravity="center" />
                     </LinearLayout>
 
@@ -167,7 +167,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -195,7 +195,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border"
+                            android:background="@drawable/background_combination_slot"
                             android:gravity="center" />
                     </LinearLayout>
                 </TableRow>
@@ -211,7 +211,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -239,7 +239,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border"
+                            android:background="@drawable/background_combination_slot"
                             android:gravity="center" />
                     </LinearLayout>
 
@@ -248,7 +248,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -276,7 +276,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border"
+                            android:background="@drawable/background_combination_slot"
                             android:gravity="center" />
 
                     </LinearLayout>
@@ -293,7 +293,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -321,7 +321,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border" />
+                            android:background="@drawable/background_combination_slot" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -329,7 +329,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -357,7 +357,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border" />
+                            android:background="@drawable/background_combination_slot" />
                     </LinearLayout>
                 </TableRow>
 
@@ -372,7 +372,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -400,7 +400,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border" />
+                            android:background="@drawable/background_combination_slot" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -408,7 +408,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -436,7 +436,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border" />
+                            android:background="@drawable/background_combination_slot" />
                     </LinearLayout>
                 </TableRow>
 
@@ -451,7 +451,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -479,7 +479,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border" />
+                            android:background="@drawable/background_combination_slot" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -487,7 +487,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -515,7 +515,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border" />
+                            android:background="@drawable/background_combination_slot" />
                     </LinearLayout>
 
 
@@ -532,7 +532,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -560,7 +560,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border" />
+                            android:background="@drawable/background_combination_slot" />
                     </LinearLayout>
 
 
@@ -569,7 +569,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -597,7 +597,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border" />
+                            android:background="@drawable/background_combination_slot" />
                     </LinearLayout>
                 </TableRow>
 
@@ -613,7 +613,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -641,7 +641,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border" />
+                            android:background="@drawable/background_combination_slot" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -649,7 +649,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/layout_border_down"
+                        android:background="@drawable/background_combinations_layout_line"
                         android:orientation="horizontal">
 
                         <TextView
@@ -677,7 +677,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="4dp"
-                            android:background="@drawable/combination_slot_border" />
+                            android:background="@drawable/background_combination_slot" />
                     </LinearLayout>
                 </TableRow>
 
@@ -834,45 +834,58 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/block_combination_question_layout"
-        android:layout_width="459dp"
+        android:layout_width="350dp"
         android:layout_height="133dp"
-        android:background="#F65D2C"
-        android:orientation="horizontal"
+        android:background="@drawable/background_block_combination_question"
+        android:orientation="vertical"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/block_combination_question_yes_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="5dp"
-            android:layout_weight="1"
-            android:text="@string/yes" />
-
         <TextView
             android:id="@+id/block_combination_question_textView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginBottom="40dp"
-            android:layout_weight="1"
             android:gravity="center"
-            android:textSize="18sp" />
+            android:text="SIEMANOSDDSDSDDSDSDSDFDFDFDFDFDFDFDFDFDSDSD"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.050000012" />
 
         <Button
             android:id="@+id/block_combination_question_no_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:text="@string/no" />
-    </LinearLayout>
+            android:text="@string/no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.93" />
+
+        <Button
+            android:id="@+id/block_combination_question_yes_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="@string/yes"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.93" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

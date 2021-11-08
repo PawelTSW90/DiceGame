@@ -23,7 +23,7 @@ public class Sounds {
 
     public void playRollDiceSound() {
         if(isSoundOn) {
-            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.roll_dices);
+            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.sound_roll_dices);
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(MediaPlayer::release);
         }
@@ -31,7 +31,7 @@ public class Sounds {
 
     public void playCompleteCombinationSound() {
         if(isSoundOn) {
-            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.combination_tick);
+            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.sound_combination_tick);
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(MediaPlayer::release);
         }
@@ -39,7 +39,7 @@ public class Sounds {
 
     public void playEraseCombinationSound() {
         if(isSoundOn) {
-            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.cross_out_combination_sound);
+            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.sound_cross_out_combination);
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(MediaPlayer::release);
         }
@@ -47,7 +47,7 @@ public class Sounds {
 
     public void playTickSound() {
         if(isSoundOn) {
-            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.tick);
+            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.sound_button_tick);
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(MediaPlayer::release);
         }
@@ -55,7 +55,7 @@ public class Sounds {
 
     public void playFinalResultSound() {
         if(isSoundOn) {
-            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.final_result);
+            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.sound_final_result);
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(MediaPlayer::release);
         }

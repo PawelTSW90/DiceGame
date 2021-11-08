@@ -55,11 +55,12 @@
     <string name="six_players">6 graczy</string>
     <string name="hotseat">HOTSEAT</string>
     <string name="multiplayer">MULTIPLAYER</string>
+    <string name="training">TRENING</string>
     <string name="play">GRAJ</string>
     <string name="back">COFNIJ</string>
     <string name="you_won">WYGRAŁEŚ!</string>
     <string name="you_lost">PRZEGRAŁEŚ!</string>
-    <string name="the_winner_is">"Zwycięzcą jest +%1$s !"</string>
+    <string name="the_winner_is">"Zwycięzcą jest %1$s !"</string>
     <string name="winnerRankingPoint">"+1 Punkt rankingowy! \n Twój ranking: %1$d"</string>
     <string name="loserRankingPoint">"-1 Punkt rankingowy! \n Twój ranking: %1$d"</string>
     <string name="playerResult">"%1$s \n \n %2$s </string>

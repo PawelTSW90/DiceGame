@@ -31,7 +31,7 @@ public class UIConfig {
     private final ValueAnimator[] valueAnimators = new ValueAnimator[16];
     private TextView currentPlayerName;
     private TextView totalScore;
-    private LinearLayout blockCombinationQuestionLayout;
+    private ConstraintLayout blockCombinationQuestionLayout;
     private ConstraintLayout gameBoardLayout;
     private TextView blockCombinationTextView;
     private Button blockCombinationYesButton;
@@ -252,7 +252,7 @@ public class UIConfig {
     }
 
     public void setDicesBorder(ImageView dice, boolean setBorder) {
-        Drawable dicesBorder = ResourcesCompat.getDrawable(gameBoardActivity.getResources(), R.drawable.dices_border, null);
+        Drawable dicesBorder = ResourcesCompat.getDrawable(gameBoardActivity.getResources(), R.drawable.background_dices, null);
         if (setBorder) {
             dice.setBackground(dicesBorder);
         } else {
@@ -383,7 +383,7 @@ public class UIConfig {
         in.setDuration(3000);
         Animation out = new AlphaAnimation(1.0f, 0.0f);
         out.setDuration(3000);
-        Drawable combinationSlotBorder = ResourcesCompat.getDrawable(gameBoardActivity.getResources(), R.drawable.combination_slot_border, null);
+        Drawable combinationSlotBorder = ResourcesCompat.getDrawable(gameBoardActivity.getResources(), R.drawable.background_combination_slot, null);
 
         if (gameBoardActivity.isCombinationsHighlightOn()) {
             final int green = Color.rgb(246, 93, 44);
