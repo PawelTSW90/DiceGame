@@ -744,7 +744,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:textColor="#ECE4E4"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
 
                     <ImageView
                         android:id="@+id/settings_imageview2"
@@ -768,7 +768,8 @@
                         android:layout_marginStart="15dp"
                         android:backgroundTint="#F65D2C"
                         android:gravity="center"
-                        android:text="@string/next" />
+                        android:text="@string/next"
+                        android:visibility="invisible" />
 
                     <ImageView
                         android:id="@+id/roll_dices"
@@ -807,10 +808,8 @@
             android:cropToPadding="true"
             android:padding="3dp"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toTopOf="@+id/diceSlot5"
             app:layout_constraintEnd_toStartOf="@+id/diceSlot3"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
             tools:ignore="ContentDescription" />
 
         <ImageView
@@ -853,6 +852,73 @@
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/diceSlot3"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/training_diceSlot1"
+            android:layout_width="41dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="14dp"
+            android:cropToPadding="true"
+            android:padding="3dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toStartOf="@+id/training_diceSlot2"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/training_diceSlot2"
+            android:layout_width="41dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="14dp"
+            android:cropToPadding="true"
+            android:padding="3dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toStartOf="@+id/training_diceSlot3"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/training_diceSlot3"
+            android:layout_width="41dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="52dp"
+            android:cropToPadding="true"
+            android:padding="3dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/training_diceSlot4"
+            android:layout_width="41dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="14dp"
+            android:contentDescription="@string/content_description"
+            android:cropToPadding="true"
+            android:padding="3dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toStartOf="@id/training_diceSlot5"
+            app:layout_constraintTop_toBottomOf="@+id/training_diceSlot1"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/training_diceSlot5"
+            android:layout_width="41dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="80dp"
+            android:contentDescription="@string/content_description"
+            android:cropToPadding="true"
+            android:padding="3dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/training_diceSlot3"
             tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

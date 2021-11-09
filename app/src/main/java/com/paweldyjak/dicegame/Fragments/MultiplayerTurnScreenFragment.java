@@ -79,7 +79,7 @@ public class MultiplayerTurnScreenFragment extends Fragment {
             gameBoardManager.updatePlayerBoard();
             updatePlayerTurnStartedValue();
             uiConfig.setRollDicesVisibility(true);
-            uiConfig.setDicesVisibility(false);
+            uiConfig.setDicesVisibility(false, false);
             nextPlayerButton.setVisibility(View.INVISIBLE);
             gameBoardActivity.hideFragment();
         });

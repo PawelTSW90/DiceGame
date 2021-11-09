@@ -40,7 +40,7 @@ public class BlockCombinationListener implements View.OnClickListener {
             ((MultiplayerGame) gameMode).updateOpponentTurnDatabase();
         }
         gameBoardManager.updatePlayerBoard();
-        uiConfig.setDicesVisibility(false);
+        uiConfig.setDicesVisibility(false, false);
         executor.execute(() -> {
             try {
 

@@ -145,7 +145,7 @@ public class GameBoardActivity extends AppCompatActivity {
     public void startTrainingGame(String playerName){
         String[] playersNames = {playerName, "Training"};
         UIConfig uiConfig = new UIConfig(this);
-        TrainingGame trainingGame = new TrainingGame(this);
+        TrainingGame trainingGame = new TrainingGame(this, uiConfig);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(trainingGame, uiConfig);
         GameBoardManager gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, trainingGame, null);
         turnScreenFragment = new TurnScreenFragment(this, trainingGame, gameBoardManager);

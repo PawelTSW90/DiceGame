@@ -6,7 +6,20 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient">
 
+    <Button
+        android:id="@+id/combinations_chart_returnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/combinations_chart_exit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tableLayout"
+        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintStart_toStartOf="@+id/tableLayout"
+        app:layout_constraintTop_toTopOf="@+id/tableLayout"
+        app:layout_constraintVertical_bias="1.0" />
+
     <TableLayout
+        android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,31 +31,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="1dp"
-            android:layout_marginBottom="15dp">
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="50dp"
                 android:layout_weight="1"
-                android:orientation="horizontal"
-                android:weightSum="4">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView2"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
                     android:layout_width="18dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:text="@string/ones"
                     android:textColor="#F65D2C"
                     android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="30dp"
+                    android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
                     android:layout_weight="0.4"
@@ -51,7 +63,7 @@
 
                 <ImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="30dp"
+                    android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
                     android:layout_weight="0.4"
@@ -60,7 +72,7 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="30dp"
+                    android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
                     android:layout_weight="0.4"
@@ -137,12 +149,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="1dp"
-            android:layout_marginBottom="15dp">
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="50dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -153,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.1"
+                    android:layout_weight="0.5"
                     android:text="@string/twos"
                     android:textColor="#F65D2C"
                     android:textSize="16sp" />
@@ -255,23 +267,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="1dp"
-            android:layout_marginBottom="15dp">
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="50dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView6"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                    android:layout_width="wrap_content"
+                    android:layout_width="18dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.1"
+                    android:layout_weight="0.5"
                     android:text="@string/threes"
                     android:textColor="#F65D2C"
                     android:textSize="16sp" />
@@ -281,7 +293,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice3"
                     tools:ignore="ContentDescription" />
 
@@ -290,7 +302,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice3"
                     tools:ignore="ContentDescription" />
 
@@ -299,7 +311,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice3"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
@@ -375,23 +387,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="1dp"
-            android:layout_marginBottom="15dp">
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="25dp"
+                android:layout_marginEnd="50dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView8"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                    android:layout_width="wrap_content"
+                    android:layout_width="18dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.1"
+                    android:layout_weight="0.5"
                     android:text="@string/fours"
                     android:textColor="#F65D2C"
                     android:textSize="16sp" />
@@ -401,7 +413,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice4"
                     tools:ignore="ContentDescription" />
 
@@ -410,7 +422,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice4"
                     tools:ignore="ContentDescription" />
 
@@ -419,7 +431,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice4"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
@@ -495,23 +507,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="1dp"
-            android:layout_marginBottom="15dp">
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="25dp"
+                android:layout_marginEnd="50dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView10"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                    android:layout_width="wrap_content"
+                    android:layout_width="18dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.1"
+                    android:layout_weight="0.5"
                     android:text="@string/fives"
                     android:textColor="#F65D2C"
                     android:textSize="16sp" />
@@ -521,7 +533,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice5"
                     tools:ignore="ContentDescription" />
 
@@ -530,7 +542,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice5"
                     tools:ignore="ContentDescription" />
 
@@ -539,7 +551,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice5"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
@@ -615,23 +627,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="1dp"
-            android:layout_marginBottom="15dp">
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="25dp"
+                android:layout_marginEnd="50dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView12"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                    android:layout_width="wrap_content"
+                    android:layout_width="18dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.1"
+                    android:layout_weight="0.5"
                     android:text="@string/sixes"
                     android:textColor="#F65D2C"
                     android:textSize="16sp" />
@@ -641,7 +653,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice6"
                     tools:ignore="ContentDescription" />
 
@@ -650,7 +662,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice6"
                     tools:ignore="ContentDescription" />
 
@@ -659,7 +671,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice6"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
@@ -726,19 +738,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="1dp"
-            android:layout_marginBottom="15dp">
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="25dp"
+                android:layout_marginEnd="50dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView14"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                    android:layout_width="wrap_content"
+                    android:layout_width="18dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="4dp"
@@ -752,7 +764,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.1"
                     app:srcCompat="@drawable/dice6"
                     tools:ignore="ContentDescription" />
 
@@ -761,7 +773,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.1"
                     app:srcCompat="@drawable/dice6"
                     tools:ignore="ContentDescription" />
 
@@ -842,18 +854,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="25dp"
+                android:layout_marginEnd="50dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView16"
                     style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                    android:layout_width="30dp"
+                    android:layout_width="18dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.1"
+                    android:layout_weight="0.5"
                     android:text="@string/two_pairs"
                     android:textColor="#F65D2C"
                     android:textSize="16sp" />
@@ -863,7 +875,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice5"
                     tools:ignore="ContentDescription" />
 
@@ -872,7 +884,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice5"
                     tools:ignore="ContentDescription" />
 
@@ -881,7 +893,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice6"
                     tools:ignore="ContentDescription" />
 
@@ -890,7 +902,7 @@
                     android:layout_width="0.1dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     app:srcCompat="@drawable/dice6"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
@@ -910,6 +922,16 @@
                     android:layout_weight="1"
                     android:text="@string/SOS"
                     android:textColor="#F65D2C"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textView18"
+                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4sp"
+                    android:layout_weight="3"
+                    android:text="@string/no_requirements"
                     android:textSize="16sp" />
 
             </LinearLayout>

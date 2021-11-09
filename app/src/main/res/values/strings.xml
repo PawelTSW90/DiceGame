@@ -78,9 +78,27 @@
     <string name="opponent_search">Searching for opponent…</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="combinations_chart_exit">RETURN</string>
     <string name="block_combination_question">"Are you sure yo want to block\n%1$s ?"</string>
+    <string name="no_requirements">NO REQUIREMENTS</string>
     <string name="training_text_1">""</string>
     <string name="training_text_2">""</string>
     <string name="training_text_3">""</string>
+    <string name="training_text_4">""</string>
+    <string name="training_text_5">""</string>
+    <string name="training_text_6">""</string>
+    <string name="training_text_7">""</string>
+    <string name="training_text_8">""</string>
+    <string name="training_text_9">""</string>
+    <string name="training_text_10">""</string>
+    <string name="training_text_11">""</string>
+    <string name="training_text_12">""</string>
+    <string name="training_text_13">""</string>
+    <string name="training_text_14">""</string>
+    <string name="training_text_15">""</string>
+    <string name="training_text_16">""</string>
+    <string name="training_text_17">""</string>
+
+
 
 </resources>

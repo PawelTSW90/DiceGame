@@ -38,7 +38,7 @@ public class ScoreInputListener implements View.OnClickListener {
         if (scoreToInput > 0 && combinationSlotStatus == 0 && !resetThrowCounter) {
             uiConfig.combinationHighlighter(0, true);
             updateBoardValues(scoreToInput, combinationNumber);
-            uiConfig.setDicesVisibility(false);
+            uiConfig.setDicesVisibility(false, false);
             if (gameMode instanceof MultiplayerGame) {
                 ((MultiplayerGame) gameMode).updateOpponentTurnDatabase();
             }
