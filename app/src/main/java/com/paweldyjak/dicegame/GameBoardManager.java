@@ -125,7 +125,7 @@ public class GameBoardManager {
                     if (v.getBackground() != null) {
                         v.setBackground(null);
                     } else {
-                        uiConfig.setDicesBorder(((ImageView) v), true);
+                        uiConfig.setDicesBorder(((ImageView) v));
                     }
                 }
 

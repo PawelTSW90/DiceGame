@@ -268,14 +268,11 @@ public class UIConfig {
         return combinationsPoints;
     }
 
-    public void setDicesBorder(ImageView dice, boolean setBorder) {
+    public void setDicesBorder(ImageView dice) {
         Drawable dicesBorder = ResourcesCompat.getDrawable(gameBoardActivity.getResources(), R.drawable.background_dices, null);
-        if (setBorder) {
             dice.setBackground(dicesBorder);
-        } else {
-            dice.setBackground(null);
         }
-    }
+
 
     public void clearDicesBorder(boolean isTrainingMode) {
         if(!isTrainingMode) {
@@ -536,5 +533,7 @@ public class UIConfig {
         return gameBoardLayout;
     }
 
-
+    public ImageView[] getTraining_dicesSlots() {
+        return training_dicesSlots;
+    }
 }
