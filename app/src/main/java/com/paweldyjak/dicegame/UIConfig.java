@@ -397,7 +397,7 @@ public class UIConfig {
 
         0 - enabled, empty
         1 - disabled, done
-        2 - disabled, not done*/
+        2 - disabled, crossed out*/
 
         if (combinationStatus == 0) {
             combinationsSlots[combinationNumber].setText("");

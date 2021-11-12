@@ -138,11 +138,41 @@ public class TrainingGame implements GameMode {
                         uiConfig.setTotalScore(46);
                         uiConfig.setDicesVisibility(false, true);
                         blockCombinationsLayouts();
+                        trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_24));
                         trainingTextNr++;
                     });
+                    break;
                 case 19:
-                    trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_24));
+                    showNextButton(false);
+                    trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_25));
+                    uiConfig.updateCombinationsUI(1,0);
+                    uiConfig.updateCombinationsUI(1,1);
+                    uiConfig.updateCombinationsUI(1,2);
+                    uiConfig.updateCombinationsUI(2,3);
+                    uiConfig.updateCombinationsUI(2,4);
+                    uiConfig.updateCombinationsUI(2,5);
+                    uiConfig.updateCombinationsUI(1,6);
+                    uiConfig.updateCombinationsUI(1,7);
+                    uiConfig.updateCombinationsUI(1,8);
+                    uiConfig.updateCombinationsUI(1,9);
+                    uiConfig.updateCombinationsUI(2,10);
+                    uiConfig.updateCombinationsUI(2,11);
+                    uiConfig.updateCombinationsUI(2,12);
+                    uiConfig.getCombinationsPoints()[0].setText(gameBoardActivity.getResources().getString(R.string.points_value, 6));
+                    uiConfig.getCombinationsPoints()[1].setText(gameBoardActivity.getResources().getString(R.string.points_value, 12));
+                    uiConfig.getCombinationsPoints()[2].setText(gameBoardActivity.getResources().getString(R.string.points_value, 9));
+                    uiConfig.getCombinationsPoints()[3].setText(gameBoardActivity.getResources().getString(R.string.points_value, 0));
+                    uiConfig.getCombinationsPoints()[6].setText(gameBoardActivity.getResources().getString(R.string.points_value, 20));
+                    uiConfig.getCombinationsPoints()[7].setText(gameBoardActivity.getResources().getString(R.string.points_value, 36));
+                    uiConfig.getCombinationsPoints()[8].setText(gameBoardActivity.getResources().getString(R.string.points_value, 20));
+                    uiConfig.getCombinationsPoints()[9].setText(gameBoardActivity.getResources().getString(R.string.points_value, 34));
+                    uiConfig.getCombinationsPoints()[12].setText(gameBoardActivity.getResources().getString(R.string.points_value, 0));
+                    uiConfig.setTotalScore(137);
                     trainingTextNr++;
+                    int[] dices4 = {1,6,3,4,6};
+                    throwDices4(dices4);
+                    break;
+
             }
 
         });
@@ -185,6 +215,25 @@ public class TrainingGame implements GameMode {
         uiConfig.combinationHighlighter(13, false);
         trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_22));
         blockThrowDicesButton();
+
+    }
+
+    public void throwDices4(int[] dices){
+        uiConfig.getRollDicesButton().setOnClickListener(v -> {
+            sounds.playRollDiceSound();
+            uiConfig.showDices(dices, true);
+            trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_26));
+            int[] dices2 = {2,6,6,5,6};
+            throwDices5(dices2);
+        });
+
+    }
+
+    public void throwDices5(int[] dices){
+        uiConfig.getRollDicesButton().setOnClickListener(v ->{
+            uiConfig.showDices(dices, true);
+            trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_27));
+        });
 
 
     }

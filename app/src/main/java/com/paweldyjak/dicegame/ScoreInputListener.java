@@ -42,30 +42,30 @@ public class ScoreInputListener implements View.OnClickListener {
             if (gameMode instanceof MultiplayerGame) {
                 ((MultiplayerGame) gameMode).updateOpponentTurnDatabase();
             }
-                executor.execute(() -> {
-                    try {
-                        Thread.sleep(2000);
-                        if (gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers() && gameMode.checkIfAllCombinationsAreDone()) {
+            executor.execute(() -> {
+                try {
+                    Thread.sleep(2000);
+                    if (gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers() && gameMode.checkIfAllCombinationsAreDone()) {
                         gameMode.setFinalResultScreen();
-                        } else{
-                            resetCombinationsListeners();
-                            gameBoardManager.setResetThrowCounter(true);
-                            gameBoardManager.changeCurrentPlayer();
-                            gameBoardActivity.showNextTurnFragment();
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    } else {
+                        resetCombinationsListeners();
+                        gameBoardManager.setResetThrowCounter(true);
+                        gameBoardManager.changeCurrentPlayer();
+                        gameBoardActivity.showNextTurnFragment();
                     }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-                });
-            }
-
+            });
         }
+
+    }
 
 
     public void updateBoardValues(int scoreToInput, int combinationNumber) {
         Sounds sounds = new Sounds(gameBoardActivity);
-            sounds.playCompleteCombinationSound();
+        sounds.playCompleteCombinationSound();
 
         if (gameMode instanceof MultiplayerGame) {
             ((MultiplayerGame) gameMode).setCombinationsSlotsInDatabase(combinationNumber, 1);
@@ -82,12 +82,12 @@ public class ScoreInputListener implements View.OnClickListener {
 
     }
 
-    public void resetCombinationsListeners(){
-for(int x = 0; x<16; x++){
-    uiConfig.getCombinationsLayouts()[x].setOnClickListener(v -> {
+    public void resetCombinationsListeners() {
+        for (int x = 0; x < 16; x++) {
+            uiConfig.getCombinationsLayouts()[x].setOnClickListener(v -> {
 
-    });
-}
+            });
+        }
     }
 
 

@@ -105,5 +105,9 @@
     <string name="training_text_21">"Spróbujmy zapolować na Dwójki. Brakuje Ci jeszcze tylko jednej, a masz przed sobą dwa rzuty więc szansę są spore. Zaznacz wszystkie kości oprócz dwójek a następnie wykonaj drugi rzut."</string>
     <string name="training_text_22">"Ten rzut zdecydowanie poprawił Twoje pole manerwu! Planowaliśmy zaliczenie Dwójek, ale teraz mamy aż pięć możliwości! Takie momenty przytrafiają się dość często, pamiętaj aby odpowiednio reagować w zależności od sytuacji."</string>
     <string name="training_text_23">"Teraz zdecydujmy którą kombinację wybrać. W sytuacji gdy mamy wiele kombinacji do wyboru, warto wybrać tę która jest najtrudniejsza do wyrzucenia. W tym przypadku jest to Full. Zalicz tę kombinację!"</string>
-    <string name="training_text_24">"Dobrze. Czas trochę skomplikować sytuację!."</string>
+    <string name="training_text_24">"Dobrze. Czas trochę skomplikować sytuację!"</string>
+    <string name="training_text_25">"Jak widzisz pozostały Ci dwie kombinacje do zaliczenia. Masz też do dyspozycji niewykorzystany SOS na wypadek gdyby nie udało się wyrzucić żadnej z nich. Spróbujmy! Rzuć kośćmi!"</string>
+    <string name="training_text_26">"Potrzebujemy Karety i Generała. Musimy więc wyrzucić conajmniej cztery jednakowe kości. W tej sytuacji spróbujemy z szóstkami. Zaznacz wszystkie kości oprócz szóstek i rzuć ponownie."</string>
+    <string name="training_text_27">"Jeszcze tylko jedna szóstka. Do 3 razy sztuka!"</string>
+
 </resources>
