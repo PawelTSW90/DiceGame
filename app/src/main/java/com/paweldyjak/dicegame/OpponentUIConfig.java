@@ -47,7 +47,7 @@ public class OpponentUIConfig {
         opponentCombinationsSlotsValues = gameMode.getCombinationsSlotsValues();
         sounds = new Sounds(gameBoardActivity);
         uiConfig.setRollDicesVisibility(false);
-        uiConfig.setDicesVisibility(false);
+        uiConfig.setDicesVisibility(false, false);
         resetOpponentDices();
         if (!opponentDicesListenerRunning) {
             checkOpponentDices();
@@ -83,7 +83,7 @@ public class OpponentUIConfig {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void displayOpponentDices() {
-        uiConfig.setDicesVisibility(true);
+        uiConfig.setDicesVisibility(true, false);
         boolean containsZero = false;
 
         for (int x = 0; x < 5; x++) {
@@ -254,7 +254,7 @@ public class OpponentUIConfig {
             sounds.playEraseCombinationSound();
 
         }
-        uiConfig.setDicesVisibility(false);
+        uiConfig.setDicesVisibility(false, false);
         gameMode.setTotalScore(newTotalScore);
         uiConfig.setTotalScore(gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber() - 1));
         gameBoardManager.updatePlayerBoard();

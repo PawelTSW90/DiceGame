@@ -23,6 +23,7 @@ import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 public class UIConfig {
     private final GameBoardActivity gameBoardActivity;
     private final ImageView[] dicesSlots = new ImageView[5];
+    private final ImageView[] training_dicesSlots = new ImageView[5];
     private ImageView rollDicesButton;
     private final TextView[] combinationsText = new TextView[16];
     private final TextView[] combinationsPoints = new TextView[16];
@@ -31,7 +32,7 @@ public class UIConfig {
     private final ValueAnimator[] valueAnimators = new ValueAnimator[16];
     private TextView currentPlayerName;
     private TextView totalScore;
-    private LinearLayout blockCombinationQuestionLayout;
+    private ConstraintLayout blockCombinationQuestionLayout;
     private ConstraintLayout gameBoardLayout;
     private TextView blockCombinationTextView;
     private Button blockCombinationYesButton;
@@ -56,6 +57,11 @@ public class UIConfig {
         dicesSlots[2] = gameBoardActivity.findViewById(R.id.diceSlot3);
         dicesSlots[3] = gameBoardActivity.findViewById(R.id.diceSlot4);
         dicesSlots[4] = gameBoardActivity.findViewById(R.id.diceSlot5);
+        training_dicesSlots[0] = gameBoardActivity.findViewById(R.id.training_diceSlot1);
+        training_dicesSlots[1] = gameBoardActivity.findViewById(R.id.training_diceSlot2);
+        training_dicesSlots[2] = gameBoardActivity.findViewById(R.id.training_diceSlot3);
+        training_dicesSlots[3] = gameBoardActivity.findViewById(R.id.training_diceSlot4);
+        training_dicesSlots[4] = gameBoardActivity.findViewById(R.id.training_diceSlot5);
         for (int x = 0; x < 16; x++) {
             switch (x) {
                 case 0:
@@ -231,12 +237,23 @@ public class UIConfig {
     }
 
 
-    public void setDicesVisibility(boolean visible) {
-        for (int x = 0; x < getDicesSlots().length; x++) {
-            if (visible) {
-                getDicesSlots()[x].setVisibility(View.VISIBLE);
-            } else {
-                getDicesSlots()[x].setVisibility(View.INVISIBLE);
+    public void setDicesVisibility(boolean visible, boolean isTrainingMode) {
+        if (!isTrainingMode) {
+
+            for (ImageView dicesSlot : dicesSlots) {
+                if (visible) {
+                    dicesSlot.setVisibility(View.VISIBLE);
+                } else {
+                    dicesSlot.setVisibility(View.INVISIBLE);
+                }
+            }
+        } else{
+            for (ImageView training_dicesSlot : training_dicesSlots) {
+                if (visible) {
+                    training_dicesSlot.setVisibility(View.VISIBLE);
+                } else {
+                    training_dicesSlot.setVisibility(View.INVISIBLE);
+                }
             }
         }
     }
@@ -251,18 +268,21 @@ public class UIConfig {
         return combinationsPoints;
     }
 
-    public void setDicesBorder(ImageView dice, boolean setBorder) {
-        Drawable dicesBorder = ResourcesCompat.getDrawable(gameBoardActivity.getResources(), R.drawable.dices_border, null);
-        if (setBorder) {
+    public void setDicesBorder(ImageView dice) {
+        Drawable dicesBorder = ResourcesCompat.getDrawable(gameBoardActivity.getResources(), R.drawable.background_dices, null);
             dice.setBackground(dicesBorder);
-        } else {
-            dice.setBackground(null);
         }
-    }
 
-    public void clearDicesBorder() {
-        for (ImageView dices : dicesSlots) {
-            dices.setBackground(null);
+
+    public void clearDicesBorder(boolean isTrainingMode) {
+        if(!isTrainingMode) {
+            for (ImageView dices : dicesSlots) {
+                dices.setBackground(null);
+            }
+        } else{
+            for(ImageView trainingDices: training_dicesSlots){
+                trainingDices.setBackground(null);
+            }
         }
     }
 
@@ -276,49 +296,96 @@ public class UIConfig {
     }
 
     //method shows dices
-    public void showDices(int[] dices) {
-        setDicesVisibility(true);
-        for (int x = 0; x < 5; x++) {
-            dicesSlots[x].setImageResource(0);
-        }
+    public void showDices(int[] dices, boolean isTrainingMode) {
+        setDicesVisibility(true, isTrainingMode);
+        if(!isTrainingMode) {
+            for (int x = 0; x < 5; x++) {
+                dicesSlots[x].setImageResource(0);
+            }
 
-        int valueToDisplay;
-        for (int x = 0; x < 5; x++) {
+            int valueToDisplay;
+            for (int x = 0; x < 5; x++) {
 
-            valueToDisplay = dices[x];
-
-
-            for (int y = 0; y < 5; y++) {
-                if (dicesSlots[y].getDrawable() == null) {
+                valueToDisplay = dices[x];
 
 
-                    switch (valueToDisplay) {
-                        case 1:
-                            dicesSlots[y].setImageResource(R.drawable.dice1);
-                            y = 5;
-                            break;
-                        case 2:
-                            dicesSlots[y].setImageResource(R.drawable.dice2);
-                            y = 5;
-                            break;
-                        case 3:
-                            dicesSlots[y].setImageResource(R.drawable.dice3);
-                            y = 5;
-                            break;
-                        case 4:
-                            dicesSlots[y].setImageResource(R.drawable.dice4);
-                            y = 5;
-                            break;
-                        case 5:
-                            dicesSlots[y].setImageResource(R.drawable.dice5);
-                            y = 5;
-                            break;
-                        case 6:
-                            dicesSlots[y].setImageResource(R.drawable.dice6);
-                            y = 5;
-                            break;
+                for (int y = 0; y < 5; y++) {
+                    if (dicesSlots[y].getDrawable() == null) {
+
+
+                        switch (valueToDisplay) {
+                            case 1:
+                                dicesSlots[y].setImageResource(R.drawable.dice1);
+                                y = 5;
+                                break;
+                            case 2:
+                                dicesSlots[y].setImageResource(R.drawable.dice2);
+                                y = 5;
+                                break;
+                            case 3:
+                                dicesSlots[y].setImageResource(R.drawable.dice3);
+                                y = 5;
+                                break;
+                            case 4:
+                                dicesSlots[y].setImageResource(R.drawable.dice4);
+                                y = 5;
+                                break;
+                            case 5:
+                                dicesSlots[y].setImageResource(R.drawable.dice5);
+                                y = 5;
+                                break;
+                            case 6:
+                                dicesSlots[y].setImageResource(R.drawable.dice6);
+                                y = 5;
+                                break;
+                        }
+
                     }
+                }
+            }
+        } else{
+            for (int x = 0; x < 5; x++) {
+                training_dicesSlots[x].setImageResource(0);
+            }
 
+            int valueToDisplay;
+            for (int x = 0; x < 5; x++) {
+
+                valueToDisplay = dices[x];
+
+
+                for (int y = 0; y < 5; y++) {
+                    if (training_dicesSlots[y].getDrawable() == null) {
+
+
+                        switch (valueToDisplay) {
+                            case 1:
+                                training_dicesSlots[y].setImageResource(R.drawable.dice1);
+                                y = 5;
+                                break;
+                            case 2:
+                                training_dicesSlots[y].setImageResource(R.drawable.dice2);
+                                y = 5;
+                                break;
+                            case 3:
+                                training_dicesSlots[y].setImageResource(R.drawable.dice3);
+                                y = 5;
+                                break;
+                            case 4:
+                                training_dicesSlots[y].setImageResource(R.drawable.dice4);
+                                y = 5;
+                                break;
+                            case 5:
+                                training_dicesSlots[y].setImageResource(R.drawable.dice5);
+                                y = 5;
+                                break;
+                            case 6:
+                                training_dicesSlots[y].setImageResource(R.drawable.dice6);
+                                y = 5;
+                                break;
+                        }
+
+                    }
                 }
             }
         }
@@ -330,7 +397,7 @@ public class UIConfig {
 
         0 - enabled, empty
         1 - disabled, done
-        2 - disabled, not done*/
+        2 - disabled, crossed out*/
 
         if (combinationStatus == 0) {
             combinationsSlots[combinationNumber].setText("");
@@ -383,7 +450,7 @@ public class UIConfig {
         in.setDuration(3000);
         Animation out = new AlphaAnimation(1.0f, 0.0f);
         out.setDuration(3000);
-        Drawable combinationSlotBorder = ResourcesCompat.getDrawable(gameBoardActivity.getResources(), R.drawable.combination_slot_border, null);
+        Drawable combinationSlotBorder = ResourcesCompat.getDrawable(gameBoardActivity.getResources(), R.drawable.background_combination_slot, null);
 
         if (gameBoardActivity.isCombinationsHighlightOn()) {
             final int green = Color.rgb(246, 93, 44);
@@ -464,5 +531,9 @@ public class UIConfig {
 
     public ConstraintLayout getGameBoardLayout() {
         return gameBoardLayout;
+    }
+
+    public ImageView[] getTraining_dicesSlots() {
+        return training_dicesSlots;
     }
 }

@@ -4,8 +4,7 @@
     android:id="@+id/player_turn_screen_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    >
+    android:background="@drawable/background_gradient">
 
     <TextView
         android:id="@+id/player_turn_textview"
@@ -15,7 +14,6 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="130dp"
-        android:background="#901F8824"
         android:gravity="center"
         android:textSize="30sp"
         android:visibility="visible"
@@ -31,6 +29,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="50dp"
+        android:backgroundTint="#F65D2C"
         android:text="@string/start"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"

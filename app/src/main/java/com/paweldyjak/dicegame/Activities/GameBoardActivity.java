@@ -4,15 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+
 import com.google.firebase.FirebaseApp;
 import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Fragments.*;
 import com.paweldyjak.dicegame.GameModes.*;
+
 import java.util.Objects;
 
 
@@ -48,9 +49,6 @@ public class GameBoardActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
-        AdView mAdView = findViewById(R.id.adView2);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
         if (multiplayerMode) {
             startMultiplayerGame(playersNames, opponentUid);
         } else {
@@ -93,10 +91,10 @@ public class GameBoardActivity extends AppCompatActivity {
         View fragmentLayout = findViewById(R.id.fragment_layout);
         mainBoardLayout.setVisibility(View.INVISIBLE);
         fragmentLayout.setVisibility(View.VISIBLE);
-        if (!multiplayerMode) {
-            turnScreenFragment.displayTurnMessage();
-        } else {
+        if (multiplayerMode) {
             multiplayerTurnScreenFragment.setNextPlayerName();
+        } else {
+            turnScreenFragment.displayTurnMessage();
         }
     }
 
@@ -112,8 +110,8 @@ public class GameBoardActivity extends AppCompatActivity {
         UIConfig uiConfig = new UIConfig(this);
         HotSeatGame hotSeatGame = new HotSeatGame(this, playersNames);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame, uiConfig);
-        GameBoardManager gameBoardManager = new GameBoardManager(this,dicesCombinationsChecker, uiConfig, hotSeatGame, null);
-        turnScreenFragment = new TurnScreenFragment(this,hotSeatGame, gameBoardManager);
+        GameBoardManager gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, hotSeatGame, null);
+        turnScreenFragment = new TurnScreenFragment(this, hotSeatGame, gameBoardManager);
         //configuring UI
         uiConfig.setComponents();
         uiConfig.getCurrentPlayerName().setText(playersNames[0]);
@@ -142,6 +140,22 @@ public class GameBoardActivity extends AppCompatActivity {
         gameBoardManager.setRollDicesButton();
         replaceFragment(R.id.fragment_layout, multiplayerTurnScreenFragment);
         showFragment();
+    }
+
+    public void startTrainingGame(String playerName){
+        String[] playersNames = {playerName, "Training"};
+        UIConfig uiConfig = new UIConfig(this);
+        TrainingGame trainingGame = new TrainingGame(this, uiConfig);
+        DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(trainingGame, uiConfig);
+        GameBoardManager gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, trainingGame, null);
+        turnScreenFragment = new TurnScreenFragment(this, trainingGame, gameBoardManager);
+        uiConfig.setComponents();
+        uiConfig.getCurrentPlayerName().setText(playerName);
+        trainingGame.setPlayersNames(playersNames);
+        trainingGame.setNumberOfPlayers(2);
+        trainingGame.setAllCombinationsAsActive();
+        hideFragment();
+
     }
 
     public OpponentUIConfig getOpponentOnlineUIConfig() {

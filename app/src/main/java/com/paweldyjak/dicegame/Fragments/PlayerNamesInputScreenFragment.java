@@ -15,11 +15,11 @@ import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.R;
 
 public class PlayerNamesInputScreenFragment extends Fragment {
-    private Context context;
+    private int currentPlayerNameInput = 0;
     private final GameBoardActivity gameBoardActivity;
     private Button start;
     private EditText playerNameEditText;
-    private TextView playerName;
+    private TextView playerNameTextView;
     private final int numberOfPlayers;
     private final String[] playersNames = new String[6];
 
@@ -29,9 +29,9 @@ public class PlayerNamesInputScreenFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_player_names_input_screen, container, false);
         start = view.findViewById(R.id.player_input_start_button);
         playerNameEditText = view.findViewById(R.id.edit_text_name);
-        playerName = view.findViewById(R.id.player_title);
-        playerName.setText(R.string.player_one);
-        playerInputScreen(context);
+        playerNameTextView = view.findViewById(R.id.player_title);
+        playerNameTextView.setText(R.string.player_one);
+        playerInputScreen();
         return view;
 
     }
@@ -41,10 +41,7 @@ public class PlayerNamesInputScreenFragment extends Fragment {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-    public void playerInputScreen(Context context) {
-        this.context = context;
-
-
+    public void playerInputScreen() {
 
 
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -66,111 +63,46 @@ public class PlayerNamesInputScreenFragment extends Fragment {
         });
 
 
-        //setting start button to save players names and start the game unless no player name entered
+        //setting start button to save player name and start the game unless no player name entered or wrong format entered
         start.setOnClickListener(v -> {
-            if (playerNameEditText.getText().length() >2 && nameDuplicateChecker()) {
-                playersNames[0] = playerNameEditText.getText().toString();
-                playerName.setText(R.string.player_two);
-                playerNameEditText.setText(null);
-                start.setVisibility(View.INVISIBLE);
-                start.setOnClickListener(v1 -> {
-                    if (playerNameEditText.getText().length() >2 && nameDuplicateChecker()) {
-                        playersNames[1] = playerNameEditText.getText().toString();
-                        playerNameEditText.setText(null);
+                if(playerNameEditText.getText().length()>2 && nameDuplicateChecker()){
+                    playersNames[currentPlayerNameInput] = playerNameEditText.getText().toString();
+                    playerNameEditText.setText(null);
+                    currentPlayerNameInput++;
+                    if(currentPlayerNameInput==numberOfPlayers && numberOfPlayers ==1){
+                        gameBoardActivity.startTrainingGame(playersNames[0]);
+                    }else if(currentPlayerNameInput==numberOfPlayers){
+                        gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
+                    } else{
+                        switch (currentPlayerNameInput){
+                            case 1:
+                                playerNameTextView.setText(R.string.player_two);
+                                break;
+                            case 2:
+                                playerNameTextView.setText(R.string.player_three);
+                                break;
+                            case 3:
+                                playerNameTextView.setText(R.string.player_four);
+                                break;
+                            case 4:
+                                playerNameTextView.setText(R.string.player_five);
+                                break;
+                            case 5:
+                                playerNameTextView.setText(R.string.player_six);
+                                break;
+                        }
                         start.setVisibility(View.INVISIBLE);
-                        if (numberOfPlayers > 2) {
-                            playerName.setText(R.string.player_three);
-                            start.setOnClickListener(v2 -> {
-                                if (playerNameEditText.getText().length() >2 && nameDuplicateChecker()) {
-                                    playersNames[2] = playerNameEditText.getText().toString();
-                                    playerNameEditText.setText(null);
-                                    start.setVisibility(View.INVISIBLE);
-                                    if (numberOfPlayers > 3) {
-                                        playerName.setText(R.string.player_four);
-                                        start.setOnClickListener(v3 -> {
-                                            if (playerNameEditText.getText().length() >2 && nameDuplicateChecker()) {
-                                                playersNames[3] = playerNameEditText.getText().toString();
-                                                playerNameEditText.setText(null);
-                                                start.setVisibility(View.INVISIBLE);
-                                                if (numberOfPlayers > 4) {
-                                                    playerName.setText(R.string.player_five);
-                                                    start.setOnClickListener(v4 -> {
-                                                        if (playerNameEditText.getText().length() >2 && nameDuplicateChecker()) {
-                                                            playersNames[4] = playerNameEditText.getText().toString();
-                                                            playerNameEditText.setText(null);
-                                                            start.setVisibility(View.INVISIBLE);
-                                                            if (numberOfPlayers > 5) {
-                                                                playerName.setText(R.string.player_six);
-                                                                start.setOnClickListener(v5 -> {
-                                                                    if (playerNameEditText.getText().length() >2 && nameDuplicateChecker()) {
-                                                                        playersNames[5] = playerNameEditText.getText().toString();
-                                                                        gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
-                                                                    } else {
-                                                                        if (!nameDuplicateChecker()) {
-                                                                            displayNameInUseToast();
-                                                                        } else {
-                                                                            displayWrongLengthToast();
-                                                                        }
-                                                                    }
-                                                                });
-                                                            } else {
-                                                                gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
-                                                            }
-                                                        } else {
-                                                            if (!nameDuplicateChecker()) {
-                                                                displayNameInUseToast();
-                                                            } else {
-                                                                displayWrongLengthToast();
-                                                            }
-                                                        }
-                                                    });
-                                                } else {
-                                                    gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
-                                                }
-
-                                            } else {
-                                                if (!nameDuplicateChecker()) {
-                                                    displayNameInUseToast();
-                                                } else {
-                                                    displayWrongLengthToast();
-                                                }
-                                            }
-                                        });
-                                    } else {
-                                        gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
-                                    }
-                                } else {
-                                    if (!nameDuplicateChecker()) {
-                                        displayNameInUseToast();
-                                    } else {
-                                        displayWrongLengthToast();
-                                    }
-                                }
-
-                            });
-
-                        } else {
-                            gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
-                        }
-
-                    } else {
-                        if (!nameDuplicateChecker()) {
-                            displayNameInUseToast();
-                        } else {
-                            displayWrongLengthToast();
-                        }
                     }
-                });
 
-
-            } else {
-                if (!nameDuplicateChecker()) {
-                    displayNameInUseToast();
                 } else {
-                    displayWrongLengthToast();
+                    if (!nameDuplicateChecker()) {
+                        start.setVisibility(View.INVISIBLE);
+                        displayNameInUseToast();
+                    } else {
+                        start.setVisibility(View.INVISIBLE);
+                        displayWrongLengthToast();
+                    }
                 }
-            }
-
         });
     }
 

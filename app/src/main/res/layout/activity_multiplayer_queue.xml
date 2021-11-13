@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background_gradient"
     tools:context=".Activities.MultiplayerQueueActivity">
 
     <TextView
         android:id="@+id/user_found_textView"
         android:layout_width="402dp"
         android:layout_height="46dp"
-        android:background="#901F8824"
         android:gravity="center"
         android:text="@string/opponent_search"
         android:textSize="30sp"
