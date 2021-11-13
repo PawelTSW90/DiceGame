@@ -652,7 +652,7 @@ public class DicesCombinationsChecker {
         }
     }
 
-    //method returns chosen combination check
+    //method saves available combinations values
     public void combinationChecker(int[] dices, boolean firstThrow, int throwNumber) {
         checkOne(dices, firstThrow);
         checkTwo(dices, firstThrow);

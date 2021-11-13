@@ -109,5 +109,6 @@
     <string name="training_text_25">"Jak widzisz pozostały Ci dwie kombinacje do zaliczenia. Masz też do dyspozycji niewykorzystany SOS na wypadek gdyby nie udało się wyrzucić żadnej z nich. Spróbujmy! Rzuć kośćmi!"</string>
     <string name="training_text_26">"Potrzebujemy Karety i Generała. Musimy więc wyrzucić conajmniej cztery jednakowe kości. W tej sytuacji spróbujemy z szóstkami. Zaznacz wszystkie kości oprócz szóstek i rzuć ponownie."</string>
     <string name="training_text_27">"Jeszcze tylko jedna szóstka. Do 3 razy sztuka!"</string>
-
+    <string name="training_text_28">"Tym razem się nie udało. Na szczęście mamy do dyspozycji SOS, więc nie musimy wykreślać kolejnej kombinacji. Wykorzystaj SOS."</string>
+    <string name="training_text_29">"Jak widzisz w przypadku SOS podliczane są punkty z wszystkich kości. Czasem warto rozważyć wykreślenie słabo punktowanej(Jedynki), lub bardzo trudnej(Generał) kombinacji, zamiast wykorzystania SOS z małą ilością punktów."</string>
 </resources>

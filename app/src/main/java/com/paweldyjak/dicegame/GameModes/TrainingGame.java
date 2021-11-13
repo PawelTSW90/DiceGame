@@ -1,7 +1,9 @@
 package com.paweldyjak.dicegame.GameModes;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
@@ -117,9 +119,9 @@ public class TrainingGame implements GameMode {
                 case 17:
                     trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_21));
                     int[] dices3 = {2, 2, 6, 6, 6};
-                    uiConfig.getTraining_dicesSlots()[2].setOnClickListener(v1 -> uiConfig.setDicesBorder(uiConfig.getTraining_dicesSlots()[2]));
-                    uiConfig.getTraining_dicesSlots()[3].setOnClickListener(v1 -> uiConfig.setDicesBorder(uiConfig.getTraining_dicesSlots()[3]));
-                    uiConfig.getTraining_dicesSlots()[4].setOnClickListener(v1 -> uiConfig.setDicesBorder(uiConfig.getTraining_dicesSlots()[4]));
+                    setDiceSelection(uiConfig.getTraining_dicesSlots()[2]);
+                    setDiceSelection(uiConfig.getTraining_dicesSlots()[3]);
+                    setDiceSelection(uiConfig.getTraining_dicesSlots()[4]);
                     uiConfig.getRollDicesButton().setOnClickListener(v1 -> {
                         if (uiConfig.getTraining_dicesSlots()[2].getBackground() != null && uiConfig.getTraining_dicesSlots()[3].getBackground() != null && uiConfig.getTraining_dicesSlots()[4].getBackground() != null) {
                             throwDices3(dices3);
@@ -130,7 +132,7 @@ public class TrainingGame implements GameMode {
                     break;
                 case 18:
                     trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_23));
-                    uiConfig.getCombinationsLayouts()[12].setOnClickListener(v1 ->{
+                    uiConfig.getCombinationsLayouts()[12].setOnClickListener(v1 -> {
                         uiConfig.updateCombinationsUI(1, 12);
                         sounds.playCompleteCombinationSound();
                         uiConfig.combinationHighlighter(0, true);
@@ -145,19 +147,19 @@ public class TrainingGame implements GameMode {
                 case 19:
                     showNextButton(false);
                     trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_25));
-                    uiConfig.updateCombinationsUI(1,0);
-                    uiConfig.updateCombinationsUI(1,1);
-                    uiConfig.updateCombinationsUI(1,2);
-                    uiConfig.updateCombinationsUI(2,3);
-                    uiConfig.updateCombinationsUI(2,4);
-                    uiConfig.updateCombinationsUI(2,5);
-                    uiConfig.updateCombinationsUI(1,6);
-                    uiConfig.updateCombinationsUI(1,7);
-                    uiConfig.updateCombinationsUI(1,8);
-                    uiConfig.updateCombinationsUI(1,9);
-                    uiConfig.updateCombinationsUI(2,10);
-                    uiConfig.updateCombinationsUI(2,11);
-                    uiConfig.updateCombinationsUI(2,12);
+                    uiConfig.updateCombinationsUI(1, 0);
+                    uiConfig.updateCombinationsUI(1, 1);
+                    uiConfig.updateCombinationsUI(1, 2);
+                    uiConfig.updateCombinationsUI(2, 3);
+                    uiConfig.updateCombinationsUI(2, 4);
+                    uiConfig.updateCombinationsUI(2, 5);
+                    uiConfig.updateCombinationsUI(1, 6);
+                    uiConfig.updateCombinationsUI(1, 7);
+                    uiConfig.updateCombinationsUI(1, 8);
+                    uiConfig.updateCombinationsUI(1, 9);
+                    uiConfig.updateCombinationsUI(2, 10);
+                    uiConfig.updateCombinationsUI(2, 11);
+                    uiConfig.updateCombinationsUI(2, 12);
                     uiConfig.getCombinationsPoints()[0].setText(gameBoardActivity.getResources().getString(R.string.points_value, 6));
                     uiConfig.getCombinationsPoints()[1].setText(gameBoardActivity.getResources().getString(R.string.points_value, 12));
                     uiConfig.getCombinationsPoints()[2].setText(gameBoardActivity.getResources().getString(R.string.points_value, 9));
@@ -169,9 +171,11 @@ public class TrainingGame implements GameMode {
                     uiConfig.getCombinationsPoints()[12].setText(gameBoardActivity.getResources().getString(R.string.points_value, 0));
                     uiConfig.setTotalScore(137);
                     trainingTextNr++;
-                    int[] dices4 = {1,6,3,4,6};
+                    int[] dices4 = {1, 6, 3, 4, 6};
                     throwDices4(dices4);
                     break;
+                case 20:
+                    trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_25));
 
             }
 
@@ -218,37 +222,72 @@ public class TrainingGame implements GameMode {
 
     }
 
-    public void throwDices4(int[] dices){
+    public void throwDices4(int[] dices) {
         uiConfig.getRollDicesButton().setOnClickListener(v -> {
             sounds.playRollDiceSound();
             uiConfig.showDices(dices, true);
             trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_26));
-            int[] dices2 = {2,6,6,5,6};
+            int[] dices2 = {2, 6, 6, 5, 6};
             throwDices5(dices2);
         });
 
     }
 
-    public void throwDices5(int[] dices){
-        uiConfig.getRollDicesButton().setOnClickListener(v ->{
-            uiConfig.showDices(dices, true);
-            trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_27));
+    public void throwDices5(int[] dices) {
+        setDiceSelection(uiConfig.getTraining_dicesSlots()[0]);
+        setDiceSelection(uiConfig.getTraining_dicesSlots()[2]);
+        setDiceSelection(uiConfig.getTraining_dicesSlots()[3]);
+        uiConfig.getRollDicesButton().setOnClickListener(v -> {
+            if (uiConfig.getTraining_dicesSlots()[0].getBackground() != null && uiConfig.getTraining_dicesSlots()[2].getBackground() != null && uiConfig.getTraining_dicesSlots()[3].getBackground() != null) {
+                sounds.playRollDiceSound();
+                uiConfig.showDices(dices, true);
+                uiConfig.clearDicesBorder(true);
+                trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_27));
+                int[] dices2 = {1, 6, 6, 1, 6};
+                throwDices6(dices2);
+            }
         });
+    }
 
-
+    public void throwDices6(int[] dices){
+        blockDicesSelection();
+        setDiceSelection(uiConfig.getTraining_dicesSlots()[0]);
+        setDiceSelection(uiConfig.getTraining_dicesSlots()[3]);
+        uiConfig.getRollDicesButton().setOnClickListener(v ->{
+            if(uiConfig.getTraining_dicesSlots()[0].getBackground()!=null && uiConfig.getTraining_dicesSlots()[3].getBackground()!=null){
+                sounds.playRollDiceSound();
+                uiConfig.showDices(dices, true);
+                uiConfig.clearDicesBorder(true);
+                uiConfig.combinationHighlighter(16, false);
+                trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_28));
+                blockDicesSelection();
+                blockThrowDicesButton();
+                uiConfig.getCombinationsLayouts()[15].setOnClickListener(v1 ->{
+                    uiConfig.updateCombinationsUI(1, 15);
+                    sounds.playCompleteCombinationSound();
+                    uiConfig.combinationHighlighter(0, true);
+                    uiConfig.getCombinationsPoints()[15].setText(gameBoardActivity.getResources().getString(R.string.points_value, 20));
+                    uiConfig.setTotalScore(157);
+                    uiConfig.setDicesVisibility(false, true);
+                    blockCombinationsLayouts();
+                    trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_29));
+                    trainingTextNr++;
+                    showNextButton(true);
+                });
+            }
+        });
     }
 
     public void blockThrowDicesButton() {
         uiConfig.getRollDicesButton().setOnClickListener(v1 -> {
-
         });
 
 
     }
 
-    public void blockDicesSelection(){
-        for(int x=0; x<5; x++){
-            uiConfig.getTraining_dicesSlots()[x].setOnClickListener(v ->{
+    public void blockDicesSelection() {
+        for (int x = 0; x < 5; x++) {
+            uiConfig.getTraining_dicesSlots()[x].setOnClickListener(v -> {
 
             });
         }
@@ -268,6 +307,17 @@ public class TrainingGame implements GameMode {
         } else {
             nextButton.setVisibility(View.INVISIBLE);
         }
+    }
+
+    public void setDiceSelection(ImageView imageView) {
+        imageView.setOnClickListener(v -> {
+            if (imageView.getBackground() != null) {
+                imageView.setBackground(null);
+            } else {
+                uiConfig.setDicesBorder(imageView);
+            }
+        });
+
     }
 
 
