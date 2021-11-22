@@ -1,4 +1,5 @@
 package com.paweldyjak.dicegame.Fragments;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -10,7 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
+
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.R;
 
@@ -65,60 +68,58 @@ public class PlayerNamesInputScreenFragment extends Fragment {
 
         //setting start button to save player name and start the game unless no player name entered or wrong format entered
         start.setOnClickListener(v -> {
-                if(playerNameEditText.getText().length()>2 && nameDuplicateChecker()){
-                    playersNames[currentPlayerNameInput] = playerNameEditText.getText().toString();
-                    playerNameEditText.setText(null);
-                    currentPlayerNameInput++;
-                    if(currentPlayerNameInput==numberOfPlayers && numberOfPlayers ==1){
-                        gameBoardActivity.startTrainingGame(playersNames[0]);
-                    }else if(currentPlayerNameInput==numberOfPlayers){
-                        gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
-                    } else{
-                        switch (currentPlayerNameInput){
-                            case 1:
-                                playerNameTextView.setText(R.string.player_two);
-                                break;
-                            case 2:
-                                playerNameTextView.setText(R.string.player_three);
-                                break;
-                            case 3:
-                                playerNameTextView.setText(R.string.player_four);
-                                break;
-                            case 4:
-                                playerNameTextView.setText(R.string.player_five);
-                                break;
-                            case 5:
-                                playerNameTextView.setText(R.string.player_six);
-                                break;
-                        }
-                        start.setVisibility(View.INVISIBLE);
-                    }
-
+            if (playerNameEditText.getText().length() > 2 && nameDuplicateChecker()) {
+                playersNames[currentPlayerNameInput] = playerNameEditText.getText().toString();
+                playerNameEditText.setText(null);
+                currentPlayerNameInput++;
+                if (currentPlayerNameInput == numberOfPlayers) {
+                    gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
                 } else {
-                    if (!nameDuplicateChecker()) {
-                        start.setVisibility(View.INVISIBLE);
-                        displayNameInUseToast();
-                    } else {
-                        start.setVisibility(View.INVISIBLE);
-                        displayWrongLengthToast();
+                    switch (currentPlayerNameInput) {
+                        case 1:
+                            playerNameTextView.setText(R.string.player_two);
+                            break;
+                        case 2:
+                            playerNameTextView.setText(R.string.player_three);
+                            break;
+                        case 3:
+                            playerNameTextView.setText(R.string.player_four);
+                            break;
+                        case 4:
+                            playerNameTextView.setText(R.string.player_five);
+                            break;
+                        case 5:
+                            playerNameTextView.setText(R.string.player_six);
+                            break;
                     }
+                    start.setVisibility(View.INVISIBLE);
                 }
+
+            } else {
+                if (!nameDuplicateChecker()) {
+                    start.setVisibility(View.INVISIBLE);
+                    displayNameInUseToast();
+                } else {
+                    start.setVisibility(View.INVISIBLE);
+                    displayWrongLengthToast();
+                }
+            }
         });
     }
 
-    public void displayWrongLengthToast(){
+    public void displayWrongLengthToast() {
         Toast toast = Toast.makeText(getContext(), R.string.username_length_error, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER,0,0);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 
-    public void displayNameInUseToast(){
+    public void displayNameInUseToast() {
         Toast toast = Toast.makeText(getContext(), R.string.username_in_use_error, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER,0,0);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 
-    public boolean nameDuplicateChecker(){
+    public boolean nameDuplicateChecker() {
         String currentName = playerNameEditText.getText().toString();
         for (String playersName : playersNames) {
             if (currentName.equals(playersName)) {

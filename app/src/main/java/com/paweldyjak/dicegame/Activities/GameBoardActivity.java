@@ -55,6 +55,8 @@ public class GameBoardActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         if (multiplayerMode) {
             startMultiplayerGame(playersNames, opponentUid);
+        } else if (numberOfPlayers == 1) {
+            startTrainingGame();
         } else {
             showNamesInputFragment();
         }
@@ -71,10 +73,10 @@ public class GameBoardActivity extends AppCompatActivity {
 
     }
 
-    public void setSettingsButton(){
+    public void setSettingsButton() {
         GameSettingsFragment gameSettingsFragment = new GameSettingsFragment(this);
         View fragmentLayout = findViewById(R.id.fragment_layout);
-        gameSettings.setOnClickListener(v ->{
+        gameSettings.setOnClickListener(v -> {
             replaceFragment(R.id.fragment_layout, gameSettingsFragment);
             mainBoardLayout.setVisibility(View.INVISIBLE);
             fragmentLayout.setVisibility(View.VISIBLE);
@@ -158,18 +160,13 @@ public class GameBoardActivity extends AppCompatActivity {
         showFragment();
     }
 
-    public void startTrainingGame(String playerName){
-        String[] playersNames = {playerName, "Training"};
+    public void startTrainingGame() {
+        String playerName = getResources().getString(R.string.training);
         UIConfig uiConfig = new UIConfig(this);
         TrainingGame trainingGame = new TrainingGame(this, uiConfig);
-        DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(trainingGame, uiConfig);
-        GameBoardManager gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, trainingGame, null);
-        turnScreenFragment = new TurnScreenFragment(this, trainingGame, gameBoardManager);
         uiConfig.setComponents();
         uiConfig.getCurrentPlayerName().setText(playerName);
-        trainingGame.setPlayersNames(playersNames);
-        trainingGame.setNumberOfPlayers(2);
-        trainingGame.setAllCombinationsAsActive();
+        trainingGame.startTrainingMode();
         hideFragment();
 
     }
