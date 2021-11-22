@@ -37,7 +37,7 @@ public class Sounds {
         }
     }
 
-    public void playEraseCombinationSound() {
+    public void playCrossOutCombinationSound() {
         if(isSoundOn) {
             MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.sound_cross_out_combination);
             mediaPlayer.start();

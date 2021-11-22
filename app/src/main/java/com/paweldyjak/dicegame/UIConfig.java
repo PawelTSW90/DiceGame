@@ -47,9 +47,9 @@ public class UIConfig {
 
     public void setComponents() {
         blockCombinationQuestionLayout = gameBoardActivity.findViewById(R.id.block_combination_question_layout);
-        blockCombinationTextView = gameBoardActivity.findViewById(R.id.block_combination_question_textView);
-        blockCombinationYesButton = gameBoardActivity.findViewById(R.id.block_combination_question_yes_button);
-        blockCombinationNoButton = gameBoardActivity.findViewById(R.id.block_combination_question_no_button);
+        blockCombinationTextView = gameBoardActivity.findViewById(R.id.gameMenu_exitGameQuestion);
+        blockCombinationYesButton = gameBoardActivity.findViewById(R.id.gameMenu_exitQuestion_yes_button);
+        blockCombinationNoButton = gameBoardActivity.findViewById(R.id.gameMenu_exitQuestion_no_button);
         gameBoardLayout = gameBoardActivity.findViewById(R.id.game_board_screen_layout);
         rollDicesButton = gameBoardActivity.findViewById(R.id.roll_dices);
         dicesSlots[0] = gameBoardActivity.findViewById(R.id.diceSlot1);
@@ -535,5 +535,9 @@ public class UIConfig {
 
     public ImageView[] getTraining_dicesSlots() {
         return training_dicesSlots;
+    }
+
+    public TextView[] getCombinationsText() {
+        return combinationsText;
     }
 }

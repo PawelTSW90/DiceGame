@@ -21,6 +21,10 @@
     <string name="connection_error">Sprawdź swoje połączenie z internetem lub spróbuj ponownie później.</string>
     <string name="set_username">Jak jest Twoja nazwa użytkownika?</string>
     <string name="username_length_error">Długość imienia musi się mieścić w przedziale pomiędzy 3 a 10 znaków.</string>
+    <string name="sounds">Dźwięk</string>
+    <string name="combinations_highlight">Podświetlenie kombinacji</string>
+    <string name="cross_out_confirmation">Potwierdzenie wykreślenia</string>
+    <string name="show_combinations_chart">Tabela kombinacji</string>
     <string name="player_one">GRACZ 1</string>
     <string name="player_two">GRACZ 2</string>
     <string name="player_three">GRACZ 3</string>
@@ -36,7 +40,7 @@
     <string name="fives">Piątki</string>
     <string name="sixes">Szóstki</string>
     <string name="pair">Para</string>
-    <string name="two_pairs">2 Pary</string>
+    <string name="two_pairs">Dwie Pary</string>
     <string name="evens">Parzyste</string>
     <string name="odds">Nieparzyste</string>
     <string name="small_straight">Mały Street</string>
@@ -45,7 +49,7 @@
     <string name="four_of_a_kind">Kareta</string>
     <string name="five_of_a_kind">Generał</string>
     <string name="SOS">SOS</string>
-    <string name="score">Razem</string>
+    <string name="score">Wynik</string>
     <string name="points_value">"%1$d pkt"</string>
     <string name="content_description">android:contentDescription="@null"</string>
     <string name="two_players">2 graczy</string>
@@ -67,6 +71,9 @@
     <string name="playerResult">"%1$s \n \n %2$s </string>
     <string name="draw">REMIS !</string>
     <string name="exit">WYJŚCIE</string>
+    <string name="exit_game">Wyjdź z gry</string>
+    <string name="X">X</string>
+    <string name="exit_game_confirmation">Czy na pewno chcesz przerwać grę?</string>
     <string name="rematch">REWANŻ</string>
     <string name="offline_mode">TRYB OFFLINE</string>
     <string name="playerName_mainMenu">Player name:</string>
@@ -80,12 +87,12 @@
     <string name="yes">Tak</string>
     <string name="no">Nie</string>
     <string name="combinations_chart_exit">POWRÓT</string>
-    <string name="block_combination_question">"Czy na pewno chcesz zablokować\n%1$s ?"</string>
+    <string name="cross_out_combination_question">"Czy na pewno chcesz wykreślić\n%1$s ?"</string>
     <string name="no_requirements">BRAK WYMAGAŃ</string>
-    <string name="training_text_1">"Witaj w grze Kości!\nTen samouczek zaznajomi Cię z zasadami gry, a także pokaże cenne wskazówki\nktóre zwiększą Twoją szansę na wygraną!"</string>
+    <string name="training_text_1">"Witaj w grze Kości!\nTen samouczek zaznajomi Cię z zasadami gry, a także pokaże cenne wskazówki które zwiększą Twoją szansę na wygraną!"</string>
     <string name="training_text_2">"Celem gry jest zdobycie większej ilości punktów od przeciwnika. Punkty zdobywamy zaliczając kombinacje widoczne po lewej stronie ekranu."</string>
     <string name="training_text_3">"Kombinacja może zostać użyta tylko raz. Po zaliczeniu nie będzie można zmienić jej wyniku, dlatego należy przemyśleć każdy ruch gdyż jedno nieprzemyślane zagranie może zadecydować o końcowym rezultacie!"</string>
-    <string name="training_text_4">"A teraz zapoznaj się z tabelą kombinacji. Pamiętaj że możesz się nią posiłkować w dowolnym momencie rozgrywki. Wystarczy wybrać "Pokaż tabelę kombinacji" w opcjach gry."</string>
+    <string name="training_text_4">"A teraz zapoznaj się z tabelą kombinacji. Pamiętaj że możesz się nią posiłkować w dowolnym momencie rozgrywki. Wystarczy wybrać "Tabela kombinacji" w opcjach gry."</string>
     <string name="training_text_5">"Zwróć uwagę że kombinacje od 1 do 6 oraz Mały Street i Duży Street wymagają wyrzucenia dokładnie takich wartości jakie są przedstawione na liście. Inne kombinacje wymagają jedynie spełnienia konkretnych kryteriów, wtedy wyrzucone wartości mogą się różnić."</string>
     <string name="training_text_6">"Dla przykładu, Full wymaga wyrzucenia 3 kości o jednolitej wartości oraz 2 o innej jednolitej wartości. Zarówno 3 jedynki i 2 dwójki jak i 3 dwójki i 2 jedynki spełniają te kryteria."</string>
     <string name="training_text_7">"Mały Street wymaga kości o wartościach: 1,2,3,4,5 Duży Street: 2,3,4,5,6 W obydwu przypadkach wartości nie mogą się powtarzać. Kareta wymaga 4 kości o jednolitej wartości. Generał wymaga 5 kości o jednolitej wartości i jest najtrudniejszą kombinacją do wyrzucenia."</string>
@@ -93,14 +100,14 @@
     <string name="training_text_9">"Warto skorzystać z SOS jeśli po trzech rzutach nie udało nam się uzyskać żadnej kombinacji. Należy również rozważyć ten krok jeśli punktacja uzyskana w innej kombinacji jest bardzo mała, zwłaszcza jeśli mowa o kombinacji dającej możliwości zdobycia wielu punktów."</string>
     <string name="training_text_10">"Dla przykładu: jeśli po trzecim rzucie jedyna kombinacja jaką mamy to para z jedynek(dająca 2 punkty), to warto rozważyć użycie SOS i dać sobie szansę na wyrzucenie znacznie lepszej pary w kolejnych turach. Uwaga! Jak każda kombinacja, SOS może być wykorzystana tylko raz!"</string>
     <string name="training_text_11">"Przejdźmy do zasad naliczania punktów. Punkty są naliczane tylko po zsumowaniu kości WYMAGANYCH W KRYTERIACH DANEJ KOMBINACJI. Jeśli wyrzucimy parę z 6, piątkę, czwórkę i trójkę, to przy zaliczeniu pary punkty zostaną policzone TYLKO z szóstek. Pozostałe kości zostaną zignorowane."</string>
-    <string name="training_text_12">"Kolejną rzeczą o której warto pamiętać jest "Zasada pierwszego rzutu". Jeśli zaliczymy kombinację wykonując tylko jeden rzut, to zdobyte punkty zostaną podwojone! Należy więc uważać, bo wykonanie drugiego rzutu może nam odebrać wiele punktów przy zaliczeniu kombinacji wyrzuconej już w pierwszym rzucie. "</string>
+    <string name="training_text_12">"Kolejną rzeczą o której warto pamiętać jest "Zasada pierwszego rzutu". Jeśli zaliczymy kombinację wykonując tylko jeden rzut, to zdobyte punkty zostaną podwojone! Należy więc uważać, bo wykonanie drugiego rzutu może nam odebrać wiele punktów przy zaliczeniu kombinacji wyrzuconej już w pierwszym rzucie."</string>
     <string name="training_text_13">"Do swojej dyspozycji mamy 16 tur. Każda składa się z 3 mniejszych tur w których rzucamy pięcioma kośćmi. Uwaga! Najczęściej przed drugim i trzecim rzutem są kości które chcielibyśmy zachować w celu uzyskania konkretnej kombinacji. W tym celu należy zaznaczyć kości którymi chcemy rzucić ponownie."</string>
-    <string name="training_text_14">"Po zaznaczeniu, dana kość zostanie otoczona fioletową obramówką. Pozostałe kości nie wezmą udziału w ponownym rzucie. Jeśli chcemy rzucić wszystkimi kośćmi, wystarczy nacisnąć obrazek rzutu kości. Nie trzeba zaznaczać ich wszystkich. "</string>
+    <string name="training_text_14">"Po zaznaczeniu, dana kość zostanie otoczona fioletową obramówką. Pozostałe kości nie wezmą udziału w ponownym rzucie. Jeśli chcemy rzucić wszystkimi kośćmi, wystarczy nacisnąć obrazek rzutu kości. Nie trzeba zaznaczać ich wszystkich."</string>
     <string name="training_text_15">"Wystarczy teorii. Przyszedł czas na praktykę! Wykonaj swój pierwszy rzut!"</string>
     <string name="training_text_16">"Wyrzuciłeś Czwórki w pierwszym rzucie! A to oznacza że punkty zostaną podwojone. Z wyjątkiem niektórych sytuacji zaleca się zaliczyć kombinację zdobytą w pierwszym rzucie."</string>
     <string name="training_text_17">"Zauważ że podświetlanie dostępnych kombinacji jest domyślnie włączone. Może to być pomocne zwłaszcza dla nowych graczy. Możesz w każdej chwili wyłączyć tę funkcję w opcjach gry. A teraz zalicz kombinację Czwórki!"</string>
     <string name="training_text_18">"Dobrze! Zdobyłeś 24 punkty. Zsumowane zostały kości wymagane do danej kombinacji, a ponieważ zaliczyłeś kombinację po jednym rzucie, wynik został podwojony. Zobaczmy co uda nam się wyrzucić tym razem. Rzuć kośćmi!"</string>
-    <string name="training_text_19">"Wyrzuciłeś Parę w pierwszym rzucie. Wstrzymaj się jednak z zaliczeniem tej kombinacji, gdyż daje Ci ona jedynie 8 punktów. "</string>
+    <string name="training_text_19">"Wyrzuciłeś Parę w pierwszym rzucie. Wstrzymaj się jednak z zaliczeniem tej kombinacji, gdyż daje Ci ona jedynie 8 punktów."</string>
     <string name="training_text_20">"Para jest najłatwiejszą kombinacją do wyrzucenia i z pewnością w kolejnych turach uda Ci się wyrzucić znacznie silniejszą. Nie warto jej więc marnować."</string>
     <string name="training_text_21">"Spróbujmy zapolować na Dwójki. Brakuje Ci jeszcze tylko jednej, a masz przed sobą dwa rzuty więc szansę są spore. Zaznacz wszystkie kości oprócz dwójek a następnie wykonaj drugi rzut."</string>
     <string name="training_text_22">"Ten rzut zdecydowanie poprawił Twoje pole manerwu! Planowaliśmy zaliczenie Dwójek, ale teraz mamy aż pięć możliwości! Takie momenty przytrafiają się dość często, pamiętaj aby odpowiednio reagować w zależności od sytuacji."</string>
@@ -111,4 +118,20 @@
     <string name="training_text_27">"Jeszcze tylko jedna szóstka. Do 3 razy sztuka!"</string>
     <string name="training_text_28">"Tym razem się nie udało. Na szczęście mamy do dyspozycji SOS, więc nie musimy wykreślać kolejnej kombinacji. Wykorzystaj SOS."</string>
     <string name="training_text_29">"Jak widzisz w przypadku SOS podliczane są punkty z wszystkich kości. Czasem warto rozważyć wykreślenie słabo punktowanej(Jedynki), lub bardzo trudnej(Generał) kombinacji, zamiast wykorzystania SOS z małą ilością punktów."</string>
+    <string name="training_text_30">"A teraz wypróbujmy kolejny scenariusz!"</string>
+    <string name="training_text_31">"Sytuacja jest ciężka. Pozostały trzy bardzo trudne kombinacje. Zobaczmy czy uda nam się z tym poradzić. Rzuć kośćmi!"</string>
+    <string name="training_text_32">"Wygląda na to że mamy szczęście! W przypadku dwóch niewykorzystanych Streetów taki układ jest idealny. Przyjrzyj się kościom. Czy już domyślasz się dlaczego?"</string>
+    <string name="training_text_33">"W tej sytuacji wystarczy rzucić jedną z czwórek i uzyskać jedynkę lub szóstkę. Jedynka da nam Małego Streeta, a szóstka Dużego Streeta. Spróbujmy! Zaznacz ostatnią z czwórek i rzuć kością!"</string>
+    <string name="training_text_34">"Nie udało się. Na szczęście mamy jeszcze jeden rzut. Zaznacz ostatnią z trójek i spróbuj ponownie!"</string>
+    <string name="training_text_35">"Udało się wyrzucić Dużego Streeta! Jak widzisz taki układ daje duże szanse powodzenia. Zapamiętaj go aby nie przegapić takiej okazji w prawdziwej rozgrywce. Teraz zalicz Dużego Streeta."</string>
+    <string name="training_text_36">"Pozostały już tylko dwie kombinacje. Rzuć koścmi!"</string>
+    <string name="training_text_37">"Potrzebujemy trójki do Małego Streeta. Rzuć ponownie pierwszą dwójką."</string>
+    <string name="training_text_38">"Spróbuj jeszcze raz."</string>
+    <string name="training_text_39">"Niestety nie tym razem. Pozostaje nam wykreslić jedną z kombinacji. Zawsze wykreślaj kombinacje najmniej punktowane, lub najtrudniejsze do wyrzucenia. W tym wypadku jest to Generał. Wykreśl go."</string>
+    <string name="training_text_40">"Potwierdzenie wykreślenia kombinacji jest domyślnie włączone. Pozwala ono uniknąć pomyłki wykreślenia nie tej kombinacji którą planowaliśmy. Możesz w każdej chwili wyłączyć tą funkcję w opcjach gry."</string>
+    <string name="training_text_41">"To już koniec treningu! Czas wykorzystać tę lekcję w prawdziwej grze! Zanim zmierzysz się z prawdziwym graczem, warto poćwiczyć z komputerowym przeciwnikiem aby uniknąć utraty punktów rankingowych."</string>
+    <string name="training_text_42">"Możesz w każdej chwili powtórzyć ten trening wybierając go w głównym menu gry. ŻYCZĘ WIELU ZWYCIĘSTW I POWODZENIA!"</string>
+
+
+
 </resources>

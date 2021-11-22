@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.google.firebase.FirebaseApp;
 import com.paweldyjak.dicegame.*;
@@ -29,6 +30,7 @@ public class GameBoardActivity extends AppCompatActivity {
     private boolean isSoundOn;
     private boolean isCombinationsHighlightOn;
     private boolean isBlockConfirmationOn;
+    private ImageView gameSettings;
 
 
     @Override
@@ -43,8 +45,10 @@ public class GameBoardActivity extends AppCompatActivity {
         String opponentUid = getIntent().getStringExtra("opponentUid");
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_game_board);
+        gameSettings = findViewById(R.id.game_settings);
         playerNamesInputScreenFragment = new PlayerNamesInputScreenFragment(this, numberOfPlayers);
         mainBoardLayout = findViewById(R.id.game_board_screen_layout);
+        setSettingsButton();
         //hides status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
@@ -65,6 +69,18 @@ public class GameBoardActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
 
+    }
+
+    public void setSettingsButton(){
+        GameSettingsFragment gameSettingsFragment = new GameSettingsFragment(this);
+        View fragmentLayout = findViewById(R.id.fragment_layout);
+        gameSettings.setOnClickListener(v ->{
+            replaceFragment(R.id.fragment_layout, gameSettingsFragment);
+            mainBoardLayout.setVisibility(View.INVISIBLE);
+            fragmentLayout.setVisibility(View.VISIBLE);
+
+
+        });
     }
 
     public void replaceFragment(int layout, Fragment fragment) {

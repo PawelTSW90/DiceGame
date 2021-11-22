@@ -12,27 +12,20 @@ import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.R;
 
 public class CombinationsChartFragment extends Fragment {
-    GameBoardActivity gameBoardActivity;
-    boolean isTrainingMode;
-    Button returnButton;
+    private final GameBoardActivity gameBoardActivity;
 
-    public CombinationsChartFragment(GameBoardActivity gameBoardActivity, boolean isTrainingMode){
+    public CombinationsChartFragment(GameBoardActivity gameBoardActivity){
         this.gameBoardActivity = gameBoardActivity;
-        this.isTrainingMode = isTrainingMode;
 
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_combinations_chart, container, false);
-        returnButton = view.findViewById(R.id.combinations_chart_returnButton);
+        View view = inflater.inflate(R.layout.fragment_combinations_chart, container, false);
+        Button returnButton = view.findViewById(R.id.combinations_chart_returnButton);
         returnButton.setOnClickListener(v ->{
-            if(isTrainingMode){
                 gameBoardActivity.hideFragment();
-            }
-
-
         });
         return view;
     }
