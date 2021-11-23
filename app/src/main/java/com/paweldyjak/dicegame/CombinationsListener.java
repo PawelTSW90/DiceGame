@@ -63,56 +63,56 @@ public class CombinationsListener implements View.OnClickListener {
             //set block combination listener
         } else if (scoreToInput == 0 && gameBoardManager.getThrowNumber() == 3 && combinationStatus==0) {
             if (gameBoardActivity.isCrossOutCombinationOn()) {
-                uiConfig.showBlockCombinationQuestion(true);
+                uiConfig.showCrossOutCombinationQuestion(true);
                 switch (combinationNumber) {
                     case 0:
-                        uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.ones)));
+                        uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.ones)));
                         break;
                     case 1:
-                        uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.twos)));
+                        uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.twos)));
                         break;
                     case 2:
-                        uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.threes)));
+                        uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.threes)));
                         break;
                     case 3:
-                        uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.fours)));
+                        uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.fours)));
                         break;
                     case 4:
-                        uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.fives)));
+                        uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.fives)));
                         break;
                     case 5:
-                        uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.sixes)));
+                        uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.sixes)));
                         break;
                     case 6:
-                        uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.pair)));
+                        uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.pair)));
                         break;
                     case 7:
-                        uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.two_pairs)));
+                        uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.two_pairs)));
                         break;
                     case 8:
-                        uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.evens)));
+                        uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.evens)));
                         break;
                     case 9:
-                        uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.odds)));
+                        uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.odds)));
                         break;
                     case 10:
-                        uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.small_straight)));
+                        uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.small_straight)));
                         break;
                     case 11:
-                        uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.large_straight)));
+                        uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.large_straight)));
                         break;
                     case 12:
-                        uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.full_house)));
+                        uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.full_house)));
                         break;
                     case 13:
-                        uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.four_of_a_kind)));
+                        uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.four_of_a_kind)));
                         break;
                     case 14:
-                        uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.five_of_a_kind)));
+                        uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.five_of_a_kind)));
                         break;
                 }
             } else {
-                blockCombination();
+                crossOutCombination();
             }
         }
     }
@@ -138,8 +138,7 @@ public class CombinationsListener implements View.OnClickListener {
     }
 
     //block combination listener
-    public void blockCombination() {
-        uiConfig.showBlockCombinationQuestion(false);
+    public void crossOutCombination() {
         gameBoardManager.setThrowNumber(0);
         gameMode.setCombinationsSlots(combinationNumber, 2);
         uiConfig.combinationHighlighter(0, true);
@@ -166,9 +165,9 @@ public class CombinationsListener implements View.OnClickListener {
     }
 
     public void setBlockConfirmationButtons() {
-            uiConfig.getBlockCombinationNoButton().setOnClickListener(v1 -> {
+            uiConfig.getCrossOutCombinationNoButton().setOnClickListener(v1 -> {
                 uiConfig.gameBoardEnableController(true, uiConfig.getGameBoardLayout());
-                uiConfig.showBlockCombinationQuestion(false);
+                uiConfig.showCrossOutCombinationQuestion(false);
                 for (int x = 0; x<16; x++){
                     if(gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][x]!=0){
                         uiConfig.getCombinationsText()[x].setEnabled(false);
@@ -176,9 +175,9 @@ public class CombinationsListener implements View.OnClickListener {
                 }
             });
 
-            uiConfig.getBlockCombinationYesButton().setOnClickListener(v1 -> {
-                uiConfig.showBlockCombinationQuestion(false);
-                blockCombination();
+            uiConfig.getCrossOutCombinationYesButton().setOnClickListener(v1 -> {
+                uiConfig.showCrossOutCombinationQuestion(false);
+                crossOutCombination();
             });
     }
 

@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Activities.MainMenuActivity;
-import com.paweldyjak.dicegame.Fragments.CombinationsChartFragment;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.Sounds;
 import com.paweldyjak.dicegame.UIConfig;
@@ -44,13 +43,12 @@ public class TrainingGame {
                     trainingTextNr++;
                     break;
                 case 3:
-                    gameBoardActivity.replaceFragment(R.id.fragment_layout, new CombinationsChartFragment(gameBoardActivity));
                     trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_4));
                     trainingTextNr++;
                     break;
                 case 4:
                     trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_5));
-                    gameBoardActivity.showFragment();
+                    gameBoardActivity.manageFragments(true, false, gameBoardActivity.getCombinationsChartFragment());
                     trainingTextNr++;
                     break;
                 case 5:
@@ -417,11 +415,11 @@ public class TrainingGame {
                 uiConfig.showDices(dices, true);
                 trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_39));
                 uiConfig.getCombinationsLayouts()[14].setOnClickListener(v1 -> {
-                    uiConfig.getBlockCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.five_of_a_kind)));
-                    uiConfig.showBlockCombinationQuestion(true);
-                    uiConfig.getBlockCombinationNoButton().setOnClickListener(v2 -> uiConfig.showBlockCombinationQuestion(false));
-                    uiConfig.getBlockCombinationYesButton().setOnClickListener(v2 -> {
-                        uiConfig.showBlockCombinationQuestion(false);
+                    uiConfig.getCrossOutCombinationTextView().setText(gameBoardActivity.getResources().getString(R.string.cross_out_combination_question, gameBoardActivity.getResources().getString(R.string.five_of_a_kind)));
+                    uiConfig.showCrossOutCombinationQuestion(true);
+                    uiConfig.getCrossOutCombinationNoButton().setOnClickListener(v2 -> uiConfig.showCrossOutCombinationQuestion(false));
+                    uiConfig.getCrossOutCombinationYesButton().setOnClickListener(v2 -> {
+                        uiConfig.showCrossOutCombinationQuestion(false);
                         sounds.playCrossOutCombinationSound();
                         uiConfig.updateCombinationsUI(2, 14);
                         uiConfig.setDicesVisibility(false, true);

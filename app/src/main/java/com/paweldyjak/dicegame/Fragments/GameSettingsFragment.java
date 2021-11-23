@@ -40,8 +40,8 @@ public class GameSettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_game_settings, container, false);
         backButton = view.findViewById(R.id.gameMenu_backButton);
         exit = view.findViewById(R.id.gameMenu_exitGame);
-        exitNoButton = view.findViewById(R.id.gameMenu_exitQuestion_no_button);
-        exitYesButton = view.findViewById(R.id.gameMenu_exitQuestion_yes_button);
+        exitNoButton = view.findViewById(R.id.gameMenu_exit_question_no_button);
+        exitYesButton = view.findViewById(R.id.gameMenu_exit_question_yes_button);
         exitQuestionLayout = view.findViewById(R.id.gameMenu_exit_question_layout);
         combinationsChart = view.findViewById(R.id.gameMenu_combinationsChart);
         soundSwitch = view.findViewById(R.id.gameMenu_sounds_switch);
@@ -53,18 +53,16 @@ public class GameSettingsFragment extends Fragment {
     }
 
     public void setButtons() {
-        CombinationsChartFragment combinationsChartFragment = new CombinationsChartFragment(gameBoardActivity);
         backButton.setOnClickListener(v -> {
             sounds.playTickSound();
             saveSettings();
-            gameBoardActivity.removeFragment(this);
-            gameBoardActivity.hideFragment();
+            gameBoardActivity.manageFragments(false, true, this);
         });
 
         combinationsChart.setOnClickListener(v -> {
             sounds.playTickSound();
-            gameBoardActivity.replaceFragment(R.id.fragment_layout, combinationsChartFragment);
-            gameBoardActivity.showFragment();
+            gameBoardActivity.manageFragments(false, true, this);
+            gameBoardActivity.manageFragments(true, false, gameBoardActivity.getCombinationsChartFragment());
         });
         exit.setOnClickListener(v -> {
             sounds.playTickSound();

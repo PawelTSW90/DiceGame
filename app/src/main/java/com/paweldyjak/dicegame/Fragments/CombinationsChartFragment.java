@@ -25,7 +25,7 @@ public class CombinationsChartFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_combinations_chart, container, false);
         Button returnButton = view.findViewById(R.id.combinations_chart_returnButton);
         returnButton.setOnClickListener(v ->{
-                gameBoardActivity.hideFragment();
+                gameBoardActivity.manageFragments(false, true, this);
         });
         return view;
     }

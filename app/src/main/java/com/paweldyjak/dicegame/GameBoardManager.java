@@ -53,7 +53,6 @@ public class GameBoardManager {
 
     //method configure roll dices button
     public void setRollDicesButton() {
-        gameBoardActivity.hideFragment();
         setCombinationsListeners();
         uiConfig.getRollDicesButton().setOnClickListener(v -> {
             if (throwNumber < 3) {

@@ -84,7 +84,10 @@ public class FinalResultTwoPlayersFragment extends Fragment {
 
         });
 
-        rematchButton.setOnClickListener(v -> gameBoardActivity.startHotSeatGame(gameMode.getPlayersNames(), gameMode.getNumberOfPlayers()));
+        rematchButton.setOnClickListener(v -> {
+            gameBoardActivity.manageFragments(false, true, this);
+            gameBoardActivity.startHotSeatGame(gameMode.getPlayersNames(), gameMode.getNumberOfPlayers());
+        });
     }
 
     public void displayFinalScreen(String playerName) {
@@ -118,7 +121,7 @@ public class FinalResultTwoPlayersFragment extends Fragment {
         if (gameMode instanceof MultiplayerGame) {
             updateDatabaseStatistics(winnerPlayer.equals(playerName));
         } else {
-            gameBoardActivity.showFragment();
+            gameBoardActivity.manageFragments(true, false, this);
         }
 
 
@@ -150,7 +153,7 @@ public class FinalResultTwoPlayersFragment extends Fragment {
                     updateDrawDatabase();
                 }
                 updateTotalGamesDatabase();
-                gameBoardActivity.showFragment();
+                gameBoardActivity.manageFragments(true, false, FinalResultTwoPlayersFragment.this);
             }
 
             @Override

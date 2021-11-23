@@ -3,8 +3,6 @@ package com.paweldyjak.dicegame.GameModes;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Fragments.FinalResultMorePlayersFragment;
 import com.paweldyjak.dicegame.Fragments.FinalResultTwoPlayersFragment;
-import com.paweldyjak.dicegame.R;
-import com.paweldyjak.dicegame.Sounds;
 
 import java.util.Arrays;
 
@@ -45,11 +43,11 @@ public class HotSeatGame implements GameMode {
     public void setFinalResultScreen() {
         if (numberOfPlayers < 3) {
             FinalResultTwoPlayersFragment finalResultTwoPlayersFragment = new FinalResultTwoPlayersFragment(gameBoardActivity, this);
-            gameBoardActivity.replaceFragment(R.id.fragment_layout, finalResultTwoPlayersFragment);
+            gameBoardActivity.addFragment(finalResultTwoPlayersFragment);
 
         } else {
             FinalResultMorePlayersFragment finalResultMorePlayersFragment = new FinalResultMorePlayersFragment(gameBoardActivity, this);
-            gameBoardActivity.replaceFragment(R.id.fragment_layout, finalResultMorePlayersFragment);
+            gameBoardActivity.addFragment(finalResultMorePlayersFragment);
         }
     }
 

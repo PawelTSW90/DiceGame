@@ -74,6 +74,7 @@ public class PlayerNamesInputScreenFragment extends Fragment {
                 currentPlayerNameInput++;
                 if (currentPlayerNameInput == numberOfPlayers) {
                     gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
+                    gameBoardActivity.manageFragments(false, true, this);
                 } else {
                     switch (currentPlayerNameInput) {
                         case 1:

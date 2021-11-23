@@ -4,7 +4,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Fragments.FinalResultTwoPlayersFragment;
-import com.paweldyjak.dicegame.R;
 import java.util.Arrays;
 
 public class MultiplayerGame implements GameMode {
@@ -52,7 +51,7 @@ public class MultiplayerGame implements GameMode {
     //generate final screen fragment
     public void setFinalResultScreen() {
         FinalResultTwoPlayersFragment finalResultTwoPlayersFragment = new FinalResultTwoPlayersFragment(gameBoardActivity, this);
-        gameBoardActivity.replaceFragment(R.id.fragment_layout, finalResultTwoPlayersFragment);
+        gameBoardActivity.addFragment(finalResultTwoPlayersFragment);
 
     }
 

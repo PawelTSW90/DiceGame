@@ -63,7 +63,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="3.5"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/ones" />
 
                         <TextView
@@ -102,7 +102,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="1"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/evens" />
 
                         <TextView
@@ -151,7 +151,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="3.5"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/twos" />
 
                         <TextView
@@ -190,7 +190,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="1"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/odds" />
 
                         <TextView
@@ -238,7 +238,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="3.5"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/threes" />
 
                         <TextView
@@ -277,7 +277,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="1"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/small_straight" />
 
                         <TextView
@@ -326,7 +326,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="3.5"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/fours" />
 
                         <TextView
@@ -365,7 +365,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="1"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/large_straight" />
 
                         <TextView
@@ -413,7 +413,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="3.5"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/fives" />
 
                         <TextView
@@ -452,7 +452,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="1"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/full_house" />
 
                         <TextView
@@ -500,7 +500,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="3.5"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/sixes" />
 
                         <TextView
@@ -539,7 +539,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="1"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/four_of_a_kind" />
 
                         <TextView
@@ -589,7 +589,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="3.5"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/pair" />
 
                         <TextView
@@ -629,7 +629,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="1"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/five_of_a_kind" />
 
                         <TextView
@@ -678,7 +678,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="3.5"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/two_pairs" />
 
                         <TextView
@@ -717,7 +717,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="1"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/SOS" />
 
                         <TextView
@@ -761,7 +761,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginStart="5dp"
                             android:layout_marginBottom="2dp"
-                            android:gravity="center|left"
+                            android:gravity="center|start"
                             android:text="@string/score" />
 
                         <TextView
@@ -994,7 +994,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/block_combination_question_layout"
+        android:id="@+id/cross_out_combination_question_layout"
         android:layout_width="350dp"
         android:layout_height="133dp"
         android:background="@drawable/background_block_combination_question"
@@ -1006,7 +1006,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/gameMenu_exitGameQuestion"
+            android:id="@+id/cross_out_combination_question_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -1019,7 +1019,7 @@
             app:layout_constraintVertical_bias="0.050000012" />
 
         <Button
-            android:id="@+id/gameMenu_exitQuestion_no_button"
+            android:id="@+id/cross_out_combination_question_no_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -1032,7 +1032,7 @@
             app:layout_constraintVertical_bias="0.93" />
 
         <Button
-            android:id="@+id/gameMenu_exitQuestion_yes_button"
+            android:id="@+id/cross_out_combination_question_yes_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
