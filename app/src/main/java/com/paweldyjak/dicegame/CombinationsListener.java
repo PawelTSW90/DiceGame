@@ -31,7 +31,6 @@ public class CombinationsListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getTurnScreenFragment());
         //set buttons for block combination confirmation
         setBlockConfirmationButtons();
         //set score input listener
@@ -140,7 +139,6 @@ public class CombinationsListener implements View.OnClickListener {
 
     //block combination listener
     public void blockCombination() {
-        gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getTurnScreenFragment());
         uiConfig.showBlockCombinationQuestion(false);
         gameBoardManager.setThrowNumber(0);
         gameMode.setCombinationsSlots(combinationNumber, 2);

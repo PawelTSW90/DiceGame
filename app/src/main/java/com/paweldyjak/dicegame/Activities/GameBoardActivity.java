@@ -111,18 +111,6 @@ public class GameBoardActivity extends AppCompatActivity {
 
     }
 
-    public void prepareFragments(){
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_layout, playerNamesInputScreenFragment, "namesInputFragment");
-        fragmentTransaction.add(R.id.fragment_layout, turnScreenFragment, "turnScreenFragment");
-        fragmentTransaction.add(R.id.fragment_layout, multiplayerTurnScreenFragment, "multiplayerTurnScreenFragment");
-        fragmentTransaction.add(R.id.fragment_layout, gameSettingsFragment, "gameSettingsFragment");
-        fragmentTransaction.hide(playerNamesInputScreenFragment);
-        fragmentTransaction.hide(turnScreenFragment);
-        fragmentTransaction.hide(multiplayerTurnScreenFragment);
-        fragmentTransaction.hide(gameSettingsFragment);
-    }
-
     public void showNextTurnFragment() {
         View fragmentLayout = findViewById(R.id.fragment_layout);
         mainBoardLayout.setVisibility(View.INVISIBLE);
@@ -229,7 +217,4 @@ public class GameBoardActivity extends AppCompatActivity {
         isCrossOutCombinationOn = crossOutCombinationOn;
     }
 
-    public TurnScreenFragment getTurnScreenFragment() {
-        return turnScreenFragment;
-    }
 }
