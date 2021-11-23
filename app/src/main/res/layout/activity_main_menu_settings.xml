@@ -113,7 +113,7 @@
                         android:layout_height="wrap_content"
                         android:button="@null"
                         android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
-                        android:text="Sounds"
+                        android:text="@string/sounds"
                         android:textColor="#E1D6D7"
                         android:textSize="30sp" />
 
@@ -123,18 +123,18 @@
                         android:layout_height="wrap_content"
                         android:button="@null"
                         android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
-                        android:text="Highlights"
+                        android:text="@string/combinations_highlight"
                         android:textColor="#E1D6D7"
                         android:textColorLink="#FF03DAC5"
                         android:textSize="30sp" />
 
                     <CheckBox
-                        android:id="@+id/blockConfirm_checkBox"
+                        android:id="@+id/crossOutConfirm_checkBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:button="@null"
                         android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
-                        android:text="Block Confirm"
+                        android:text="@string/cross_out_confirmation"
                         android:textColor="#E1D6D7"
                         android:textSize="30sp" />
 

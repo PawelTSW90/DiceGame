@@ -39,7 +39,7 @@ public class TurnScreenFragment extends Fragment {
         playerName.setText(gameMode.getPlayersNames()[gameMode.getCurrentPlayerNumber()-1]);
         nextPlayerButton.setOnClickListener(v -> {
             gameBoardManager.updatePlayerBoard();
-            gameBoardActivity.hideFragment();
+            gameBoardActivity.manageFragments(false, true, this);
 
         });
     }

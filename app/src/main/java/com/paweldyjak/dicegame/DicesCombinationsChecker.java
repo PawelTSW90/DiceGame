@@ -16,7 +16,7 @@ public class DicesCombinationsChecker {
         this.uiConfig = uiConfig;
     }
 
-    public void checkOne(int[] dices, boolean firstThrow) {
+    public void checkOne(int[] dices, int throwNumber) {
         if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][0] == 0) {
             availableCombinationsValues.set(0, 0);
             int nrOfOne = 0;
@@ -28,7 +28,7 @@ public class DicesCombinationsChecker {
 
             if (nrOfOne >= 3) {
                 uiConfig.combinationHighlighter(1, false);
-                if (firstThrow) {
+                if (throwNumber==1) {
                     availableCombinationsValues.set(0, 6);
                 } else {
                     availableCombinationsValues.set(0, 3);
@@ -37,7 +37,7 @@ public class DicesCombinationsChecker {
         }
     }
 
-    public void checkTwo(int[] dices, boolean firstThrow) {
+    public void checkTwo(int[] dices, int throwNumber) {
         if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][1] == 0) {
             availableCombinationsValues.set(1, 0);
             int nrOfTwo = 0;
@@ -49,7 +49,7 @@ public class DicesCombinationsChecker {
 
             if (nrOfTwo >= 3) {
                 uiConfig.combinationHighlighter(2, false);
-                if (firstThrow) {
+                if (throwNumber==1) {
                     availableCombinationsValues.set(1, 12);
                 } else {
                     availableCombinationsValues.set(1, 6);
@@ -59,7 +59,7 @@ public class DicesCombinationsChecker {
     }
 
 
-    public void checkThree(int[] dices, boolean firstThrow) {
+    public void checkThree(int[] dices, int throwNumber) {
         if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][2] == 0) {
             availableCombinationsValues.set(2, 0);
             int nrOfThree = 0;
@@ -71,7 +71,7 @@ public class DicesCombinationsChecker {
 
             if (nrOfThree >= 3) {
                 uiConfig.combinationHighlighter(3, false);
-                if (firstThrow) {
+                if (throwNumber==1) {
                     availableCombinationsValues.set(2, 18);
                 } else {
                     availableCombinationsValues.set(2, 9);
@@ -81,7 +81,7 @@ public class DicesCombinationsChecker {
     }
 
 
-    public void checkFour(int[] dices, boolean firstThrow) {
+    public void checkFour(int[] dices, int throwNumber) {
         if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][3] == 0) {
             availableCombinationsValues.set(3, 0);
             int nrOfFour = 0;
@@ -93,7 +93,7 @@ public class DicesCombinationsChecker {
 
             if (nrOfFour >= 3) {
                 uiConfig.combinationHighlighter(4, false);
-                if (firstThrow) {
+                if (throwNumber==1) {
                     availableCombinationsValues.set(3, 24);
                 } else {
                     availableCombinationsValues.set(3, 12);
@@ -103,7 +103,7 @@ public class DicesCombinationsChecker {
     }
 
 
-    public void checkFive(int[] dices, boolean firstThrow) {
+    public void checkFive(int[] dices, int throwNumber) {
         if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][4] == 0) {
             availableCombinationsValues.set(4, 0);
             int nrOfFive = 0;
@@ -115,7 +115,7 @@ public class DicesCombinationsChecker {
 
             if (nrOfFive >= 3) {
                 uiConfig.combinationHighlighter(5, false);
-                if (firstThrow) {
+                if (throwNumber==1) {
                     availableCombinationsValues.set(4, 30);
                 } else {
                     availableCombinationsValues.set(4, 15);
@@ -125,7 +125,7 @@ public class DicesCombinationsChecker {
     }
 
 
-    public void checkSix(int[] dices, boolean firstThrow) {
+    public void checkSix(int[] dices, int throwNumber) {
         if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][5] == 0) {
             availableCombinationsValues.set(5, 0);
             int nrOfSix = 0;
@@ -137,7 +137,7 @@ public class DicesCombinationsChecker {
 
             if (nrOfSix >= 3) {
                 uiConfig.combinationHighlighter(6, false);
-                if (firstThrow) {
+                if (throwNumber==1) {
                     availableCombinationsValues.set(5, 36);
                 } else {
                     availableCombinationsValues.set(5, 18);
@@ -147,7 +147,7 @@ public class DicesCombinationsChecker {
     }
 
 
-    public void checkPair(int[] dices, boolean firstThrow) {
+    public void checkPair(int[] dices, int throwNumber) {
         int firstThrowValue = 4;
         int notFirstThrowValue = 2;
         int highestPairScore = 0;
@@ -185,7 +185,7 @@ public class DicesCombinationsChecker {
             for (int x = 0; x < 6; x++) {
 
                 if (valuesList.get(x) >= 2) {
-                    if (firstThrow) {
+                    if (throwNumber==1) {
                         highestPairScore = firstThrowValue;
                     } else {
                         highestPairScore = notFirstThrowValue;
@@ -202,7 +202,7 @@ public class DicesCombinationsChecker {
         }
     }
 
-    public void checkTwoPairs(int[] dices, boolean firstThrow) {
+    public void checkTwoPairs(int[] dices, int throwNumber) {
         if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][7] == 0) {
             availableCombinationsValues.set(7, 0);
             int one = 0, two = 0, three = 0, four = 0, five = 0, six = 0;
@@ -231,14 +231,14 @@ public class DicesCombinationsChecker {
                 }
             }
             if (one >= 2 && one < 4) {
-                if (firstThrow) {
+                if (throwNumber==1) {
                     pairs.add(4);
                 } else {
                     pairs.add(2);
 
                 }
             } else if (one >= 4) {
-                if (firstThrow) {
+                if (throwNumber==1) {
                     pairs.add(4);
                     pairs.add(4);
                 } else {
@@ -248,14 +248,14 @@ public class DicesCombinationsChecker {
             }
 
             if (two >= 2 && two < 4) {
-                if (firstThrow) {
+                if (throwNumber==1) {
                     pairs.add(8);
                 } else {
                     pairs.add(4);
 
                 }
             } else if (two >= 4) {
-                if (firstThrow) {
+                if (throwNumber==1) {
                     pairs.add(8);
                     pairs.add(8);
                 } else {
@@ -265,14 +265,14 @@ public class DicesCombinationsChecker {
             }
 
             if (three >= 2 && three < 4) {
-                if (firstThrow) {
+                if (throwNumber==1) {
                     pairs.add(12);
                 } else {
                     pairs.add(6);
 
                 }
             } else if (three >= 4) {
-                if (firstThrow) {
+                if (throwNumber==1) {
                     pairs.add(12);
                     pairs.add(12);
                 } else {
@@ -282,14 +282,14 @@ public class DicesCombinationsChecker {
             }
 
             if (four >= 2 && four < 4) {
-                if (firstThrow) {
+                if (throwNumber==1) {
                     pairs.add(16);
                 } else {
                     pairs.add(8);
 
                 }
             } else if (four >= 4) {
-                if (firstThrow) {
+                if (throwNumber==1) {
                     pairs.add(16);
                     pairs.add(16);
                 } else {
@@ -299,14 +299,14 @@ public class DicesCombinationsChecker {
             }
 
             if (five >= 2 && five < 4) {
-                if (firstThrow) {
+                if (throwNumber==1) {
                     pairs.add(20);
                 } else {
                     pairs.add(10);
 
                 }
             } else if (five >= 4) {
-                if (firstThrow) {
+                if (throwNumber==1) {
                     pairs.add(20);
                     pairs.add(20);
                 } else {
@@ -316,14 +316,14 @@ public class DicesCombinationsChecker {
             }
 
             if (six >= 2 && six < 4) {
-                if (firstThrow) {
+                if (throwNumber==1) {
                     pairs.add(24);
                 } else {
                     pairs.add(12);
 
                 }
             } else if (six >= 4) {
-                if (firstThrow) {
+                if (throwNumber==1) {
                     pairs.add(24);
                     pairs.add(24);
                 } else {
@@ -346,7 +346,7 @@ public class DicesCombinationsChecker {
     }
 
 
-    public void checkEvens(int[] dices, boolean firstThrow) {
+    public void checkEvens(int[] dices, int throwNumber) {
         if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][8] == 0) {
             availableCombinationsValues.set(8, 0);
             List<Integer> evenNumbers = new ArrayList<>();
@@ -354,7 +354,7 @@ public class DicesCombinationsChecker {
 
             for (int dice : dices) {
                 if (dice % 2 == 0) {
-                    if (firstThrow) {
+                    if (throwNumber==1) {
                         evenNumbers.add(dice * 2);
                     } else {
                         evenNumbers.add(dice);
@@ -375,7 +375,7 @@ public class DicesCombinationsChecker {
         }
     }
 
-    public void checkOdds(int[] dices, boolean firstThrow) {
+    public void checkOdds(int[] dices, int throwNumber) {
         if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][9] == 0) {
             availableCombinationsValues.set(9, 0);
             List<Integer> oddNumbers = new ArrayList<>();
@@ -383,7 +383,7 @@ public class DicesCombinationsChecker {
 
             for (int dice : dices) {
                 if (dice % 2 != 0) {
-                    if (firstThrow) {
+                    if (throwNumber==1) {
                         oddNumbers.add(dice * 2);
                     } else {
                         oddNumbers.add(dice);
@@ -405,7 +405,7 @@ public class DicesCombinationsChecker {
     }
 
 
-    public void checkSmallStraight(int[] dices, boolean firstThrow) {
+    public void checkSmallStraight(int[] dices, int throwNumber) {
         if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][10] == 0) {
             availableCombinationsValues.set(10, 0);
             List<Integer> smallStraight = new ArrayList<>();
@@ -426,7 +426,7 @@ public class DicesCombinationsChecker {
                 for (Integer values : smallStraight) {
                     sum += values;
                 }
-                if (firstThrow) {
+                if (throwNumber==1) {
                     availableCombinationsValues.set(10, (sum * 2));
                 } else {
                     availableCombinationsValues.set(10, sum);
@@ -435,7 +435,7 @@ public class DicesCombinationsChecker {
         }
     }
 
-    public void checkLargeStraight(int[] dices, boolean firstThrow) {
+    public void checkLargeStraight(int[] dices, int throwNumber) {
         if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][11] == 0) {
             availableCombinationsValues.set(11, 0);
             List<Integer> largeStraight = new ArrayList<>();
@@ -456,7 +456,7 @@ public class DicesCombinationsChecker {
                 for (Integer values : largeStraight) {
                     sum += values;
                 }
-                if (firstThrow) {
+                if (throwNumber==1) {
                     availableCombinationsValues.set(11, (sum * 2));
                 } else {
                     availableCombinationsValues.set(11, sum);
@@ -466,7 +466,7 @@ public class DicesCombinationsChecker {
     }
 
 
-    public void checkFullHouse(int[] dices, boolean firstThrow) {
+    public void checkFullHouse(int[] dices, int throwNumber) {
         if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][12] == 0) {
             availableCombinationsValues.set(12, 0);
             List<Integer> valuesList = new ArrayList<>();
@@ -521,7 +521,7 @@ public class DicesCombinationsChecker {
             if (nrOfDifferentValues == 2 && !isMoreThanThreeSameDices) {
                 uiConfig.combinationHighlighter(13, false);
 
-                if (firstThrow) {
+                if (throwNumber==1) {
                     availableCombinationsValues.set(12, (fullHouseSum * 2));
                 } else {
                     availableCombinationsValues.set(12, fullHouseSum);
@@ -533,7 +533,7 @@ public class DicesCombinationsChecker {
     }
 
 
-    public void checkFourOfAKind(int[] dices, boolean firstThrow) {
+    public void checkFourOfAKind(int[] dices, int throwNumber) {
         if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][13] == 0) {
             availableCombinationsValues.set(13, 0);
             int[] values = new int[6];
@@ -576,7 +576,7 @@ public class DicesCombinationsChecker {
             if (checkCombination) {
                 uiConfig.combinationHighlighter(14, false);
 
-                if (firstThrow) {
+                if (throwNumber==1) {
                     availableCombinationsValues.set(13, (score * 2));
                 } else {
                     availableCombinationsValues.set(13, score);
@@ -587,7 +587,7 @@ public class DicesCombinationsChecker {
     }
 
 
-    public void checkFiveOfAKind(int[] dices, boolean firstThrow) {
+    public void checkFiveOfAKind(int[] dices, int throwNumber) {
         if (gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][14] == 0) {
             int[] values = new int[6];
             boolean checkCombination = false;
@@ -625,7 +625,7 @@ public class DicesCombinationsChecker {
             if (checkCombination) {
                 uiConfig.combinationHighlighter(15, false);
 
-                if (firstThrow) {
+                if (throwNumber==1) {
                     availableCombinationsValues.set(14, (score * 2));
                 } else {
                     availableCombinationsValues.set(14, score);
@@ -653,22 +653,22 @@ public class DicesCombinationsChecker {
     }
 
     //method saves available combinations values
-    public void combinationChecker(int[] dices, boolean firstThrow, int throwNumber) {
-        checkOne(dices, firstThrow);
-        checkTwo(dices, firstThrow);
-        checkThree(dices, firstThrow);
-        checkFour(dices, firstThrow);
-        checkFive(dices, firstThrow);
-        checkSix(dices, firstThrow);
-        checkPair(dices, firstThrow);
-        checkTwoPairs(dices, firstThrow);
-        checkEvens(dices, firstThrow);
-        checkOdds(dices, firstThrow);
-        checkSmallStraight(dices, firstThrow);
-        checkLargeStraight(dices, firstThrow);
-        checkFullHouse(dices, firstThrow);
-        checkFourOfAKind(dices, firstThrow);
-        checkFiveOfAKind(dices, firstThrow);
+    public void combinationChecker(int[] dices,int throwNumber) {
+        checkOne(dices, throwNumber);
+        checkTwo(dices, throwNumber);
+        checkThree(dices, throwNumber);
+        checkFour(dices, throwNumber);
+        checkFive(dices, throwNumber);
+        checkSix(dices, throwNumber);
+        checkPair(dices, throwNumber);
+        checkTwoPairs(dices, throwNumber);
+        checkEvens(dices, throwNumber);
+        checkOdds(dices, throwNumber);
+        checkSmallStraight(dices, throwNumber);
+        checkLargeStraight(dices, throwNumber);
+        checkFullHouse(dices, throwNumber);
+        checkFourOfAKind(dices, throwNumber);
+        checkFiveOfAKind(dices, throwNumber);
         checkSOS(dices, throwNumber);
 
     }

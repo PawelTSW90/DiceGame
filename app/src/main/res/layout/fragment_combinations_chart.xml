@@ -854,7 +854,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="50dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -865,7 +865,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="4dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.7"
                     android:text="@string/two_pairs"
                     android:textColor="#F65D2C"
                     android:textSize="16sp" />

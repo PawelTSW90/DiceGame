@@ -81,7 +81,7 @@ public class MultiplayerTurnScreenFragment extends Fragment {
             uiConfig.setRollDicesVisibility(true);
             uiConfig.setDicesVisibility(false, false);
             nextPlayerButton.setVisibility(View.INVISIBLE);
-            gameBoardActivity.hideFragment();
+            gameBoardActivity.manageFragments(false, true, this);
         });
 
     }
@@ -114,7 +114,7 @@ public class MultiplayerTurnScreenFragment extends Fragment {
                 if(snapshot.getValue(Integer.class)==1){
                     gameBoardManager.updatePlayerBoard();
                     gameBoardActivity.getOpponentOnlineUIConfig().displayOpponentScreen();
-                    gameBoardActivity.hideFragment();
+                    gameBoardActivity.manageFragments(false, true, MultiplayerTurnScreenFragment.this);
                 }
             }
 

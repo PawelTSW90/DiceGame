@@ -32,11 +32,11 @@ public class UIConfig {
     private final ValueAnimator[] valueAnimators = new ValueAnimator[16];
     private TextView currentPlayerName;
     private TextView totalScore;
-    private ConstraintLayout blockCombinationQuestionLayout;
+    private ConstraintLayout crossOutCombinationQuestionLayout;
     private ConstraintLayout gameBoardLayout;
-    private TextView blockCombinationTextView;
-    private Button blockCombinationYesButton;
-    private Button blockCombinationNoButton;
+    private TextView crossOutCombinationTextView;
+    private Button crossOutCombinationYesButton;
+    private Button crossOutCombinationNoButton;
 
 
     public UIConfig(GameBoardActivity gameBoardActivity) {
@@ -46,10 +46,10 @@ public class UIConfig {
     }
 
     public void setComponents() {
-        blockCombinationQuestionLayout = gameBoardActivity.findViewById(R.id.block_combination_question_layout);
-        blockCombinationTextView = gameBoardActivity.findViewById(R.id.block_combination_question_textView);
-        blockCombinationYesButton = gameBoardActivity.findViewById(R.id.block_combination_question_yes_button);
-        blockCombinationNoButton = gameBoardActivity.findViewById(R.id.block_combination_question_no_button);
+        crossOutCombinationQuestionLayout = gameBoardActivity.findViewById(R.id.cross_out_combination_question_layout);
+        crossOutCombinationTextView = gameBoardActivity.findViewById(R.id.cross_out_combination_question_textView);
+        crossOutCombinationYesButton = gameBoardActivity.findViewById(R.id.cross_out_combination_question_yes_button);
+        crossOutCombinationNoButton = gameBoardActivity.findViewById(R.id.cross_out_combination_question_no_button);
         gameBoardLayout = gameBoardActivity.findViewById(R.id.game_board_screen_layout);
         rollDicesButton = gameBoardActivity.findViewById(R.id.roll_dices);
         dicesSlots[0] = gameBoardActivity.findViewById(R.id.diceSlot1);
@@ -258,8 +258,6 @@ public class UIConfig {
         }
     }
 
-
-    //setters and getters
     public ImageView[] getDicesSlots() {
         return dicesSlots;
     }
@@ -494,39 +492,39 @@ public class UIConfig {
         return combinationsLayouts;
     }
 
-    public void showBlockCombinationQuestion(boolean showQuestion) {
+    public void showCrossOutCombinationQuestion(boolean showQuestion) {
 
         gameBoardEnableController(!showQuestion, gameBoardLayout);
         if (showQuestion) {
-            blockCombinationQuestionLayout.setVisibility(View.VISIBLE);
+            crossOutCombinationQuestionLayout.setVisibility(View.VISIBLE);
         } else {
-            blockCombinationQuestionLayout.setVisibility(View.INVISIBLE);
+            crossOutCombinationQuestionLayout.setVisibility(View.INVISIBLE);
         }
 
 
     }
 
-    public void gameBoardEnableController(boolean enable, ViewGroup vg) {
+    public void gameBoardEnableController(boolean enableGameBoard, ViewGroup gameBoardLayout) {
 
-        for (int i = 0; i < vg.getChildCount(); i++) {
-            View child = vg.getChildAt(i);
-            child.setEnabled(enable);
+        for (int i = 0; i < gameBoardLayout.getChildCount(); i++) {
+            View child = gameBoardLayout.getChildAt(i);
+            child.setEnabled(enableGameBoard);
             if (child instanceof ViewGroup) {
-                gameBoardEnableController(enable, (ViewGroup) child);
+                gameBoardEnableController(enableGameBoard, (ViewGroup) child);
             }
         }
     }
 
-    public Button getBlockCombinationYesButton() {
-        return blockCombinationYesButton;
+    public Button getCrossOutCombinationYesButton() {
+        return crossOutCombinationYesButton;
     }
 
-    public Button getBlockCombinationNoButton() {
-        return blockCombinationNoButton;
+    public Button getCrossOutCombinationNoButton() {
+        return crossOutCombinationNoButton;
     }
 
-    public TextView getBlockCombinationTextView() {
-        return blockCombinationTextView;
+    public TextView getCrossOutCombinationTextView() {
+        return crossOutCombinationTextView;
     }
 
     public ConstraintLayout getGameBoardLayout() {
@@ -535,5 +533,9 @@ public class UIConfig {
 
     public ImageView[] getTraining_dicesSlots() {
         return training_dicesSlots;
+    }
+
+    public TextView[] getCombinationsText() {
+        return combinationsText;
     }
 }

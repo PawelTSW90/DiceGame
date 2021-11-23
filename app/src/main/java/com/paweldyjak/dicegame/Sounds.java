@@ -16,7 +16,7 @@ public class Sounds {
         if (context instanceof MainMenuActivity) {
             isSoundOn = ((MainMenuActivity) context).getIsSoundOn();
         } else {
-            isSoundOn = ((GameBoardActivity) context).getIsSoundOn();
+            isSoundOn = ((GameBoardActivity) context).isSoundOn();
         }
     }
 
@@ -37,7 +37,7 @@ public class Sounds {
         }
     }
 
-    public void playEraseCombinationSound() {
+    public void playCrossOutCombinationSound() {
         if(isSoundOn) {
             MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.sound_cross_out_combination);
             mediaPlayer.start();

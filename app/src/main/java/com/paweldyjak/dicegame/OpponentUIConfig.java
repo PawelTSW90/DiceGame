@@ -251,7 +251,7 @@ public class OpponentUIConfig {
 
         } else {
 
-            sounds.playEraseCombinationSound();
+            sounds.playCrossOutCombinationSound();
 
         }
         uiConfig.setDicesVisibility(false, false);
