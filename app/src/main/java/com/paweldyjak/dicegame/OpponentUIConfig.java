@@ -87,7 +87,7 @@ public class OpponentUIConfig {
         boolean containsZero = false;
 
         for (int x = 0; x < 5; x++) {
-            uiConfig.getDicesSlots()[x].setImageResource(0);
+            uiConfig.getDicesSlots().get(x).setImageResource(0);
         }
 
 
@@ -98,32 +98,32 @@ public class OpponentUIConfig {
 
 
             for (int y = 0; y < 5; y++) {
-                if (uiConfig.getDicesSlots()[y].getDrawable() == null) {
+                if (uiConfig.getDicesSlots().get(y).getDrawable() == null) {
 
 
                     switch (valueToDisplay) {
                         case 1:
-                            uiConfig.getDicesSlots()[y].setImageResource(R.drawable.dice1);
+                            uiConfig.getDicesSlots().get(y).setImageResource(R.drawable.dice1);
                             y = 5;
                             break;
                         case 2:
-                            uiConfig.getDicesSlots()[y].setImageResource(R.drawable.dice2);
+                            uiConfig.getDicesSlots().get(y).setImageResource(R.drawable.dice2);
                             y = 5;
                             break;
                         case 3:
-                            uiConfig.getDicesSlots()[y].setImageResource(R.drawable.dice3);
+                            uiConfig.getDicesSlots().get(y).setImageResource(R.drawable.dice3);
                             y = 5;
                             break;
                         case 4:
-                            uiConfig.getDicesSlots()[y].setImageResource(R.drawable.dice4);
+                            uiConfig.getDicesSlots().get(y).setImageResource(R.drawable.dice4);
                             y = 5;
                             break;
                         case 5:
-                            uiConfig.getDicesSlots()[y].setImageResource(R.drawable.dice5);
+                            uiConfig.getDicesSlots().get(y).setImageResource(R.drawable.dice5);
                             y = 5;
                             break;
                         case 6:
-                            uiConfig.getDicesSlots()[y].setImageResource(R.drawable.dice6);
+                            uiConfig.getDicesSlots().get(y).setImageResource(R.drawable.dice6);
                             y = 5;
                             break;
                     }

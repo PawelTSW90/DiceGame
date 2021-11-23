@@ -101,7 +101,7 @@ public class GameBoardManager {
 
         for (int x = 0; x < 5; x++) {
             uiConfig.clearDicesBorder(false);
-            uiConfig.getDicesSlots()[x].setOnClickListener(v -> {
+            uiConfig.getDicesSlots().get(x).setOnClickListener(v -> {
                 if (throwNumber < 3) {
                     if (v.getBackground() != null) {
                         v.setBackground(null);
@@ -116,7 +116,7 @@ public class GameBoardManager {
     public boolean[] getSelectedDices() {
         boolean[] selectedDices = new boolean[5];
         for (int x = 0; x < 5; x++) {
-            if (uiConfig.getDicesSlots()[x].getBackground() != null) {
+            if (uiConfig.getDicesSlots().get(x).getBackground() != null) {
                 selectedDices[x] = true;
             }
         }
@@ -125,22 +125,22 @@ public class GameBoardManager {
 
     // method sets combinations listeners
     public void setCombinationsListeners() {
-        uiConfig.getCombinationsLayouts()[CombinationsNames.ONES.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.ONES.getCombinationNumber()));
-        uiConfig.getCombinationsLayouts()[CombinationsNames.TWOS.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.TWOS.getCombinationNumber()));
-        uiConfig.getCombinationsLayouts()[CombinationsNames.THREES.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.THREES.getCombinationNumber()));
-        uiConfig.getCombinationsLayouts()[CombinationsNames.FOURS.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.FOURS.getCombinationNumber()));
-        uiConfig.getCombinationsLayouts()[CombinationsNames.FIVES.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.FIVES.getCombinationNumber()));
-        uiConfig.getCombinationsLayouts()[CombinationsNames.SIXES.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.SIXES.getCombinationNumber()));
-        uiConfig.getCombinationsLayouts()[CombinationsNames.PAIR.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.PAIR.getCombinationNumber()));
-        uiConfig.getCombinationsLayouts()[CombinationsNames.TWOPAIRS.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.TWOPAIRS.getCombinationNumber()));
-        uiConfig.getCombinationsLayouts()[CombinationsNames.EVENS.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.EVENS.getCombinationNumber()));
-        uiConfig.getCombinationsLayouts()[CombinationsNames.ODDS.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.ODDS.getCombinationNumber()));
-        uiConfig.getCombinationsLayouts()[CombinationsNames.SMALLSTRAIGHT.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.SMALLSTRAIGHT.getCombinationNumber()));
-        uiConfig.getCombinationsLayouts()[CombinationsNames.LARGESTRAIGHT.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.LARGESTRAIGHT.getCombinationNumber()));
-        uiConfig.getCombinationsLayouts()[CombinationsNames.FULLHOUSE.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.FULLHOUSE.getCombinationNumber()));
-        uiConfig.getCombinationsLayouts()[CombinationsNames.FOUROFAKIND.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.FOUROFAKIND.getCombinationNumber()));
-        uiConfig.getCombinationsLayouts()[CombinationsNames.FIVEOFAKIND.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.FIVEOFAKIND.getCombinationNumber()));
-        uiConfig.getCombinationsLayouts()[CombinationsNames.SOS.getCombinationNumber()].setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.SOS.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.ONES.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.ONES.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.TWOS.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.TWOS.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.THREES.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.THREES.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.FOURS.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.FOURS.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.FIVES.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.FIVES.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.SIXES.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.SIXES.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.PAIR.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.PAIR.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.TWOPAIRS.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.TWOPAIRS.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.EVENS.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.EVENS.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.ODDS.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.ODDS.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.SMALLSTRAIGHT.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.SMALLSTRAIGHT.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.LARGESTRAIGHT.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.LARGESTRAIGHT.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.FULLHOUSE.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.FULLHOUSE.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.FOUROFAKIND.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.FOUROFAKIND.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.FIVEOFAKIND.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.FIVEOFAKIND.getCombinationNumber()));
+        uiConfig.getCombinationsLayouts().get(CombinationsNames.SOS.getCombinationNumber()).setOnClickListener(new CombinationsListener(gameBoardActivity, gameMode, uiConfig, this, dicesCombinationsChecker, sounds, CombinationsNames.SOS.getCombinationNumber()));
 
     }
 
@@ -148,17 +148,17 @@ public class GameBoardManager {
         int numberOfPlayers = gameMode.getNumberOfPlayers();
         if (numberOfPlayers > gameMode.getCurrentPlayerNumber()) {
             gameMode.setCurrentPlayerNumber(gameMode.getCurrentPlayerNumber() + 1);
-            uiConfig.changeCurrentPlayerName(gameMode.getPlayersNames()[gameMode.getCurrentPlayerNumber() - 1]);
+            uiConfig.setCurrentPlayerName(gameMode.getPlayersNames()[gameMode.getCurrentPlayerNumber() - 1]);
         } else {
             gameMode.setCurrentPlayerNumber(1);
-            uiConfig.changeCurrentPlayerName(gameMode.getPlayersNames()[0]);
+            uiConfig.setCurrentPlayerName(gameMode.getPlayersNames()[0]);
         }
     }
 
     public void updatePlayerBoard() {
         for (int x = 0; x < 16; x++) {
             uiConfig.updateCombinationsUI(gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][x], x);
-            uiConfig.getCombinationsPoints()[x].setText(gameBoardActivity.getResources().getString(R.string.points_value, gameMode.getCombinationsPointsValues(gameMode.getCurrentPlayerNumber(), x)));
+            uiConfig.getCombinationsPoints().get(x).setText(gameBoardActivity.getResources().getString(R.string.points_value, gameMode.getCombinationsPointsValues(gameMode.getCurrentPlayerNumber(), x)));
         }
         uiConfig.setTotalScore(gameMode.getPlayersTotalScore(gameMode.getCurrentPlayerNumber() - 1));
     }

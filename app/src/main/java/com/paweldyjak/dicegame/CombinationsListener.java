@@ -170,7 +170,7 @@ public class CombinationsListener implements View.OnClickListener {
                 uiConfig.showCrossOutCombinationQuestion(false);
                 for (int x = 0; x<16; x++){
                     if(gameMode.getCombinationsSlotsValues()[gameMode.getCurrentPlayerNumber() - 1][x]!=0){
-                        uiConfig.getCombinationsText()[x].setEnabled(false);
+                        uiConfig.getCombinationsText().get(x).setEnabled(false);
                     }
                 }
             });
