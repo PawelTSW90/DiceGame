@@ -36,7 +36,8 @@
                 android:layout_width="450dp"
                 android:layout_height="match_parent"
                 android:background="#FFFFFF"
-                android:visibility="visible">
+                android:visibility="visible"
+                android:weightSum="9">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -70,9 +71,10 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="0.5"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_1_slot"
@@ -108,8 +110,9 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="65dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_evens_slot"
@@ -156,9 +159,10 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="0.5"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_2_slot"
@@ -194,8 +198,9 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="65dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_odds_slot"
@@ -241,9 +246,10 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="0.5"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_3_slot"
@@ -279,8 +285,9 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="65dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_smallStraight_slot"
@@ -327,9 +334,10 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="0.5"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_4_slot"
@@ -365,8 +373,9 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="65dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_largeStraight_slot"
@@ -412,9 +421,10 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="0.5"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_5_slot"
@@ -450,8 +460,9 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="65dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_fullHouse_slot"
@@ -497,9 +508,10 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="0.5"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_6_slot"
@@ -535,8 +547,9 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="65dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_4ofAKind_slot"
@@ -584,9 +597,10 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="0.5"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_pair_slot"
@@ -623,8 +637,9 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="65dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_5ofAKind_slot"
@@ -671,9 +686,10 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
                             android:layout_weight="0.5"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_2pairs_slot"
@@ -709,8 +725,9 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="65dp"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginBottom="2dp"
-                            android:gravity="center" />
+                            android:gravity="center|start" />
 
                         <TextView
                             android:id="@+id/textView_sos_slot"
@@ -728,7 +745,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="1dp"
-                    android:layout_weight="1.0">
+                    android:layout_weight="1">
 
 
                     <LinearLayout
@@ -743,8 +760,8 @@
                             android:layout_width="88dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="5dp"
-                            android:layout_marginTop="8dp"
-                            android:gravity="left"
+                            android:layout_marginBottom="2dp"
+                            android:gravity="center|left"
                             android:text="@string/score" />
 
                         <TextView
@@ -752,8 +769,9 @@
                             style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="80dp"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="21dp"
-                            android:layout_marginTop="8dp" />
+                            android:layout_marginStart="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:gravity="center|start" />
                     </LinearLayout>
 
                 </TableRow>

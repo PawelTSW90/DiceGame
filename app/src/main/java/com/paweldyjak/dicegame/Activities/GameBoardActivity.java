@@ -4,19 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-
 import com.google.firebase.FirebaseApp;
 import com.paweldyjak.dicegame.*;
 import com.paweldyjak.dicegame.Fragments.*;
 import com.paweldyjak.dicegame.GameModes.*;
-
 import java.util.Objects;
-
 
 public class GameBoardActivity extends AppCompatActivity {
     private PlayerNamesInputScreenFragment playerNamesInputScreenFragment;
@@ -24,29 +20,34 @@ public class GameBoardActivity extends AppCompatActivity {
     private MultiplayerTurnScreenFragment multiplayerTurnScreenFragment;
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentTransaction fragmentTransaction;
+    private GameSettingsFragment gameSettingsFragment;
     private View mainBoardLayout;
     private boolean multiplayerMode;
     private OpponentUIConfig opponentUIConfig;
     private boolean isSoundOn;
     private boolean isCombinationsHighlightOn;
-    private boolean isBlockConfirmationOn;
+    private boolean isCrossOutCombinationOn;
     private ImageView gameSettings;
+    private TrainingGame trainingGame;
+    private GameBoardManager gameBoardManager;
+    private int numberOfPlayers;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int numberOfPlayers = getIntent().getIntExtra("numberOfPlayers", 0);
+        numberOfPlayers = getIntent().getIntExtra("numberOfPlayers", 0);
         multiplayerMode = getIntent().getBooleanExtra("MultiplayerMode", false);
         isSoundOn = getIntent().getBooleanExtra("isSoundOn", true);
         isCombinationsHighlightOn = getIntent().getBooleanExtra("isCombinationsHighlightOn", true);
-        isBlockConfirmationOn = getIntent().getBooleanExtra("isBlockingConfirmationOn", false);
+        isCrossOutCombinationOn = getIntent().getBooleanExtra("isCrossOutConfirmationOn", true);
         String[] playersNames = getIntent().getStringArrayExtra("playersNames");
         String opponentUid = getIntent().getStringExtra("opponentUid");
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_game_board);
         gameSettings = findViewById(R.id.game_settings);
         playerNamesInputScreenFragment = new PlayerNamesInputScreenFragment(this, numberOfPlayers);
+        gameSettingsFragment = new GameSettingsFragment(this);
         mainBoardLayout = findViewById(R.id.game_board_screen_layout);
         setSettingsButton();
         //hides status bar
@@ -74,7 +75,6 @@ public class GameBoardActivity extends AppCompatActivity {
     }
 
     public void setSettingsButton() {
-        GameSettingsFragment gameSettingsFragment = new GameSettingsFragment(this);
         View fragmentLayout = findViewById(R.id.fragment_layout);
         gameSettings.setOnClickListener(v -> {
             replaceFragment(R.id.fragment_layout, gameSettingsFragment);
@@ -97,12 +97,30 @@ public class GameBoardActivity extends AppCompatActivity {
         fragmentLayout.setVisibility(View.VISIBLE);
     }
 
+    public void removeFragment(Fragment fragment){
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.remove(fragment);
+        fragmentTransaction.commit();
+    }
+
 
     public void hideFragment() {
         View fragmentLayout = findViewById(R.id.fragment_layout);
         fragmentLayout.setVisibility(View.INVISIBLE);
         mainBoardLayout.setVisibility(View.VISIBLE);
 
+    }
+
+    public void prepareFragments(){
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_layout, playerNamesInputScreenFragment, "namesInputFragment");
+        fragmentTransaction.add(R.id.fragment_layout, turnScreenFragment, "turnScreenFragment");
+        fragmentTransaction.add(R.id.fragment_layout, multiplayerTurnScreenFragment, "multiplayerTurnScreenFragment");
+        fragmentTransaction.add(R.id.fragment_layout, gameSettingsFragment, "gameSettingsFragment");
+        fragmentTransaction.hide(playerNamesInputScreenFragment);
+        fragmentTransaction.hide(turnScreenFragment);
+        fragmentTransaction.hide(multiplayerTurnScreenFragment);
+        fragmentTransaction.hide(gameSettingsFragment);
     }
 
     public void showNextTurnFragment() {
@@ -129,7 +147,9 @@ public class GameBoardActivity extends AppCompatActivity {
         HotSeatGame hotSeatGame = new HotSeatGame(this, playersNames);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame, uiConfig);
         GameBoardManager gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, hotSeatGame, null);
+        this.gameBoardManager = gameBoardManager;
         turnScreenFragment = new TurnScreenFragment(this, hotSeatGame, gameBoardManager);
+        replaceFragment(R.id.fragment_layout, turnScreenFragment);
         //configuring UI
         uiConfig.setComponents();
         uiConfig.getCurrentPlayerName().setText(playersNames[0]);
@@ -137,7 +157,6 @@ public class GameBoardActivity extends AppCompatActivity {
         hotSeatGame.setNumberOfPlayers(numberOfPlayers);
         hotSeatGame.setAllCombinationsAsActive();
         gameBoardManager.setRollDicesButton();
-        replaceFragment(R.id.fragment_layout, turnScreenFragment);
         showFragment();
     }
 
@@ -147,8 +166,10 @@ public class GameBoardActivity extends AppCompatActivity {
         MultiplayerGame multiplayerGame = new MultiplayerGame(this, playersNames, opponentUid);
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame, uiConfig);
         GameBoardManager gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, multiplayerGame, opponentUid);
+        this.gameBoardManager = gameBoardManager;
         multiplayerTurnScreenFragment = new MultiplayerTurnScreenFragment(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
         this.opponentUIConfig = new OpponentUIConfig(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
+        replaceFragment(R.id.fragment_layout, multiplayerTurnScreenFragment);
         //configuring UI
         uiConfig.setComponents();
         uiConfig.setCurrentPlayerName(playersNames[0]);
@@ -156,7 +177,6 @@ public class GameBoardActivity extends AppCompatActivity {
         multiplayerGame.setNumberOfPlayers(2);
         multiplayerGame.setStartBoardValues();
         gameBoardManager.setRollDicesButton();
-        replaceFragment(R.id.fragment_layout, multiplayerTurnScreenFragment);
         showFragment();
     }
 
@@ -164,6 +184,7 @@ public class GameBoardActivity extends AppCompatActivity {
         String playerName = getResources().getString(R.string.training);
         UIConfig uiConfig = new UIConfig(this);
         TrainingGame trainingGame = new TrainingGame(this, uiConfig);
+        this.trainingGame = trainingGame;
         uiConfig.setComponents();
         uiConfig.getCurrentPlayerName().setText(playerName);
         trainingGame.startTrainingMode();
@@ -171,20 +192,44 @@ public class GameBoardActivity extends AppCompatActivity {
 
     }
 
+    public void updateSoundSettings(){
+        if(numberOfPlayers==1){
+            trainingGame.setSounds(new Sounds(this));
+        } else{
+            gameBoardManager.setSounds(new Sounds(this));
+        }
+    }
+
     public OpponentUIConfig getOpponentOnlineUIConfig() {
         return opponentUIConfig;
     }
 
-    public boolean getIsSoundOn() {
+    public boolean isSoundOn() {
         return isSoundOn;
     }
 
-
-    public boolean isBlockConfirmationOn() {
-        return isBlockConfirmationOn;
+    public boolean isCrossOutCombinationOn() {
+        return isCrossOutCombinationOn;
     }
 
     public boolean isCombinationsHighlightOn() {
         return isCombinationsHighlightOn;
+    }
+
+
+    public void setSoundOn(boolean soundOn) {
+        isSoundOn = soundOn;
+    }
+
+    public void setCombinationsHighlightOn(boolean combinationsHighlightOn) {
+        isCombinationsHighlightOn = combinationsHighlightOn;
+    }
+
+    public void setCrossOutCombinationOn(boolean crossOutCombinationOn) {
+        isCrossOutCombinationOn = crossOutCombinationOn;
+    }
+
+    public TurnScreenFragment getTurnScreenFragment() {
+        return turnScreenFragment;
     }
 }

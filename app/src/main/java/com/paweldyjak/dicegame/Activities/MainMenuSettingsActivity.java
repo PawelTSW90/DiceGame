@@ -20,7 +20,7 @@ import java.util.Objects;
 public class MainMenuSettingsActivity extends AppCompatActivity {
     private CheckBox soundsCheckBox;
     private CheckBox combinationsHighlightCheckBox;
-    private CheckBox blockConfirmationCheckBox;
+    private CheckBox crossOutConfirmationCheckBox;
     private TextView playerNameTextView;
     private TextView totalGamesTextView;
     private TextView winGamesTextView;
@@ -31,10 +31,10 @@ public class MainMenuSettingsActivity extends AppCompatActivity {
     private final String userSettingsPref = "userSettingsPref";
     private final String soundPref = "soundPref";
     private final String highlightPref = "highlightPref";
-    private final String blockConfirmPref = "blockConfirmPref";
+    private final String crossOutConfirmPref = "crossOutConfirmPref";
     private boolean isSoundOn = true;
     private boolean isCombinationsHighlightOn = true;
-    private boolean isBlockConfirmationOn = false;
+    private boolean isCrossOutConfirmationOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class MainMenuSettingsActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         soundsCheckBox = findViewById(R.id.sounds_checkBox);
         combinationsHighlightCheckBox = findViewById(R.id.highlight_checkBox);
-        blockConfirmationCheckBox = findViewById(R.id.blockConfirm_checkBox);
+        crossOutConfirmationCheckBox = findViewById(R.id.crossOutConfirm_checkBox);
         playerNameTextView = findViewById(R.id.playerName_mainMenu);
         totalGamesTextView = findViewById(R.id.totalGames_mainMenu);
         winGamesTextView = findViewById(R.id.winGames_mainMenu);
@@ -180,7 +180,7 @@ public class MainMenuSettingsActivity extends AppCompatActivity {
 
         soundsCheckBox.setOnClickListener(v -> saveSettings());
         combinationsHighlightCheckBox.setOnClickListener(v -> saveSettings());
-        blockConfirmationCheckBox.setOnClickListener(v -> saveSettings());
+        crossOutConfirmationCheckBox.setOnClickListener(v -> saveSettings());
 
     }
 
@@ -189,7 +189,7 @@ public class MainMenuSettingsActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(soundPref, soundsCheckBox.isChecked());
         editor.putBoolean(highlightPref, combinationsHighlightCheckBox.isChecked());
-        editor.putBoolean(blockConfirmPref, blockConfirmationCheckBox.isChecked());
+        editor.putBoolean(crossOutConfirmPref, crossOutConfirmationCheckBox.isChecked());
         editor.apply();
         loadSettings();
     }
@@ -198,18 +198,18 @@ public class MainMenuSettingsActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(userSettingsPref, MODE_PRIVATE);
         isSoundOn = sharedPreferences.getBoolean(soundPref, true);
         isCombinationsHighlightOn = sharedPreferences.getBoolean(highlightPref, true);
-        isBlockConfirmationOn = sharedPreferences.getBoolean(blockConfirmPref, true);
+        isCrossOutConfirmationOn = sharedPreferences.getBoolean(crossOutConfirmPref, true);
         updateSettings();
     }
 
     public void updateSettings() {
         soundsCheckBox.setChecked(isSoundOn);
         combinationsHighlightCheckBox.setChecked(isCombinationsHighlightOn);
-        blockConfirmationCheckBox.setChecked(isBlockConfirmationOn);
+        crossOutConfirmationCheckBox.setChecked(isCrossOutConfirmationOn);
         Intent intent = new Intent();
         intent.putExtra("soundPref", isSoundOn);
         intent.putExtra("highlightPref", isCombinationsHighlightOn);
-        intent.putExtra("blockConfirmPref", isBlockConfirmationOn);
+        intent.putExtra("crossOutConfirmPref", isCrossOutConfirmationOn);
         setResult(RESULT_OK, intent);
     }
 

@@ -53,12 +53,12 @@ public class MainMenuActivity extends AppCompatActivity {
     private MainMenuSettingsActivity mainMenuSettings;
     private boolean isSoundOn = true;
     private boolean isCombinationsHighlightOn = true;
-    private boolean isBlockConfirmationOn = false;
+    private boolean isCrossOutConfirmationOn = false;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     public final String mainMenuUserSettingsPref = "userSettingsPref";
     public final String soundPref = "soundPref";
     public final String highlightPref = "highlightPref";
-    public final String blockConfirmPref = "blockConfirmPref";
+    public final String crossOutConfirmPref = "crossOutConfirmPref";
 
 
     @Override
@@ -74,7 +74,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 Intent data = result.getData();
                 isSoundOn = data.getBooleanExtra("soundPref", true);
                 isCombinationsHighlightOn = data.getBooleanExtra("highlightPref", true);
-                isBlockConfirmationOn = data.getBooleanExtra("blockConfirmPref", false);
+                isCrossOutConfirmationOn = data.getBooleanExtra("crossOutConfirmPref", false);
                 saveSettings();
 
             }
@@ -131,7 +131,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 intent.putExtra("MultiplayerMode", false);
                 intent.putExtra("isSoundOn", isSoundOn);
                 intent.putExtra("isCombinationsHighlightOn", isCombinationsHighlightOn);
-                intent.putExtra("isBlockingConfirmationOn", isBlockConfirmationOn);
+                intent.putExtra("isCrossOutConfirmationOn", isCrossOutConfirmationOn);
                 startActivity(intent);
                 this.finish();
             });
@@ -215,7 +215,7 @@ public class MainMenuActivity extends AppCompatActivity {
             intent.putExtra("MultiplayerMode", false);
             intent.putExtra("isSoundOn", isSoundOn);
             intent.putExtra("isCombinationsHighlightOn", isCombinationsHighlightOn);
-            intent.putExtra("isBlockingConfirmationOn", isBlockConfirmationOn);
+            intent.putExtra("isCrossOutConfirmationOn", isCrossOutConfirmationOn);
             startActivity(intent);
             this.finish();
 
@@ -340,12 +340,12 @@ public class MainMenuActivity extends AppCompatActivity {
         isCombinationsHighlightOn = combinationsHighlightOn;
     }
 
-    public boolean isBlockConfirmationOn() {
-        return isBlockConfirmationOn;
+    public boolean isCrossOutConfirmationOn() {
+        return isCrossOutConfirmationOn;
     }
 
-    public void setBlockConfirmationOn(boolean blockConfirmationOn) {
-        isBlockConfirmationOn = blockConfirmationOn;
+    public void setCrossOutConfirmationOn(boolean crossOutConfirmationOn) {
+        isCrossOutConfirmationOn = crossOutConfirmationOn;
     }
 
     public void saveSettings() {
@@ -353,7 +353,7 @@ public class MainMenuActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(soundPref, isSoundOn);
         editor.putBoolean(highlightPref, isCombinationsHighlightOn);
-        editor.putBoolean(blockConfirmPref, isBlockConfirmationOn);
+        editor.putBoolean(crossOutConfirmPref, isCrossOutConfirmationOn);
         editor.apply();
 
     }
@@ -362,7 +362,7 @@ public class MainMenuActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(mainMenuUserSettingsPref, MODE_PRIVATE);
         isSoundOn = sharedPreferences.getBoolean(soundPref, true);
         isCombinationsHighlightOn = sharedPreferences.getBoolean(highlightPref, true);
-        isBlockConfirmationOn = sharedPreferences.getBoolean(blockConfirmPref, false);
+        isCrossOutConfirmationOn = sharedPreferences.getBoolean(crossOutConfirmPref, false);
     }
 
     @Override

@@ -31,6 +31,7 @@ public class CombinationsListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getTurnScreenFragment());
         //set buttons for block combination confirmation
         setBlockConfirmationButtons();
         //set score input listener
@@ -62,7 +63,7 @@ public class CombinationsListener implements View.OnClickListener {
 
             //set block combination listener
         } else if (scoreToInput == 0 && gameBoardManager.getThrowNumber() == 3 && combinationStatus==0) {
-            if (gameBoardActivity.isBlockConfirmationOn()) {
+            if (gameBoardActivity.isCrossOutCombinationOn()) {
                 uiConfig.showBlockCombinationQuestion(true);
                 switch (combinationNumber) {
                     case 0:
@@ -139,6 +140,7 @@ public class CombinationsListener implements View.OnClickListener {
 
     //block combination listener
     public void blockCombination() {
+        gameBoardActivity.replaceFragment(R.id.fragment_layout, gameBoardActivity.getTurnScreenFragment());
         uiConfig.showBlockCombinationQuestion(false);
         gameBoardManager.setThrowNumber(0);
         gameMode.setCombinationsSlots(combinationNumber, 2);

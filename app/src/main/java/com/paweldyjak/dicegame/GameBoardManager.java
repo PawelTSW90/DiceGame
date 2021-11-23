@@ -19,7 +19,7 @@ public class GameBoardManager {
     private final GameMode gameMode;
     private final int[] dices = new int[5];
     private int throwNumber = 0;
-    private final Sounds sounds;
+    private Sounds sounds;
     private final GameBoardActivity gameBoardActivity;
     private final Random randomValue = new Random();
     private final String opponentUid;
@@ -178,6 +178,10 @@ public class GameBoardManager {
 
     public int getThrowNumber() {
         return throwNumber;
+    }
+
+    public void setSounds(Sounds sounds) {
+        this.sounds = sounds;
     }
 }
 

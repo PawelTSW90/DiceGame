@@ -12,11 +12,11 @@ import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.Sounds;
 import com.paweldyjak.dicegame.UIConfig;
 
-public class TrainingGame{
-    GameBoardActivity gameBoardActivity;
-    UIConfig uiConfig;
-    Sounds sounds;
-    Button nextButton;
+public class TrainingGame {
+    private final GameBoardActivity gameBoardActivity;
+    private final UIConfig uiConfig;
+    private Sounds sounds;
+    private Button nextButton;
     private TextView trainingText;
     private int trainingTextNr = 1;
 
@@ -224,7 +224,7 @@ public class TrainingGame{
                 case 24:
                     trainingText.setText(gameBoardActivity.getResources().getString(R.string.training_text_42));
                     nextButton.setText(gameBoardActivity.getResources().getString(R.string.exit));
-                    nextButton.setOnClickListener(v1 ->{
+                    nextButton.setOnClickListener(v1 -> {
                         Intent intent = new Intent(gameBoardActivity.getApplicationContext(), MainMenuActivity.class);
                         gameBoardActivity.startActivity(intent);
                         gameBoardActivity.finish();
@@ -485,4 +485,11 @@ public class TrainingGame{
             uiConfig.updateCombinationsUI(0, x);
         }
     }
+
+    public void setSounds(Sounds sounds) {
+        this.sounds = sounds;
+    }
+
+
+
 }

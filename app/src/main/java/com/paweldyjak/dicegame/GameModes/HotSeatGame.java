@@ -4,6 +4,8 @@ import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Fragments.FinalResultMorePlayersFragment;
 import com.paweldyjak.dicegame.Fragments.FinalResultTwoPlayersFragment;
 import com.paweldyjak.dicegame.R;
+import com.paweldyjak.dicegame.Sounds;
+
 import java.util.Arrays;
 
 public class HotSeatGame implements GameMode {
@@ -102,4 +104,5 @@ public class HotSeatGame implements GameMode {
     public int[][] getCombinationsSlotsValues() {
         return combinationsSlotsValues;
     }
+
 }
