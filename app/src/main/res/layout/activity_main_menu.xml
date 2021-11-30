@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -109,7 +108,7 @@
     <Button
         android:id="@+id/hotseat_mode_button"
         android:layout_width="140dp"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:backgroundTint="#F65D2C"
         android:text="@string/hotseat"
         android:visibility="invisible"
@@ -123,27 +122,40 @@
     <Button
         android:id="@+id/multiplayer_mode_button"
         android:layout_width="140dp"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:backgroundTint="#F65D2C"
         android:text="@string/multiplayer"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/training_mode_button"
+        app:layout_constraintEnd_toStartOf="@+id/singlePlayer_mode_button"
         app:layout_constraintHorizontal_bias="0.67"
         app:layout_constraintStart_toEndOf="@id/hotseat_mode_button"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.64" />
 
     <Button
+        android:id="@+id/singlePlayer_mode_button"
+        android:layout_width="140dp"
+        android:layout_height="55dp"
+        android:backgroundTint="#F65D2C"
+        android:text="@string/single_player"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/training_mode_button"
+        app:layout_constraintStart_toEndOf="@id/multiplayer_mode_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.64" />
+
+    <Button
         android:id="@+id/training_mode_button"
         android:layout_width="140dp"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:backgroundTint="#F65D2C"
         android:text="@string/training"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/user_name_creator_layout"
-        app:layout_constraintStart_toEndOf="@id/multiplayer_mode_button"
+        app:layout_constraintBottom_toBottomOf="@+id/user_name_creator_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/singlePlayer_mode_button"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.64" />
 

@@ -805,7 +805,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:textColor="#ECE4E4"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
 
                     <ImageView
                         android:id="@+id/game_settings"
@@ -946,7 +946,7 @@
             android:layout_width="41dp"
             android:layout_height="44dp"
             android:layout_marginTop="200dp"
-            android:layout_marginEnd="52dp"
+            android:layout_marginEnd="32dp"
             android:cropToPadding="true"
             android:padding="3dp"
             android:scaleType="centerCrop"
@@ -973,7 +973,7 @@
             android:layout_width="41dp"
             android:layout_height="44dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="80dp"
+            android:layout_marginEnd="60dp"
             android:contentDescription="@string/content_description"
             android:cropToPadding="true"
             android:padding="3dp"

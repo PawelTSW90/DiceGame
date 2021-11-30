@@ -11,10 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.paweldyjak.dicegame.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -38,9 +41,10 @@ public class MainMenuActivity extends AppCompatActivity {
     private DatabaseReference namesInUseReference;
     private Button playButton;
     private Button hotSeatButton;
+    private Button multiplayerButton;
+    private Button singlePlayerButton;
     private Button trainingButton;
     private Button logoutButton;
-    private Button multiplayerButton;
     private final Button[] playersNumberButtons = new Button[5];
     private Button backButton;
     private Button settingPlayerNameButton;
@@ -69,6 +73,7 @@ public class MainMenuActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
+
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK) {
                 Intent data = result.getData();
@@ -84,10 +89,11 @@ public class MainMenuActivity extends AppCompatActivity {
         sounds = new Sounds(this);
         playButton = findViewById(R.id.play_button);
         hotSeatButton = findViewById(R.id.hotseat_mode_button);
+        multiplayerButton = findViewById(R.id.multiplayer_mode_button);
+        singlePlayerButton = findViewById(R.id.singlePlayer_mode_button);
         trainingButton = findViewById(R.id.training_mode_button);
         backButton = findViewById(R.id.back_button);
         logoutButton = findViewById(R.id.logout_button_titleScreen);
-        multiplayerButton = findViewById(R.id.multiplayer_mode_button);
         settingPlayerNameButton = findViewById(R.id.setting_player_name_button);
         userNameCreatorLayout = findViewById(R.id.user_name_creator_layout);
         playersNumberButtons[0] = findViewById(R.id.two_players_button);
@@ -151,7 +157,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 startActivity(intent);
                 this.finish();
 
-            } else{
+            } else {
                 connectionChecker.shutdown();
                 Intent intent = new Intent(this, StartActivity.class);
                 startActivity(intent);
@@ -163,8 +169,10 @@ public class MainMenuActivity extends AppCompatActivity {
             sounds.playTickSound();
             backButton.setVisibility(View.VISIBLE);
             hotSeatButton.setVisibility(View.VISIBLE);
-            if(userUID!=null) {
-                multiplayerButton.setVisibility(View.VISIBLE);
+            singlePlayerButton.setVisibility(View.VISIBLE);
+            multiplayerButton.setVisibility(View.VISIBLE);
+            if (userUID == null) {
+                multiplayerButton.setEnabled(false);
             }
             trainingButton.setVisibility(View.VISIBLE);
             playButton.setEnabled(false);
@@ -175,10 +183,14 @@ public class MainMenuActivity extends AppCompatActivity {
             if (playersNumberLayout.getVisibility() == View.VISIBLE) {
                 playersNumberLayout.setVisibility(View.INVISIBLE);
                 hotSeatButton.setEnabled(true);
-                multiplayerButton.setEnabled(true);
+                singlePlayerButton.setEnabled(true);
+                if(userUID!=null) {
+                    multiplayerButton.setEnabled(true);
+                }
                 trainingButton.setEnabled(true);
             } else if (hotSeatButton.getVisibility() == View.VISIBLE) {
                 hotSeatButton.setVisibility(View.INVISIBLE);
+                singlePlayerButton.setVisibility(View.INVISIBLE);
                 multiplayerButton.setVisibility(View.INVISIBLE);
                 trainingButton.setVisibility(View.INVISIBLE);
                 playButton.setEnabled(true);
@@ -190,9 +202,6 @@ public class MainMenuActivity extends AppCompatActivity {
             connectionChecker.shutdown();
             sounds.playTickSound();
             playersNumberLayout.setVisibility(View.VISIBLE);
-            multiplayerButton.setEnabled(false);
-            hotSeatButton.setEnabled(false);
-            trainingButton.setEnabled(false);
         });
 
         multiplayerButton.setOnClickListener(v -> {
@@ -204,12 +213,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
         });
 
-        trainingButton.setOnClickListener(v ->{
+        trainingButton.setOnClickListener(v -> {
             connectionChecker.shutdown();
             sounds.playTickSound();
-            multiplayerButton.setEnabled(false);
-            hotSeatButton.setEnabled(false);
-            trainingButton.setEnabled(false);
             Intent intent = new Intent(this, GameBoardActivity.class);
             intent.putExtra("numberOfPlayers", 1);
             intent.putExtra("MultiplayerMode", false);
@@ -219,6 +225,15 @@ public class MainMenuActivity extends AppCompatActivity {
             startActivity(intent);
             this.finish();
 
+        });
+
+        singlePlayerButton.setOnClickListener(v ->{
+            connectionChecker.shutdown();
+            sounds.playTickSound();
+            multiplayerButton.setEnabled(false);
+            singlePlayerButton.setEnabled(false);
+            hotSeatButton.setEnabled(false);
+            trainingButton.setEnabled(false);
         });
 
     }
@@ -256,14 +271,10 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void checkIfUserCreatedName() {
-
-
         userNameReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 try {
-
-
                     if (snapshot.getValue().equals("null")) {
                         playButton.setVisibility(View.INVISIBLE);
                         userName = "false";
@@ -284,7 +295,6 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void checkIfNameIsAvailable() {
-
         namesInUseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -309,11 +319,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
     }
 
-
     public void internetConnectionChecker() {
         connectionChecker.scheduleAtFixedRate(connectionCheckerThread, 0, 1, TimeUnit.SECONDS);
     }
-
 
     public String getUserName() {
         return userName;
@@ -324,28 +332,8 @@ public class MainMenuActivity extends AppCompatActivity {
 
     }
 
-    public boolean getIsSoundOn() {
+    public boolean isSoundOn() {
         return isSoundOn;
-    }
-
-    public void setIsSoundOn(boolean isSoundOn) {
-        this.isSoundOn = isSoundOn;
-    }
-
-    public boolean isCombinationsHighlightOn() {
-        return isCombinationsHighlightOn;
-    }
-
-    public void setCombinationsHighlightOn(boolean combinationsHighlightOn) {
-        isCombinationsHighlightOn = combinationsHighlightOn;
-    }
-
-    public boolean isCrossOutConfirmationOn() {
-        return isCrossOutConfirmationOn;
-    }
-
-    public void setCrossOutConfirmationOn(boolean crossOutConfirmationOn) {
-        isCrossOutConfirmationOn = crossOutConfirmationOn;
     }
 
     public void saveSettings() {
@@ -366,7 +354,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         sounds = new Sounds(this);
     }

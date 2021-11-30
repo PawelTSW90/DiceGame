@@ -14,12 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
-
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
-
 import java.util.ArrayList;
 
 public class UIConfig {
@@ -426,7 +423,6 @@ public class UIConfig {
         Animation out = new AlphaAnimation(1.0f, 0.0f);
         out.setDuration(3000);
         Drawable combinationSlotBorder = ResourcesCompat.getDrawable(gameBoardActivity.getResources(), R.drawable.background_combination_slot, null);
-        if (gameBoardActivity.isCombinationsHighlightOn()) {
             if (turnHighlightsOff) {
                 for (int x = 0; x < 16; x++) {
                     valueAnimators.get(x).pause();
@@ -436,7 +432,7 @@ public class UIConfig {
                     }
                 }
 
-            } else {
+            } else if (gameBoardActivity.isCombinationsHighlightOn()) {
                 combinationsSlots.get(combinationNr - 1).setText("?");
                 combinationsSlots.get(combinationNr - 1).setGravity(Gravity.CENTER);
                 combinationsSlots.get(combinationNr - 1).setTextSize(16);
@@ -444,7 +440,7 @@ public class UIConfig {
                 valueAnimators.get(combinationNr - 1).start();
             }
 
-        }
+
     }
 
     public void showCrossOutCombinationQuestion(boolean showQuestion) {

@@ -488,6 +488,4 @@ public class TrainingGame {
         this.sounds = sounds;
     }
 
-
-
 }

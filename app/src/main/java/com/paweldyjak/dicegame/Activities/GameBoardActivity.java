@@ -33,6 +33,7 @@ public class GameBoardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //get game settings and player information
         numberOfPlayers = getIntent().getIntExtra("numberOfPlayers", 0);
         multiplayerMode = getIntent().getBooleanExtra("MultiplayerMode", false);
         isSoundOn = getIntent().getBooleanExtra("isSoundOn", true);
@@ -40,20 +41,23 @@ public class GameBoardActivity extends AppCompatActivity {
         isCrossOutCombinationOn = getIntent().getBooleanExtra("isCrossOutConfirmationOn", true);
         String[] playersNames = getIntent().getStringArrayExtra("playersNames");
         String opponentUid = getIntent().getStringExtra("opponentUid");
+
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_game_board);
         PlayerNamesInputScreenFragment playerNamesInputScreenFragment = new PlayerNamesInputScreenFragment(this, numberOfPlayers);
-        gameSettingsFragment = new GameSettingsFragment(this);
+
         combinationsChartFragment = new CombinationsChartFragment(this);
         addFragment(playerNamesInputScreenFragment);
         addFragment(combinationsChartFragment);
-        addFragment(gameSettingsFragment);
+
         ImageView gameSettings = findViewById(R.id.game_settings);
         gameSettings.setOnClickListener(v -> manageFragments(true, false, gameSettingsFragment));
+
         //hides status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
+
         if (multiplayerMode) {
             startMultiplayerGame(playersNames, opponentUid);
         } else if (numberOfPlayers == 1) {
@@ -93,11 +97,7 @@ public class GameBoardActivity extends AppCompatActivity {
         }
     }
 
-    //disable back button
-    @Override
-    public void onBackPressed() {
 
-    }
 
     public void startHotSeatGame(String[] playersNames, int numberOfPlayers) {
         //creating class objects
@@ -106,7 +106,9 @@ public class GameBoardActivity extends AppCompatActivity {
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(hotSeatGame, uiConfig);
         gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, hotSeatGame, null);
         turnScreenFragment = new TurnScreenFragment(this, hotSeatGame, gameBoardManager);
+        gameSettingsFragment = new GameSettingsFragment(this, gameBoardManager, dicesCombinationsChecker, uiConfig);
         addFragment(turnScreenFragment);
+        addFragment(gameSettingsFragment);
         //configuring UI
         uiConfig.setComponents();
         uiConfig.getCurrentPlayerName().setText(playersNames[0]);
@@ -124,8 +126,10 @@ public class GameBoardActivity extends AppCompatActivity {
         DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(multiplayerGame, uiConfig);
         gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, multiplayerGame, opponentUid);
         multiplayerTurnScreenFragment = new MultiplayerTurnScreenFragment(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
+        gameSettingsFragment = new GameSettingsFragment(this, gameBoardManager, dicesCombinationsChecker, uiConfig);
         opponentUIConfig = new OpponentUIConfig(this, uiConfig, multiplayerGame, gameBoardManager, opponentUid);
         addFragment(multiplayerTurnScreenFragment);
+        addFragment(gameSettingsFragment);
         //configuring UI
         uiConfig.setComponents();
         uiConfig.setCurrentPlayerName(playersNames[0]);
@@ -141,6 +145,8 @@ public class GameBoardActivity extends AppCompatActivity {
         UIConfig uiConfig = new UIConfig(this);
         TrainingGame trainingGame = new TrainingGame(this, uiConfig);
         this.trainingGame = trainingGame;
+        gameSettingsFragment = new GameSettingsFragment(this, gameBoardManager, null, uiConfig);
+        addFragment(gameSettingsFragment);
         uiConfig.setComponents();
         uiConfig.getCurrentPlayerName().setText(playerName);
         trainingGame.startTrainingMode();
@@ -155,6 +161,11 @@ public class GameBoardActivity extends AppCompatActivity {
         }
     }
 
+    //disable back button
+    @Override
+    public void onBackPressed() {
+
+    }
     public OpponentUIConfig getOpponentOnlineUIConfig() {
         return opponentUIConfig;
     }
@@ -186,5 +197,9 @@ public class GameBoardActivity extends AppCompatActivity {
 
     public CombinationsChartFragment getCombinationsChartFragment() {
         return combinationsChartFragment;
+    }
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
     }
 }

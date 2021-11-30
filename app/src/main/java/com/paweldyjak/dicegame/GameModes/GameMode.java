@@ -1,8 +1,5 @@
 package com.paweldyjak.dicegame.GameModes;
 
-
-import com.paweldyjak.dicegame.Sounds;
-
 public interface GameMode {
 
     boolean checkIfAllCombinationsAreDone();

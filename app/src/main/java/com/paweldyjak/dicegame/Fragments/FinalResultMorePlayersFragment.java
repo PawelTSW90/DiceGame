@@ -80,7 +80,7 @@ public class FinalResultMorePlayersFragment extends Fragment {
             Integer score = entry.getValue();
             switch (playerNr) {
                 case 0:
-                    winnerPlayer.setText(gameBoardActivity.getString(R.string.the_winner_is) + " " + name + " !!!");
+                    winnerPlayer.setText(gameBoardActivity.getString(R.string.the_winner_is, name));
                     playersTextViews[playerNr].setText(name + "\n" + gameBoardActivity.getResources().getString(R.string.points_value, score));
                     sortedResults[0] = score;
                     playerNr++;
@@ -176,6 +176,7 @@ public class FinalResultMorePlayersFragment extends Fragment {
         });
 
         rematchButton.setOnClickListener(v -> {
+            gameBoardActivity.manageFragments(false, true, this);
             gameBoardActivity.startHotSeatGame(gameMode.getPlayersNames(), gameMode.getNumberOfPlayers());
 
 

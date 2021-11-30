@@ -35,21 +35,6 @@ public class GameBoardManager {
 
     }
 
-    public enum CombinationsNames {
-        ONES(0), TWOS(1), THREES(2), FOURS(3), FIVES(4), SIXES(5),
-        PAIR(6), TWOPAIRS(7), EVENS(8), ODDS(9), SMALLSTRAIGHT(10),
-        LARGESTRAIGHT(11), FULLHOUSE(12), FOUROFAKIND(13), FIVEOFAKIND(14), SOS(15);
-
-        private final int combinationNumber;
-
-        CombinationsNames(int combinationNumber) {
-            this.combinationNumber = combinationNumber;
-        }
-
-        public int getCombinationNumber() {
-            return combinationNumber;
-        }
-    }
 
     //method configure roll dices button
     public void setRollDicesButton() {
@@ -182,5 +167,27 @@ public class GameBoardManager {
     public void setSounds(Sounds sounds) {
         this.sounds = sounds;
     }
+
+    public int[] getDices() {
+        return dices;
+    }
+
+    public enum CombinationsNames {
+        ONES(0), TWOS(1), THREES(2), FOURS(3), FIVES(4), SIXES(5),
+        PAIR(6), TWOPAIRS(7), EVENS(8), ODDS(9), SMALLSTRAIGHT(10),
+        LARGESTRAIGHT(11), FULLHOUSE(12), FOUROFAKIND(13), FIVEOFAKIND(14), SOS(15);
+
+        private final int combinationNumber;
+
+        CombinationsNames(int combinationNumber) {
+            this.combinationNumber = combinationNumber;
+        }
+
+        public int getCombinationNumber() {
+            return combinationNumber;
+        }
+    }
 }
+
+
 
