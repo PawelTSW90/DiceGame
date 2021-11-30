@@ -5,7 +5,7 @@
     <string name="logout">WYLOGUJ</string>
     <string name="logged_out">Wylogowano</string>
     <string name="register">REJESTRACJA</string>
-    <string name="login">LOGOWANIE</string>
+    <string name="login">ZALOGUJ</string>
     <string name="hello">Witaj</string>
     <string name="settings">USTAWIENIA</string>
     <string name="password">hasło:</string>
@@ -59,6 +59,7 @@
     <string name="six_players">6 graczy</string>
     <string name="hotseat">HOTSEAT</string>
     <string name="multiplayer">MULTIPLAYER</string>
+    <string name="single_player">SINGLE PLAYER</string>
     <string name="training">TRENING</string>
     <string name="play">GRAJ</string>
     <string name="back">COFNIJ</string>
@@ -103,7 +104,7 @@
     <string name="training_text_12">"Kolejną rzeczą o której warto pamiętać jest "Zasada pierwszego rzutu". Jeśli zaliczymy kombinację wykonując tylko jeden rzut, to zdobyte punkty zostaną podwojone! Należy więc uważać, bo wykonanie drugiego rzutu może nam odebrać wiele punktów przy zaliczeniu kombinacji wyrzuconej już w pierwszym rzucie."</string>
     <string name="training_text_13">"Do swojej dyspozycji mamy 16 tur. Każda składa się z 3 mniejszych tur w których rzucamy pięcioma kośćmi. Uwaga! Najczęściej przed drugim i trzecim rzutem są kości które chcielibyśmy zachować w celu uzyskania konkretnej kombinacji. W tym celu należy zaznaczyć kości którymi chcemy rzucić ponownie."</string>
     <string name="training_text_14">"Po zaznaczeniu, dana kość zostanie otoczona fioletową obramówką. Pozostałe kości nie wezmą udziału w ponownym rzucie. Jeśli chcemy rzucić wszystkimi kośćmi, wystarczy nacisnąć obrazek rzutu kości. Nie trzeba zaznaczać ich wszystkich."</string>
-    <string name="training_text_15">"Wystarczy teorii. Przyszedł czas na praktykę! Wykonaj swój pierwszy rzut!"</string>
+    <string name="training_text_15">"Na potrzeby treningu niektóre funkcje w opcjach gry zostały zablokowane, a interfejs gry zmodyfikowany. Wystarczy teorii. Przyszedł czas na praktykę! Wykonaj swój pierwszy rzut!"</string>
     <string name="training_text_16">"Wyrzuciłeś Czwórki w pierwszym rzucie! A to oznacza że punkty zostaną podwojone. Z wyjątkiem niektórych sytuacji zaleca się zaliczyć kombinację zdobytą w pierwszym rzucie."</string>
     <string name="training_text_17">"Zauważ że podświetlanie dostępnych kombinacji jest domyślnie włączone. Może to być pomocne zwłaszcza dla nowych graczy. Możesz w każdej chwili wyłączyć tę funkcję w opcjach gry. A teraz zalicz kombinację Czwórki!"</string>
     <string name="training_text_18">"Dobrze! Zdobyłeś 24 punkty. Zsumowane zostały kości wymagane do danej kombinacji, a ponieważ zaliczyłeś kombinację po jednym rzucie, wynik został podwojony. Zobaczmy co uda nam się wyrzucić tym razem. Rzuć kośćmi!"</string>

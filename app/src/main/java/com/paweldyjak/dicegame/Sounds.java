@@ -14,7 +14,7 @@ public class Sounds {
     public Sounds(Context context) {
         this.context = context;
         if (context instanceof MainMenuActivity) {
-            isSoundOn = ((MainMenuActivity) context).getIsSoundOn();
+            isSoundOn = ((MainMenuActivity) context).isSoundOn();
         } else {
             isSoundOn = ((GameBoardActivity) context).isSoundOn();
         }

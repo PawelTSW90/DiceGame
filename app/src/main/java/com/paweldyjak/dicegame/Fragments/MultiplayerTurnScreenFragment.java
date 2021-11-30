@@ -32,7 +32,6 @@ public class MultiplayerTurnScreenFragment extends Fragment {
     private final String opponentUid;
     private boolean displayBoardListenerRunning = false;
 
-
     public MultiplayerTurnScreenFragment(GameBoardActivity gameBoardActivity, UIConfig uiConfig, GameMode gameMode, GameBoardManager gameBoardManager, String opponentUid) {
         this.gameBoardActivity = gameBoardActivity;
         this.uiConfig = uiConfig;
@@ -51,7 +50,6 @@ public class MultiplayerTurnScreenFragment extends Fragment {
         displayTurnMessage();
         return view;
     }
-
 
     public void displayTurnMessage() {
         setNextPlayerName();
@@ -86,8 +84,6 @@ public class MultiplayerTurnScreenFragment extends Fragment {
 
     }
 
-
-
     public void setNextPlayerName(){
         if(gameMode.getCurrentPlayerNumber()==1){
             playerNameTextview.setText(gameMode.getPlayersNames()[0]);
@@ -95,8 +91,6 @@ public class MultiplayerTurnScreenFragment extends Fragment {
             playerNameTextview.setText(gameMode.getPlayersNames()[1]);
         }
     }
-
-
 
 
     //update opponentTurnStarted value in opponents database record

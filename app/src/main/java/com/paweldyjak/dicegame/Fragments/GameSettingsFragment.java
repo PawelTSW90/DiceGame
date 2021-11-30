@@ -14,12 +14,18 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import com.paweldyjak.dicegame.Activities.GameBoardActivity;
 import com.paweldyjak.dicegame.Activities.MainMenuActivity;
+import com.paweldyjak.dicegame.DicesCombinationsChecker;
+import com.paweldyjak.dicegame.GameBoardManager;
 import com.paweldyjak.dicegame.R;
 import com.paweldyjak.dicegame.Sounds;
+import com.paweldyjak.dicegame.UIConfig;
 
 public class GameSettingsFragment extends Fragment {
     private final GameBoardActivity gameBoardActivity;
-    private final Sounds sounds;
+    private final GameBoardManager gameBoardManager;
+    private final DicesCombinationsChecker dicesCombinationsChecker;
+    private final UIConfig uiConfig;
+    private Sounds sounds;
     private TextView backButton;
     private TextView combinationsChart;
     private TextView exit;
@@ -30,8 +36,11 @@ public class GameSettingsFragment extends Fragment {
     private SwitchCompat crossOutCombinationSwitch;
     private ConstraintLayout exitQuestionLayout;
 
-    public GameSettingsFragment(GameBoardActivity gameBoardActivity) {
+    public GameSettingsFragment(GameBoardActivity gameBoardActivity, GameBoardManager gameBoardManager, DicesCombinationsChecker dicesCombinationsChecker, UIConfig uiConfig) {
         this.gameBoardActivity = gameBoardActivity;
+        this.gameBoardManager = gameBoardManager;
+        this.dicesCombinationsChecker = dicesCombinationsChecker;
+        this.uiConfig = uiConfig;
         sounds = new Sounds(gameBoardActivity);
     }
 
@@ -53,9 +62,16 @@ public class GameSettingsFragment extends Fragment {
     }
 
     public void setButtons() {
+        if(gameBoardActivity.getNumberOfPlayers()==1){
+            combinationHighlightSwitch.setEnabled(false);
+            crossOutCombinationSwitch.setEnabled(false);
+        }
+        soundSwitch.setOnClickListener(v -> saveSettings());
+        combinationHighlightSwitch.setOnClickListener(v -> saveSettings());
+        crossOutCombinationSwitch.setOnClickListener(v -> saveSettings());
+
         backButton.setOnClickListener(v -> {
             sounds.playTickSound();
-            saveSettings();
             gameBoardActivity.manageFragments(false, true, this);
         });
 
@@ -70,7 +86,6 @@ public class GameSettingsFragment extends Fragment {
         });
         exitYesButton.setOnClickListener(v -> {
             sounds.playTickSound();
-            saveSettings();
             Intent intent = new Intent(gameBoardActivity.getApplicationContext(), MainMenuActivity.class);
             gameBoardActivity.startActivity(intent);
             gameBoardActivity.finish();
@@ -82,7 +97,7 @@ public class GameSettingsFragment extends Fragment {
         });
     }
 
-    public void getSettings(){
+    public void getSettings() {
         boolean isSoundOn = gameBoardActivity.isSoundOn();
         boolean isCombinationsHighlightOn = gameBoardActivity.isCombinationsHighlightOn();
         boolean isCrossOutConfirmationOn = gameBoardActivity.isCrossOutCombinationOn();
@@ -106,7 +121,14 @@ public class GameSettingsFragment extends Fragment {
         gameBoardActivity.setCombinationsHighlightOn(combinationHighlightSwitch.isChecked());
         gameBoardActivity.setCrossOutCombinationOn(crossOutCombinationSwitch.isChecked());
         gameBoardActivity.updateSoundSettings();
+        if (gameBoardActivity.getNumberOfPlayers() > 1) {
+            if (combinationHighlightSwitch.isChecked() && gameBoardManager.getThrowNumber() > 0) {
+                dicesCombinationsChecker.combinationChecker(gameBoardManager.getDices(), gameBoardManager.getThrowNumber());
+            } else if (!combinationHighlightSwitch.isChecked()) {
+                uiConfig.combinationHighlighter(0, true);
+            }
+        }
+        sounds = new Sounds(gameBoardActivity);
     }
-
 
 }

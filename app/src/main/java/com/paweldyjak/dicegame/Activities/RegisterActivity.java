@@ -53,12 +53,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser(String email, String password) {
-
-
         if (!isConnectedToNetwork()) {
             Toast.makeText(this, getApplicationContext().getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
         } else {
-
             firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             Toast.makeText(this, getApplicationContext().getText(R.string.registration_successful), Toast.LENGTH_SHORT).show();
@@ -79,11 +76,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(this, "" + task.getException(), Toast.LENGTH_SHORT).show();
                             }
                         }
-
                     }
             );
-
-
         }
     }
 
@@ -106,8 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
 
     }
-
 }

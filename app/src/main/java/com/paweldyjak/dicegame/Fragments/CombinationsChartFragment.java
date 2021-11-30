@@ -18,8 +18,6 @@ public class CombinationsChartFragment extends Fragment {
         this.gameBoardActivity = gameBoardActivity;
 
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_combinations_chart, container, false);
