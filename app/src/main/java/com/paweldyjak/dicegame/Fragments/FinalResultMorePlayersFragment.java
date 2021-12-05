@@ -66,12 +66,11 @@ public class FinalResultMorePlayersFragment extends Fragment {
         int numberOfPlayers = gameMode.getNumberOfPlayers();
         int playerNr = 0;
         int[] sortedResults = new int[6];
-        int[] playersTotalScore = gameMode.getPlayersScore();
         String[] playersNames = gameMode.getPlayersNames();
         Map<String, Integer> unsortedPlayersResults = new HashMap<>();
 
         for (int x = 0; x < numberOfPlayers; x++) {
-            unsortedPlayersResults.put(playersNames[x], playersTotalScore[x]);
+            unsortedPlayersResults.put(playersNames[x], gameMode.getPlayersTotalScore(x));
         }
         LinkedHashMap<String, Integer> sortedPlayersWithResults;
         sortedPlayersWithResults = sortPlayersResult(unsortedPlayersResults);

@@ -72,6 +72,11 @@ public class MultiplayerGame implements GameMode {
         return playersNames;
     }
 
+    @Override
+    public int getNumberOfPlayers() {
+        return 2;
+    }
+
     public void setPlayersNames(String[] playersNames) {
         this.playersNames = playersNames;
     }
@@ -79,20 +84,6 @@ public class MultiplayerGame implements GameMode {
     public int getPlayersTotalScore(int playerNumber) {
         return totalScore[playerNumber];
 
-    }
-
-    public int[] getPlayersScore() {
-        return totalScore;
-    }
-
-    @Override
-    public void setNumberOfPlayers(int numberOfPlayers) {
-
-    }
-
-    @Override
-    public int getNumberOfPlayers() {
-        return 2;
     }
 
     public int[][] getCombinationsSlotsValues() {

@@ -21,6 +21,9 @@ public class GameBoardActivity extends AppCompatActivity {
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentTransaction fragmentTransaction;
     private boolean multiplayerMode;
+    private boolean hotSeatMode;
+    private boolean trainingMode;
+    private boolean singlePlayerMode;
     private OpponentUIConfig opponentUIConfig;
     private boolean isSoundOn;
     private boolean isCombinationsHighlightOn;
@@ -35,7 +38,10 @@ public class GameBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //get game settings and player information
         numberOfPlayers = getIntent().getIntExtra("numberOfPlayers", 0);
-        multiplayerMode = getIntent().getBooleanExtra("MultiplayerMode", false);
+        multiplayerMode = getIntent().getBooleanExtra("multiplayerMode", false);
+        hotSeatMode = getIntent().getBooleanExtra("hotSeatMode", false);
+        trainingMode = getIntent().getBooleanExtra("trainingMode", false);
+        singlePlayerMode = getIntent().getBooleanExtra("singlePlayerMode", false);
         isSoundOn = getIntent().getBooleanExtra("isSoundOn", true);
         isCombinationsHighlightOn = getIntent().getBooleanExtra("isCombinationsHighlightOn", true);
         isCrossOutCombinationOn = getIntent().getBooleanExtra("isCrossOutConfirmationOn", true);
@@ -44,8 +50,8 @@ public class GameBoardActivity extends AppCompatActivity {
 
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_game_board);
-        PlayerNamesInputScreenFragment playerNamesInputScreenFragment = new PlayerNamesInputScreenFragment(this, numberOfPlayers);
 
+        PlayerNamesInputScreenFragment playerNamesInputScreenFragment = new PlayerNamesInputScreenFragment(this, numberOfPlayers);
         combinationsChartFragment = new CombinationsChartFragment(this);
         addFragment(playerNamesInputScreenFragment);
         addFragment(combinationsChartFragment);
@@ -60,9 +66,11 @@ public class GameBoardActivity extends AppCompatActivity {
 
         if (multiplayerMode) {
             startMultiplayerGame(playersNames, opponentUid);
-        } else if (numberOfPlayers == 1) {
+        } else if (trainingMode) {
             startTrainingGame();
-        } else {
+        } else if(hotSeatMode) {
+            manageFragments(true, false, playerNamesInputScreenFragment);
+        } else{
             manageFragments(true, false, playerNamesInputScreenFragment);
         }
 
@@ -134,10 +142,30 @@ public class GameBoardActivity extends AppCompatActivity {
         uiConfig.setComponents();
         uiConfig.setCurrentPlayerName(playersNames[0]);
         multiplayerGame.setPlayersNames(playersNames);
-        multiplayerGame.setNumberOfPlayers(2);
         multiplayerGame.setStartBoardValues();
         gameBoardManager.setRollDicesButton();
         manageFragments(true, false, multiplayerTurnScreenFragment);
+    }
+
+    public void startSinglePlayerGame(String playerName){
+        String[] playersNames = {playerName, "Computer"};
+        //creating class objects
+        UIConfig uiConfig = new UIConfig(this);
+        SinglePlayerGame singlePlayerGame = new SinglePlayerGame(this, playersNames);
+        DicesCombinationsChecker dicesCombinationsChecker = new DicesCombinationsChecker(singlePlayerGame, uiConfig);
+        gameBoardManager = new GameBoardManager(this, dicesCombinationsChecker, uiConfig, singlePlayerGame, null);
+        turnScreenFragment = new TurnScreenFragment(this, singlePlayerGame, gameBoardManager);
+        gameSettingsFragment = new GameSettingsFragment(this, gameBoardManager, dicesCombinationsChecker, uiConfig);
+        addFragment(turnScreenFragment);
+        addFragment(gameSettingsFragment);
+        //configuring UI
+
+        uiConfig.setComponents();
+        uiConfig.getCurrentPlayerName().setText(playerName);
+        singlePlayerGame.setPlayersNames(playersNames);
+        singlePlayerGame.setAllCombinationsAsActive();
+        gameBoardManager.setRollDicesButton();
+        manageFragments(true, false, turnScreenFragment);
     }
 
     public void startTrainingGame() {

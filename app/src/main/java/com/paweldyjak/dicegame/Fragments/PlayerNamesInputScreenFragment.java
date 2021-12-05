@@ -45,26 +45,7 @@ public class PlayerNamesInputScreenFragment extends Fragment {
     }
 
     public void playerInputScreen() {
-
-
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        //allows to proceed when players name is at least 3 characters long
-        playerNameEditText.setOnEditorActionListener((v, actionId, event) -> {
-            if (v.getText().length() > 2) {
-                {
-                    start.setVisibility(View.VISIBLE);
-                    //hide keyboard after players name input finished
-                    imm.hideSoftInputFromWindow(playerNameEditText.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
-                    return true;
-                }
-            } else {
-                start.setVisibility(View.INVISIBLE);
-            }
-
-            return false;
-        });
-
+        nameFormatChecker();
 
         //setting start button to save player name and start the game unless no player name entered or wrong format entered
         start.setOnClickListener(v -> {
@@ -72,8 +53,11 @@ public class PlayerNamesInputScreenFragment extends Fragment {
                 playersNames[currentPlayerNameInput] = playerNameEditText.getText().toString();
                 playerNameEditText.setText(null);
                 currentPlayerNameInput++;
-                if (currentPlayerNameInput == numberOfPlayers) {
+                if (currentPlayerNameInput == numberOfPlayers && currentPlayerNameInput > 1) {
                     gameBoardActivity.startHotSeatGame(playersNames, numberOfPlayers);
+                    gameBoardActivity.manageFragments(false, true, this);
+                } else if (currentPlayerNameInput == numberOfPlayers && currentPlayerNameInput == 1) {
+                    gameBoardActivity.startSinglePlayerGame(playersNames[0]);
                     gameBoardActivity.manageFragments(false, true, this);
                 } else {
                     switch (currentPlayerNameInput) {
@@ -105,6 +89,27 @@ public class PlayerNamesInputScreenFragment extends Fragment {
                     displayWrongLengthToast();
                 }
             }
+        });
+    }
+
+
+    public void nameFormatChecker() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        //allows to proceed when players name is at least 3 characters long
+        playerNameEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (v.getText().length() > 2) {
+                {
+                    start.setVisibility(View.VISIBLE);
+                    //hide keyboard after players name input finished
+                    imm.hideSoftInputFromWindow(playerNameEditText.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                    return true;
+                }
+            } else {
+                start.setVisibility(View.INVISIBLE);
+            }
+
+            return false;
         });
     }
 

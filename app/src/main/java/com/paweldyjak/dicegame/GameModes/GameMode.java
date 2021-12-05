@@ -14,8 +14,6 @@ public interface GameMode {
 
     void setCombinationsSlots(int combinationsSlotNumber, int slotStatus);
 
-    void setNumberOfPlayers(int numberOfPlayers);
-
     void setPlayersNames(String[] playersNames);
 
     void setCurrentPlayerNumber(int currentPlayerNumber);
@@ -29,8 +27,6 @@ public interface GameMode {
     int getNumberOfPlayers();
 
     int getPlayersTotalScore(int playerNumber);
-
-    int[] getPlayersScore();
 
     int getCurrentPlayerNumber();
 

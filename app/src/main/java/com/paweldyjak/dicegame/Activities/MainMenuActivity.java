@@ -71,9 +71,11 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         //hides status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         //hides title bar
         Objects.requireNonNull(getSupportActionBar()).hide();
 
+        //save user settings
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK) {
                 Intent data = result.getData();
@@ -84,7 +86,10 @@ public class MainMenuActivity extends AppCompatActivity {
 
             }
         });
+
         loadSettings();
+
+        //create objects and views
         gameBoardActivity = new GameBoardActivity();
         sounds = new Sounds(this);
         playButton = findViewById(R.id.play_button);
@@ -106,6 +111,8 @@ public class MainMenuActivity extends AppCompatActivity {
         settingsButton = findViewById(R.id.settings_imageview);
         mainMenuSettings = new MainMenuSettingsActivity();
         setButtons();
+
+        //check internet connection
         try {
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             userUID = firebaseAuth.getUid();
@@ -126,28 +133,26 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void setButtons() {
+        setSettingsButton();
+        setLogoutButton();
+        setPlayButton();
+        setBackButton();
+        setHotSeatButton();
+        setMultiplayerButton();
+        setTrainingButton();
+        setSinglePlayerButton();
 
-        for (int x = 0; x < 5; x++) {
-            int numberOfPlayers = x + 2;
-            playersNumberButtons[x].setOnClickListener(v -> {
-                connectionChecker.shutdown();
-                sounds.playTickSound();
-                Intent intent = new Intent(this, GameBoardActivity.class);
-                intent.putExtra("numberOfPlayers", numberOfPlayers);
-                intent.putExtra("MultiplayerMode", false);
-                intent.putExtra("isSoundOn", isSoundOn);
-                intent.putExtra("isCombinationsHighlightOn", isCombinationsHighlightOn);
-                intent.putExtra("isCrossOutConfirmationOn", isCrossOutConfirmationOn);
-                startActivity(intent);
-                this.finish();
-            });
-        }
 
+    }
+
+    public void setSettingsButton() {
         settingsButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, mainMenuSettings.getClass());
             activityResultLauncher.launch(intent);
         });
+    }
 
+    public void setLogoutButton() {
         logoutButton.setOnClickListener(v -> {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 connectionChecker.shutdown();
@@ -164,7 +169,9 @@ public class MainMenuActivity extends AppCompatActivity {
                 this.finish();
             }
         });
+    }
 
+    public void setPlayButton() {
         playButton.setOnClickListener(v -> {
             sounds.playTickSound();
             backButton.setVisibility(View.VISIBLE);
@@ -177,14 +184,16 @@ public class MainMenuActivity extends AppCompatActivity {
             trainingButton.setVisibility(View.VISIBLE);
             playButton.setEnabled(false);
         });
+    }
 
+    public void setBackButton() {
         backButton.setOnClickListener(v -> {
             sounds.playTickSound();
             if (playersNumberLayout.getVisibility() == View.VISIBLE) {
                 playersNumberLayout.setVisibility(View.INVISIBLE);
                 hotSeatButton.setEnabled(true);
                 singlePlayerButton.setEnabled(true);
-                if(userUID!=null) {
+                if (userUID != null) {
                     multiplayerButton.setEnabled(true);
                 }
                 trainingButton.setEnabled(true);
@@ -197,13 +206,32 @@ public class MainMenuActivity extends AppCompatActivity {
                 backButton.setVisibility(View.INVISIBLE);
             }
         });
+    }
 
+    public void setHotSeatButton() {
+        for (int x = 0; x < 5; x++) {
+            int numberOfPlayers = x + 2;
+            playersNumberButtons[x].setOnClickListener(v -> {
+                connectionChecker.shutdown();
+                sounds.playTickSound();
+                Intent intent = new Intent(this, GameBoardActivity.class);
+                intent.putExtra("numberOfPlayers", numberOfPlayers);
+                intent.putExtra("hotSeatMode", true);
+                intent.putExtra("isSoundOn", isSoundOn);
+                intent.putExtra("isCombinationsHighlightOn", isCombinationsHighlightOn);
+                intent.putExtra("isCrossOutConfirmationOn", isCrossOutConfirmationOn);
+                startActivity(intent);
+                this.finish();
+            });
+        }
         hotSeatButton.setOnClickListener(v -> {
             connectionChecker.shutdown();
             sounds.playTickSound();
             playersNumberLayout.setVisibility(View.VISIBLE);
         });
+    }
 
+    public void setMultiplayerButton() {
         multiplayerButton.setOnClickListener(v -> {
             connectionChecker.shutdown();
             sounds.playTickSound();
@@ -212,13 +240,15 @@ public class MainMenuActivity extends AppCompatActivity {
             this.finish();
 
         });
+    }
 
+    public void setTrainingButton() {
         trainingButton.setOnClickListener(v -> {
             connectionChecker.shutdown();
             sounds.playTickSound();
             Intent intent = new Intent(this, GameBoardActivity.class);
             intent.putExtra("numberOfPlayers", 1);
-            intent.putExtra("MultiplayerMode", false);
+            intent.putExtra("trainingMode", true);
             intent.putExtra("isSoundOn", isSoundOn);
             intent.putExtra("isCombinationsHighlightOn", isCombinationsHighlightOn);
             intent.putExtra("isCrossOutConfirmationOn", isCrossOutConfirmationOn);
@@ -226,16 +256,24 @@ public class MainMenuActivity extends AppCompatActivity {
             this.finish();
 
         });
+    }
 
-        singlePlayerButton.setOnClickListener(v ->{
+    public void setSinglePlayerButton() {
+        singlePlayerButton.setOnClickListener(v -> {
             connectionChecker.shutdown();
             sounds.playTickSound();
             multiplayerButton.setEnabled(false);
             singlePlayerButton.setEnabled(false);
             hotSeatButton.setEnabled(false);
             trainingButton.setEnabled(false);
+            Intent intent = new Intent(this, GameBoardActivity.class);
+            intent.putExtra("numberOfPlayers", 1);
+            intent.putExtra("singlePlayerMode", true);
+            intent.putExtra("isSoundOn", isSoundOn);
+            intent.putExtra("isCombinationsHighlightOn", isCombinationsHighlightOn);
+            intent.putExtra("isCrossOutConfirmationOn", isCrossOutConfirmationOn);
+            startActivity(intent);
         });
-
     }
 
     public void setPlayerNameInput() {

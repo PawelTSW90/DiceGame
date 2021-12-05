@@ -262,7 +262,7 @@ public class OpponentUIConfig {
         executor.execute(() -> {
             try {
                 Thread.sleep(2000);
-                if (gameMode.getCurrentPlayerNumber() == gameMode.getNumberOfPlayers() && gameMode.checkIfAllCombinationsAreDone()) {
+                if (gameMode.getCurrentPlayerNumber() == 2 && gameMode.checkIfAllCombinationsAreDone()) {
                     gameMode.setFinalResultScreen();
                 } else {
                     gameBoardManager.changeCurrentPlayer();
